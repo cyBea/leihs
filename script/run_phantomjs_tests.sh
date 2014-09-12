@@ -2,7 +2,7 @@
 
 bash script/validate_gettext_files.sh && \
 bundle exec rake leihs:reset && \
-bundle exec cucumber -t @javascript -t ~@firefox features/
+bundle exec cucumber -t @javascript -t ~@firefox -t ~@chrome features/
 
 if [[ $? -ne 0 ]]; then
   if [[ -f tmp/rerun.txt && -s tmp/rerun.txt ]]; then
