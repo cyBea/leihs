@@ -9,4 +9,4 @@ cucumber_report:
   content-type: application/json
 coverage: 
   glob: 'coverage/.resultset.json'
-  content-type: image/png
+  content-type: application/json
