@@ -55,9 +55,10 @@ class CiderClient
     trials
   end
 
-  def trial_attachments(pattern = nil)
+  # Takes a regex pattern and returns only the attachments that matched the regex.
+  # Default: return all attachments
+  def trial_attachments(pattern = /.*/)
     trial_attachments = []
-    attachments = []
     trials.each do |trial|
       trial_url = url(trial["href"])
       single_trial = JSON.parse(RestClient.get(trial_url))
@@ -65,7 +66,7 @@ class CiderClient
     end
     trial_attachments.each do |ta|
       attachment_detail_url = url(ta["href"])
-      attachment_details = JSON.parse(RestClient.get(attachment_detail_url))  # 404 happens here
+      attachment_details = JSON.parse(RestClient.get(attachment_detail_url))  # 404 happens here, don't know how to find out the filenames of the attachments
     end
   end
 
