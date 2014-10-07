@@ -3,8 +3,7 @@ require 'rubygems'
 require 'rest-client'
 require 'json'
 require 'pry'
-
-
+require 'simplecov'
 
 execution_id = ARGV[0]
 raise "You must give an execution ID as an argument, e.g.: bundle exec ruby script/retrieve_cider_coverage.rb 37b8408a-8e22-465b-9ae9-ba90b58262fd" if execution_id.nil?
@@ -65,7 +64,7 @@ class CiderClient
     trial_attachment_groups
   end
 
-  # Takes a regex pattern and returns only the attachment ids that matched the regex.
+  # Takes a regex pattern and returns only hrefs of the attachments that matched the regex.
   def trial_attachment_hrefs(pattern = /.*/)
     matching_tas = []
     trial_attachment_groups.each do |ta|
@@ -80,9 +79,11 @@ class CiderClient
     }
   end
 
-  def trial_attachment(id)
-    trial_attachment_url = url("trial-attachments/#{id}")
-    trial_attachment_details = JSON.parse(RestClient.get(trial_attachment_url))
+  def trial_attachment_data(href)
+    trial_attachment_details = JSON.parse(RestClient.get(url(href)))
+    stream_url = trial_attachment_details["_links"]["data-stream"]["href"]
+    stream_url.gsub!("https://195.176.254.43", base_url)
+    RestClient.get(stream_url)
   end
 end
 
@@ -90,7 +91,22 @@ cc = CiderClient.new
 cc.username = username
 cc.password = password
 cc.execution_id = "d7a1c121-8f22-471a-8d25-292cb5669883"
-puts cc.trial_attachment_hrefs
+
+puts "Gathering coverage data for execution #{cc.execution_id}."
+coverage_data = {}
+cc.trial_attachment_hrefs(/.*resultset\.json$/).each do |tah|
+  puts "Gathering results from #{tah}"
+  coverage_data.merge!(JSON.parse(cc.trial_attachment_data(tah)))
+end
+
+# Crazy ideas
+#
+
+SimpleCov::Result.from_has(coverage_data)
+
+# But this ain't gonna work because we need to use the ResultMerger to merge
+# each set of coverage results we get above instead of just merging them into 
+# one chaotic hash.
+
+binding.pry
 puts "foo"
-
-
