@@ -90,23 +90,39 @@ end
 cc = CiderClient.new
 cc.username = username
 cc.password = password
-cc.execution_id = "d7a1c121-8f22-471a-8d25-292cb5669883"
+cc.execution_id = execution_id
 
+resultsets = []
 puts "Gathering coverage data for execution #{cc.execution_id}."
-coverage_data = {}
 cc.trial_attachment_hrefs(/.*resultset\.json$/).each do |tah|
   puts "Gathering results from #{tah}"
-  coverage_data.merge!(JSON.parse(cc.trial_attachment_data(tah)))
+  resultsets << SimpleCov::JSON.parse(cc.trial_attachment_data(tah))
 end
 
-# Crazy ideas
-#
+results = []
+resultsets.each do |resultset|
+  resultset.each do |command_name, data|
+    fixed_coverage_data = {}
+    data["coverage"].each do |k, v|
+      # Fix the filenames by stupidly dumping the first three directories the executor used,
+      # then adding our current pwd. TODO: Check that we're in Rails.root
+      local_path = File.join(k.split("/").reverse.shift(4).reverse.unshift(FileUtils.pwd))
+      fixed_coverage_data[local_path] = v
+    end
+    data["coverage"] = fixed_coverage_data
+    result = SimpleCov::Result.from_hash(command_name => data)
+    results << result
+  end
+end
 
-SimpleCov::Result.from_has(coverage_data)
+puts "Merging results"
+merged = {}
+results.each do |result|
+  merged = result.original_result.merge_resultset(merged)
+end
 
-# But this ain't gonna work because we need to use the ResultMerger to merge
-# each set of coverage results we get above instead of just merging them into 
-# one chaotic hash.
-
-binding.pry
-puts "foo"
+result = SimpleCov::Result.new(merged)
+result.command_name = results.map(&:command_name).sort.join(", ")
+formatter = SimpleCov::Formatter::HTMLFormatter.new
+formatter.format(result)
+puts "Done"
