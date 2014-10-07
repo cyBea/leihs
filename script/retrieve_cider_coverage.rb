@@ -55,26 +55,42 @@ class CiderClient
     trials
   end
 
-  # Takes a regex pattern and returns only the attachments that matched the regex.
-  # Default: return all attachments
-  def trial_attachments(pattern = /.*/)
-    trial_attachments = []
+  def trial_attachment_groups
+    trial_attachment_groups = []
     trials.each do |trial|
       trial_url = url(trial["href"])
       single_trial = JSON.parse(RestClient.get(trial_url))
-      trial_attachments << single_trial["_links"]["cici:trial-attachments"]
+      trial_attachment_groups << single_trial["_links"]["cici:trial-attachments"]
     end
-    trial_attachments.each do |ta|
-      attachment_detail_url = url(ta["href"])
-      attachment_details = JSON.parse(RestClient.get(attachment_detail_url))  # 404 happens here, don't know how to find out the filenames of the attachments
-    end
+    trial_attachment_groups
   end
 
+  # Takes a regex pattern and returns only the attachment ids that matched the regex.
+  def trial_attachment_hrefs(pattern = /.*/)
+    matching_tas = []
+    trial_attachment_groups.each do |ta|
+      trial_attachment_url = url(ta["href"])
+      trial_attachment_details = JSON.parse(RestClient.get(trial_attachment_url))
+      matching_tas << trial_attachment_details["_links"]["cici:trial-attachment"].select {|ta|
+        ta if ta["href"].match(pattern)
+      }
+    end
+    matching_tas.flatten.map {|ta|
+      ta["href"]
+    }
+  end
+
+  def trial_attachment(id)
+    trial_attachment_url = url("trial-attachments/#{id}")
+    trial_attachment_details = JSON.parse(RestClient.get(trial_attachment_url))
+  end
 end
 
 cc = CiderClient.new
 cc.username = username
 cc.password = password
 cc.execution_id = "d7a1c121-8f22-471a-8d25-292cb5669883"
-cc.trial_attachments
+puts cc.trial_attachment_hrefs
+puts "foo"
+
 
