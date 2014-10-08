@@ -2,8 +2,11 @@ require 'rubygems'
 
 require 'rest-client'
 require 'json'
-require 'pry'
 require 'simplecov'
+require 'fileutils'
+
+
+raise "You must run this from inside the Rails root. I can't find an 'app' directory here." unless Dir.exist?(File.join(FileUtils.pwd, "app"))
 
 execution_id = ARGV[0]
 raise "You must give an execution ID as an argument, e.g.: bundle exec ruby script/retrieve_cider_coverage.rb 37b8408a-8e22-465b-9ae9-ba90b58262fd" if execution_id.nil?
@@ -87,6 +90,48 @@ class CiderClient
   end
 end
 
+def fix_resultsets(resultsets)
+  results = []
+  resultsets.each do |resultset|
+    resultset.each do |command_name, data|
+      fixed_coverage_data = {}
+      data["coverage"].each do |k, v|
+        local_path = k.gsub(/\/.*\/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}/, FileUtils.pwd)
+        fixed_coverage_data[local_path] = v
+      end
+      data["coverage"] = fixed_coverage_data
+      result = SimpleCov::Result.from_hash(command_name => data)
+      results << result
+    end
+  end
+  results
+end
+
+def stats(result)
+  nils = 0
+  not_run = 0
+  run = 0
+  result.values.each do |file|
+    nils += file.count(nil)
+    not_run += file.count(0)
+    run += file.select {|line|
+      line if !line.nil? and line > 0
+    }.count
+  end
+  return "#{nils} nils, #{not_run} not run, #{run} run."
+end
+
+def merge_results(results)
+  puts "Merging results"
+  merged = {}
+  results.each_with_index do |result, index|
+    puts "Seen #{result.original_result.keys.count} files in result set #{index} before merge.Stats: #{stats(result.original_result)}"
+    merged = result.original_result.merge_resultset(merged)
+  end
+  puts "Seen #{merged.keys.count} files in results after merge. Stats: #{stats(merged)}."
+  merged
+end
+
 cc = CiderClient.new
 cc.username = username
 cc.password = password
@@ -99,30 +144,18 @@ cc.trial_attachment_hrefs(/.*resultset\.json$/).each do |tah|
   resultsets << SimpleCov::JSON.parse(cc.trial_attachment_data(tah))
 end
 
-results = []
-resultsets.each do |resultset|
-  resultset.each do |command_name, data|
-    fixed_coverage_data = {}
-    data["coverage"].each do |k, v|
-      # Fix the filenames by stupidly dumping the first three directories the executor used,
-      # then adding our current pwd. TODO: Check that we're in Rails.root
-      local_path = File.join(k.split("/").reverse.shift(4).reverse.unshift(FileUtils.pwd))
-      fixed_coverage_data[local_path] = v
-    end
-    data["coverage"] = fixed_coverage_data
-    result = SimpleCov::Result.from_hash(command_name => data)
-    results << result
-  end
-end
+results = fix_resultsets(resultsets)
+merged = merge_results(results)
 
-puts "Merging results"
-merged = {}
-results.each do |result|
-  merged = result.original_result.merge_resultset(merged)
-end
+SimpleCov.add_group "Models", "app/models"
+SimpleCov.add_group "Controllers", "app/controllers"
+SimpleCov.add_group "Views", "app/views"
+SimpleCov.add_group "Helpers", "app/helpers"
+SimpleCov.add_group "Factories", "factories"
+SimpleCov.add_group "Libraries", "lib"
 
 result = SimpleCov::Result.new(merged)
-result.command_name = results.map(&:command_name).sort.join(", ")
+result.command_name = results.map(&:command_name).sort.uniq.join(", ")
 formatter = SimpleCov::Formatter::HTMLFormatter.new
 formatter.format(result)
 puts "Done"
