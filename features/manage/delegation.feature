@@ -133,11 +133,11 @@ Funktionalität: Delegation
     Wenn ich dieser Delegation einen Namen gebe
     Und ich keinen Verantwortlichen zuteile
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Wenn ich genau einen Verantwortlichen eintrage
     Und ich keinen Namen angebe
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
   @javascript @personas
   Szenario: Delegation editieren

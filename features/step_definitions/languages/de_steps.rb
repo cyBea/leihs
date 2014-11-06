@@ -9,10 +9,6 @@ Wenn /^einem Gegenstand einen Inventarcode manuell zuweise$/ do
   step 'I select one of those'
 end
 
-Wenn /^ich versuche, die Gegenstände auszuhändigen$/ do
-  step 'I click hand over'
-end
-
 Dann /^findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"$/ do
   step 'I follow "Admin"'
   step 'I follow "%s"' % _("Users")

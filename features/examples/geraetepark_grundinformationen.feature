@@ -32,7 +32,7 @@ Funktionalität: Gerätepark-Grundinformationen
       | Kurzname |
       | E-Mail   |
     Dann kann das Gerätepark nicht gespeichert werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
 
   @personas
   Szenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks
@@ -109,7 +109,7 @@ Funktionalität: Gerätepark-Grundinformationen
     | E-Mail      |
     Wenn ich das gekennzeichnete "<Pflichtfeld>" des Geräteparks leer lasse
     Dann kann das Gerätepark nicht gespeichert werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die anderen Angaben wurde nicht gelöscht
     Beispiele:
       | Pflichtfeld |

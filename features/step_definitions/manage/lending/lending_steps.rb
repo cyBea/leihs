@@ -66,3 +66,16 @@ Then(/^the user appears under last visitors$/) do
   visit manage_daily_view_path @current_inventory_pool
   find("#last-visitors a", :text => @user.name)
 end
+
+When /^the chosen items contain some from a future hand over$/ do
+  find("#add-start-date").set (Date.today+2.days).strftime("%d.%m.%Y")
+  step 'I add an item to the hand over by providing an inventory code'
+end
+
+Then /^I see an error message$/ do
+  find("#flash .error")
+end
+
+Then /^I cannot hand over the items$/ do
+  expect(has_no_selector?(".hand_over .summary")).to be true
+end

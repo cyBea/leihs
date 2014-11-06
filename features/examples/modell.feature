@@ -181,11 +181,11 @@ Funktionalität: Modell
     Wenn ich ein neues Modell hinzufüge
     Und ich speichere die Informationen
     Dann wird das Modell nicht gespeichert, da es keinen Namen hat
-    Und sehe ich eine Fehlermeldung
+    Und I see an error message
     Wenn ich einen Namen eines existierenden Modelles eingebe
     Und ich speichere die Informationen
     Dann wird das Modell nicht gespeichert, da es keinen eindeutigen Namen hat
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Wenn ich die folgenden Details ändere
       | Feld    | Wert          |
       | Produkt | Test Modell y |

@@ -5,15 +5,6 @@ Funktionalität: Ausleihe
   Grundlage:
     Angenommen ich bin Pius
 
-  @javascript @personas
-  Szenario: Fehlermeldung beim Versuch, etwas aus der Zukunft auszuhändigen
-    Wenn I open a hand over
-     Und die ausgewählten Gegenstände auch solche beinhalten, die in einer zukünftige Aushändigung enthalten sind
-     Und ich versuche, die Gegenstände auszuhändigen
-    Dann sehe ich eine Fehlermeldung
-     Und die Fehlermeldung lautet "Mindestens ein Startdatum liegt in der Zukunft"
-     Und ich kann die Gegenstände nicht aushändigen
-
   # https://www.pivotaltracker.com/story/show/29455957
   @javascript @personas
   Szenario: Buchungskalender: Bei "Show Availability" anzeigen in welcher Grupper der Kunde ist
@@ -117,7 +108,7 @@ Funktionalität: Ausleihe
     Und etwas in das Feld "Inventarcode/Name" schreibe
     Dann werden mir diejenigen Gegenstände vorgeschlagen, die in den dargestellten Rücknahmen vorkommen
     Wenn ich etwas zuweise, das nicht in den Rücknahmen vorkommt
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Und die Fehlermeldung lautet "In dieser Rücknahme nicht gefunden"
 
   @javascript @personas

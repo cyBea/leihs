@@ -28,3 +28,10 @@ Feature: Lending
     When I open a take back
     Then the user appears under last visitors
 
+  @javascript @personas
+  Scenario: Error message when trying to hand over something from the future
+    When I open a hand over
+    And the chosen items contain some from a future hand over
+    And I click hand over
+    Then I see the error message "you cannot hand out lines which are starting in the future"
+    And I cannot hand over the items

@@ -63,7 +63,7 @@ Funktionalität: Gegenstand erstellen
     | Projektnummer |
     | Anschaffungskategorie  |
     Dann kann das Modell nicht erstellt werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
 
   @javascript @personas
   Szenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
@@ -77,7 +77,7 @@ Funktionalität: Gegenstand erstellen
     | Anschaffungskategorie |
     Wenn ich das gekennzeichnete "Modell" leer lasse
     Dann kann das Modell nicht erstellt werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
@@ -92,7 +92,7 @@ Funktionalität: Gegenstand erstellen
     | Anschaffungskategorie |
     Wenn ich das gekennzeichnete "Inventarcode" leer lasse
     Dann kann das Modell nicht erstellt werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
@@ -178,7 +178,7 @@ Funktionalität: Gegenstand erstellen
     | Anschaffungskategorie |
     Wenn ich das gekennzeichnete "Projektnummer" leer lasse
     Dann kann das Modell nicht erstellt werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
@@ -193,7 +193,7 @@ Funktionalität: Gegenstand erstellen
     | Anschaffungskategorie |
     Wenn ich das gekennzeichnete "Anschaffungskategorie" leer lasse
     Dann kann das Modell nicht erstellt werden
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas @browser

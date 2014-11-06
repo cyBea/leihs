@@ -147,7 +147,7 @@ Funktionalität: Gegenstand bearbeiten
     Wenn "Ja" bei "Ausmusterung" ausgewählt ist muss auch "Grund der Ausmusterung" angegeben werden
     Dann sind alle Pflichtfelder mit einem Stern gekenzeichnet
     Wenn ein Pflichtfeld nicht ausgefüllt/ausgewählt ist, dann lässt sich der Gegenstand nicht speichern
-    Und ich sehe eine Fehlermeldung
+    Und I see an error message
     Und die nicht ausgefüllten/ausgewählten Pflichtfelder sind rot markiert
 
   @javascript @personas

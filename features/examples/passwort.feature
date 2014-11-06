@@ -38,7 +38,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzerliste
     Wenn ich einen Benutzer mit falscher Passwort-Bestätigung erstellen probiere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |
@@ -51,7 +51,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzereditieransicht von "Normin"
     Wenn ich die Passwort-Angaben nicht eingebe und speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |
@@ -64,7 +64,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzerliste
     Wenn ich einen Benutzer ohne Loginnamen erstellen probiere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |
@@ -91,7 +91,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzerliste
     Wenn ich einen Benutzer mit fehlenden Passwortangaben erstellen probiere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |
@@ -104,7 +104,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzereditieransicht von "Normin"
     Wenn ich den Benutzernamen von nicht ausfülle und speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |
@@ -117,7 +117,7 @@ Funktionalität: Passwörter von Benutzern
     Angenommen ich bin <Person>
     Und man befindet sich auf der Benutzereditieransicht von "Normin"
     Wenn ich eine falsche Passwort-Bestägigung eingebe und speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
     Beispiele:
       | Person |

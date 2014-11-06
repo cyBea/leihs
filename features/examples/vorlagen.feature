@@ -75,11 +75,11 @@ Funktionalität: Vorlagen verwalten
     Wenn der Name nicht ausgefüllt ist
     Und es ist mindestens ein Modell dem Template hinzugefügt
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Wenn ich den Name ausgefüllt habe
     Und kein Modell hinzugefügt habe
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
 
   @javascript @personas
   Szenario: Pflichtangaben bei der Erstellungsansicht
@@ -87,8 +87,8 @@ Funktionalität: Vorlagen verwalten
     Wenn der Name nicht ausgefüllt ist
     Und es ist mindestens ein Modell dem Template hinzugefügt
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Wenn ich den Name ausgefüllt habe
     Und kein Modell hinzugefügt habe
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message

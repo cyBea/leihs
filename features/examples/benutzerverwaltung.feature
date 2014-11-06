@@ -121,7 +121,7 @@ Funktionalität: Benutzer verwalten
     Und man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
     Und man befindet sich auf der Benutzerliste im beliebigen Inventarpool
     Wenn ich diesen Benutzer aus der Liste lösche
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Und der Benutzer ist nicht gelöscht
 
   @personas
@@ -369,7 +369,7 @@ Funktionalität: Benutzer verwalten
     Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
     Und man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
     Wenn ich diesen Benutzer aus der Liste lösche
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Und der Benutzer ist nicht gelöscht
 
   @javascript @personas
@@ -423,7 +423,7 @@ Funktionalität: Benutzer verwalten
     Und alle Pflichtfelder sind sichtbar und abgefüllt
     Wenn man ein <Pflichtfeld> nicht eingegeben hat
     Und ich speichere
-    Dann sehe ich eine Fehlermeldung
+    Dann I see an error message
     Beispiele:
       | Pflichtfeld |
       | Nachname    |

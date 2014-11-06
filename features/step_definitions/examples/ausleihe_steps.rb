@@ -50,13 +50,6 @@ Wenn /^ich etwas zuweise, das nicht in den Rücknahmen vorkommt$/ do
   find("[data-add-contract-line] + .addon").click
 end
 
-Dann /^(?:sehe ich|ich sehe) eine Fehlermeldung$/ do
-  find("#flash .error")
-end
-
-Dann /^die Fehlermeldung lautet "(.*?)"$/ do |text|
-  # default language is english, so its not so easy to test german here
-end
 
 Wenn /^ich eine Rücknahme mache die Optionen beinhaltet$/ do
   @customer = @current_inventory_pool.users.all.select {|x| x.contracts.signed.size > 0 and !x.contracts.signed.detect{|c| c.options.size > 0}.nil? }.first
@@ -72,16 +65,6 @@ end
 Dann /^wird die Option ausgewählt und der Haken gesetzt$/ do
   @option_line.find("input[data-select-line]:checked")
   step 'the count matches the amount of selected lines'
-end
-
-
-Wenn /^die ausgewählten Gegenstände auch solche beinhalten, die in einer zukünftige Aushändigung enthalten sind$/ do
-  find("#add-start-date").set (Date.today+2.days).strftime("%d.%m.%Y")
-  step 'I add an item to the hand over by providing an inventory code'
-end
-
-Dann /^ich kann die Gegenstände nicht aushändigen$/ do
-  expect(has_no_selector?(".hand_over .summary")).to be true
 end
 
 Angenommen /^der Kunde ist in mehreren Gruppen$/ do
