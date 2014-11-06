@@ -33,7 +33,7 @@ Funktionalität: Aushändigung editieren
 
   @personas @javascript
   Szenario: Sperrstatus des Benutzers anzeigen
-    Angenommen ich eine Aushändigung mache
+    Angenommen I open a hand over
     Und der Benutzer für die Aushändigung ist gesperrt
     Dann sehe ich neben seinem Namen den Sperrstatus 'Gesperrt!'
 
@@ -63,7 +63,7 @@ Funktionalität: Aushändigung editieren
 
   @javascript @personas
   Szenario: Vertragsnotiz
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
     Wenn ich aushändige
     Dann erscheint ein Dialog
     Und ich kann eine Notiz für diesen Vertrag eingeben

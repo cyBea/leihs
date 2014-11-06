@@ -5,32 +5,9 @@ Funktionalität: Ausleihe
   Grundlage:
     Angenommen ich bin Pius
 
-  @javascript @browser @personas
-  Szenario: Selektion bei manueller Interaktion bei Aushändigung
-    Wenn ich eine Aushändigung mache
-    Und einem Gegenstand einen Inventarcode manuell zuweise
-    Dann wird der Gegenstand ausgewählt und der Haken gesetzt
-
-  @javascript @browser @personas
-  Szenario: Aushändigen: In den Inventarcodelisten nicht verfügbare Gegenstände hervorheben
-    Wenn ich eine Aushändigung mache die ein Model enthält dessen Gegenstände ein nicht ausleihbares enthält
-    Und diesem Model ein Inventarcode zuweisen möchte
-    Dann schlägt mir das System eine Liste von Gegenständen vor
-    Und diejenigen Gegenstände sind gekennzeichnet, welche als nicht ausleihbar markiert sind
-
-  @javascript @personas
-  Szenario: Wann letzter Besucher erscheint
-    Angenommen ich öffne die Tagesansicht
-    Wenn ich eine Bestellung editieren
-    Dann erscheint der Benutzer unter den letzten Besuchern
-    Wenn ich eine Aushändigung mache
-    Dann erscheint der Benutzer unter den letzten Besuchern
-    Wenn ich eine Rücknahme mache
-    Dann erscheint der Benutzer unter den letzten Besuchern
-
   @javascript @personas
   Szenario: Fehlermeldung beim Versuch, etwas aus der Zukunft auszuhändigen
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
      Und die ausgewählten Gegenstände auch solche beinhalten, die in einer zukünftige Aushändigung enthalten sind
      Und ich versuche, die Gegenstände auszuhändigen
     Dann sehe ich eine Fehlermeldung
@@ -126,9 +103,9 @@ Funktionalität: Ausleihe
 
   @javascript @personas
   Szenario: Klick auf Letzten Besucher nach Editieren einer Bestellung
-    Angenommen ich öffne die Tagesansicht
+    Angenommen I open the daily view
     Und ich öffne eine Bestellung
-    Dann ich kehre zur Tagesansicht zurück
+    Dann I return to the daily view
     Dann sehe ich die letzten Besucher
     Und ich sehe den Benutzer der vorher geöffneten Bestellung als letzten Besucher
     Wenn ich auf den Namen des letzten Benutzers klicke

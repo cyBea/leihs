@@ -260,5 +260,5 @@ end
 
 Wenn(/^ich eine Bestellung öffne$/) do
   @contract = @order
-  step "ich die Bestellung editiere"
+  step "I edit the order"
 end

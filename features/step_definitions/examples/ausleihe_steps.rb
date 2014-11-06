@@ -1,15 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^ich öffne die Tagesansicht$/ do
-  @current_inventory_pool = @current_user.managed_inventory_pools.select{|ip| ip.contracts.submitted.exists? }.sample
-  raise "contract not found" unless @current_inventory_pool
-  visit manage_daily_view_path(@current_inventory_pool)
-  find("#daily-view")
-end
-
-Wenn /^ich kehre zur Tagesansicht zurück$/ do
-  step 'ich öffne die Tagesansicht'
-end
 
 Wenn /^ich öffne eine Bestellung von "(.*?)"$/ do |arg1|
   find("[data-collapsed-toggle='#open-orders']").click unless all("[data-collapsed-toggle='#open-orders']").empty?
@@ -68,16 +58,6 @@ Dann /^die Fehlermeldung lautet "(.*?)"$/ do |text|
   # default language is english, so its not so easy to test german here
 end
 
-Dann /^wird der Gegenstand ausgewählt und der Haken gesetzt$/ do
-  find("#flash")
-  within(".line[data-id='#{@item_line.id}']") do
-    find("input[data-assign-item][value='#{@selected_inventory_code}']")
-    find("input[type='checkbox'][data-select-line]:checked")
-    expect(@item_line.reload.item.inventory_code).to eq @selected_inventory_code
-  end
-  step 'the count matches the amount of selected lines'
-end
-
 Wenn /^ich eine Rücknahme mache die Optionen beinhaltet$/ do
   @customer = @current_inventory_pool.users.all.select {|x| x.contracts.signed.size > 0 and !x.contracts.signed.detect{|c| c.options.size > 0}.nil? }.first
   visit manage_take_back_path(@current_inventory_pool, @customer)
@@ -94,33 +74,6 @@ Dann /^wird die Option ausgewählt und der Haken gesetzt$/ do
   step 'the count matches the amount of selected lines'
 end
 
-Wenn /^ich eine Aushändigung mache die ein Model enthält dessen Gegenstände ein nicht ausleihbares enthält$/ do
-  @contract_line = nil
-  @contract = @current_inventory_pool.contracts.approved.detect do |c|
-    @contract_line = c.lines.where(item_id: nil).detect do |l|
-      l.model.items.unborrowable.where(inventory_pool_id: @current_inventory_pool).first
-    end
-  end
-  @model = @contract_line.model
-  @customer = @contract.user
-  step "ich eine Aushändigung an diesen Kunden mache"
-  expect(has_selector?("#hand-over-view", :visible => true)).to be true
-end
-
-Wenn /^diesem Model ein Inventarcode zuweisen möchte$/ do
-  @item_line_element = find(".line[data-id='#{@contract_line.id}']", :visible => true)
-  @item_line_element.find("[data-assign-item]").click
-end
-
-Dann /^schlägt mir das System eine Liste von Gegenständen vor$/ do
-  find(".ui-autocomplete .ui-menu-item", match: :first)
-end
-
-Dann /^diejenigen Gegenstände sind gekennzeichnet, welche als nicht ausleihbar markiert sind$/ do
-  @model.items.unborrowable.in_stock.each do |item|
-    find(".ui-autocomplete .ui-menu-item a.light-red", text: item.inventory_code)
-  end
-end
 
 Wenn /^die ausgewählten Gegenstände auch solche beinhalten, die in einer zukünftige Aushändigung enthalten sind$/ do
   find("#add-start-date").set (Date.today+2.days).strftime("%d.%m.%Y")
@@ -400,11 +353,6 @@ def check_printed_contract(window_handles, ip = nil, contract = nil)
   end
 end
 
-Wenn(/^ich eine Bestellung editieren$/) do
-  @contract = @current_inventory_pool.contracts.submitted.sample
-  @user = @contract.user
-  step "ich die Bestellung editiere"
-end
 
 Dann(/^erscheint der Benutzer unter den letzten Besuchern$/) do
   visit manage_daily_view_path @current_inventory_pool

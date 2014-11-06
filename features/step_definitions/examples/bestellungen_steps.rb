@@ -36,10 +36,6 @@ Angenommen(/^eine Bestellung enhält überbuchte Modelle$/) do
   expect(@contract).not_to be_nil
 end
 
-Wenn(/^ich die Bestellung editiere$/) do
-  visit manage_edit_contract_path(@current_inventory_pool, @contract)
-end
-
 Wenn(/^die Bestellung genehmige$/) do
   if page.has_selector? "button", text: _("Approve order")
     click_button _("Approve order")

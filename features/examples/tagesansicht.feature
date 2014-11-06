@@ -4,7 +4,7 @@ Funktionalität: Ausleihe
 
   Grundlage:
     Angenommen ich bin Pius
-    Und ich öffne die Tagesansicht
+    Und I open the daily view
 
   @personas
   Szenario: Anzeige der längsten Zeitspanne für Bestellungen

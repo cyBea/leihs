@@ -19,7 +19,7 @@ Funktionalität: Zweck
   Szenario: Orte, an denen ich den Zweck sehe
     Wenn ich eine Bestellung editiere
     Dann sehe ich den Zweck
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
     Dann sehe ich auf jeder Zeile den zugewisenen Zweck
 
   @javascript @personas @browser
@@ -29,20 +29,20 @@ Funktionalität: Zweck
 
   @javascript @browser @personas
   Szenario: Aushändigung mit Gegenständen teilweise ohne Zweck übertragen einen angegebenen Zweck nur auf die Gegenstände ohne Zweck
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
      Und einige der ausgewählten Gegenstände hat keinen Zweck angegeben
      Und ich einen Zweck angebe
     Dann wird nur den Gegenständen ohne Zweck der angegebene Zweck zugewiesen
 
   @javascript @browser @personas
   Szenario: Aushändigung mit Gegenständen die alle einen Zweck haben
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
     Und alle der ausgewählten Gegenstände haben einen Zweck angegeben
     Dann kann ich keinen weiteren Zweck angeben
 
   @javascript @browser @personas
   Szenario: Aushändigung ohne Zweck
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
     Und keine der ausgewählten Gegenstände hat einen Zweck angegeben
     Dann werde ich beim Aushändigen darauf hingewiesen einen Zweck anzugeben
     Und erst wenn ich einen Zweck angebebe
@@ -50,6 +50,6 @@ Funktionalität: Zweck
 
   @javascript @browser @personas
   Szenario: Aushändigung mit Gegenständen teilweise ohne Zweck können durchgeführt werden
-    Wenn ich eine Aushändigung mache
+    Wenn I open a hand over
     Und einige der ausgewählten Gegenstände hat keinen Zweck angegeben
     Dann muss ich keinen Zweck angeben um die Aushändigung durchzuführen

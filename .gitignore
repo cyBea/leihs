@@ -36,3 +36,4 @@ Gemfile.local*
 /tags
 db/exports/
 tmp/
+features/reports/*

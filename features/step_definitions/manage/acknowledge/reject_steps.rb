@@ -1,7 +1,8 @@
-When /^I open the daily view$/ do
-  @current_inventory_pool = @current_inventory_pool || @current_user.managed_inventory_pools.sample
-  visit manage_daily_view_path @current_inventory_pool
-end
+# newer version in lending/lending_steps.rb?
+#When /^I open the daily view$/ do
+#  @current_inventory_pool = @current_inventory_pool || @current_user.managed_inventory_pools.sample
+#  visit manage_daily_view_path @current_inventory_pool
+#end
 
 When /^I reject a contract$/ do
   @contract = @current_inventory_pool.contracts.submitted.sample

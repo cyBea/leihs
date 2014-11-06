@@ -12,7 +12,7 @@ Funktionalität: Bestellung editieren
   Szenario: Trotzdem genehmigen für Gruppen-Verwalter unterbinden
     Angenommen ich bin Andi
     Und eine Bestellung enhält überbuchte Modelle
-    Wenn ich die Bestellung editiere
+    Wenn I edit the order
     Und die Bestellung genehmige
     Dann ist es mir nicht möglich, die Genehmigung zu forcieren
 

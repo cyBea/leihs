@@ -4,10 +4,6 @@ Angenommen /^ich bin (.*?)$/ do |persona_name|
   step "I am %s" % persona_name
 end
 
-Wenn /^ich eine Rücknahme mache$/ do
-  step 'I open a take back'
-end
-
 Wenn /^einem Gegenstand einen Inventarcode manuell zuweise$/ do
   step 'I click an inventory code input field of an item line'
   step 'I select one of those'
@@ -15,10 +11,6 @@ end
 
 Wenn /^ich versuche, die Gegenstände auszuhändigen$/ do
   step 'I click hand over'
-end
-
-Wenn /^ich eine Aushändigung mache$/ do
-  step 'I open a hand over'
 end
 
 Dann /^findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"$/ do

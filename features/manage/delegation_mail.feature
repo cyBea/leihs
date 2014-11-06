@@ -6,7 +6,7 @@ Funktionalität: Mailversand bei Delegationsbestellungen und -besuchen
   Szenario: Handhabung der Genehmigungsmails
     Angenommen ich bin Pius
     Und es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
-    Wenn ich die Bestellung editiere
+    Wenn I edit the order
     Und die Bestellung genehmige
     Dann ich erhalte eine Erfolgsmeldung
     Und wird das Genehmigungsmail an den Besteller versendet

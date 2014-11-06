@@ -142,7 +142,7 @@ Angenommen(/^es wurde für eine Delegation eine Bestellung erstellt$/) do
 end
 
 Angenommen(/^ich befinde mich in dieser Bestellung$/) do
-  step "ich die Bestellung editiere"
+  step "I edit the order"
 end
 
 Angenommen(/^ich befinde mich in einer Bestellung von einer Delegation$/) do

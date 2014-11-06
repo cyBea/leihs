@@ -10,7 +10,7 @@ When /^I open a contract for acknowledgement( with more then one line)?(, whose 
 
   @customer = @contract.user
 
-  step "ich die Bestellung editiere"
+  step "I edit the order"
   expect(has_selector?("[data-order-approve]", :visible => true)).to be true
 end
 

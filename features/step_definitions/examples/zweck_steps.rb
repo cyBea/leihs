@@ -22,7 +22,7 @@ Wenn /^ich eine Bestellung editiere$/ do
   find(".line[data-type='contract']", match: :first)
   contract_id = all(".line[data-type='contract']").to_a.sample["data-id"].to_i
   @contract = Contract.find(contract_id)
-  step "ich die Bestellung editiere"
+  step "I edit the order"
 end
 
 Dann /^sehe ich den Zweck$/ do
