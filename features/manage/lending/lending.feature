@@ -73,3 +73,15 @@ Feature: Lending
     And I fill in all the necessary information in hand over dialog
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
+
+  @javascript @browser @personas
+  Scenario: Inspection during take back
+    Given I take back an item
+    Then I can inspect each item
+    When I inspect an item
+    Then I can set the state of "Status" to "Functional" or "Defective"
+    And I can set the state of "Completeness" to "Complete" or "Incomplete"
+    And I can set the state of "Borrowable" to "Borrowable" or "Unborrowable"
+    When I change values during inspection
+    And I save the inspection
+    Then the item is saved with the currently set states

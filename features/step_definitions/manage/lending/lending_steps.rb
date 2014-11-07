@@ -209,3 +209,54 @@ Then(/^there are inventory codes for item and license in the contract$/) do
     expect(has_content?(inv_code)).to be true
   }
 end
+
+
+Then /^I can inspect each item$/ do
+  find(".line[data-line-type='item_line']", match: :first)
+  line_ids = all(".line[data-line-type='item_line']").map {|l| l["data-id"]}
+  line_ids.each do |id|
+    within find(".line[data-id='#{id}'] .multibutton") do
+      find(".dropdown-toggle").click
+      find(".dropdown-holder .dropdown-item", text: _("Inspect"))
+    end
+  end
+end
+
+
+When /^I inspect an item$/ do
+  find(".line[data-line-type='item_line']", match: :first)
+  within all(".line[data-line-type='item_line']").to_a.sample.find(".multibutton") do
+    @item = ContractLine.find(JSON.parse(find("[data-ids]")["data-ids"]).first).item
+    find(".dropdown-toggle").click
+    find(".dropdown-holder .dropdown-item", text: _("Inspect")).click
+  end
+  find(".modal")
+end
+
+Then /^I can set the state of "(.*?)" to "(.*?)" or "(.*?)"$/ do |arg1, arg2, arg3|
+  within(".col1of3", :text => arg1) do
+    find("option", :text => arg2)
+    find("option", :text => arg3)
+  end
+end
+
+When /^I change values during inspection$/ do
+  @is_borrowable = true
+  find("select[name='is_borrowable'] option[value='true']").select_option
+  @is_broken = true
+  find("select[name='is_broken'] option[value='true']").select_option
+  @is_incomplete = true
+  find("select[name='is_incomplete'] option[value='true']").select_option
+end
+
+When /^I save the inspection$/ do
+  find(".modal button[type='submit']").click
+end
+
+Then /^the item is saved with the currently set states$/ do
+  visit current_path
+  @item.reload
+  expect(@item.is_borrowable).to eq @is_borrowable
+  expect(@item.is_broken).to eq @is_broken
+  expect(@item.is_incomplete).to eq @is_incomplete
+end

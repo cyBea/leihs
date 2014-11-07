@@ -92,57 +92,6 @@ Dann /^dann erkennen ich, in welchen Gruppen der Kunde nicht ist$/ do
   end
 end
 
-
-
-Dann /^habe ich für jeden Gegenstand die Möglichkeit, eine Inspektion auszulösen$/ do
-  find(".line[data-line-type='item_line']", match: :first)
-  line_ids = all(".line[data-line-type='item_line']").map {|l| l["data-id"]}
-  line_ids.each do |id|
-    within find(".line[data-id='#{id}'] .multibutton") do
-      find(".dropdown-toggle").click
-      find(".dropdown-holder .dropdown-item", text: _("Inspect"))
-    end
-  end
-end
-
-Wenn /^ich bei einem Gegenstand eine Inspektion durchführen$/ do
-  find(".line[data-line-type='item_line']", match: :first)
-  within all(".line[data-line-type='item_line']").to_a.sample.find(".multibutton") do
-    @item = ContractLine.find(JSON.parse(find("[data-ids]")["data-ids"]).first).item
-    find(".dropdown-toggle").click
-    find(".dropdown-holder .dropdown-item", text: _("Inspect")).click
-  end
-  find(".modal")
-end
-
-Dann /^die Inspektion erlaubt es, den Status von "(.*?)" auf "(.*?)" oder "(.*?)" zu setzen$/ do |arg1, arg2, arg3|
-  within(".col1of3", :text => arg1) do
-    find("option", :text => arg2)
-    find("option", :text => arg3)
-  end
-end
-
-Wenn /^ich Werte der Inspektion ändere$/ do
-  @is_borrowable = true
-  find("select[name='is_borrowable'] option[value='true']").select_option
-  @is_broken = true
-  find("select[name='is_broken'] option[value='true']").select_option
-  @is_incomplete = true
-  find("select[name='is_incomplete'] option[value='true']").select_option
-end
-
-Dann /^wenn ich die Inspektion speichere$/ do
-  find(".modal button[type='submit']").click
-end
-
-Dann /^wird der Gegenstand mit den aktuell gesetzten Status gespeichert$/ do
-  visit current_path
-  @item.reload
-  expect(@item.is_borrowable).to eq @is_borrowable
-  expect(@item.is_broken).to eq @is_broken
-  expect(@item.is_incomplete).to eq @is_incomplete
-end
-
 Angenommen /^man fährt über die Anzahl von Gegenständen in einer Zeile$/ do
   find(".line [data-type='lines-cell']", match: :first).hover
   @lines = all(".line [data-type='lines-cell']")

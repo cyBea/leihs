@@ -113,10 +113,10 @@ Angenommen /^eine Gegenstand ist nicht ausleihbar$/ do
   end
 end
 
-Angenommen /^ich mache eine Rücknahme eines( verspäteten)? Gegenstandes$/ do |arg1|
+Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
   @event = "take_back"
   overdued_take_backs = @current_inventory_pool.visits.take_back.select{|v| v.lines.any? {|l| l.is_a? ItemLine}}
-  overdued_take_backs = overdued_take_backs.select { |x| x.date < Date.today } if arg1
+  overdued_take_backs = overdued_take_backs.select { |x| x.date < Date.today } if is_late
   overdued_take_back = overdued_take_backs.sample
   @line_id = overdued_take_back.contract_lines.where(type: "ItemLine").sample.id
   visit manage_take_back_path(@current_inventory_pool, overdued_take_back.user)
