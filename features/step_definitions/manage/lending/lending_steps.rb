@@ -127,4 +127,85 @@ Then /^I see which groups the customer is not a member of$/ do
 end
 
 
+When /^I open a hand over for a customer that has things to pick up today as well as in the future$/ do
+  @customer = @current_inventory_pool.users.detect{|u| u.visits.hand_over.size > 1}
+  step "I open a hand over to this customer"
+end
 
+When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
+  begin
+    @model = @customer.get_approved_contract(@current_inventory_pool).models.sample
+    @item = @model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).sample
+  end while @item.nil?
+  find("[data-add-contract-line]").set @item.inventory_code
+  find("[data-add-contract-line] + .addon").click
+  @assigned_line = find("[data-assign-item][disabled][value='#{@item.inventory_code}']")
+end
+
+
+Then /^it is assigned \(whether it is selected or not\)$/ do
+  @assigned_line.find(:xpath, "./../../..").find("input[type='checkbox'][data-select-line]:checked")
+end
+
+When /^it doesn't exist in any future contracts$/ do
+  @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
+                              @customer.get_approved_contract(@current_inventory_pool).models).sample
+  @item = @model_not_in_contract.items.borrowable.in_stock.sample
+  find("#add-start-date").set (Date.today+7.days).strftime("%d.%m.%Y")
+  find("#add-end-date").set (Date.today+8.days).strftime("%d.%m.%Y")
+  find("[data-add-contract-line]").set @item.inventory_code
+  @amount_lines_before = all(".line").size
+  find("[data-add-contract-line] + .addon").click
+end
+
+Then /^it is added for the selected time span$/ do
+  find("#flash")
+  find(".line", match: :first, text: @model)
+  expect(@amount_lines_before).to be < all(".line").size
+end
+
+
+Given /^I am doing a hand over$/ do
+  @event = "hand_over"
+  step 'I open a hand over'
+end
+
+When(/^I click on "(.*?)"$/) do |arg1|
+  case arg1
+    when "Continue this order"
+      find(".button", text: _("Continue this order")).click
+    when "Continue with available models only"
+      find(".dropdown-item", text: _("Continue with available models only")).click
+    when "Delegations"
+      find(".dropdown-item", text: _("Delegations")).click
+    else
+      step %Q(I press "#{arg1}")
+  end
+end
+
+When /^I open a hand over for this customer$/ do
+  visit manage_hand_over_path(@current_inventory_pool, @customer)
+  expect(has_selector?("#hand-over-view")).to be true
+  step "the availability is loaded"
+end
+
+When(/^I fill in all the necessary information in hand over dialog$/) do
+  if has_css?("#contact-person")
+    contact_field = find("#contact-person").all("input#user-id").first
+    contact_field.click
+    find(".ui-menu-item", match: :first).click
+  end
+  fill_in "purpose", with: Faker::Lorem.sentence
+end
+
+Then(/^there are inventory codes for item and license in the contract$/) do
+  # Sleeps are not sexy, but for some reason on busy systems, the contract
+  # window opens very slowly and then this test is reliably red.
+  if page.driver.browser.window_handles.count < 2
+    sleep 2
+  end
+  page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+  @inventory_codes.each {|inv_code|
+    expect(has_content?(inv_code)).to be true
+  }
+end

@@ -14,11 +14,6 @@ Angenommen /^ich mache eine Rücknahme(, die nicht überfällig ist)?$/ do |arg1
   end
 end
 
-Angenommen /^ich mache eine Aushändigung$/ do
-  @event = "hand_over"
-  step 'I open a hand over'
-end
-
 Angenommen /^ein Modell ist nichtmehr verfügbar$/ do
   if @event=="order" or @event=="hand_over"
     @entity = if @contract

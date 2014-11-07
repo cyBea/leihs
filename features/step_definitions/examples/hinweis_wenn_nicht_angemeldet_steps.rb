@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 Wenn /^versuche eine Aktion im Backend auszuführen obwohl ich abgemeldet bin$/ do
-  step 'ich mache eine Aushändigung'
+  step 'I am doing a hand over'
   page.execute_script %Q{ $.ajax({url: "/logout"}); }
   find("[data-add-contract-line]").set "A B"
   find("[data-add-contract-line]")

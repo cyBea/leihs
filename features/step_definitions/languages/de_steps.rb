@@ -133,20 +133,8 @@ Wenn(/^ich den Wert für Bezug ändere$/) do
   step %Q(I change the value for reference)
 end
 
-Wenn(/^ich der Aushändigung ein Gegenstand mit Hilfe eines Inventarcodes hinzufüge$/) do
-  step %Q(I add an item to the hand over by providing an inventory code)
-end
-
-Wenn(/^ich der Aushändigung eine Lizenz mit Hilfe eines Inventarcodes hinzufüge$/) do
-  step %Q(I add an license to the hand over by providing an inventory code)
-end
-
 Dann(/^wurde diese Aushändigung erfolgreich abgeschlossen$/) do
   step %Q(this hand over was completed successfully)
-end
-
-Wenn(/^ich die notwendigen Angaben im Aushändigungsdialog mache$/) do
-  step %Q(I fill in all the necessary information in hand over dialog)
 end
 
 Dann(/^sind im Vertrag sowohl der Gegenstand als auch die Lizenz aufgeführt$/) do

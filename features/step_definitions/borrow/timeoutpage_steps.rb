@@ -124,18 +124,6 @@ Wenn(/^ein Modell nicht verfügbar ist$/) do
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).any? { |l| not l.available? }).to be true
 end
 
-Wenn(/^ich auf "(.*?)" drücke$/) do |arg1|
-  case arg1
-    when "Diese Bestellung fortsetzen"
-      find(".button", text: _("Continue this order")).click
-    when "Mit den verfügbaren Modellen weiterfahren"
-      find(".dropdown-item", text: _("Continue with available models only")).click
-    when "Delegationen"
-      find(".dropdown-item", text: _("Delegations")).click
-    else
-      step %Q(I press "#{arg1}")
-  end
-end
 
 Dann(/^ich erhalte einen Fehler$/) do
   expect(has_content?(_("Please solve the conflicts for all highlighted lines in order to continue."))).to be true

@@ -92,41 +92,7 @@ Dann /^dann erkennen ich, in welchen Gruppen der Kunde nicht ist$/ do
   end
 end
 
-Wenn /^ich eine Aushändigung mache mit einem Kunden der sowohl am heutigen Tag sowie in der Zukunft Abholungen hat$/ do
-  @customer = @current_inventory_pool.users.detect{|u| u.visits.hand_over.size > 1}
-  step "I open a hand over to this customer"
-end
 
-Wenn /^ich etwas scanne \(per Inventarcode zuweise\) und es in irgendeinem zukünftigen Vertrag existiert$/ do
-  begin
-    @model = @customer.get_approved_contract(@current_inventory_pool).models.sample
-    @item = @model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).sample
-  end while @item.nil?
-  find("[data-add-contract-line]").set @item.inventory_code
-  find("[data-add-contract-line] + .addon").click
-  @assigned_line = find("[data-assign-item][disabled][value='#{@item.inventory_code}']")
-end
-
-Dann /^wird es zugewiesen \(unabhängig ob es ausgewählt ist\)$/ do
-  @assigned_line.find(:xpath, "./../../..").find("input[type='checkbox'][data-select-line]:checked")
-end
-
-Wenn /^es in keinem zukünftigen Vertrag existiert$/ do
-  @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
-                              @customer.get_approved_contract(@current_inventory_pool).models).sample
-  @item = @model_not_in_contract.items.borrowable.in_stock.sample
-  find("#add-start-date").set (Date.today+7.days).strftime("%d.%m.%Y")
-  find("#add-end-date").set (Date.today+8.days).strftime("%d.%m.%Y")
-  find("[data-add-contract-line]").set @item.inventory_code
-  @amount_lines_before = all(".line").size
-  find("[data-add-contract-line] + .addon").click
-end
-
-Dann /^wird es für die ausgewählte Zeitspanne hinzugefügt$/ do
-  find("#flash")
-  find(".line", match: :first, text: @model)
-  expect(@amount_lines_before).to be < all(".line").size
-end
 
 Dann /^habe ich für jeden Gegenstand die Möglichkeit, eine Inspektion auszulösen$/ do
   find(".line[data-line-type='item_line']", match: :first)
@@ -345,16 +311,3 @@ Dann(/^wird mir ich ein Suchresultat nach dem Namen des letzten Benutzers angeze
   find("#search-overview h1", text: _("Search Results for \"%s\"") % @user.name)
 end
 
-When(/^I fill in all the necessary information in hand over dialog$/) do
-  if contact_field = find("#contact-person").all("input#user-id").first
-    contact_field.click
-    find(".ui-menu-item", match: :first).click
-  end
-  fill_in "purpose", with: Faker::Lorem.sentence
-end
-
-Then(/^there are inventory codes for item and license in the contract$/) do
-  @inventory_codes.each {|inv_code|
-    expect(has_content?(inv_code)).to be true
-  }
-end

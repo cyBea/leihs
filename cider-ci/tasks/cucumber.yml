@@ -195,6 +195,11 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/manage/booking_calendar/closed_day_alert.feature"
+- name: manage/lending/lending
+  scripts:
+    cucumber:
+      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
+        "features/manage/lending/lending.feature"
 - name: manage/lending/day_navigation
   scripts:
     cucumber:

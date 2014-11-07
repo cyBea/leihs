@@ -33,11 +33,11 @@ Funktionalität: Timeout Page
   Szenario: In Bestellung übernehmen nicht möglich
     Angenommen ich bin Normin
     Und ich zur Timeout Page mit 2 Konfliktmodellen weitergeleitet werde
-    Wenn ich auf "Diese Bestellung fortsetzen" drücke
+    Wenn I click on "Continue this order"
     Dann lande ich wieder auf der Timeout Page
     Und ich erhalte einen Fehler
     Wenn ich einen der Fehler korrigiere
-    Und ich auf "Diese Bestellung fortsetzen" drücke
+    Wenn I click on "Continue this order"
     Dann lande ich wieder auf der Timeout Page
     Und ich erhalte einen Fehler
     Wenn ich alle Fehler korrigiere
@@ -57,7 +57,7 @@ Funktionalität: Timeout Page
     Angenommen ich bin Normin
     Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     Wenn ein Modell nicht verfügbar ist
-    Und ich auf "Mit den verfügbaren Modellen weiterfahren" drücke
+    Und I click on "Continue with available models only"
     Dann werden die nicht verfügbaren Modelle aus der Bestellung gelöscht
     Und ich lande auf der Seite der Bestellübersicht
     Und ich sehe eine Information, dass alle Geräte wieder verfügbar sind

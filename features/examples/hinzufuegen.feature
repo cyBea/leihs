@@ -13,6 +13,6 @@ Funktionalität: Hinzufügen von Modellen
 
   @javascript @browser @personas
   Szenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Aushändigung
-    Angenommen ich mache eine Aushändigung
+    Angenommen I am doing a hand over
       Und ich suche ein Modell um es hinzuzufügen
     Dann sehe ich die Verfügbarkeit innerhalb der gefundenen Modelle im Format: "2(3)/7 Modelname Typ"

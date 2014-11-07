@@ -7,5 +7,5 @@ Funktionalität: Reservierenden wechseln
 
   @javascript @personas
   Szenario: Reservierende Person für ausgewählte Linien wechseln
-    Angenommen ich mache eine Aushändigung
+    Angenommen I am doing a hand over
     Dann kann ich die reservierende Person für eine Auswahl an Linien wechseln

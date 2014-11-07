@@ -45,3 +45,31 @@ Feature: Lending
     And I expand the group selector
     Then I see which groups the customer is a member of
     And I see which groups the customer is not a member of
+
+  @javascript @browser @personas
+  Scenario: Scanning behavior during hand over
+    When I open a hand over for a customer that has things to pick up today as well as in the future
+    When I scan something (assign it using its inventory code) and it is already assigned to a future contract
+    Then it is assigned (whether it is selected or not)
+    When it doesn't exist in any future contracts
+    Then it is added for the selected time span
+
+  @javascript @browser @personas
+  Scenario: Handing over items and licenses by inventory code
+    Given I am doing a hand over
+    When I add an item to the hand over by providing an inventory code
+    And I add a license to the hand over by providing an inventory code
+    And I click on "Hand Over Selection"
+    And I fill in all the necessary information in hand over dialog
+    And I click on "Hand Over"
+    Then there are inventory codes for item and license in the contract
+
+  @javascript @browser @personas
+  Scenario: Handing over items and licenses by model search
+    Given I am doing a hand over
+    When I add a borrowable item to the hand over by using the search input field
+    When I add a borrowable license to the hand over by using the search input field
+    And I click on "Hand Over Selection"
+    And I fill in all the necessary information in hand over dialog
+    And I click on "Hand Over"
+    Then there are inventory codes for item and license in the contract

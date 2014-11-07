@@ -21,19 +21,19 @@ Feature: Generating Personas
 
     And the following users exist
       | firstname                 | lastname                 | email                    | language | address                                 |
-      | Gino                      | #{Faker::Name.last_name} | gino@zhdk.ch             | de-CH    |                                         |
-      | Ramon                     | #{Faker::Name.last_name} | ramon@zhdk.ch            | de-CH    |                                         |
-      | Matti                     | #{Faker::Name.last_name} | matti@zhdk.ch            | de-CH    |                                         |
-      | Mike                      | #{Faker::Name.last_name} | mike@zhdk.ch             | de-CH    |                                         |
-      | Pius                      | #{Faker::Name.last_name} | pius@zhdk.ch             | de-CH    |                                         |
-      | Normin                    | #{Faker::Name.last_name} | normin@zhdk.ch           | de-CH    |                                         |
-      | #{Faker::Name.first_name} | #{Faker::Name.last_name} | lending_manager1@zhdk.ch | de-CH    |                                         |
-      | Peter                     | Silie                    | peter@silie.com          | de-CH    |                                         |
-      | Andi                      | #{Faker::Name.last_name} | andi@zhdk.ch             | de-CH    |                                         |
-      | Mina                      | #{Faker::Name.last_name} | mina@zhdk.ch             | de-CH    |                                         |
-      | Petra                     | #{Faker::Name.last_name} | petra@zhdk.ch            | de-CH    | #{Faker::Address.street_address + ", "} |
+      | Gino                      | #{Faker::Name.last_name} | gino@zhdk.ch             | en-US    |                                         |
+      | Ramon                     | #{Faker::Name.last_name} | ramon@zhdk.ch            | en-US    |                                         |
+      | Matti                     | #{Faker::Name.last_name} | matti@zhdk.ch            | en-US    |                                         |
+      | Mike                      | #{Faker::Name.last_name} | mike@zhdk.ch             | en-US    |                                         |
+      | Pius                      | #{Faker::Name.last_name} | pius@zhdk.ch             | en-US    |                                         |
+      | Normin                    | #{Faker::Name.last_name} | normin@zhdk.ch           | en-US    |                                         |
+      | #{Faker::Name.first_name} | #{Faker::Name.last_name} | lending_manager1@zhdk.ch | en-US    |                                         |
+      | Peter                     | Silie                    | peter@silie.com          | en-US    |                                         |
+      | Andi                      | #{Faker::Name.last_name} | andi@zhdk.ch             | en-US    |                                         |
+      | Mina                      | #{Faker::Name.last_name} | mina@zhdk.ch             | en-US    |                                         |
+      | Petra                     | #{Faker::Name.last_name} | petra@zhdk.ch            | en-US    | #{Faker::Address.street_address + ", "} |
       | Julie                     | #{Faker::Name.last_name} | julie@zhdk.ch            |          |                                         |
-      | Lisa                      | #{Faker::Name.last_name} | lisa@zhdk.ch             | de-CH    |                                         |
+      | Lisa                      | #{Faker::Name.last_name} | lisa@zhdk.ch             | en-US    |                                         |
       | #{Faker::Name.first_name} | #{Faker::Name.last_name} | customer1@zhdk.ch        |          |                                         |
       | #{Faker::Name.first_name} | #{Faker::Name.last_name} | customer2@zhdk.ch        |          |                                         |
       | #{Faker::Name.first_name} | #{Faker::Name.last_name} | customer3@zhdk.ch        |          |                                         |

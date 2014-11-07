@@ -243,7 +243,7 @@ Funktionalität: Delegation
   Szenario: Borrow: Bestellung erfassen mit Delegation
     Angenommen ich bin Julie
     Wenn ich über meinen Namen fahre
-    Und ich auf "Delegationen" drücke
+    Und I click on "Delegations"
     Dann werden mir die Delegationen angezeigt, denen ich zugeteilt bin
     Wenn ich eine Delegation wähle
     Dann wechsle ich die Anmeldung zur Delegation

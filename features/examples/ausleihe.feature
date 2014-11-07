@@ -6,34 +6,6 @@ Funktionalität: Ausleihe
     Angenommen ich bin Pius
 
   @javascript @browser @personas
-  Szenario: Scanning-Verhalten beim Aushändigen
-    Wenn ich eine Aushändigung mache mit einem Kunden der sowohl am heutigen Tag sowie in der Zukunft Abholungen hat
-    Wenn ich etwas scanne (per Inventarcode zuweise) und es in irgendeinem zukünftigen Vertrag existiert
-    Dann wird es zugewiesen (unabhängig ob es ausgewählt ist)
-    Wenn es in keinem zukünftigen Vertrag existiert 
-    Dann wird es für die ausgewählte Zeitspanne hinzugefügt
-
-  @javascript @browser @personas
-  Szenario: Aushändigung von Gegenständen und Lizenzen anhand von Inventarcode
-    Angenommen ich mache eine Aushändigung
-    Wenn ich der Aushändigung einen Gegenstand mit Hilfe eines Inventarcodes hinzufüge
-    Und ich der Aushändigung eine Lizenz mit Hilfe eines Inventarcodes hinzufüge
-    Und ich auf "Auswahl aushändigen" drücke
-    Und ich die notwendigen Angaben im Aushändigungsdialog mache
-    Und ich auf "Aushändigen" drücke
-    Dann sind im Vertrag sowohl der Gegenstand als auch die Lizenz aufgeführt
-
-  @javascript @browser @personas
-  Szenario: Aushändigung von Gegenständen und Lizenzen anhand von Modellsuche
-    Angenommen ich mache eine Aushändigung
-    Wenn ich der Aushändigung einen ausleihbaren Gegenstand mit Hilfe des Suchfeldes hinzufüge
-    Und ich der Aushändigung eine ausleihbare Lizenz mit Hilfe des Suchfeldes hinzufüge
-    Und ich auf "Auswahl aushändigen" drücke
-    Und ich die notwendigen Angaben im Aushändigungsdialog mache
-    Und ich auf "Aushändigen" drücke
-    Dann sind im Vertrag sowohl der Gegenstand als auch die Lizenz aufgeführt
-
-  @javascript @browser @personas
   Szenario: Inspektion bei Rücknahme
     Angenommen ich mache eine Rücknahme eines Gegenstandes
     Dann habe ich für jeden Gegenstand die Möglichkeit, eine Inspektion auszulösen
@@ -127,7 +99,3 @@ Funktionalität: Ausleihe
     Wenn ich mich auf der Liste der Besuche befinde
     Und ich nach einem Besuch suche
     Dann werden mir alle Besuche aufgeführt, die zu meinem Suchbegriff passen
-
-  
-
-
