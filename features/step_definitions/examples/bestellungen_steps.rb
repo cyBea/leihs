@@ -5,7 +5,7 @@ Angenommen(/^es existiert eine leere Bestellung$/) do
     @customer = ip.users.to_a.shuffle.detect {|c| c.visits.hand_over.empty? }
   end
   raise "customer not found" unless @customer
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over to this customer"
   @contract = @current_inventory_pool.contracts.approved.where(user_id: @customer.id).last
 end
 

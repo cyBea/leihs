@@ -22,7 +22,7 @@ When /^I try to complete a hand over that contains a model with unborrowable ite
   end
   @model = @contract_line.model
   @customer = @contract.user
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over for this customer"
   expect(has_selector?("#hand-over-view", :visible => true)).to be true
 end
 
@@ -79,3 +79,52 @@ end
 Then /^I cannot hand over the items$/ do
   expect(has_no_selector?(".hand_over .summary")).to be true
 end
+
+
+Given /^the customer is in multiple groups$/ do
+  @customer = @current_inventory_pool.users.detect{|u| u.groups.size > 0}
+  expect(@customer).not_to be_nil
+end
+
+
+When /^I open a hand over to this customer$/ do
+  visit manage_hand_over_path(@current_inventory_pool, @customer)
+  expect(has_selector?("#hand-over-view")).to be true
+  step "the availability is loaded"
+end
+
+
+When /^I edit a line containing group partitions$/ do
+  @inventory_code = @current_inventory_pool.models.detect {|m| m.partitions.size > 1}.items.in_stock.borrowable.first.inventory_code
+  @model = Item.find_by_inventory_code(@inventory_code).model
+  step 'I assign an item to the hand over by providing an inventory code and a date range'
+  find(:xpath, "//*[contains(@class, 'line') and descendant::input[@data-assign-item and @value='#{@inventory_code}']]", match: :first).find("button[data-edit-lines]").click
+end
+
+
+When /^I expand the group selector$/ do
+  find("#booking-calendar-partitions")
+end
+
+
+Then /^I see which groups the customer is a member of$/ do
+  @customer_group_ids = @customer.groups.map(&:id)
+  @model.partitions.each do |partition|
+    next if partition.group_id.nil?
+    if @customer_group_ids.include? partition.group_id
+      expect(find("#booking-calendar-partitions optgroup[label='#{_("Groups of this customer")}']").has_content? partition.group.name).to be true
+    end
+  end
+end
+
+Then /^I see which groups the customer is not a member of$/ do
+  @model.partitions.each do |partition|
+    next if partition.group_id.nil?
+    unless @customer_group_ids.include?(partition.group_id)
+      expect(find("#booking-calendar-partitions optgroup[label='#{_("Other Groups")}']").has_content? partition.group.name).to be true
+    end
+  end
+end
+
+
+

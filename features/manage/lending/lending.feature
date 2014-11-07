@@ -35,3 +35,13 @@ Feature: Lending
     And I click hand over
     Then I see the error message "you cannot hand out lines which are starting in the future"
     And I cannot hand over the items
+
+  # https://www.pivotaltracker.com/story/show/29455957
+  @javascript @personas
+  Scenario: Booking calendar: Show the customer's groups in "show availability"
+    Given the customer is in multiple groups
+    When I open a hand over to this customer
+    And I edit a line containing group partitions
+    And I expand the group selector
+    Then I see which groups the customer is a member of
+    And I see which groups the customer is not a member of

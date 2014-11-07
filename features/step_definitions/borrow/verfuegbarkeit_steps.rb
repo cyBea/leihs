@@ -112,7 +112,7 @@ end
 Wenn(/^eine Rücknahme nur Optionen enthält$/) do
   @current_inventory_pool = @current_user.inventory_pools.where("access_rights.suspended_until IS NULL OR access_rights.suspended_until < ?", Date.today).first
   expect(@customer = @current_inventory_pool.users.find{|u| u.visits.take_back.count == 0}).to be
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over for this customer"
   step 'I add an option to the hand over by providing an inventory code and a date range'
   step 'the option is added to the hand over'
   step 'I click hand over'

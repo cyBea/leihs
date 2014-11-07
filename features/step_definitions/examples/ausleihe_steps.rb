@@ -67,23 +67,7 @@ Dann /^wird die Option ausgewählt und der Haken gesetzt$/ do
   step 'the count matches the amount of selected lines'
 end
 
-Angenommen /^der Kunde ist in mehreren Gruppen$/ do
-  @customer = @current_inventory_pool.users.detect{|u| u.groups.size > 0}
-  expect(@customer).not_to be_nil
-end
 
-Wenn /^ich eine Aushändigung an diesen Kunden mache$/ do
-  visit manage_hand_over_path(@current_inventory_pool, @customer)
-  expect(has_selector?("#hand-over-view")).to be true
-  step "the availability is loaded"
-end
-
-Wenn /^eine Zeile mit Gruppen-Partitionen editiere$/ do
-  @inventory_code = @current_inventory_pool.models.detect {|m| m.partitions.size > 1}.items.in_stock.borrowable.first.inventory_code
-  @model = Item.find_by_inventory_code(@inventory_code).model
-  step 'I assign an item to the hand over by providing an inventory code and a date range'
-  find(:xpath, "//*[contains(@class, 'line') and descendant::input[@data-assign-item and @value='#{@inventory_code}']]", match: :first).find("button[data-edit-lines]").click
-end
 
 Wenn /^die Gruppenauswahl aufklappe$/ do
   find("#booking-calendar-partitions")
@@ -110,7 +94,7 @@ end
 
 Wenn /^ich eine Aushändigung mache mit einem Kunden der sowohl am heutigen Tag sowie in der Zukunft Abholungen hat$/ do
   @customer = @current_inventory_pool.users.detect{|u| u.visits.hand_over.size > 1}
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over to this customer"
 end
 
 Wenn /^ich etwas scanne \(per Inventarcode zuweise\) und es in irgendeinem zukünftigen Vertrag existiert$/ do

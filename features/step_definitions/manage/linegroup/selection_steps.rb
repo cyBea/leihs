@@ -7,7 +7,7 @@ When /^I open a take back, hand over or I edit a contract$/ do
       visit manage_take_back_path(@current_inventory_pool, @customer)
     when "hand_over"
       @customer = @current_inventory_pool.users.detect {|x| x.contracts.approved.size > 0}
-      step "ich eine Aushändigung an diesen Kunden mache"
+      step "I open a hand over for this customer"
     when "contract"
       @customer = @current_inventory_pool.users.detect {|x| x.contracts.submitted.size > 0}
       @entity = @customer.contracts.submitted.first

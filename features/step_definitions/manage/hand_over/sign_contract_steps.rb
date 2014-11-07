@@ -25,7 +25,7 @@ When /^I open a hand over( with at least one unassigned line)?( for today)?( wit
   end
   expect(@customer).not_to be_nil
 
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over for this customer"
   expect(has_selector?("#hand-over-view", :visible => true)).to be true
 
   @contract = @customer.contracts.where(inventory_pool_id: @current_inventory_pool).approved.first
@@ -52,7 +52,7 @@ When /^I open a hand over which has multiple( unassigned)? lines( and models in 
   expect(@hand_over).not_to be_nil
 
   @customer = @hand_over.user
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over for this customer"
   expect(has_selector?("#hand-over-view", :visible => true)).to be true
 end
 
@@ -74,7 +74,7 @@ When /^I open a hand over with overdue lines$/ do
     end
   end
   expect(@customer).not_to be_nil
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over for this customer"
 end
 
 

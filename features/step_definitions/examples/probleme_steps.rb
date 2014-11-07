@@ -34,7 +34,7 @@ Angenommen /^ein Modell ist nichtmehr verfügbar$/ do
   else
     contract_line = @contract_lines_to_take_back.where(option_id: nil).sample
     @model = contract_line.model
-    step "ich eine Aushändigung an diesen Kunden mache"
+    step "I open a hand over to this customer"
     @max_before = @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(contract_line.start_date, contract_line.end_date, contract_line.group_ids)
     step 'I add so many lines that I break the maximal quantity of a model'
     visit manage_take_back_path(@current_inventory_pool, @customer)

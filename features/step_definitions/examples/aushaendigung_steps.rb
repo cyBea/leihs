@@ -28,7 +28,7 @@ end
 
 When(/^der Benutzer für die Aushändigung ist gesperrt$/) do
   ensure_suspended_user(@customer, @current_inventory_pool)
-  step "ich eine Aushändigung an diesen Kunden mache"
+  step "I open a hand over to this customer"
 end
 
 Angenommen(/^ich öffne eine Aushändigung( mit einer Software)?$/) do |arg1|
