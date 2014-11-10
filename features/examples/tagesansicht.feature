@@ -1,19 +1,18 @@
-# language: de
 
-Funktionalität: Ausleihe
+Feature: Ausleihe
 
   Grundlage:
-    Angenommen ich bin Pius
-    Und I open the daily view
+    Given ich bin Pius
+    And I open the daily view
 
   @personas
-  Szenario: Anzeige der längsten Zeitspanne für Bestellungen
-    Angenommen eine Bestellungen mit zwei unterschiedlichen Zeitspannen existiert
-    Dann sehe ich für diese Bestellung die längste Zeitspanne direkt auf der Linie
+  Scenario: Anzeige der längsten Zeitspanne für Bestellungen
+    Given eine Bestellungen mit zwei unterschiedlichen Zeitspannen existiert
+    Then sehe ich für diese Bestellung die längste Zeitspanne direkt auf der Linie
 
   @personas
-  Szenario: Sperrstatus des Benutzers anzeigen
-    Angenommen eigenes Benutzer sind gesperrt
-    Dann sehe ich auf allen Linien dieses Benutzers den Sperrstatus 'Gesperrt'
+  Scenario: Sperrstatus des Benutzers anzeigen
+    Given eigenes Benutzer sind gesperrt
+    Then sehe ich auf allen Linien dieses Benutzers den Sperrstatus 'Gesperrt'
 
 

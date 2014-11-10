@@ -1,21 +1,20 @@
-# language: de
 
-Funktionalität: Inventar
+Feature: Inventar
 
   @personas
-  Szenario: Globaler Export des Inventars aller Geräteparks
-    Angenommen ich bin Gino
-    Und man öffnet die Liste der Geräteparks
-    Dann kann man das globale Inventar als CSV-Datei exportieren
+  Scenario: Globaler Export des Inventars aller Geräteparks
+    Given ich bin Gino
+    And man öffnet die Liste der Geräteparks
+    Then kann man das globale Inventar als CSV-Datei exportieren
 
   @javascript @personas @browser
-  Szenario: Export der aktuellen Ansicht als CSV
-    Angenommen ich bin Mike
-    Und man öffnet die Liste des Inventars
-    Wenn ich den Reiter "Modelle" einsehe
-    Dann kann man diese Daten als CSV-Datei exportieren
-    Und die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
-    Und die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
+  Scenario: Export der aktuellen Ansicht als CSV
+    Given ich bin Mike
+    And man öffnet die Liste des Inventars
+    When ich den Reiter "Modelle" einsehe
+    Then kann man diese Daten als CSV-Datei exportieren
+    And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
+    And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
     | Felder                            |
     | Erstellt am                       |
     | Aktualisiert am                   |
@@ -64,10 +63,10 @@ Funktionalität: Inventar
     | Ankunftsdatum                     |
     | Ankunftszustand                   |
     | Ankunftsnotiz                     |
-    Wenn ich den Reiter "Software" einsehe
-    Dann kann man diese Daten als CSV-Datei exportieren
-    Und die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
-    Und die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
+    When ich den Reiter "Software" einsehe
+    Then kann man diese Daten als CSV-Datei exportieren
+    And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
+    And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
     | Felder                            |
     | Erstellt am                       |
     | Aktualisiert am                   |

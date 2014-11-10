@@ -1,19 +1,18 @@
-# language: de
 
-Funktionalität: Kalender
+Feature: Kalender
 
   Um einen Gegenstand einer Bestellung hinzuzufügen
   möchte ich als Ausleihender
   den Gegenstand der Bestellung hinzufügen können
 
   Grundlage:
-    Angenommen ich bin Normin
+    Given ich bin Normin
 
   @javascript @browser @personas
-  Szenario: Kalenderkomponenten
-    Wenn man einen Gegenstand aus der Modellliste hinzufügt
-    Dann öffnet sich der Kalender
-    Und der Kalender beinhaltet die folgenden Komponenten
+  Scenario: Kalenderkomponenten
+    When man einen Gegenstand aus der Modellliste hinzufügt
+    Then öffnet sich der Kalender
+    And der Kalender beinhaltet die folgenden Komponenten
     |Modellname                       |
     |Aktueller Monat                  |
     |Kalender                         |
@@ -25,113 +24,113 @@ Funktionalität: Kalender
     |Abbrechen Schaltfläche           |
 
   @javascript @personas
-  Szenario: Kalender Grundeinstellung
-    Wenn man einen Gegenstand aus der Modellliste hinzufügt
-    Dann öffnet sich der Kalender
-    Und das aktuelle Startdatum ist heute
-    Und das Enddatum ist morgen
-    Und die Anzahl ist 1
-    Und es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben
+  Scenario: Kalender Grundeinstellung
+    When man einen Gegenstand aus der Modellliste hinzufügt
+    Then öffnet sich der Kalender
+    And das aktuelle Startdatum ist heute
+    And das Enddatum ist morgen
+    And die Anzahl ist 1
+    And es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben
 
   @javascript @browser @personas
-  Szenario: Kalender Grundeinstellung wenn Zeitspanne bereits ausgewählt
-    Angenommen man befindet sich auf der Modellliste
-    Und man hat eine Zeitspanne ausgewählt
-    Wenn man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt
-    Dann öffnet sich der Kalender
-    Und das Startdatum entspricht dem vorausgewählten Startdatum
-    Und das Enddatum entspricht dem vorausgewählten Enddatum
+  Scenario: Kalender Grundeinstellung wenn Zeitspanne bereits ausgewählt
+    Given man befindet sich auf der Modellliste
+    And man hat eine Zeitspanne ausgewählt
+    When man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt
+    Then öffnet sich der Kalender
+    And das Startdatum entspricht dem vorausgewählten Startdatum
+    And das Enddatum entspricht dem vorausgewählten Enddatum
 
   @javascript @personas
-  Szenario: Kalender Grundeinstellung wenn Geräteparks bereits ausgewählt sind
-    Angenommen man befindet sich auf der Modellliste
-    Und man die Geräteparks begrenzt
-    Und man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt
-    Dann öffnet sich der Kalender
-    Und es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist
-    Dann werden die Schliesstage gemäss gewähltem Gerätepark angezeigt
+  Scenario: Kalender Grundeinstellung wenn Geräteparks bereits ausgewählt sind
+    Given man befindet sich auf der Modellliste
+    And man die Geräteparks begrenzt
+    And man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt
+    Then öffnet sich der Kalender
+    And es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist
+    Then werden die Schliesstage gemäss gewähltem Gerätepark angezeigt
 
   @javascript  @browser @personas
-  Szenario: Kalender zwischen Monaten hin und herspringen
-    Angenommen man hat den Buchungskalender geöffnet
-    Wenn man zwischen den Monaten hin und herspring
-    Dann wird der Kalender gemäss aktuell gewähltem Monat angezeigt
+  Scenario: Kalender zwischen Monaten hin und herspringen
+    Given man hat den Buchungskalender geöffnet
+    When man zwischen den Monaten hin und herspring
+    Then wird der Kalender gemäss aktuell gewähltem Monat angezeigt
 
   @javascript @personas
-  Szenario: Kalender Sprung zu Start und Enddatum
-    Angenommen man hat den Buchungskalender geöffnet
-    Wenn man anhand der Sprungtaste zum aktuellen Startdatum springt
-    Dann wird das Startdatum im Kalender angezeigt
-    Wenn man anhand der Sprungtaste zum aktuellen Enddatum springt
-    Dann wird das Enddatum im Kalender angezeigt
+  Scenario: Kalender Sprung zu Start und Enddatum
+    Given man hat den Buchungskalender geöffnet
+    When man anhand der Sprungtaste zum aktuellen Startdatum springt
+    Then wird das Startdatum im Kalender angezeigt
+    When man anhand der Sprungtaste zum aktuellen Enddatum springt
+    Then wird das Enddatum im Kalender angezeigt
 
   @javascript @browser @personas
-  Szenario: Meiner Bestellung einen Gegenstand hinzufügen
-    Wenn man sich auf der Modellliste befindet die verfügbare Modelle beinhaltet
-    Und man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt
-    Dann öffnet sich der Kalender
-    Wenn alle Angaben die ich im Kalender mache gültig sind
-    Dann ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden
+  Scenario: Meiner Bestellung einen Gegenstand hinzufügen
+    When man sich auf der Modellliste befindet die verfügbare Modelle beinhaltet
+    And man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt
+    Then öffnet sich der Kalender
+    When alle Angaben die ich im Kalender mache gültig sind
+    Then ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden
 
   @javascript @personas
-  Szenario: Kalender max. Verfügbarkeit
-    Angenommen man hat den Buchungskalender geöffnet
-    Dann wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt
-    Und man kann maximal die maximal ausleihbare Anzahl eingeben
+  Scenario: Kalender max. Verfügbarkeit
+    Given man hat den Buchungskalender geöffnet
+    Then wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt
+    And man kann maximal die maximal ausleihbare Anzahl eingeben
 
   @javascript @personas
-  Szenario: Auswählbare Geräteparks im Kalender
-    Angenommen man hat den Buchungskalender geöffnet
-    Dann sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen
-    Und die Geräteparks sind alphabetisch sortiert
+  Scenario: Auswählbare Geräteparks im Kalender
+    Given man hat den Buchungskalender geöffnet
+    Then sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen
+    And die Geräteparks sind alphabetisch sortiert
 
   @javascript @personas
-  Szenario: Kalender Anzeige der Schliesstage
-    Angenommen man hat den Buchungskalender geöffnet
+  Scenario: Kalender Anzeige der Schliesstage
+    Given man hat den Buchungskalender geöffnet
 
   @javascript @browser @personas
-  Szenario: Bestellkalender nutzen nach dem man alle Filter zurückgesetzt hat
-    Angenommen ich ein Modell der Bestellung hinzufüge
-    Und man sich auf der Modellliste befindet
-    Und man den zweiten Gerätepark in der Geräteparkauswahl auswählt
-    Wenn man "Alles zurücksetzen" wählt
-    Und man auf einem Model "Zur Bestellung hinzufügen" wählt
-    Dann öffnet sich der Kalender
-    Wenn alle Angaben die ich im Kalender mache gültig sind
-    Dann lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
+  Scenario: Bestellkalender nutzen nach dem man alle Filter zurückgesetzt hat
+    Given ich ein Modell der Bestellung hinzufüge
+    And man sich auf der Modellliste befindet
+    And man den zweiten Gerätepark in der Geräteparkauswahl auswählt
+    When man "Alles zurücksetzen" wählt
+    And man auf einem Model "Zur Bestellung hinzufügen" wählt
+    Then öffnet sich der Kalender
+    When alle Angaben die ich im Kalender mache gültig sind
+    Then lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
 
   @javascript @browser @personas
-  Szenario: Etwas bestellen, was nur Gruppen vorbehalten ist
-    Wenn ein Modell existiert, welches nur einer Gruppe vorbehalten ist
-    Dann kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin
+  Scenario: Etwas bestellen, was nur Gruppen vorbehalten ist
+    When ein Modell existiert, welches nur einer Gruppe vorbehalten ist
+    Then kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin
 
   @javascript @browser @personas
-  Szenario: Kalender Bestellung nicht möglich, wenn Auswahl nicht verfügbar
-    Wenn man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfügbar ist
-    Dann schlägt der Versuch es hinzufügen fehl
-    Und ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten Zeitraum nicht verfügbar ist
+  Scenario: Kalender Bestellung nicht möglich, wenn Auswahl nicht verfügbar
+    When man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfügbar ist
+    Then schlägt der Versuch es hinzufügen fehl
+    And ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten Zeitraum nicht verfügbar ist
 
   @javascript @personas
-  Szenario: Bestellkalender schliessen
-    Wenn man sich auf der Modellliste befindet
-    Und man auf einem Model "Zur Bestellung hinzufügen" wählt
-    Dann öffnet sich der Kalender
-    Wenn ich den Kalender schliesse
-    Dann schliesst das Dialogfenster
+  Scenario: Bestellkalender schliessen
+    When man sich auf der Modellliste befindet
+    And man auf einem Model "Zur Bestellung hinzufügen" wählt
+    Then öffnet sich der Kalender
+    When ich den Kalender schliesse
+    Then schliesst das Dialogfenster
 
   @javascript @personas
-  Szenario: Kalender Verfügbarkeitsanzeige
-    Angenommen es existiert ein Modell für das eine Bestellung vorhanden ist
-    Wenn man dieses Modell aus der Modellliste hinzufügt
-    Dann öffnet sich der Kalender
-    Und wird die Verfügbarkeit des Modells im Kalendar angezeigt
+  Scenario: Kalender Verfügbarkeitsanzeige
+    Given es existiert ein Modell für das eine Bestellung vorhanden ist
+    When man dieses Modell aus der Modellliste hinzufügt
+    Then öffnet sich der Kalender
+    And wird die Verfügbarkeit des Modells im Kalendar angezeigt
 
   @javascript @personas
-  Szenario: Kalender Verfügbarkeitsanzeige nach Änderung der Kalenderdaten
-    Angenommen es existiert ein Modell für das eine Bestellung vorhanden ist
-    Wenn man dieses Modell aus der Modellliste hinzufügt
-    Dann öffnet sich der Kalender
-    Wenn man ein Start und Enddatum ändert
-    Dann wird die Verfügbarkeit des Gegenstandes aktualisiert
-    Wenn man die Anzahl ändert
-    Dann wird die Verfügbarkeit des Gegenstandes aktualisiert
+  Scenario: Kalender Verfügbarkeitsanzeige nach Änderung der Kalenderdaten
+    Given es existiert ein Modell für das eine Bestellung vorhanden ist
+    When man dieses Modell aus der Modellliste hinzufügt
+    Then öffnet sich der Kalender
+    When man ein Start und Enddatum ändert
+    Then wird die Verfügbarkeit des Gegenstandes aktualisiert
+    When man die Anzahl ändert
+    Then wird die Verfügbarkeit des Gegenstandes aktualisiert

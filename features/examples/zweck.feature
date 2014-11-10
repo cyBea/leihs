@@ -1,55 +1,54 @@
-# language: de
 
-Funktionalität: Zweck
+Feature: Zweck
 
   Um den Zweck einer Bestellung oder Übergabe zu sehen
   möchte ich als Verleiher
   den vom Benutzer angegebenen Zweck sehen
   
   Grundlage:
-    Angenommen ich bin Pius
+    Given ich bin Pius
 
   @personas
-  Szenario: Unabhängigkeit
-    Wenn ein Zweck gespeichert wird ist er unabhängig von einer Bestellung
-     Und jeder Eintrag einer abgeschickten Bestellung referenziert auf einen Zweck
-     Und jeder Eintrag eines Vertrages kann auf einen Zweck referenzieren
+  Scenario: Unabhängigkeit
+    When ein Zweck gespeichert wird ist er unabhängig von einer Bestellung
+     And jeder Eintrag einer abgeschickten Bestellung referenziert auf einen Zweck
+     And jeder Eintrag eines Vertrages kann auf einen Zweck referenzieren
 
   @javascript @personas @browser
-  Szenario: Orte, an denen ich den Zweck sehe
-    Wenn ich eine Bestellung editiere
-    Dann sehe ich den Zweck
-    Wenn I open a hand over
-    Dann sehe ich auf jeder Zeile den zugewisenen Zweck
+  Scenario: Orte, an denen ich den Zweck sehe
+    When ich eine Bestellung editiere
+    Then sehe ich den Zweck
+    When I open a hand over
+    Then sehe ich auf jeder Zeile den zugewisenen Zweck
 
   @javascript @personas @browser
-  Szenario: Orte, an denen ich den Zweck editieren kann
-    Wenn ich eine Bestellung editiere
-    Dann kann ich den Zweck editieren
+  Scenario: Orte, an denen ich den Zweck editieren kann
+    When ich eine Bestellung editiere
+    Then kann ich den Zweck editieren
 
   @javascript @browser @personas
-  Szenario: Aushändigung mit Gegenständen teilweise ohne Zweck übertragen einen angegebenen Zweck nur auf die Gegenstände ohne Zweck
-    Wenn I open a hand over
-     Und einige der ausgewählten Gegenstände hat keinen Zweck angegeben
-     Und ich einen Zweck angebe
-    Dann wird nur den Gegenständen ohne Zweck der angegebene Zweck zugewiesen
+  Scenario: Aushändigung mit Gegenständen teilweise ohne Zweck übertragen einen angegebenen Zweck nur auf die Gegenstände ohne Zweck
+    When I open a hand over
+     And einige der ausgewählten Gegenstände hat keinen Zweck angegeben
+     And ich einen Zweck angebe
+    Then wird nur den Gegenständen ohne Zweck der angegebene Zweck zugewiesen
 
   @javascript @browser @personas
-  Szenario: Aushändigung mit Gegenständen die alle einen Zweck haben
-    Wenn I open a hand over
-    Und alle der ausgewählten Gegenstände haben einen Zweck angegeben
-    Dann kann ich keinen weiteren Zweck angeben
+  Scenario: Aushändigung mit Gegenständen die alle einen Zweck haben
+    When I open a hand over
+    And alle der ausgewählten Gegenstände haben einen Zweck angegeben
+    Then kann ich keinen weiteren Zweck angeben
 
   @javascript @browser @personas
-  Szenario: Aushändigung ohne Zweck
-    Wenn I open a hand over
-    Und keine der ausgewählten Gegenstände hat einen Zweck angegeben
-    Dann werde ich beim Aushändigen darauf hingewiesen einen Zweck anzugeben
-    Und erst wenn ich einen Zweck angebebe
-    Dann kann ich die Aushändigung durchführen
+  Scenario: Aushändigung ohne Zweck
+    When I open a hand over
+    And keine der ausgewählten Gegenstände hat einen Zweck angegeben
+    Then werde ich beim Aushändigen darauf hingewiesen einen Zweck anzugeben
+    And erst wenn ich einen Zweck angebebe
+    Then kann ich die Aushändigung durchführen
 
   @javascript @browser @personas
-  Szenario: Aushändigung mit Gegenständen teilweise ohne Zweck können durchgeführt werden
-    Wenn I open a hand over
-    Und einige der ausgewählten Gegenstände hat keinen Zweck angegeben
-    Dann muss ich keinen Zweck angeben um die Aushändigung durchzuführen
+  Scenario: Aushändigung mit Gegenständen teilweise ohne Zweck können durchgeführt werden
+    When I open a hand over
+    And einige der ausgewählten Gegenstände hat keinen Zweck angegeben
+    Then muss ich keinen Zweck angeben um die Aushändigung durchzuführen

@@ -1,12 +1,11 @@
-# language: de
 
-Funktionalität: Geräteparks
+Feature: Geräteparks
 
   @personas
-  Szenario: Gerätepark Informationen
-    Angenommen ich bin Normin
-    Wenn ich den Gerätepark Link drücke
-    Dann sehe ich die Geräteparks für die ich berechtigt bin
-    Und ich sehe nur die Geräteparks, die ausleihbare Gegenstände enthalten
-    Und sehe die Beschreibung für jeden Gerätepark
-    Und die Geräteparks sind auf dieser Seite alphabetisch sortiert
+  Scenario: Gerätepark Informationen
+    Given ich bin Normin
+    When ich den Gerätepark Link drücke
+    Then sehe ich die Geräteparks für die ich berechtigt bin
+    And ich sehe nur die Geräteparks, die ausleihbare Gegenstände enthalten
+    And sehe die Beschreibung für jeden Gerätepark
+    And die Geräteparks sind auf dieser Seite alphabetisch sortiert

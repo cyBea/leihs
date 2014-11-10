@@ -35,7 +35,7 @@ Dann(/^sind die Rücknahmen aufsteigend nach Datum sortiert$/) do
 
 end
 
-When(/^ich befinde mich in einer Rücknahme für ein gesperrter Benutzer$/) do
+When(/^I open a take back for a suspended user$/) do
   step 'I open a take back'
   ensure_suspended_user(@customer, @current_inventory_pool)
   visit manage_take_back_path(@current_inventory_pool, @customer)

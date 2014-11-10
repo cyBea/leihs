@@ -1,16 +1,15 @@
-# language: de
 
-Funktionalität: Suche
+Feature: Suche
 
   Um die Sprache der Applikation zu verstehen
   möchte ich als Benutzer
   die Sprache umschalten können
 
   @personas
-  Szenario: Wechsel der Sprache
-    Angenommen ich bin Normin
-    Und man sich auf der Modellliste befindet
-    Wenn ich die Sprache auf "English" umschalte
-    Dann ist die Sprache "English"
-    Wenn ich die Sprache auf "Deutsch" umschalte
-    Dann ist die Sprache "Deutsch"
+  Scenario: Wechsel der Sprache
+    Given ich bin Normin
+    And man sich auf der Modellliste befindet
+    When ich die Sprache auf "English" umschalte
+    Then ist die Sprache "English"
+    When ich die Sprache auf "Deutsch" umschalte
+    Then ist die Sprache "Deutsch"

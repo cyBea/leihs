@@ -1,49 +1,48 @@
-# language: de
 
-Funktionalität: Verfügbarkeit
+Feature: Verfügbarkeit
 
   Grundlage:
-    Angenommen ich bin Normin
-    Und ich habe eine offene Bestellung mit Modellen
-    Und die Bestellung Timeout ist 30 Minuten
+    Given ich bin Normin
+    And ich habe eine offene Bestellung mit Modellen
+    And die Bestellung Timeout ist 30 Minuten
 
   @personas
-  Szenario: Überbuchung durch Ausleih-Manager
-    Wenn ich ein Modell der Bestellung hinzufüge
-    Angenommen ich bin Pius
-    Wenn ich dasselbe Modell einer Bestellung hinzufüge
-    Und die maximale Anzahl der Gegenstände überschritten ist
-    Angenommen ich bin Normin
-    Wenn ich die Bestellübersicht öffne
-    Und ich die Bestellung abschliesse
-    Dann wird die Bestellung nicht abgeschlossen
-    Und ich lande auf der Seite der Bestellübersicht
-    Und ich erhalte eine Fehlermeldung
+  Scenario: Überbuchung durch Ausleih-Manager
+    When ich ein Modell der Bestellung hinzufüge
+    Given ich bin Pius
+    When ich dasselbe Modell einer Bestellung hinzufüge
+    And die maximale Anzahl der Gegenstände überschritten ist
+    Given ich bin Normin
+    When ich die Bestellübersicht öffne
+    And ich die Bestellung abschliesse
+    Then wird die Bestellung nicht abgeschlossen
+    And ich lande auf der Seite der Bestellübersicht
+    And ich erhalte eine Fehlermeldung
 
   @personas
-  Szenario: Blockieren der Modelle
-    Wenn ich eine Aktivität ausführe
-    Dann bleiben die Modelle in der Bestellung blockiert
+  Scenario: Blockieren der Modelle
+    When ich eine Aktivität ausführe
+    Then bleiben die Modelle in der Bestellung blockiert
 
   @personas
-  Szenario: Freigabe der Modelle
-    Wenn ich länger als 30 Minuten keine Aktivität ausgeführt habe
-    Dann werden die Modelle meiner Bestellung freigegeben
+  Scenario: Freigabe der Modelle
+    When ich länger als 30 Minuten keine Aktivität ausgeführt habe
+    Then werden die Modelle meiner Bestellung freigegeben
 
   @personas
-  Szenario: Erneutes Blockieren nach Inaktivität
-    Angenommen ich länger als 30 Minuten keine Aktivität ausgeführt habe
-    Und alle Modelle verfügbar sind
-    Wenn ich eine Aktivität ausführe
-    Dann kann man sein Prozess fortsetzen
-    Und die Modelle werden blockiert
+  Scenario: Erneutes Blockieren nach Inaktivität
+    Given ich länger als 30 Minuten keine Aktivität ausgeführt habe
+    And alle Modelle verfügbar sind
+    When ich eine Aktivität ausführe
+    Then kann man sein Prozess fortsetzen
+    And die Modelle werden blockiert
 
   @personas
-  Szenario: Modelle nach langer Inaktivität nicht mehr verfügbar
-    Angenommen ein Modell ist nicht verfügbar
-    Und ich länger als 30 Minuten keine Aktivität ausgeführt habe
-    Wenn ich eine Aktivität ausführe
-    Dann werde ich auf die Timeout Page geleitet
+  Scenario: Modelle nach langer Inaktivität nicht mehr verfügbar
+    Given ein Modell ist nicht verfügbar
+    And ich länger als 30 Minuten keine Aktivität ausgeführt habe
+    When ich eine Aktivität ausführe
+    Then werde ich auf die Timeout Page geleitet
     
     
     

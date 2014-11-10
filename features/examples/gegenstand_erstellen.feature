@@ -1,14 +1,13 @@
-# language: de
 
-Funktionalität: Gegenstand erstellen
+Feature: Gegenstand erstellen
 
   @javascript @personas
-  Szenario: Felder beim Erstellen eines Gegenstandes
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und I select "Ja" from "item[retired]"
-    Und I choose "Investition"
-    Dann sehe ich die Felder in folgender Reihenfolge:
+  Scenario: Felder beim Erstellen eines Gegenstandes
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And I select "Ja" from "item[retired]"
+    And I choose "Investition"
+    Then sehe ich die Felder in folgender Reihenfolge:
     | Inventarcode                 |
     | Modell                       |
     | - Zustand -                  |
@@ -53,73 +52,73 @@ Funktionalität: Gegenstand erstellen
     | Vertragsablaufdatum          |
 
   @javascript @personas @browser
-  Szenario: Einen Gegenstand mit allen fehlenden Pflichtangaben erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und man setzt Bezug auf Investition
-    Und kein Pflichtfeld ist gesetzt
+  Scenario: Einen Gegenstand mit allen fehlenden Pflichtangaben erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And man setzt Bezug auf Investition
+    And kein Pflichtfeld ist gesetzt
     | Modell        |
     | Inventarcode  |
     | Projektnummer |
     | Anschaffungskategorie  |
-    Dann kann das Modell nicht erstellt werden
-    Und I see an error message
+    Then kann das Modell nicht erstellt werden
+    And I see an error message
 
   @javascript @personas
-  Szenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und man setzt Bezug auf Investition
-    Und jedes Pflichtfeld ist gesetzt
+  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And man setzt Bezug auf Investition
+    And jedes Pflichtfeld ist gesetzt
     | Modell        |
     | Inventarcode  |
     | Projektnummer |
     | Anschaffungskategorie |
-    Wenn ich das gekennzeichnete "Modell" leer lasse
-    Dann kann das Modell nicht erstellt werden
-    Und I see an error message
-    Und die anderen Angaben wurde nicht gelöscht
+    When ich das gekennzeichnete "Modell" leer lasse
+    Then kann das Modell nicht erstellt werden
+    And I see an error message
+    And die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
-  Szenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und man setzt Bezug auf Investition
-    Und jedes Pflichtfeld ist gesetzt
+  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And man setzt Bezug auf Investition
+    And jedes Pflichtfeld ist gesetzt
     | Modell        |
     | Inventarcode  |
     | Projektnummer |
     | Anschaffungskategorie |
-    Wenn ich das gekennzeichnete "Inventarcode" leer lasse
-    Dann kann das Modell nicht erstellt werden
-    Und I see an error message
-    Und die anderen Angaben wurde nicht gelöscht
+    When ich das gekennzeichnete "Inventarcode" leer lasse
+    Then kann das Modell nicht erstellt werden
+    And I see an error message
+    And die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
-  Szenario: Wo man einen Gegenstand erstellen kann
-    Angenommen ich bin Matti
-    Und man befindet sich auf der Liste des Inventars
-    Dann kann man einen Gegenstand erstellen
+  Scenario: Wo man einen Gegenstand erstellen kann
+    Given ich bin Matti
+    And man befindet sich auf der Liste des Inventars
+    Then kann man einen Gegenstand erstellen
 
   @javascript @personas
-  Szenario: Neuen Lieferanten erstellen falls nicht vorhanden
-    Angenommen ich bin Mike
-    Und ich befinde mich auf der Erstellungsseite eines Gegenstandes
-    Und jedes Pflichtfeld ist gesetzt
+  Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
+    Given ich bin Mike
+    And ich befinde mich auf der Erstellungsseite eines Gegenstandes
+    And jedes Pflichtfeld ist gesetzt
       | Modell        |
       | Inventarcode  |
       | Projektnummer |
       | Anschaffungskategorie |
-    Wenn ich einen nicht existierenen Lieferanten angebe
-    Und ich erstellen druecke
-    Dann wird der neue Lieferant erstellt
-    Und bei dem erstellten Gegestand ist der neue Lieferant eingetragen
+    When ich einen nicht existierenen Lieferanten angebe
+    And ich erstellen druecke
+    Then wird der neue Lieferant erstellt
+    And bei dem erstellten Gegestand ist der neue Lieferant eingetragen
 
   @javascript @personas @browser
-  Szenario: Einen Gegenstand mit allen Informationen erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Wenn ich die folgenden Informationen erfasse
+  Scenario: Einen Gegenstand mit allen Informationen erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
 
     | Inventarcode                 |              | Test Inventory Code           |
@@ -136,15 +135,15 @@ Funktionalität: Gegenstand erstellen
     | Ankunftszustand              | select       | transportschaden              |
     | Ankunftsnotiz                |              | Test Notiz                    |
 
-    Und ich erstellen druecke
-    Dann man wird zur Liste des Inventars zurueckgefuehrt
-    Und ist der Gegenstand mit all den angegebenen Informationen erstellt
+    And ich erstellen druecke
+    Then man wird zur Liste des Inventars zurueckgefuehrt
+    And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
   @javascript @personas @browser
-  Szenario: Einen Gegenstand mit allen Informationen erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Wenn ich die folgenden Informationen erfasse
+  Scenario: Einen Gegenstand mit allen Informationen erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
 
     | Inventarcode                 |              | Test Inventory Code           |
@@ -162,45 +161,45 @@ Funktionalität: Gegenstand erstellen
     | Raum                         |              | Test Raum                     |
     | Gestell                      |              | Test Gestell                  |
 
-    Und ich erstellen druecke
-    Dann man wird zur Liste des Inventars zurueckgefuehrt
-    Und ist der Gegenstand mit all den angegebenen Informationen erstellt
+    And ich erstellen druecke
+    Then man wird zur Liste des Inventars zurueckgefuehrt
+    And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
   @javascript @personas
-  Szenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und man setzt Bezug auf Investition
-    Und jedes Pflichtfeld ist gesetzt
+  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And man setzt Bezug auf Investition
+    And jedes Pflichtfeld ist gesetzt
     | Modell        |
     | Inventarcode  |
     | Projektnummer |
     | Anschaffungskategorie |
-    Wenn ich das gekennzeichnete "Projektnummer" leer lasse
-    Dann kann das Modell nicht erstellt werden
-    Und I see an error message
-    Und die anderen Angaben wurde nicht gelöscht
+    When ich das gekennzeichnete "Projektnummer" leer lasse
+    Then kann das Modell nicht erstellt werden
+    And I see an error message
+    And die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas
-  Szenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Und man setzt Bezug auf Investition
-    Und jedes Pflichtfeld ist gesetzt
+  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    And man setzt Bezug auf Investition
+    And jedes Pflichtfeld ist gesetzt
     | Modell        |
     | Inventarcode  |
     | Projektnummer |
     | Anschaffungskategorie |
-    Wenn ich das gekennzeichnete "Anschaffungskategorie" leer lasse
-    Dann kann das Modell nicht erstellt werden
-    Und I see an error message
-    Und die anderen Angaben wurde nicht gelöscht
+    When ich das gekennzeichnete "Anschaffungskategorie" leer lasse
+    Then kann das Modell nicht erstellt werden
+    And I see an error message
+    And die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas @browser
-  Szenario: Einen Gegenstand mit allen Informationen erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Wenn ich die folgenden Informationen erfasse
+  Scenario: Einen Gegenstand mit allen Informationen erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
 
     | Inventarcode                 |              | Test Inventory Code           |
@@ -217,15 +216,15 @@ Funktionalität: Gegenstand erstellen
     | Garantieablaufdatum          |              | 01.01.2013                    |
     | Vertragsablaufdatum          |              | 01.01.2013                    |
 
-    Und ich erstellen druecke
-    Dann man wird zur Liste des Inventars zurueckgefuehrt
-    Und ist der Gegenstand mit all den angegebenen Informationen erstellt
+    And ich erstellen druecke
+    Then man wird zur Liste des Inventars zurueckgefuehrt
+    And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
   @javascript @personas @browser
-  Szenario: Einen Gegenstand mit allen Informationen erstellen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Wenn ich die folgenden Informationen erfasse
+  Scenario: Einen Gegenstand mit allen Informationen erstellen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
 
     | Inventarcode                 |              | Test Inventory Code           |
@@ -242,23 +241,23 @@ Funktionalität: Gegenstand erstellen
     | Name                         |              | Test Name                     |
     | Notiz                        |              | Test Notiz                    |
 
-    Und ich erstellen druecke
-    Dann man wird zur Liste des Inventars zurueckgefuehrt
-    Und ist der Gegenstand mit all den angegebenen Informationen erstellt
+    And ich erstellen druecke
+    Then man wird zur Liste des Inventars zurueckgefuehrt
+    And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
   @javascript @personas
-  Szenario: Wo man einen Gegenstand erstellen kann
-    Angenommen ich bin Matti
-    Und man befindet sich auf der Liste des Inventars
-    Dann kann man einen Gegenstand erstellen
+  Scenario: Wo man einen Gegenstand erstellen kann
+    Given ich bin Matti
+    And man befindet sich auf der Liste des Inventars
+    Then kann man einen Gegenstand erstellen
 
   @javascript @personas
-  Szenario: Felder die bereits vorausgefüllt sind
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Dann ist der Barcode bereits gesetzt
-    Und Letzte Inventur ist das heutige Datum
-    Und folgende Felder haben folgende Standardwerte
+  Scenario: Felder die bereits vorausgefüllt sind
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    Then ist der Barcode bereits gesetzt
+    And Letzte Inventur ist das heutige Datum
+    And folgende Felder haben folgende Standardwerte
     | Feldname         | Type             | Wert             |
     | Ausleihbar       | radio            | Nicht ausleihbar |
     | Inventarrelevant | select           | Ja               |
@@ -267,10 +266,10 @@ Funktionalität: Gegenstand erstellen
     | Anschaffungskategorie  | select     |                  |
 
   @javascript @personas
-  Szenario: Werte für Anschaffungskategorie hinterlegen
-    Angenommen ich bin Matti
-    Und man navigiert zur Gegenstandserstellungsseite
-    Dann sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt
+  Scenario: Werte für Anschaffungskategorie hinterlegen
+    Given ich bin Matti
+    And man navigiert zur Gegenstandserstellungsseite
+    Then sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt
     | Anschaffungskategorie |
     | Werkstatt-Technik     |
     | Produktionstechnik    |

@@ -1,65 +1,64 @@
-# language: de
 
-Funktionalität: Bestellfensterchen
+Feature: Bestellfensterchen
 
   Um Gegenstände ausleihen zu können
   möchte ich als Ausleiher
   die möglichkeit haben Modelle zu bestellen
 
   Grundlage:
-    Angenommen ich bin Normin
+    Given ich bin Normin
 
   @personas
-  Szenario: Bestellfensterchen
-    Angenommen man befindet sich auf der Seite der Hauptkategorien
-    Dann sehe ich das Bestellfensterchen
+  Scenario: Bestellfensterchen
+    Given man befindet sich auf der Seite der Hauptkategorien
+    Then sehe ich das Bestellfensterchen
 
   @personas
-  Szenario: Kein Bestellfensterchen
-    Angenommen man befindet sich auf der Bestellübersicht
-    Dann sehe ich kein Bestellfensterchen
+  Scenario: Kein Bestellfensterchen
+    Given man befindet sich auf der Bestellübersicht
+    Then sehe ich kein Bestellfensterchen
 
   @personas
-  Szenario: Bestellfensterchen Inhalt
-    Angenommen ich ein Modell der Bestellung hinzufüge
-    Dann erscheint es im Bestellfensterchen
-    Und die Modelle im Bestellfensterchen sind alphabetisch sortiert
-    Und gleiche Modelle werden zusammengefasst
-    Wenn das gleiche Modell nochmals hinzugefügt wird
-    Dann wird die Anzahl dieses Modells erhöht
-    Und die Modelle im Bestellfensterchen sind alphabetisch sortiert
-    Und gleiche Modelle werden zusammengefasst
-    Und ich kann zur detaillierten Bestellübersicht gelangen
+  Scenario: Bestellfensterchen Inhalt
+    Given ich ein Modell der Bestellung hinzufüge
+    Then erscheint es im Bestellfensterchen
+    And die Modelle im Bestellfensterchen sind alphabetisch sortiert
+    And gleiche Modelle werden zusammengefasst
+    When das gleiche Modell nochmals hinzugefügt wird
+    Then wird die Anzahl dieses Modells erhöht
+    And die Modelle im Bestellfensterchen sind alphabetisch sortiert
+    And gleiche Modelle werden zusammengefasst
+    And ich kann zur detaillierten Bestellübersicht gelangen
 
   @javascript @browser @personas
-  Szenario: Bestellfensterchen aus Kalender updaten
-    Wenn ich mit dem Kalender ein Modell der Bestellung hinzufüge
-    Dann wird das Bestellfensterchen aktualisiert
+  Scenario: Bestellfensterchen aus Kalender updaten
+    When ich mit dem Kalender ein Modell der Bestellung hinzufüge
+    Then wird das Bestellfensterchen aktualisiert
 
   @javascript @personas
-  Szenario: Zeit abgelaufen
-    Wenn die Zeit abgelaufen ist
-    Dann werde ich auf die Timeout Page weitergeleitet
+  Scenario: Zeit abgelaufen
+    When die Zeit abgelaufen ist
+    Then werde ich auf die Timeout Page weitergeleitet
 
   @javascript @personas
-  Szenario: Zeit überschritten
-    Wenn ich ein Modell der Bestellung hinzufüge
-    Dann sehe ich die Zeitanzeige
-    Wenn die Zeit überschritten ist
+  Scenario: Zeit überschritten
+    When ich ein Modell der Bestellung hinzufüge
+    Then sehe ich die Zeitanzeige
+    When die Zeit überschritten ist
 
   @javascript @personas
-  Szenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen
-    Angenommen meine Bestellung ist leer
-    Wenn man befindet sich auf der Seite der Hauptkategorien
-    Dann sehe ich keine Zeitanzeige
-    Wenn ich ein Modell der Bestellung hinzufüge
-    Dann sehe ich die Zeitanzeige
-    Und die Zeitanzeige ist in einer Schaltfläche im Reiter "Bestellung" auf der rechten Seite
-    Und die Zeitanzeige zählt von 30 Minuten herunter
+  Scenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen
+    Given meine Bestellung ist leer
+    When man befindet sich auf der Seite der Hauptkategorien
+    Then sehe ich keine Zeitanzeige
+    When ich ein Modell der Bestellung hinzufüge
+    Then sehe ich die Zeitanzeige
+    And die Zeitanzeige ist in einer Schaltfläche im Reiter "Bestellung" auf der rechten Seite
+    And die Zeitanzeige zählt von 30 Minuten herunter
 
   @personas
-  Szenario: Zeit zurücksetzen
-    Angenommen die Bestellung ist nicht leer
-    Dann sehe ich die Zeitanzeige
-    Wenn ich den Time-Out zurücksetze
-    Dann wird die Zeit zurückgesetzt
+  Scenario: Zeit zurücksetzen
+    Given die Bestellung ist nicht leer
+    Then sehe ich die Zeitanzeige
+    When ich den Time-Out zurücksetze
+    Then wird die Zeit zurückgesetzt

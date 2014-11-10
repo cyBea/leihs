@@ -1,32 +1,31 @@
-# language: de
 
-Funktionalität: Option
+Feature: Option
 
   Grundlage:
-    Angenommen ich bin Mike
+    Given ich bin Mike
 
   @javascript @browser @personas
-  Szenario: Option hinzufügen
-    Angenommen man öffnet die Liste des Inventars
-    Wenn ich eine neue Option hinzufüge
-    Und ich ändere die folgenden Details
+  Scenario: Option hinzufügen
+    Given man öffnet die Liste des Inventars
+    When ich eine neue Option hinzufüge
+    And ich ändere die folgenden Details
     | Feld             | Wert         |
     | Produkt          | Test Option  |
     | Preis            | 50           |
     | Inventarcode     | Test Barcode |
-    Und ich speichere die Informationen
-    Dann die neue Option ist erstellt
+    And ich speichere die Informationen
+    Then die neue Option ist erstellt
 
   @javascript @browser @personas
-  Szenario: Option bearbeiten
-    Angenommen man öffnet die Liste des Inventars
-    Wenn ich eine bestehende Option bearbeite
-    Und ich erfasse die folgenden Details
+  Scenario: Option bearbeiten
+    Given man öffnet die Liste des Inventars
+    When ich eine bestehende Option bearbeite
+    And ich erfasse die folgenden Details
     | Feld             | Wert           |
     | Produkt          | Test Option x  |
     | Preis            | 51             |
     | Inventarcode     | Test Barcode x |
-    Und ich speichere die Informationen
-    Dann die Informationen sind gespeichert
-    Und die Daten wurden entsprechend aktualisiert
+    And ich speichere die Informationen
+    Then die Informationen sind gespeichert
+    And die Daten wurden entsprechend aktualisiert
 

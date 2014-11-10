@@ -1,113 +1,111 @@
-# language: de
-
-Funktionalität: Bestellung editieren
+Feature: Edit order
 
   @javascript @personas
-  Szenario: Sperrstatus des Benutzers anzeigen
-    Angenommen ich bin Pius
-    Angenommen ich öffne eine Bestellung von ein gesperrter Benutzer
-    Dann sehe ich neben seinem Namen den Sperrstatus 'Gesperrt!'
+  Scenario: Sperrstatus des Benutzers anzeigen
+    Given I am Pius
+    And I open a take back for a suspended user
+    Then I see the note 'Suspended!' next to their name
 
   @javascript @personas
-  Szenario: Trotzdem genehmigen für Gruppen-Verwalter unterbinden
-    Angenommen ich bin Andi
-    Und eine Bestellung enhält überbuchte Modelle
-    Wenn I edit the order
-    Und die Bestellung genehmige
-    Dann ist es mir nicht möglich, die Genehmigung zu forcieren
+  Scenario: Prevent 'approve anyway' for group managers
+    Given I am Andi
+    And an order contains overbooked models
+    When I edit the order
+    And I approve the order
+    Then I cannot force the order to be approved
 
   @personas
-  Szenario: Keine leeren Bestellungen in der Liste der Bestellungen
-    Angenommen ich bin Pius
-    Und es existiert eine leere Bestellung
-    Dann sehe ich diese Bestellung nicht in der Liste der Bestellungen
+  Scenario: Keine leeren Bestellungen in der Liste der Bestellungen
+    Given ich bin Pius
+    And es existiert eine leere Bestellung
+    Then sehe ich diese Bestellung nicht in der Liste der Bestellungen
 
   @personas
-  Szenario: Sichtbare Reiter
-    Angenommen ich bin Andi
-    Wenn ich mich auf der Liste der Bestellungen befinde
-    Dann sehe ich die Reiter "Alle, Offen, Genehmigt, Abgelehnt"
+  Scenario: Sichtbare Reiter
+    Given ich bin Andi
+    When ich mich auf der Liste der Bestellungen befinde
+    Then sehe ich die Reiter "Alle, Offen, Genehmigt, Abgelehnt"
 
   @personas
-  Szenario: Definition visierpflichtige Bestellungen
-    Angenommen es existiert eine visierpflichtige Bestellung
-    Dann wurde diese Bestellung von einem Benutzer aus einer visierpflichtigen Gruppe erstellt
-    Und diese Bestellung beinhaltet ein Modell aus einer visierpflichtigen Gruppe
+  Scenario: Definition visierpflichtige Bestellungen
+    Given es existiert eine visierpflichtige Bestellung
+    Then wurde diese Bestellung von einem Benutzer aus einer visierpflichtigen Gruppe erstellt
+    And diese Bestellung beinhaltet ein Modell aus einer visierpflichtigen Gruppe
 
   @javascript @personas
-  Szenario: Alle Bestellungen anzeigen - Reiter Alle Bestellungen
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Wenn ich den Reiter "Alle" einsehe
-    Dann sehe ich alle visierpflichtigen Bestellungen
-    Und diese Bestellungen sind nach Erstelltdatum aufgelistet
+  Scenario: Alle Bestellungen anzeigen - Reiter Alle Bestellungen
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    When ich den Reiter "Alle" einsehe
+    Then sehe ich alle visierpflichtigen Bestellungen
+    And diese Bestellungen sind nach Erstelltdatum aufgelistet
 
   @javascript @browser @personas
-  Szenario: Reiter Offene Bestellungen Darstellung
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Wenn ich den Reiter "Offen" einsehe
-    Dann sehe ich alle offenen visierpflichtigen Bestellungen
-    Und ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
-    Und ich sehe auf der Bestellungszeile das Erstelldatum
-    Und ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
-    Und ich sehe auf der Bestellungszeile die Dauer der Bestellung
-    Und ich sehe auf der Bestellungszeile den Zweck
-    Und ich kann die Bestellung genehmigen
-    Und ich kann die Bestellung ablehnen
-    Und ich kann die Bestellung editieren
-    Und ich kann keine Bestellungen aushändigen
+  Scenario: Reiter Offene Bestellungen Darstellung
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    When ich den Reiter "Offen" einsehe
+    Then sehe ich alle offenen visierpflichtigen Bestellungen
+    And ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
+    And ich sehe auf der Bestellungszeile das Erstelldatum
+    And ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
+    And ich sehe auf der Bestellungszeile die Dauer der Bestellung
+    And ich sehe auf der Bestellungszeile den Zweck
+    And ich kann die Bestellung genehmigen
+    And ich kann die Bestellung ablehnen
+    And ich kann die Bestellung editieren
+    And ich kann keine Bestellungen aushändigen
 
   @javascript @browser @personas
-  Szenario: Reiter "Genehmigt" Darstellung
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Wenn ich den Reiter "Genehmigt" einsehe
-    Dann sehe ich alle genehmigten visierpflichtigen Bestellungen
-    Und ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
-    Und ich sehe auf der Bestellungszeile das Erstelldatum
-    Und ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
-    Und ich sehe auf der Bestellungszeile die Dauer der Bestellung
-    Und ich sehe auf der Bestellungszeile den Status
-    Und ich eine bereits gehmigte Bestellung editiere
-    Und gelange ich in die Ansicht der Aushändigung
-    Aber ich kann nicht aushändigen
+  Scenario: Reiter "Genehmigt" Darstellung
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    When ich den Reiter "Genehmigt" einsehe
+    Then sehe ich alle genehmigten visierpflichtigen Bestellungen
+    And ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
+    And ich sehe auf der Bestellungszeile das Erstelldatum
+    And ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
+    And ich sehe auf der Bestellungszeile die Dauer der Bestellung
+    And ich sehe auf der Bestellungszeile den Status
+    And ich eine bereits gehmigte Bestellung editiere
+    And gelange ich in die Ansicht der Aushändigung
+    But ich kann nicht aushändigen
 
   @javascript @browser @personas
-  Szenario: Reiter "Abgelehnt" Darstellung
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Wenn ich den Reiter "Abgelehnt" einsehe
-    Dann sehe ich alle abgelehnten visierpflichtigen Bestellungen
-    Und ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
-    Und ich sehe auf der Bestellungszeile das Erstelldatum
-    Und ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
-    Und ich sehe auf der Bestellungszeile die Dauer der Bestellung
-    Und ich sehe auf der Bestellungszeile den Status
+  Scenario: Reiter "Abgelehnt" Darstellung
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    When ich den Reiter "Abgelehnt" einsehe
+    Then sehe ich alle abgelehnten visierpflichtigen Bestellungen
+    And ich sehe auf der Bestellungszeile den Besteller mit Popup-Ansicht der Benutzerinformationen
+    And ich sehe auf der Bestellungszeile das Erstelldatum
+    And ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup-Ansicht der bestellten Gegenstände
+    And ich sehe auf der Bestellungszeile die Dauer der Bestellung
+    And ich sehe auf der Bestellungszeile den Status
 
   @javascript @personas
-  Szenario: Filter zum visieren aufheben
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Und sehe ich alle visierpflichtigen Bestellungen
-    Wenn ich den Filter "Zu prüfen" aufhebe
-    Dann sehe ich alle Bestellungen, welche von Benutzern der visierpflichtigen Gruppen erstellt wurden
+  Scenario: Filter zum visieren aufheben
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    And sehe ich alle visierpflichtigen Bestellungen
+    When ich den Filter "Zu prüfen" aufhebe
+    Then sehe ich alle Bestellungen, welche von Benutzern der visierpflichtigen Gruppen erstellt wurden
 
   @javascript @browser @personas
-  Szenario: Bereits genehmigte Bestellung zurücksetzen
-    Angenommen ich bin Andi
-    Und ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
-    Und ich mich auf der Liste der Bestellungen befinde
-    Wenn ich den Reiter "Genehmigt" einsehe
-    Und ich eine bereits gehmigte Bestellung editiere
-    Dann gelange ich in die Ansicht der Aushändigung
-    Und ich kann Modelle hinzufügen
-    Und ich kann Optionen hinzufügen
-    Aber ich kann keine Gegenstände zuteilen
-    Und ich kann nicht aushändigen
+  Scenario: Bereits genehmigte Bestellung zurücksetzen
+    Given ich bin Andi
+    And ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen
+    And ich mich auf der Liste der Bestellungen befinde
+    When ich den Reiter "Genehmigt" einsehe
+    And ich eine bereits gehmigte Bestellung editiere
+    Then gelange ich in die Ansicht der Aushändigung
+    And ich kann Modelle hinzufügen
+    And ich kann Optionen hinzufügen
+    But ich kann keine Gegenstände zuteilen
+    And ich kann nicht aushändigen
 

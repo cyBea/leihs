@@ -20,7 +20,7 @@ When(/^ich öffne eine Bestellung von ein gesperrter Benutzer$/) do
   step 'ich öffne eine Bestellung von "%s"' % user
 end
 
-When(/^sehe ich neben seinem Namen den Sperrstatus 'Gesperrt!'$/) do
+When(/^I see the note 'Suspended!' next to their name$/) do
   find("span.darkred-text", text: "%s!" % _("Suspended"))
 end
 
@@ -31,12 +31,12 @@ def ensure_suspended_user(user, inventory_pool, suspended_until = rand(1.years.f
   end
 end
 
-Angenommen(/^eine Bestellung enhält überbuchte Modelle$/) do
+Given(/^an order contains overbooked models$/) do
   @contract = @current_inventory_pool.contracts.submitted.with_verifiable_user_and_model.detect {|c| not c.approvable?}
   expect(@contract).not_to be_nil
 end
 
-Wenn(/^die Bestellung genehmige$/) do
+When(/^I approve the order$/) do
   if page.has_selector? "button", text: _("Approve order")
     click_button _("Approve order")
   elsif page.has_selector? "button", text: _("Verify + approve order")
@@ -44,7 +44,7 @@ Wenn(/^die Bestellung genehmige$/) do
   end
 end
 
-Dann(/^ist es mir nicht möglich, die Genehmigung zu forcieren$/) do
+Then(/^I cannot force the order to be approved$/) do
   expect(has_selector?(".modal")).to be true
   if page.has_selector? ".modal .multibutton .dropdown-toggle"
     find(".modal .multibutton .dropdown-toggle").click

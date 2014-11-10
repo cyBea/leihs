@@ -1,28 +1,27 @@
-# language: de
 
-Funktionalität: Explorative Suche
+Feature: Explorative Suche
 
   Um Modelle anhand von Kategorien explorativ zu entdecken
   möchte ich als Ausleihender
   eine entsprehende Interaktionsmöglichkeit haben
 
   Grundlage:
-    Angenommen ich bin Normin
+    Given ich bin Normin
 
   @personas
-  Szenario: Explorative Suche in Modellliste
-    Angenommen man sich auf der Modellliste befindet
-    Dann sehe ich die explorative Suche
-    Und sie beinhaltet die direkten Kinder und deren Kinder gemäss aktuell ausgewählter Kategorie
-    Und diejenigen Kategorien, die oder deren Nachfolger keine ausleihbare Gegenstände beinhalten, werden nicht angezeigt
+  Scenario: Explorative Suche in Modellliste
+    Given man sich auf der Modellliste befindet
+    Then sehe ich die explorative Suche
+    And sie beinhaltet die direkten Kinder und deren Kinder gemäss aktuell ausgewählter Kategorie
+    And diejenigen Kategorien, die oder deren Nachfolger keine ausleihbare Gegenstände beinhalten, werden nicht angezeigt
 
   @personas
-  Szenario: Wahl einer Subkategorie
-    Angenommen man sich auf der Modellliste befindet
-    Wenn ich eine Kategorie wähle
-    Dann werden die Modelle der aktuell angewählten Kategorie angezeigt
+  Scenario: Wahl einer Subkategorie
+    Given man sich auf der Modellliste befindet
+    When ich eine Kategorie wähle
+    Then werden die Modelle der aktuell angewählten Kategorie angezeigt
 
   @personas
-  Szenario: Unterstes Blatt erreicht
-    Angenommen man befindet sich auf der Modellliste einer Kategorie ohne Kinder
-    Dann ist die explorative Suche nicht sichtbar und die Modellliste ist erweitert
+  Scenario: Unterstes Blatt erreicht
+    Given man befindet sich auf der Modellliste einer Kategorie ohne Kinder
+    Then ist die explorative Suche nicht sichtbar und die Modellliste ist erweitert

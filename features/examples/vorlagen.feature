@@ -1,94 +1,93 @@
-# language: de
 
-Funktionalität: Vorlagen verwalten
+Feature: Vorlagen verwalten
 
   Als Ausleihe-Verwalter / Inventar-Verwalter möchte ich 
   die Möglichkeit haben, Vorlagen zu verwalten
 
   Grundlage:
-    Angenommen ich bin Mike
+    Given ich bin Mike
 
   @personas
-  Szenario: Liste aller Vorlagen anzeigen
-    Wenn ich im Inventarbereich auf den Link "Vorlagen" klicke
-    Dann öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen
-    Und die Vorlagen für dieses Inventarpool sind alphabetisch nach Namen sortiert
+  Scenario: Liste aller Vorlagen anzeigen
+    When ich im Inventarbereich auf den Link "Vorlagen" klicke
+    Then öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen
+    And die Vorlagen für dieses Inventarpool sind alphabetisch nach Namen sortiert
 
   @javascript @browser @personas
-  Szenario: Vorlage erstellen
-    Und ich befinde mich auf der Liste der Vorlagen
-    Wenn ich auf den Button "Neue Vorlage" klicke
-    Dann öffnet sich die Seite zur Erstellung einer neuen Vorlage
-    Wenn ich den Namen der Vorlage eingebe
-    Und ich Modelle hinzufüge
-    Dann steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
-    Und für jedes hinzugefügte Modell ist die Mindestanzahl 1
-    Wenn ich zu jedem Modell die Anzahl angebe
-    Und ich speichere
-    Dann ich wurde auf die Liste der Vorlagen weitergeleitet
-    Und ich sehe die Erfolgsbestätigung
-    Und die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
+  Scenario: Vorlage erstellen
+    And ich befinde mich auf der Liste der Vorlagen
+    When ich auf den Button "Neue Vorlage" klicke
+    Then öffnet sich die Seite zur Erstellung einer neuen Vorlage
+    When ich den Namen der Vorlage eingebe
+    And ich Modelle hinzufüge
+    Then steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
+    And für jedes hinzugefügte Modell ist die Mindestanzahl 1
+    When ich zu jedem Modell die Anzahl angebe
+    And ich speichere
+    Then ich wurde auf die Liste der Vorlagen weitergeleitet
+    And ich sehe die Erfolgsbestätigung
+    And die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
 
   @javascript @personas
-  Szenario: Prüfen, ob max. Anzahl bei den Modellen überschritten ist
-    Und ich befinde mich der Seite zur Erstellung einer neuen Vorlage
-    Und ich habe den Namen der Vorlage eingegeben
-    Wenn ich Modelle hinzufüge
-    Und ich bei einem Modell eine Anzahl eingebe, welche höher ist als die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
-    Wenn ich speichere
-    Dann ich sehe eine Warnmeldung wegen nicht erfüllbaren Vorlagen
-    Und die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
-    Und die Vorlage ist in der Liste als unerfüllbar markiert
-    Wenn ich die gleiche Vorlage bearbeite
-    Und ich die korrekte Anzahl angebe
-    Und ich speichere
-    Dann ich sehe die Erfolgsbestätigung
-    Und die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
-    Und die Vorlage ist in der Liste nicht als unerfüllbar markiert
+  Scenario: Prüfen, ob max. Anzahl bei den Modellen überschritten ist
+    And ich befinde mich der Seite zur Erstellung einer neuen Vorlage
+    And ich habe den Namen der Vorlage eingegeben
+    When ich Modelle hinzufüge
+    And ich bei einem Modell eine Anzahl eingebe, welche höher ist als die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
+    When ich speichere
+    Then ich sehe eine Warnmeldung wegen nicht erfüllbaren Vorlagen
+    And die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
+    And die Vorlage ist in der Liste als unerfüllbar markiert
+    When ich die gleiche Vorlage bearbeite
+    And ich die korrekte Anzahl angebe
+    And ich speichere
+    Then ich sehe die Erfolgsbestätigung
+    And die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
+    And die Vorlage ist in der Liste nicht als unerfüllbar markiert
 
   @javascript @personas
-  Szenario: Vorlage löschen
-    Und ich befinde mich auf der Liste der Vorlagen
-    Dann kann ich beliebige Vorlage direkt aus der Liste löschen
-    Und die Vorlage wurde aus der Liste gelöscht
-    Und die Vorlage wurde erfolgreich aus der Datenbank gelöscht
+  Scenario: Vorlage löschen
+    And ich befinde mich auf der Liste der Vorlagen
+    Then kann ich beliebige Vorlage direkt aus der Liste löschen
+    And die Vorlage wurde aus der Liste gelöscht
+    And die Vorlage wurde erfolgreich aus der Datenbank gelöscht
 
   @javascript @personas
-  Szenario: Vorlage ändern
-    Und ich befinde mich auf der Liste der Vorlagen
-    Und es existiert eine Vorlage mit mindestens zwei Modellen
-    Wenn ich auf den Button "Vorlage bearbeiten" klicke
-    Dann öffnet sich die Seite zur Bearbeitung einer existierenden Vorlage
-    Wenn ich den Namen ändere
-    Und ein Modell aus der Liste lösche
-    Und ich ein zusätzliches Modell hinzufüge
-    Dann für das hinzugefügte Modell ist die Mindestanzahl 1
-    Und die Anzahl bei einem der Modell ändere
-    Und ich speichere
-    Dann ich wurde auf die Liste der Vorlagen weitergeleitet
-    Und ich sehe die Erfolgsbestätigung
-    Und die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
+  Scenario: Vorlage ändern
+    And ich befinde mich auf der Liste der Vorlagen
+    And es existiert eine Vorlage mit mindestens zwei Modellen
+    When ich auf den Button "Vorlage bearbeiten" klicke
+    Then öffnet sich die Seite zur Bearbeitung einer existierenden Vorlage
+    When ich den Namen ändere
+    And ein Modell aus der Liste lösche
+    And ich ein zusätzliches Modell hinzufüge
+    Then für das hinzugefügte Modell ist die Mindestanzahl 1
+    And die Anzahl bei einem der Modell ändere
+    And ich speichere
+    Then ich wurde auf die Liste der Vorlagen weitergeleitet
+    And ich sehe die Erfolgsbestätigung
+    And die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
 
   @javascript @personas
-  Szenario: Pflichtangaben bei der Editieransicht
-    Und ich befinde mich auf der Editieransicht einer Vorlage
-    Wenn der Name nicht ausgefüllt ist
-    Und es ist mindestens ein Modell dem Template hinzugefügt
-    Und ich speichere
-    Dann I see an error message
-    Wenn ich den Name ausgefüllt habe
-    Und kein Modell hinzugefügt habe
-    Und ich speichere
-    Dann I see an error message
+  Scenario: Pflichtangaben bei der Editieransicht
+    And ich befinde mich auf der Editieransicht einer Vorlage
+    When der Name nicht ausgefüllt ist
+    And es ist mindestens ein Modell dem Template hinzugefügt
+    And ich speichere
+    Then I see an error message
+    When ich den Name ausgefüllt habe
+    And kein Modell hinzugefügt habe
+    And ich speichere
+    Then I see an error message
 
   @javascript @personas
-  Szenario: Pflichtangaben bei der Erstellungsansicht
-    Und ich befinde mich auf der Erstellungsansicht einer Vorlage
-    Wenn der Name nicht ausgefüllt ist
-    Und es ist mindestens ein Modell dem Template hinzugefügt
-    Und ich speichere
-    Dann I see an error message
-    Wenn ich den Name ausgefüllt habe
-    Und kein Modell hinzugefügt habe
-    Und ich speichere
-    Dann I see an error message
+  Scenario: Pflichtangaben bei der Erstellungsansicht
+    And ich befinde mich auf der Erstellungsansicht einer Vorlage
+    When der Name nicht ausgefüllt ist
+    And es ist mindestens ein Modell dem Template hinzugefügt
+    And ich speichere
+    Then I see an error message
+    When ich den Name ausgefüllt habe
+    And kein Modell hinzugefügt habe
+    And ich speichere
+    Then I see an error message

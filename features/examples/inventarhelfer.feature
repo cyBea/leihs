@@ -1,96 +1,95 @@
-# language: de
 
-Funktionalität: Inventarhelfer
+Feature: Inventarhelfer
 
   Grundlage:
-    Angenommen ich bin Matti
+    Given ich bin Matti
 
   @personas
-  Szenario: Wie man den Helferschirm erreicht
-    Wenn man im Inventar Bereich ist
-    Dann kann man über die Tabnavigation zum Helferschirm wechseln
+  Scenario: Wie man den Helferschirm erreicht
+    When man im Inventar Bereich ist
+    Then kann man über die Tabnavigation zum Helferschirm wechseln
 
   @javascript @personas
-  Szenario: Gestell bei vorhandenem Ort ändern
-    Angenommen man ist auf dem Helferschirm
-    Und es existiert ein Gegenstand, welches sich denselben Ort mit einem anderen Gegenstand teilt
-    Dann wähle ich das Feld "Gestell" aus der Liste aus
-    Und ich setze den Wert für das Feld "Gestell"
-    Dann gebe ich den Anfang des Inventarcodes des spezifischen Gegenstandes ein
-    Und wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer
-    Dann sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
-    Und die geänderten Werte sind hervorgehoben
-    Und der Ort des anderen Gegenstandes ist dergleiche geblieben
+  Scenario: Gestell bei vorhandenem Ort ändern
+    Given man ist auf dem Helferschirm
+    And es existiert ein Gegenstand, welches sich denselben Ort mit einem anderen Gegenstand teilt
+    Then wähle ich das Feld "Gestell" aus der Liste aus
+    And ich setze den Wert für das Feld "Gestell"
+    Then gebe ich den Anfang des Inventarcodes des spezifischen Gegenstandes ein
+    And wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer
+    Then sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
+    And die geänderten Werte sind hervorgehoben
+    And der Ort des anderen Gegenstandes ist dergleiche geblieben
 
   @javascript @browser @personas
-  Szenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
-    Angenommen man ist auf dem Helferschirm
-    Und man editiert das Feld "Verantwortliche Abteilung" eines ausgeliehenen Gegenstandes, wo man Besitzer ist
-    Dann erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
+  Scenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
+    Given man ist auf dem Helferschirm
+    And man editiert das Feld "Verantwortliche Abteilung" eines ausgeliehenen Gegenstandes, wo man Besitzer ist
+    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
 
   @javascript @personas
-  Szenario: Die ausgeliehenen Gegenständen kann man nicht ausmustern
-    Angenommen man ist auf dem Helferschirm
-    Und man mustert einen ausgeliehenen Gegenstand aus
-    Dann erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist
+  Scenario: Die ausgeliehenen Gegenständen kann man nicht ausmustern
+    Given man ist auf dem Helferschirm
+    And man mustert einen ausgeliehenen Gegenstand aus
+    Then erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist
 
   @javascript @personas
-  Szenario: Geräte über den Helferschirm editieren, mittels vollständigem Inventarcode (Scanner)
-    Angenommen man ist auf dem Helferschirm
-    Dann wähle ich all die Felder über eine List oder per Namen aus
-    Und ich setze all ihre Initalisierungswerte
-    Dann scanne oder gebe ich den Inventarcode von einem Gegenstand ein, der am Lager und in keinem Vertrag vorhanden ist
-    Dann sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
-    Und die geänderten Werte sind hervorgehoben
+  Scenario: Geräte über den Helferschirm editieren, mittels vollständigem Inventarcode (Scanner)
+    Given man ist auf dem Helferschirm
+    Then wähle ich all die Felder über eine List oder per Namen aus
+    And ich setze all ihre Initalisierungswerte
+    Then scanne oder gebe ich den Inventarcode von einem Gegenstand ein, der am Lager und in keinem Vertrag vorhanden ist
+    Then sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
+    And die geänderten Werte sind hervorgehoben
 
   @javascript @personas
-  Szenario: Pflichtfelder
-    Angenommen man ist auf dem Helferschirm
-    Wenn "Bezug" ausgewählt und auf "Investition" gesetzt wird, dann muss auch "Projektnummer" angegeben werden
-    Wenn "Inventarrelevant" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Anschaffungskategorie" angegeben werden
-    Wenn "Ausmusterung" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Grund der Ausmusterung" angegeben werden
-    Dann sind alle Pflichtfelder mit einem Stern gekenzeichnet
-    Wenn ein Pflichtfeld nicht ausgefüllt/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen
-    Und I see an error message
-    Und die nicht ausgefüllten/ausgewählten Pflichtfelder sind rot markiert
+  Scenario: Pflichtfelder
+    Given man ist auf dem Helferschirm
+    When "Bezug" ausgewählt und auf "Investition" gesetzt wird, dann muss auch "Projektnummer" angegeben werden
+    When "Inventarrelevant" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Anschaffungskategorie" angegeben werden
+    When "Ausmusterung" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Grund der Ausmusterung" angegeben werden
+    Then sind alle Pflichtfelder mit einem Stern gekenzeichnet
+    When ein Pflichtfeld nicht ausgefüllt/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen
+    And I see an error message
+    And die nicht ausgefüllten/ausgewählten Pflichtfelder sind rot markiert
 
   @javascript @personas
-  Szenario: Geräte über den Helferschirm editieren, mittels Inventarcode konnte nicht gefunden wurde
-    Angenommen man ist auf dem Helferschirm
-    Dann wähle ich die Felder über eine List oder per Namen aus
-    Und ich setze ihre Initalisierungswerte
-    Dann scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht gefunden wird
-    Dann erhählt man eine Fehlermeldung
+  Scenario: Geräte über den Helferschirm editieren, mittels Inventarcode konnte nicht gefunden wurde
+    Given man ist auf dem Helferschirm
+    Then wähle ich die Felder über eine List oder per Namen aus
+    And ich setze ihre Initalisierungswerte
+    Then scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht gefunden wird
+    Then erhählt man eine Fehlermeldung
 
   @javascript @personas
-  Szenario: Geräte über den Helferschirm editieren mittels Inventarcode über Autovervollständigung
-    Angenommen man ist auf dem Helferschirm
-    Dann wähle ich die Felder über eine List oder per Namen aus
-    Und ich setze ihre Initalisierungswerte
-    Dann gebe ich den Anfang des Inventarcodes eines Gegenstand ein
-    Und wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer
-    Dann sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
-    Und die geänderten Werte sind hervorgehoben
+  Scenario: Geräte über den Helferschirm editieren mittels Inventarcode über Autovervollständigung
+    Given man ist auf dem Helferschirm
+    Then wähle ich die Felder über eine List oder per Namen aus
+    And ich setze ihre Initalisierungswerte
+    Then gebe ich den Anfang des Inventarcodes eines Gegenstand ein
+    And wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer
+    Then sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
+    And die geänderten Werte sind hervorgehoben
 
   @javascript @browser @personas
-  Szenario: Editeren nach automatischen speichern
-    Angenommen man editiert ein Gerät über den Helferschirm mittels Inventarcode
-    Wenn man die Editierfunktion nutzt
-    Dann kann man an Ort und Stelle alle Werte des Gegenstandes editieren
-    Wenn man die Änderungen speichert
-    Dann sind sie gespeichert
+  Scenario: Editeren nach automatischen speichern
+    Given man editiert ein Gerät über den Helferschirm mittels Inventarcode
+    When man die Editierfunktion nutzt
+    Then kann man an Ort und Stelle alle Werte des Gegenstandes editieren
+    When man die Änderungen speichert
+    Then sind sie gespeichert
 
   @javascript @personas
-  Szenario: Editeren nach automatischen speichern abbrechen
-    Angenommen man editiert ein Gerät über den Helferschirm mittels Inventarcode
-    Wenn man die Editierfunktion nutzt
-    Dann kann man an Ort und Stelle alle Werte des Gegenstandes editieren
-    Wenn man seine Änderungen widerruft
-    Dann sind die Änderungen widerrufen
-    Und man sieht alle ursprünglichen Werte des Gegenstandes in der Übersicht
+  Scenario: Editeren nach automatischen speichern abbrechen
+    Given man editiert ein Gerät über den Helferschirm mittels Inventarcode
+    When man die Editierfunktion nutzt
+    Then kann man an Ort und Stelle alle Werte des Gegenstandes editieren
+    When man seine Änderungen widerruft
+    Then sind die Änderungen widerrufen
+    And man sieht alle ursprünglichen Werte des Gegenstandes in der Übersicht
 
   @javascript @personas
-  Szenario: Bei Gegenständen, die in Verträgen vorhanden sind, können gewisse Felder nicht editiert werden
-    Angenommen man ist auf dem Helferschirm
-    Und man editiert das Feld "Modell" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist
-    Dann erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist
+  Scenario: Bei Gegenständen, die in Verträgen vorhanden sind, können gewisse Felder nicht editiert werden
+    Given man ist auf dem Helferschirm
+    And man editiert das Feld "Modell" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist
+    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist

@@ -1,24 +1,23 @@
-# language: de
 
-Funktionalität: Benutzeransicht
+Feature: Benutzeransicht
 
   Als Benutzer möchte ich die Möglichkeit haben meine Benutzerdaten zu sehen
 
   Grundlage:
-    Angenommen ich bin Normin
+    Given ich bin Normin
 
   @personas
-  Szenario: Benutzerdaten ansehen
-    Wenn ich auf meinen Namen klicke
-    Dann gelange ich auf die Seite der Benutzerdaten
-    Und werden mir meine Benutzerdaten angezeigt
-    Und die Benutzerdaten beinhalten
+  Scenario: Benutzerdaten ansehen
+    When ich auf meinen Namen klicke
+    Then gelange ich auf die Seite der Benutzerdaten
+    And werden mir meine Benutzerdaten angezeigt
+    And die Benutzerdaten beinhalten
     |Vorname|
     |Nachname|
     |E-Mail|
     |Telefon|
 
   @javascript @personas
-  Szenario: Benutzerdaten unter dem Benutzername
-    Wenn ich über meinen Namen fahre
-    Dann sehe ich im Dropdown eine Schaltfläche die zur Benutzeransicht führt
+  Scenario: Benutzerdaten unter dem Benutzername
+    When ich über meinen Namen fahre
+    Then sehe ich im Dropdown eine Schaltfläche die zur Benutzeransicht führt

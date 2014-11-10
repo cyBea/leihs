@@ -1,21 +1,20 @@
-# language: de
 
-Funktionalität: Software kopieren
+Feature: Software kopieren
 
   Grundlage:
-    Angenommen ich bin Mike
+    Given ich bin Mike
 
   @personas @javascript @browser
-  Szenario: Software kopieren
-    Angenommen es existiert eine Software-Lizenz
-    Wenn ich eine bestehende Software-Lizenz kopiere
-    Dann wird die Editieransicht der neuen Software-Lizenz geöffnet
-    Und der Titel heisst "Neue Software-Lizenz erstellen"
-    Und der Speichern-Button heisst "Lizenz speichern"
-    Und ein neuer Inventarcode vergeben wird
-    Wenn ich speichere
-    Dann ist die neue Lizenz erstellt
-    Und wurden die folgenden Felder von der kopierten Lizenz übernommen
+  Scenario: Software kopieren
+    Given es existiert eine Software-Lizenz
+    When ich eine bestehende Software-Lizenz kopiere
+    Then wird die Editieransicht der neuen Software-Lizenz geöffnet
+    And der Titel heisst "Neue Software-Lizenz erstellen"
+    And der Speichern-Button heisst "Lizenz speichern"
+    And ein neuer Inventarcode vergeben wird
+    When ich speichere
+    Then ist die neue Lizenz erstellt
+    And wurden die folgenden Felder von der kopierten Lizenz übernommen
       | Software                  |
       | Bezug                     |
       | Besitzer                  |
@@ -35,9 +34,9 @@ Funktionalität: Software kopieren
       | Maintenance-Ablaufdatum   |
 
   @personas @javascript @browser
-  Szenario: Wo kann Software kopiert werden
-    Angenommen es existiert eine Software-Lizenz
-    Wenn man im Inventar Bereich ist
-    Dann kann ich die bestehende Software-Lizenz kopieren
-    Wenn ich mich in der Editieransicht einer Sofware-Lizenz befinde
-    Dann kann ich die bestehende Software-Lizenz speichern und kopieren
+  Scenario: Wo kann Software kopiert werden
+    Given es existiert eine Software-Lizenz
+    When man im Inventar Bereich ist
+    Then kann ich die bestehende Software-Lizenz kopieren
+    When ich mich in der Editieransicht einer Sofware-Lizenz befinde
+    Then kann ich die bestehende Software-Lizenz speichern und kopieren

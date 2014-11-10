@@ -1,139 +1,138 @@
-# language: de
 
-Funktionalität: Passwörter von Benutzern
+Feature: Passwörter von Benutzern
 
   Als Ausleihe-Verwalter, Inventar-Verwalter oder Administrator,
   möchte ich eine Benutzer ein Login und Passwort zuteilen
 
   @personas
-  Szenariogrundriss: Benutzer mit Benutzernamen und Passwort erstellen
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
-    Und der Benutzer hat Zugriff auf ein Inventarpool
-    Dann kann sich der Benutzer "username" mit "password" anmelden
+  Scenario Outline: Benutzer mit Benutzernamen und Passwort erstellen
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
+    And der Benutzer hat Zugriff auf ein Inventarpool
+    Then kann sich der Benutzer "username" mit "password" anmelden
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzernamen und Passwort ändern
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich den Benutzernamen auf "newnorminusername" und das Passwort auf "newnorminpassword" ändere
-    Und der Benutzer hat Zugriff auf ein Inventarpool
-    Dann kann sich der Benutzer "newnorminusername" mit "newnorminpassword" anmelden
+  Scenario Outline: Benutzernamen und Passwort ändern
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich den Benutzernamen auf "newnorminusername" und das Passwort auf "newnorminpassword" ändere
+    And der Benutzer hat Zugriff auf ein Inventarpool
+    Then kann sich der Benutzer "newnorminusername" mit "newnorminpassword" anmelden
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer mit falscher Passwort-Bestätigung erstellen
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer mit falscher Passwort-Bestätigung erstellen probiere
-    Dann I see an error message
+  Scenario Outline: Benutzer mit falscher Passwort-Bestätigung erstellen
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer mit falscher Passwort-Bestätigung erstellen probiere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer mit fehlenden Passwortangaben editieren
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich die Passwort-Angaben nicht eingebe und speichere
-    Dann I see an error message
+  Scenario Outline: Benutzer mit fehlenden Passwortangaben editieren
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich die Passwort-Angaben nicht eingebe und speichere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer ohne Loginnamen erstellen
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer ohne Loginnamen erstellen probiere
-    Dann I see an error message
+  Scenario Outline: Benutzer ohne Loginnamen erstellen
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer ohne Loginnamen erstellen probiere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Passwort ändern
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich das Passwort von "Normin" auf "newnorminpassword" ändere
-    Und der Benutzer hat Zugriff auf ein Inventarpool
-    Dann kann sich der Benutzer "normin" mit "newnorminpassword" anmelden
+  Scenario Outline: Passwort ändern
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich das Passwort von "Normin" auf "newnorminpassword" ändere
+    And der Benutzer hat Zugriff auf ein Inventarpool
+    Then kann sich der Benutzer "normin" mit "newnorminpassword" anmelden
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer mit fehlenden Passwortangaben erstellen
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer mit fehlenden Passwortangaben erstellen probiere
-    Dann I see an error message
+  Scenario Outline: Benutzer mit fehlenden Passwortangaben erstellen
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer mit fehlenden Passwortangaben erstellen probiere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer ohne Loginnamen editieren
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich den Benutzernamen von nicht ausfülle und speichere
-    Dann I see an error message
+  Scenario Outline: Benutzer ohne Loginnamen editieren
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich den Benutzernamen von nicht ausfülle und speichere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzer mit falscher Passwort-Bestätigung editieren
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich eine falsche Passwort-Bestägigung eingebe und speichere
-    Dann I see an error message
+  Scenario Outline: Benutzer mit falscher Passwort-Bestätigung editieren
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich eine falsche Passwort-Bestägigung eingebe und speichere
+    Then I see an error message
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |
       | Gino   |
 
   @personas
-  Szenariogrundriss: Benutzernamen ändern
-    Angenommen ich bin <Person>
-    Und man befindet sich auf der Benutzereditieransicht von "Normin"
-    Wenn ich den Benutzernamen von "Normin" auf "username" ändere
-    Und der Benutzer hat Zugriff auf ein Inventarpool
-    Dann kann sich der Benutzer "username" mit "password" anmelden
+  Scenario Outline: Benutzernamen ändern
+    Given ich bin <Person>
+    And man befindet sich auf der Benutzereditieransicht von "Normin"
+    When ich den Benutzernamen von "Normin" auf "username" ändere
+    And der Benutzer hat Zugriff auf ein Inventarpool
+    Then kann sich der Benutzer "username" mit "password" anmelden
 
-    Beispiele:
+    Examples:
       | Person |
       | Mike   |
       | Pius   |

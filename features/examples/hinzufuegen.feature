@@ -1,18 +1,17 @@
-# language: de
 
-Funktionalität: Hinzufügen von Modellen
+Feature: Hinzufügen von Modellen
 
   Grundlage:
-    Angenommen ich bin Pius
+    Given ich bin Pius
 
   @javascript @browser @personas
-  Szenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Bestellung
-    Angenommen ich editiere eine Bestellung
-      Und ich suche ein Modell um es hinzuzufügen
-    Dann sehe ich die Verfügbarkeit innerhalb der gefundenen Modelle im Format: "2(3)/7 Modelname Typ"
+  Scenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Bestellung
+    Given ich editiere eine Bestellung
+      And ich suche ein Modell um es hinzuzufügen
+    Then sehe ich die Verfügbarkeit innerhalb der gefundenen Modelle im Format: "2(3)/7 Modelname Typ"
 
   @javascript @browser @personas
-  Szenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Aushändigung
-    Angenommen I am doing a hand over
-      Und ich suche ein Modell um es hinzuzufügen
-    Dann sehe ich die Verfügbarkeit innerhalb der gefundenen Modelle im Format: "2(3)/7 Modelname Typ"
+  Scenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Aushändigung
+    Given I am doing a hand over
+      And ich suche ein Modell um es hinzuzufügen
+    Then sehe ich die Verfügbarkeit innerhalb der gefundenen Modelle im Format: "2(3)/7 Modelname Typ"

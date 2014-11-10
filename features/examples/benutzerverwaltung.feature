@@ -1,28 +1,27 @@
-# language: de
 
-Funktionalität: Benutzer verwalten 
+Feature: Benutzer verwalten 
 
   @javascript @personas
-  Szenariogrundriss: Sperrfunktion für Benutzer und Delegation
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Und man editiert einen <Benutzertyp>
-    Und man nutzt die Sperrfunktion
-    Dann muss man den Grund der Sperrung eingeben
-    Und sofern der <Benutzertyp> gesperrt ist, kann man die Sperrung aufheben
-    Beispiele:
+  Scenario Outline: Sperrfunktion für Benutzer und Delegation
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    And man editiert einen <Benutzertyp>
+    And man nutzt die Sperrfunktion
+    Then muss man den Grund der Sperrung eingeben
+    And sofern der <Benutzertyp> gesperrt ist, kann man die Sperrung aufheben
+    Examples:
       | Benutzertyp |
       | Benutzer    |
       | Delegation  |
 
   @upcoming @personas
-  Szenario: Elemente der Editieransicht
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Und man editiert einen Benutzer
-    Dann sieht man als Titel den Vornamen und Namen des Benutzers, sofern bereits vorhanden
-    Dann sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
-    Dann sieht man die Sperrfunktion für diesen Benutzer
-    Und sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung
-    Dann sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
+  Scenario: Elemente der Editieransicht
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    And man editiert einen Benutzer
+    Then sieht man als Titel den Vornamen und Namen des Benutzers, sofern bereits vorhanden
+    Then sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
+    Then sieht man die Sperrfunktion für diesen Benutzer
+    And sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung
+    Then sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
     |en         |de           |
     |Last name  |Name         |
     |First name |Vorname      |
@@ -32,173 +31,173 @@ Funktionalität: Benutzer verwalten
     |Country    |Land         |
     |Phone      |Telefonnummer|
     |E-Mail     |E-Mail-Adresse|
-    Und man kann die Informationen ändern, sofern es sich um einen externen Benutzer handelt
-    Und man kann die Informationen nicht verändern, sofern es sich um einen Benutzer handelt, der über ein externes Authentifizierungssystem eingerichtet wurde
-    Und man sieht die Rollen des Benutzers und kann diese entsprechend seiner Rolle verändern
-    Und man kann die vorgenommenen Änderungen abspeichern
+    And man kann die Informationen ändern, sofern es sich um einen externen Benutzer handelt
+    And man kann die Informationen nicht verändern, sofern es sich um einen Benutzer handelt, der über ein externes Authentifizierungssystem eingerichtet wurde
+    And man sieht die Rollen des Benutzers und kann diese entsprechend seiner Rolle verändern
+    And man kann die vorgenommenen Änderungen abspeichern
 
   @personas
-  Szenario: Als Administrator einen anderen Benutzer Administrator machen
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat
-    Wenn man diesen Benutzer die Rolle Administrator zuweist
-    Und ich speichere
-    Dann sieht man die Erfolgsbestätigung
-    Und hat dieser Benutzer die Rolle Administrator
-    Und alle andere Zugriffe auf Inventarpools bleiben beibehalten
+  Scenario: Als Administrator einen anderen Benutzer Administrator machen
+    Given ich bin Gino
+    And man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat
+    When man diesen Benutzer die Rolle Administrator zuweist
+    And ich speichere
+    Then sieht man die Erfolgsbestätigung
+    And hat dieser Benutzer die Rolle Administrator
+    And alle andere Zugriffe auf Inventarpools bleiben beibehalten
 
   @personas
-  Szenario: Als Administrator einem anderen Benutzer die Rolle Administrator wegnehmen
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat
-    Wenn man diesem Benutzer die Rolle Administrator wegnimmt
-    Und ich speichere
-    Dann hat dieser Benutzer die Rolle Administrator nicht mehr
-    Und alle andere Zugriffe auf Inventarpools bleiben beibehalten
+  Scenario: Als Administrator einem anderen Benutzer die Rolle Administrator wegnehmen
+    Given ich bin Gino
+    And man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat
+    When man diesem Benutzer die Rolle Administrator wegnimmt
+    And ich speichere
+    Then hat dieser Benutzer die Rolle Administrator nicht mehr
+    And alle andere Zugriffe auf Inventarpools bleiben beibehalten
 
   @personas
-  Szenariogrundriss: Als Ausleihe- oder Inventar-Verwalter hat man kein Zugriff auf die Administrator-User-Pfade
-    Angenommen ich bin <Person>
-    Wenn man versucht auf die Administrator Benutzererstellenansicht zu gehen
-    Dann gelangt man auf diese Seite nicht
-    Wenn man versucht auf die Administrator Benutzereditieransicht zu gehen
-    Dann gelangt man auf diese Seite nicht
-    Beispiele:
+  Scenario Outline: Als Ausleihe- oder Inventar-Verwalter hat man kein Zugriff auf die Administrator-User-Pfade
+    Given ich bin <Person>
+    When man versucht auf die Administrator Benutzererstellenansicht zu gehen
+    Then gelangt man auf diese Seite nicht
+    When man versucht auf die Administrator Benutzereditieransicht zu gehen
+    Then gelangt man auf diese Seite nicht
+    Examples:
       | Person |
       | Pius   |
       | Mike   |
 
   @javascript @personas
-  Szenario: Neuen Benutzer im Geräterpark als Ausleihe-Verwalter hinzufügen
-    Angenommen ich bin Pius
-    Wenn man in der Benutzeransicht ist
-    Und man einen Benutzer hinzufügt
-    Und die folgenden Informationen eingibt
+  Scenario: Neuen Benutzer im Geräterpark als Ausleihe-Verwalter hinzufügen
+    Given ich bin Pius
+    When man in der Benutzeransicht ist
+    And man einen Benutzer hinzufügt
+    And die folgenden Informationen eingibt
       | Nachname       |
       | Vorname        |
       | E-Mail         |
-    Und man gibt die Login-Daten ein
-    Und man gibt eine Badge-Id ein
-    Und man hat nur die folgenden Rollen zur Auswahl
+    And man gibt die Login-Daten ein
+    And man gibt eine Badge-Id ein
+    And man hat nur die folgenden Rollen zur Auswahl
       | No access |
       | Customer  |
       | Group manager  |
       | Lending manager  |
-    Und eine der folgenden Rollen auswählt
+    And eine der folgenden Rollen auswählt
       | tab                | role              |
       | Kunde              | customer          |
       | Gruppen-Verwalter  | group_manager   |
       | Ausleihe-Verwalter | lending_manager   |
-    Und man teilt mehrere Gruppen zu
-    Und ich speichere
-    Dann ist der Benutzer mit all den Informationen gespeichert
+    And man teilt mehrere Gruppen zu
+    And ich speichere
+    Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
-  Szenario: Als Administrator neuen Benutzer erstellen
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    Wenn man von hier auf die Benutzererstellungsseite geht
-    Und den Nachnamen eingibt
-    Und den Vornahmen eingibt
-    Und die Email-Addresse eingibt
-    Und man gibt die Login-Daten ein
-    Und ich speichere
-    Dann wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet
-    Und man sieht eine Bestätigungsmeldung
-    Und der neue Benutzer wurde erstellt
-    Und er hat keine Zugriffe auf Inventarpools und ist kein Administrator
+  Scenario: Als Administrator neuen Benutzer erstellen
+    Given ich bin Gino
+    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+    When man von hier auf die Benutzererstellungsseite geht
+    And den Nachnamen eingibt
+    And den Vornahmen eingibt
+    And die Email-Addresse eingibt
+    And man gibt die Login-Daten ein
+    And ich speichere
+    Then wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet
+    And man sieht eine Bestätigungsmeldung
+    And der neue Benutzer wurde erstellt
+    And er hat keine Zugriffe auf Inventarpools und ist kein Administrator
 
   @personas
-  Szenario: Auflistung der Inventarpools eines Benutzers
-    Angenommen ich bin Ramon
-    Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    Und man einen Benutzer mit Zugriffsrechten editiert
-    Dann werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet
+  Scenario: Auflistung der Inventarpools eines Benutzers
+    Given ich bin Ramon
+    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+    And man einen Benutzer mit Zugriffsrechten editiert
+    Then werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet
 
   @javascript @browser @personas
-  Szenario: Voraussetzungen fürs Löschen eines Benutzers im Gerätepark
-    Angenommen ich bin Ramon
-    Und man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
-    Und man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    Wenn ich diesen Benutzer aus der Liste lösche
-    Dann I see an error message
-    Und der Benutzer ist nicht gelöscht
+  Scenario: Voraussetzungen fürs Löschen eines Benutzers im Gerätepark
+    Given ich bin Ramon
+    And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
+    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
+    When ich diesen Benutzer aus der Liste lösche
+    Then I see an error message
+    And der Benutzer ist nicht gelöscht
 
   @personas
-  Szenario: Alphabetische Sortierung der Benutzer ausserhalb vom Inventarpool
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+  Scenario: Alphabetische Sortierung der Benutzer ausserhalb vom Inventarpool
+    Given ich bin Gino
+    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
 
   @personas
-  Szenario: Zugriff entfernen als Ausleihe-Verwalter
-    Angenommen ich bin Pius
-    Und man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
-    Wenn man den Zugriff entfernt
-    Und ich speichere
-    Dann hat der Benutzer keinen Zugriff auf das Inventarpool
+  Scenario: Zugriff entfernen als Ausleihe-Verwalter
+    Given ich bin Pius
+    And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
+    When man den Zugriff entfernt
+    And ich speichere
+    Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @javascript @personas
-  Szenario: Benutzer im Geräterpark als Administrator löschen
-    Angenommen ich bin Gino
-    Und man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
-    Und man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    Wenn ich diesen Benutzer aus der Liste lösche
-    Dann wurde der Benutzer aus der Liste gelöscht
-    Und der Benutzer ist gelöscht
+  Scenario: Benutzer im Geräterpark als Administrator löschen
+    Given ich bin Gino
+    And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
+    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
+    When ich diesen Benutzer aus der Liste lösche
+    Then wurde der Benutzer aus der Liste gelöscht
+    And der Benutzer ist gelöscht
 
   @personas
-  Szenario: Zugriff entfernen als Administrator
-    Angenommen ich bin Gino
-    Und man editiert einen Benutzer der Zugriff auf ein Inventarpool hat und keine Gegenstände hat
-    Wenn man den Zugriff entfernt
-    Und ich speichere
-    Dann hat der Benutzer keinen Zugriff auf das Inventarpool
+  Scenario: Zugriff entfernen als Administrator
+    Given ich bin Gino
+    And man editiert einen Benutzer der Zugriff auf ein Inventarpool hat und keine Gegenstände hat
+    When man den Zugriff entfernt
+    And ich speichere
+    Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @personas
-  Szenario: Startseite setzen
-    Angenommen ich bin Pius
-    Und man befindet sich auf der Liste der Benutzer
-    Wenn man die Startseite setzt
-    Dann ist die Liste der Benutzer die Startseite
+  Scenario: Startseite setzen
+    Given ich bin Pius
+    And man befindet sich auf der Liste der Benutzer
+    When man die Startseite setzt
+    Then ist die Liste der Benutzer die Startseite
 
   @javascript @personas @browser
-  Szenario: Elemente der Benutzeradministration
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Dann findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"
-    Dann sieht man eine Liste aller Benutzer
-    Und man kann filtern nach den folgenden Eigenschaften: gesperrt
-    Und man kann filtern nach den folgenden Rollen:
+  Scenario: Elemente der Benutzeradministration
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    Then findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"
+    Then sieht man eine Liste aller Benutzer
+    And man kann filtern nach den folgenden Eigenschaften: gesperrt
+    And man kann filtern nach den folgenden Rollen:
       | tab                | role               |
       | Kunde              | customers          |
       | Ausleihe-Verwalter | lending_managers   |
       | Inventar-Verwalter | inventory_managers |
-    Und man kann für jeden Benutzer die Editieransicht aufrufen
+    And man kann für jeden Benutzer die Editieransicht aufrufen
 
   @javascript @personas
-  Szenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Und ein Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
-    Dann sieht man folgende Informationen in folgender Reihenfolge:
+  Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    And ein Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
+    Then sieht man folgende Informationen in folgender Reihenfolge:
       |attr |
       |Vorname Name|
       |Telefonnummer|
       |Rolle|
 
   @javascript @personas
-  Szenario: Darstellung eines Benutzers in Listen ohne zugeteilte Rolle
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Und ein Benutzer ohne zugeteilte Rolle erscheint in einer Benutzerliste
-    Dann sieht man folgende Informationen in folgender Reihenfolge:
+  Scenario: Darstellung eines Benutzers in Listen ohne zugeteilte Rolle
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    And ein Benutzer ohne zugeteilte Rolle erscheint in einer Benutzerliste
+    Then sieht man folgende Informationen in folgender Reihenfolge:
       |attr |
       |Vorname Name|
       |Telefonnummer|
       |Rolle|
 
   @javascript @personas
-  Szenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle und Status gesperrt
-    Angenommen man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Und ein gesperrter Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
-    Dann sieht man folgende Informationen in folgender Reihenfolge:
+  Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle und Status gesperrt
+    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    And ein gesperrter Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
+    Then sieht man folgende Informationen in folgender Reihenfolge:
       |attr |
       |Vorname Name|
       |Telefonnummer|
@@ -207,55 +206,55 @@ Funktionalität: Benutzer verwalten
 
   # English: lending manager
   @personas
-  Szenario: Benutzerolle "Ausleihe-Verwalter"
-    Angenommen man ist Ausleihe-Verwalter
-    Wenn man im Inventar Bereich ist
-    Dann kann man neue Gegenstände erstellen
-    Und diese Gegenstände ausschliesslich nicht inventarrelevant sind
-    Und man kann Optionen erstellen
-    Und man kann neue Benutzer erstellen und für die Ausleihe sperren
-    Und man kann nicht inventarrelevante Gegenstände ausmustern, sofern man deren Besitzer ist
+  Scenario: Benutzerolle "Ausleihe-Verwalter"
+    Given man ist Ausleihe-Verwalter
+    When man im Inventar Bereich ist
+    Then kann man neue Gegenstände erstellen
+    And diese Gegenstände ausschliesslich nicht inventarrelevant sind
+    And man kann Optionen erstellen
+    And man kann neue Benutzer erstellen und für die Ausleihe sperren
+    And man kann nicht inventarrelevante Gegenstände ausmustern, sofern man deren Besitzer ist
 
   # English: inventory manager
   @personas
-  Szenario: Benutzerolle "Inventar-Verwalter"
-    Angenommen man ist Inventar-Verwalter
-    Dann kann man neue Modelle erstellen
-    Und kann man neue Gegenstände erstellen
-    Und diese Gegenstände können inventarrelevant sein
-    Und man kann sie einem anderen Gerätepark als Besitzer zuweisen
-    Und man kann Gegenstände ausmustern, sofern man deren Besitzer ist
-    Und man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist
-    Und man kann die Arbeitstage und Ferientage seines Geräteparks anpassen
-    Und man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist
+  Scenario: Benutzerolle "Inventar-Verwalter"
+    Given man ist Inventar-Verwalter
+    Then kann man neue Modelle erstellen
+    And kann man neue Gegenstände erstellen
+    And diese Gegenstände können inventarrelevant sein
+    And man kann sie einem anderen Gerätepark als Besitzer zuweisen
+    And man kann Gegenstände ausmustern, sofern man deren Besitzer ist
+    And man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist
+    And man kann die Arbeitstage und Ferientage seines Geräteparks anpassen
+    And man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist
     | role                |
     | Kein Zugriff        |
     | Kunde               |
     | Gruppen-Verwalter   |
     | Ausleihe-Verwalter  |
     | Inventar-Verwalter  |
-    Und man kann alles, was ein Ausleihe-Verwalter kann
-    Wenn man keine verantwortliche Abteilung auswählt
-    Dann ist die Verantwortliche Abteilung gleich wie der Besitzer
+    And man kann alles, was ein Ausleihe-Verwalter kann
+    When man keine verantwortliche Abteilung auswählt
+    Then ist die Verantwortliche Abteilung gleich wie der Besitzer
 
   @personas
-  Szenario: Zugriff entfernen als Inventar-Verwalter
-    Angenommen ich bin Mike
-    Und man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
-    Wenn man den Zugriff entfernt
-    Und ich speichere
-    Dann hat der Benutzer keinen Zugriff auf das Inventarpool
+  Scenario: Zugriff entfernen als Inventar-Verwalter
+    Given ich bin Mike
+    And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
+    When man den Zugriff entfernt
+    And ich speichere
+    Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @personas
-  Szenariogrundriss: Zugriff entfernen für einen Benutzer mit offenen Vertrag
-    Angenommen ich bin <Persona>
-    Und es existiert ein Vertrag mit Status "<Vertragsstatus>" für einen Benutzer mit sonst keinem anderen Verträgen
-    Wenn man den Benutzer für diesen Vertrag editiert
-    Dann hat dieser Benutzer Zugriff auf das aktuelle Inventarpool
-    Wenn man den Zugriff entfernt
-    Und ich speichere
-    Dann erhalte ich die Fehlermeldung "<Fehlermeldung>"
-    Beispiele:
+  Scenario Outline: Zugriff entfernen für einen Benutzer mit offenen Vertrag
+    Given ich bin <Persona>
+    And es existiert ein Vertrag mit Status "<Vertragsstatus>" für einen Benutzer mit sonst keinem anderen Verträgen
+    When man den Benutzer für diesen Vertrag editiert
+    Then hat dieser Benutzer Zugriff auf das aktuelle Inventarpool
+    When man den Zugriff entfernt
+    And ich speichere
+    Then erhalte ich die Fehlermeldung "<Fehlermeldung>"
+    Examples:
       | Persona | Vertragsstatus | Fehlermeldung                          |
       | Mike    | abgeschickt    | Hat momentan offene Bestellungen       |
       | Pius    | abgeschickt    | Hat momentan offene Bestellungen       |
@@ -265,20 +264,20 @@ Funktionalität: Benutzer verwalten
       | Pius    | unterschrieben | Hat momentan Gegenstände zurückzugeben |
 
    @upcoming
-  Szenario: Gruppenzuteilung in Benutzeransicht hinzufügen/entfernen
-    Angenommen ich bin Pius
-    Und man editiert einen Benutzer
-    Dann kann man Gruppen über eine Autocomplete-Liste hinzufügen
-    Und kann Gruppen entfernen
-    Und speichert den Benutzer
-    Dann ist die Gruppenzugehörigkeit gespeichert 
+  Scenario: Gruppenzuteilung in Benutzeransicht hinzufügen/entfernen
+    Given ich bin Pius
+    And man editiert einen Benutzer
+    Then kann man Gruppen über eine Autocomplete-Liste hinzufügen
+    And kann Gruppen entfernen
+    And speichert den Benutzer
+    Then ist die Gruppenzugehörigkeit gespeichert 
 
   @javascript @personas
-  Szenario: Neuen Benutzer im Geräterpark als Inventar-Verwalter hinzufügen
-    Angenommen ich bin Mike
-    Wenn man in der Benutzeransicht ist
-    Und man einen Benutzer hinzufügt
-    Und die folgenden Informationen eingibt
+  Scenario: Neuen Benutzer im Geräterpark als Inventar-Verwalter hinzufügen
+    Given ich bin Mike
+    When man in der Benutzeransicht ist
+    And man einen Benutzer hinzufügt
+    And die folgenden Informationen eingibt
       | Nachname       |
       | Vorname        |
       | Adresse        |
@@ -287,172 +286,172 @@ Funktionalität: Benutzer verwalten
       | Land           |
       | Telefon        |
       | E-Mail         |
-    Und man gibt die Login-Daten ein
-    Und man gibt eine Badge-Id ein
-    Und man hat nur die folgenden Rollen zur Auswahl
+    And man gibt die Login-Daten ein
+    And man gibt eine Badge-Id ein
+    And man hat nur die folgenden Rollen zur Auswahl
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    Und eine der folgenden Rollen auswählt
+    And eine der folgenden Rollen auswählt
     | tab                | role                |
     | Kunde              | customer            |
     | Gruppen-Verwalter  | group_manager       |
     | Ausleihe-Verwalter | lending_manager     |
     | Inventar-Verwalter | inventory_manager   |
-    Und man teilt mehrere Gruppen zu
-    Und ich speichere
-    Dann ist der Benutzer mit all den Informationen gespeichert
+    And man teilt mehrere Gruppen zu
+    And ich speichere
+    Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
-  Szenario: Zugriff auf Ausleihe-Verwalter ändern als Ausleihe-Verwalter
-    Angenommen ich bin Pius
-    Und man editiert einen Benutzer der Kunde ist
-    Dann man hat nur die folgenden Rollen zur Auswahl
+  Scenario: Zugriff auf Ausleihe-Verwalter ändern als Ausleihe-Verwalter
+    Given ich bin Pius
+    And man editiert einen Benutzer der Kunde ist
+    Then man hat nur die folgenden Rollen zur Auswahl
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
-    Wenn man den Zugriff auf "Ausleihe-Verwalter" ändert
-    Und ich speichere
-    Dann hat der Benutzer die Rolle Ausleihe-Verwalter
+    When man den Zugriff auf "Ausleihe-Verwalter" ändert
+    And ich speichere
+    Then hat der Benutzer die Rolle Ausleihe-Verwalter
 
   @personas
-  Szenario: Zugriff auf Kunde ändern als Ausleihe-Verwalter
-    Angenommen ich bin Pius
-    Und man editiert einen Benutzer der Ausleihe-Verwalter ist
-    Wenn man den Zugriff auf "Kunde" ändert
-    Und ich speichere
-    Dann hat der Benutzer die Rolle Kunde
+  Scenario: Zugriff auf Kunde ändern als Ausleihe-Verwalter
+    Given ich bin Pius
+    And man editiert einen Benutzer der Ausleihe-Verwalter ist
+    When man den Zugriff auf "Kunde" ändert
+    And ich speichere
+    Then hat der Benutzer die Rolle Kunde
 
   @personas
-  Szenario: Zugriff ändern als Inventar-Verwalter
-    Angenommen ich bin Mike
-    Und man editiert einen Benutzer der Kunde ist
-    Dann man hat nur die folgenden Rollen zur Auswahl
-      | No access          |
-      | Customer           |
-      | Group manager      |
-      | Lending manager    |
-      | Inventory manager  |
-    Wenn man den Zugriff auf "Inventar-Verwalter" ändert
-    Und ich speichere
-    Dann hat der Benutzer die Rolle Inventar-Verwalter
-
-  @personas
-  Szenario: Zugriff auf ein Inventarpool gewährleisten als Inventar-Verwalter
-    Angenommen ich bin Mike
-    Und man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
-    Wenn man den Zugriff auf "Kunde" ändert
-    Und ich speichere
-    Dann sieht man die Erfolgsbestätigung
-    Und hat der Benutzer die Rolle Kunde
-
-  @personas
-  Szenario: Zugriff ändern als Administrator
-    Angenommen ich bin Gino
-    Und man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist
-    Dann man hat nur die folgenden Rollen zur Auswahl
+  Scenario: Zugriff ändern als Inventar-Verwalter
+    Given ich bin Mike
+    And man editiert einen Benutzer der Kunde ist
+    Then man hat nur die folgenden Rollen zur Auswahl
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    Wenn man den Zugriff auf "Inventar-Verwalter" ändert
-    Und ich speichere
-    Dann hat der Benutzer die Rolle Inventar-Verwalter
+    When man den Zugriff auf "Inventar-Verwalter" ändert
+    And ich speichere
+    Then hat der Benutzer die Rolle Inventar-Verwalter
+
+  @personas
+  Scenario: Zugriff auf ein Inventarpool gewährleisten als Inventar-Verwalter
+    Given ich bin Mike
+    And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
+    When man den Zugriff auf "Kunde" ändert
+    And ich speichere
+    Then sieht man die Erfolgsbestätigung
+    And hat der Benutzer die Rolle Kunde
+
+  @personas
+  Scenario: Zugriff ändern als Administrator
+    Given ich bin Gino
+    And man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist
+    Then man hat nur die folgenden Rollen zur Auswahl
+      | No access          |
+      | Customer           |
+      | Group manager      |
+      | Lending manager    |
+      | Inventory manager  |
+    When man den Zugriff auf "Inventar-Verwalter" ändert
+    And ich speichere
+    Then hat der Benutzer die Rolle Inventar-Verwalter
 
   @javascript @browser @personas
-  Szenario: Voraussetzungen fürs Löschen eines Benutzers
-    Angenommen ich bin Ramon
-    Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    Und man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
-    Wenn ich diesen Benutzer aus der Liste lösche
-    Dann I see an error message
-    Und der Benutzer ist nicht gelöscht
+  Scenario: Voraussetzungen fürs Löschen eines Benutzers
+    Given ich bin Ramon
+    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+    And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
+    When ich diesen Benutzer aus der Liste lösche
+    Then I see an error message
+    And der Benutzer ist nicht gelöscht
 
   @javascript @personas
-  Szenario: Alphabetische Sortierung der Benutzer innerhalb vom Inventarpool
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    Dann sind die Benutzer nach ihrem Vornamen alphabetisch sortiert
+  Scenario: Alphabetische Sortierung der Benutzer innerhalb vom Inventarpool
+    Given ich bin Gino
+    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
+    Then sind die Benutzer nach ihrem Vornamen alphabetisch sortiert
 
   @personas
-  Szenario: Benutzer ohne Zugriff im Inventarpool editieren ohne ihm dabei Zugriff zu gewährleisten
-    Angenommen ich bin Pius
-    Und man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
-    Wenn man ändert die Email
-    Und ich speichere
-    Dann sieht man die Erfolgsbestätigung
-    Und die neue Email des Benutzers wurde gespeichert
-    Und der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool
+  Scenario: Benutzer ohne Zugriff im Inventarpool editieren ohne ihm dabei Zugriff zu gewährleisten
+    Given ich bin Pius
+    And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
+    When man ändert die Email
+    And ich speichere
+    Then sieht man die Erfolgsbestätigung
+    And die neue Email des Benutzers wurde gespeichert
+    And der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool
 
   @javascript @personas
-  Szenario: Neuen Benutzer im Geräterpark als Administrator hinzufügen
-    Angenommen ich bin Gino
-    Wenn man in der Benutzeransicht ist
-    Und man einen Benutzer hinzufügt
-    Und die folgenden Informationen eingibt
+  Scenario: Neuen Benutzer im Geräterpark als Administrator hinzufügen
+    Given ich bin Gino
+    When man in der Benutzeransicht ist
+    And man einen Benutzer hinzufügt
+    And die folgenden Informationen eingibt
       | Nachname       |
       | Vorname        |
       | E-Mail         |
-    Und man gibt die Login-Daten ein
-    Und man gibt eine Badge-Id ein
-    Und man hat nur die folgenden Rollen zur Auswahl
+    And man gibt die Login-Daten ein
+    And man gibt eine Badge-Id ein
+    And man hat nur die folgenden Rollen zur Auswahl
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    Und eine der folgenden Rollen auswählt
+    And eine der folgenden Rollen auswählt
       | tab                | role                |
       | Kunde              | customer            |
       | Gruppen-Verwalter  | group_manager       |
       | Ausleihe-Verwalter | lending_manager     |
       | Inventar-Verwalter | inventory_manager   |
-    Und man teilt mehrere Gruppen zu
-    Und ich speichere
-    Dann ist der Benutzer mit all den Informationen gespeichert
+    And man teilt mehrere Gruppen zu
+    And ich speichere
+    Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
-  Szenariogrundriss: Neuen Benutzer hinzufügen - ohne Eingabe der Pflichtfelder
-    Angenommen ich bin Pius
-    Wenn man in der Benutzeransicht ist
-    Und man einen Benutzer hinzufügt
-    Und alle Pflichtfelder sind sichtbar und abgefüllt
-    Wenn man ein <Pflichtfeld> nicht eingegeben hat
-    Und ich speichere
-    Dann I see an error message
-    Beispiele:
+  Scenario Outline: Neuen Benutzer hinzufügen - ohne Eingabe der Pflichtfelder
+    Given ich bin Pius
+    When man in der Benutzeransicht ist
+    And man einen Benutzer hinzufügt
+    And alle Pflichtfelder sind sichtbar und abgefüllt
+    When man ein <Pflichtfeld> nicht eingegeben hat
+    And ich speichere
+    Then I see an error message
+    Examples:
       | Pflichtfeld |
       | Nachname    |
       | Vorname     |
       | E-Mail      |
 
   @personas
-  Szenario: Benutzer den Zugriff auf ein Inventarpool reaktivieren
-    Angenommen ich bin Mike
-    Und man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
-    Wenn man den Zugriff auf "Kunde" ändert
-    Und ich speichere
-    Dann sieht man die Erfolgsbestätigung
-    Und hat der Benutzer die Rolle Kunde
+  Scenario: Benutzer den Zugriff auf ein Inventarpool reaktivieren
+    Given ich bin Mike
+    And man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
+    When man den Zugriff auf "Kunde" ändert
+    And ich speichere
+    Then sieht man die Erfolgsbestätigung
+    And hat der Benutzer die Rolle Kunde
 
   @javascript @personas
-  Szenario: Benutzer als Administrator löschen
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    Und man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
-    Wenn ich diesen Benutzer aus der Liste lösche
-    Dann wurde der Benutzer aus der Liste gelöscht
-    Und der Benutzer ist gelöscht
+  Scenario: Benutzer als Administrator löschen
+    Given ich bin Gino
+    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+    And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
+    When ich diesen Benutzer aus der Liste lösche
+    Then wurde der Benutzer aus der Liste gelöscht
+    And der Benutzer ist gelöscht
 
   @personas
-  Szenario: Startseite zurücksetzen
-    Angenommen ich bin Pius
-    Und man hat eine Startseite gesetzt
-    Wenn man seine Startseite zurücksetzt
-    Dann ist ist keine Startseite gesetzt
-    Wenn man auf das Logo klickt
-    Dann landet man auf der Tagesansicht als Standard-Startseite
+  Scenario: Startseite zurücksetzen
+    Given ich bin Pius
+    And man hat eine Startseite gesetzt
+    When man seine Startseite zurücksetzt
+    Then ist ist keine Startseite gesetzt
+    When man auf das Logo klickt
+    Then landet man auf der Tagesansicht als Standard-Startseite

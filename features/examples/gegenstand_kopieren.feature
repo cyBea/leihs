@@ -1,13 +1,12 @@
-# language: de
 
-Funktionalität: Gegenstand kopieren
+Feature: Gegenstand kopieren
 
   Grundlage:
-    Angenommen ich bin Mike
+    Given ich bin Mike
 
   @javascript @personas
-  Szenario: Gegenstand erstellen und kopieren
-    Angenommen man erstellt einen Gegenstand
+  Scenario: Gegenstand erstellen und kopieren
+    Given man erstellt einen Gegenstand
     | Feldname                     | Type         | Wert                          |
     | Modell                       | autocomplete | Sharp Beamer 456              |
     | Ausmusterung                 | checkbox     | unchecked                     |
@@ -40,49 +39,49 @@ Funktionalität: Gegenstand kopieren
     #| Lieferant                    | autocomplete | Neuer Lieferant               |
     | Garantieablaufdatum          |              | 01.01.2013                    |
     | Vertragsablaufdatum          |              | 01.01.2013                    |
-    Wenn man speichert und kopiert
-    Dann wird der Gegenstand gespeichert
-    Und eine neue Gegenstandserstellungsansicht wird geöffnet
-    Und man sieht den Seitentitel 'Kopierten Gegenstand erstellen'
-    Und man sieht den Abbrechen-Knopf
-    Und alle Felder bis auf die folgenden wurden kopiert:
+    When man speichert und kopiert
+    Then wird der Gegenstand gespeichert
+    And eine neue Gegenstandserstellungsansicht wird geöffnet
+    And man sieht den Seitentitel 'Kopierten Gegenstand erstellen'
+    And man sieht den Abbrechen-Knopf
+    And alle Felder bis auf die folgenden wurden kopiert:
     | Inventarcode                 |
     | Name                         |
     | Seriennummer                 |
-    Und der Inventarcode ist vorausgefüllt
-    Wenn ich speichere
-    Dann wird der kopierte Gegenstand gespeichert
-    Und man wird zur Liste des Inventars zurückgeführt
+    And der Inventarcode ist vorausgefüllt
+    When ich speichere
+    Then wird der kopierte Gegenstand gespeichert
+    And man wird zur Liste des Inventars zurückgeführt
 
   @javascript @browser @personas
-  Szenario: Bestehenden Gegenstand aus Liste kopieren
-    Angenommen man befindet sich auf der Liste des Inventars
-    Wenn man einen Gegenstand kopiert
-    Dann wird eine neue Gegenstandskopieransicht geöffnet
-    Und alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
+  Scenario: Bestehenden Gegenstand aus Liste kopieren
+    Given man befindet sich auf der Liste des Inventars
+    When man einen Gegenstand kopiert
+    Then wird eine neue Gegenstandskopieransicht geöffnet
+    And alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
 
   @javascript @browser @personas
-  Szenario: Bestehenden Gegenstand aus Editieransicht kopieren
-    Wenn ich mich in der Editieransicht einer Gegenstand befinde
-    Und man speichert und kopiert
-    Dann wird eine neue Gegenstandskopieransicht geöffnet
-    Und alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
+  Scenario: Bestehenden Gegenstand aus Editieransicht kopieren
+    When ich mich in der Editieransicht einer Gegenstand befinde
+    And man speichert und kopiert
+    Then wird eine neue Gegenstandskopieransicht geöffnet
+    And alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
 
   @javascript @personas
-  Szenario: Gegenstand aus einem anderem Gerätepark kopieren
-    Angenommen I go to logout
-    Und ich bin Matti
-    Und man editiert ein Gegenstand eines anderen Besitzers
-    Wenn man speichert und kopiert
-    Dann wird eine neue Gegenstandskopieransicht geöffnet
-    Und alle Felder sind editierbar, da man jetzt Besitzer von diesem Gegenstand ist
+  Scenario: Gegenstand aus einem anderem Gerätepark kopieren
+    Given I go to logout
+    And ich bin Matti
+    And man editiert ein Gegenstand eines anderen Besitzers
+    When man speichert und kopiert
+    Then wird eine neue Gegenstandskopieransicht geöffnet
+    And alle Felder sind editierbar, da man jetzt Besitzer von diesem Gegenstand ist
 
   @javascript @browser @personas
-  Szenario: Neuen Lieferanten erstellen falls nicht vorhanden
-    Angenommen man einen Gegenstand kopiert
-    Dann wird eine neue Gegenstandskopieransicht geöffnet
-    Wenn ich einen nicht existierenen Lieferanten angebe
-    Und ich merke mir den Inventarcode für weitere Schritte
-    Und ich speichere
-    Dann wird der neue Lieferant erstellt
-    Und bei dem kopierten Gegestand ist der neue Lieferant eingetragen
+  Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
+    Given man einen Gegenstand kopiert
+    Then wird eine neue Gegenstandskopieransicht geöffnet
+    When ich einen nicht existierenen Lieferanten angebe
+    And ich merke mir den Inventarcode für weitere Schritte
+    And ich speichere
+    Then wird der neue Lieferant erstellt
+    And bei dem kopierten Gegestand ist der neue Lieferant eingetragen

@@ -1,28 +1,27 @@
-# language: de
 
-Funktionalität: Mailversand bei Delegationsbestellungen und -besuchen
-
-  @javascript @personas
-  Szenario: Handhabung der Genehmigungsmails
-    Angenommen ich bin Pius
-    Und es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
-    Wenn I edit the order
-    Und die Bestellung genehmige
-    Dann ich erhalte eine Erfolgsmeldung
-    Und wird das Genehmigungsmail an den Besteller versendet
-    Und das Genehmigungsmail wird nicht an den Delegationsverantwortlichen versendet
+Feature: Mailversand bei Delegationsbestellungen und -besuchen
 
   @javascript @personas
-  Szenario: Handhabung der Erinnerungsmails
-    Angenommen ich bin Pius
-    Und es existiert eine Rücknahme von einer Delegation
-    Wenn ich bei dieser Rücknahme eine Erinnerung sende
-    Dann wird das Erinnerungsmail an den Abholenden versendet
-    Und das Erinnerungsmail wird nicht an den Delegationsverantwortlichen versendet
+  Scenario: Handhabung der Genehmigungsmails
+    Given ich bin Pius
+    And es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
+    When I edit the order
+    And die Bestellung genehmige
+    Then ich erhalte eine Erfolgsmeldung
+    And wird das Genehmigungsmail an den Besteller versendet
+    And das Genehmigungsmail wird nicht an den Delegationsverantwortlichen versendet
 
   @javascript @personas
-  Szenario: Mail an Delegation senden
-    Angenommen ich bin Pius
-    Wenn ich nach einer Delegation suche
-    Und ich die Mailfunktion wähle
-    Dann wird das Mail an den Delegationsverantwrotlichen verschickt
+  Scenario: Handhabung der Erinnerungsmails
+    Given ich bin Pius
+    And es existiert eine Rücknahme von einer Delegation
+    When ich bei dieser Rücknahme eine Erinnerung sende
+    Then wird das Erinnerungsmail an den Abholenden versendet
+    And das Erinnerungsmail wird nicht an den Delegationsverantwortlichen versendet
+
+  @javascript @personas
+  Scenario: Mail an Delegation senden
+    Given ich bin Pius
+    When ich nach einer Delegation suche
+    And ich die Mailfunktion wähle
+    Then wird das Mail an den Delegationsverantwrotlichen verschickt

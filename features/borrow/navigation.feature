@@ -1,52 +1,51 @@
-# language: de
 
-Funktionalität: Navigation
+Feature: Navigation
 
   Um mich durch die Applikation navigieren zu können
   möchte ich als Ausleiher
   Navigationsmöglichkeiten haben
 
   @personas
-  Szenario: Navigation für Ausleihenden
-    Angenommen ich bin Normin
-    Und man befindet sich auf der Seite der Hauptkategorien
-    Dann seh ich die Navigation
-    Und die Navigation beinhaltet "Abzuholen"
-    Und die Navigation beinhaltet "Rückgaben"
-    Und die Navigation beinhaltet "Bestellungen"
-    Und die Navigation beinhaltet "Geräteparks"
-    Und die Navigation beinhaltet "Benutzer"
-    Und die Navigation beinhaltet "Logout"
+  Scenario: Navigation für Ausleihenden
+    Given ich bin Normin
+    And man befindet sich auf der Seite der Hauptkategorien
+    Then seh ich die Navigation
+    And die Navigation beinhaltet "Abzuholen"
+    And die Navigation beinhaltet "Rückgaben"
+    And die Navigation beinhaltet "Bestellungen"
+    And die Navigation beinhaltet "Geräteparks"
+    And die Navigation beinhaltet "Benutzer"
+    And die Navigation beinhaltet "Logout"
 
   @personas
-  Szenario: Navigation für Manager
-    Angenommen ich bin Pius
-    Und man befindet sich auf der Seite der Hauptkategorien
-    Dann seh ich die Navigation
-    Und die Navigation beinhaltet "Abzuholen"
-    Und die Navigation beinhaltet "Rückgaben"
-    Und die Navigation beinhaltet "Bestellungen"
-    Und die Navigation beinhaltet "Geräteparks"
-    Und die Navigation beinhaltet "Verwalten"
-    Und die Navigation beinhaltet "Benutzer"
-    Und die Navigation beinhaltet "Logout"
+  Scenario: Navigation für Manager
+    Given ich bin Pius
+    And man befindet sich auf der Seite der Hauptkategorien
+    Then seh ich die Navigation
+    And die Navigation beinhaltet "Abzuholen"
+    And die Navigation beinhaltet "Rückgaben"
+    And die Navigation beinhaltet "Bestellungen"
+    And die Navigation beinhaltet "Geräteparks"
+    And die Navigation beinhaltet "Verwalten"
+    And die Navigation beinhaltet "Benutzer"
+    And die Navigation beinhaltet "Logout"
 
   @personas
-  Szenario: Navigation für Prüfer
-    Angenommen ich bin Andi
-    Und man befindet sich auf der Seite der Hauptkategorien
-    Dann seh ich die Navigation
-    Und die Navigation beinhaltet "Abzuholen"
-    Und die Navigation beinhaltet "Rückgaben"
-    Und die Navigation beinhaltet "Bestellungen"
-    Und die Navigation beinhaltet "Geräteparks"
-    Und die Navigation beinhaltet "Verwalten"
-    Und die Navigation beinhaltet "Benutzer"
-    Und die Navigation beinhaltet "Logout"
+  Scenario: Navigation für Prüfer
+    Given ich bin Andi
+    And man befindet sich auf der Seite der Hauptkategorien
+    Then seh ich die Navigation
+    And die Navigation beinhaltet "Abzuholen"
+    And die Navigation beinhaltet "Rückgaben"
+    And die Navigation beinhaltet "Bestellungen"
+    And die Navigation beinhaltet "Geräteparks"
+    And die Navigation beinhaltet "Verwalten"
+    And die Navigation beinhaltet "Benutzer"
+    And die Navigation beinhaltet "Logout"
 
   @personas
-  Szenario: Home-Button
-    Angenommen ich bin Normin
-    Dann seh ich in der Navigation den Home-Button
-    Wenn ich den Home-Button bediene
-    Dann lande ich auf der Seite der Hauptkategorien
+  Scenario: Home-Button
+    Given ich bin Normin
+    Then seh ich in der Navigation den Home-Button
+    When ich den Home-Button bediene
+    Then lande ich auf der Seite der Hauptkategorien

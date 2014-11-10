@@ -1,81 +1,80 @@
-# language: de
 
-Funktionalität: Timeout Page
-
-  @personas
-  Szenario: Bestellung abgelaufen
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Und ich habe Gegenstände der Bestellung hinzugefügt
-    Und die letzte Aktivität auf meiner Bestellung ist mehr als 30 minuten her
-    Wenn ich die Seite der Hauptkategorien besuche
-    Dann lande ich auf der Bestellung-Abgelaufen-Seite
-    Und ich sehe eine Information, dass die Geräte nicht mehr reserviert sind
+Feature: Timeout Page
 
   @personas
-  Szenario: Ansicht
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Dann sehe ich meine Bestellung
-    Und die nicht mehr verfügbaren Modelle sind hervorgehoben
-    Und ich kann Einträge löschen
-    Und ich kann Einträge editieren
-    Und ich kann zur Hauptübersicht
-
-  @javascript @browser @personas
-  Szenario: Eintrag löschen
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Und ich lösche einen Eintrag
-    Dann wird der Eintrag aus der Bestellung gelöscht
-
-  @javascript @browser @personas
-  Szenario: In Bestellung übernehmen nicht möglich
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit 2 Konfliktmodellen weitergeleitet werde
-    Wenn I click on "Continue this order"
-    Dann lande ich wieder auf der Timeout Page
-    Und ich erhalte einen Fehler
-    Wenn ich einen der Fehler korrigiere
-    Wenn I click on "Continue this order"
-    Dann lande ich wieder auf der Timeout Page
-    Und ich erhalte einen Fehler
-    Wenn ich alle Fehler korrigiere
-    Dann verschwindet die Fehlermeldung
+  Scenario: Bestellung abgelaufen
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    And ich habe Gegenstände der Bestellung hinzugefügt
+    And die letzte Aktivität auf meiner Bestellung ist mehr als 30 minuten her
+    When ich die Seite der Hauptkategorien besuche
+    Then lande ich auf der Bestellung-Abgelaufen-Seite
+    And ich sehe eine Information, dass die Geräte nicht mehr reserviert sind
 
   @personas
-  Szenario: Bestellung löschen
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Wenn ich die Bestellung lösche
-    Dann werden die Modelle meiner Bestellung freigegeben
-    Und wird die Bestellung des Benutzers gelöscht
-    Und ich lande auf der Seite der Hauptkategorien
+  Scenario: Ansicht
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    Then sehe ich meine Bestellung
+    And die nicht mehr verfügbaren Modelle sind hervorgehoben
+    And ich kann Einträge löschen
+    And ich kann Einträge editieren
+    And ich kann zur Hauptübersicht
+
+  @javascript @browser @personas
+  Scenario: Eintrag löschen
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    And ich lösche einen Eintrag
+    Then wird der Eintrag aus der Bestellung gelöscht
+
+  @javascript @browser @personas
+  Scenario: In Bestellung übernehmen nicht möglich
+    Given ich bin Normin
+    And ich zur Timeout Page mit 2 Konfliktmodellen weitergeleitet werde
+    When I click on "Continue this order"
+    Then lande ich wieder auf der Timeout Page
+    And ich erhalte einen Fehler
+    When ich einen der Fehler korrigiere
+    When I click on "Continue this order"
+    Then lande ich wieder auf der Timeout Page
+    And ich erhalte einen Fehler
+    When ich alle Fehler korrigiere
+    Then verschwindet die Fehlermeldung
 
   @personas
-  Szenario: Nur verfügbare Modelle aus Bestellung übernehmen
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Wenn ein Modell nicht verfügbar ist
-    Und I click on "Continue with available models only"
-    Dann werden die nicht verfügbaren Modelle aus der Bestellung gelöscht
-    Und ich lande auf der Seite der Bestellübersicht
-    Und ich sehe eine Information, dass alle Geräte wieder verfügbar sind
+  Scenario: Bestellung löschen
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    When ich die Bestellung lösche
+    Then werden die Modelle meiner Bestellung freigegeben
+    And wird die Bestellung des Benutzers gelöscht
+    And ich lande auf der Seite der Hauptkategorien
+
+  @personas
+  Scenario: Nur verfügbare Modelle aus Bestellung übernehmen
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    When ein Modell nicht verfügbar ist
+    And I click on "Continue with available models only"
+    Then werden die nicht verfügbaren Modelle aus der Bestellung gelöscht
+    And ich lande auf der Seite der Bestellübersicht
+    And ich sehe eine Information, dass alle Geräte wieder verfügbar sind
 
   @javascript @browser @personas
-  Szenario: Eintrag ändern
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Und ich einen Eintrag ändere
-    Dann werden die Änderungen gespeichert
-    Und lande ich wieder auf der Timeout Page
+  Scenario: Eintrag ändern
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    And ich einen Eintrag ändere
+    Then werden die Änderungen gespeichert
+    And lande ich wieder auf der Timeout Page
 
   @javascript @browser @personas
-  Szenario: Die Menge eines Eintrags heruntersetzen
-    Angenommen ich bin Normin
-    Und ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    Wenn ich die Menge eines Eintrags heraufsetze
-    Dann werden die Änderungen gespeichert
-    Wenn ich die Menge eines Eintrags heruntersetze
-    Dann werden die Änderungen gespeichert
-    Und lande ich wieder auf der Timeout Page
+  Scenario: Die Menge eines Eintrags heruntersetzen
+    Given ich bin Normin
+    And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
+    When ich die Menge eines Eintrags heraufsetze
+    Then werden die Änderungen gespeichert
+    When ich die Menge eines Eintrags heruntersetze
+    Then werden die Änderungen gespeichert
+    And lande ich wieder auf der Timeout Page

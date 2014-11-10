@@ -1,16 +1,15 @@
-# language: de
 
-Funktionalität: Gerätepark-Grundinformationen
+Feature: Gerätepark-Grundinformationen
 
   Um die Grundinformationen meines Gerätepark zu verwalten
   möchte ich als Zuständiger
   die Informationen/Einstellungen für einen Gerätepark bearbeiten können
 
   @javascript @personas
-  Szenario: Grundinformationen erfassen
-    Angenommen ich bin Mike
-    Wenn ich den Admin-Bereich betrete
-    Dann kann ich die Gerätepark-Grundinformationen eingeben
+  Scenario: Grundinformationen erfassen
+    Given ich bin Mike
+    When ich den Admin-Bereich betrete
+    Then kann ich die Gerätepark-Grundinformationen eingeben
     | Name |
     | Kurzname |
     | E-Mail |
@@ -18,124 +17,124 @@ Funktionalität: Gerätepark-Grundinformationen
     | Standard-Vertragsnotiz |
     | Verträge drucken |
     | Automatischer Zugriff |
-    Und ich kann die angegebenen Grundinformationen speichern
-    Dann sehe eine Bestätigung
-    Und sind die Informationen aktualisiert
-    Und ich bleibe auf derselben Ansicht
+    And ich kann die angegebenen Grundinformationen speichern
+    Then sehe eine Bestätigung
+    And sind die Informationen aktualisiert
+    And ich bleibe auf derselben Ansicht
 
   @personas
-  Szenario: Pflichtfelder der Grundinformationen zusammen prüfen
-    Angenommen ich bin Mike
-    Und ich die Grundinformationen des Geräteparks abfüllen möchte
-    Und ich die folgenden Felder nicht befüllt habe
+  Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
+    Given ich bin Mike
+    And ich die Grundinformationen des Geräteparks abfüllen möchte
+    And ich die folgenden Felder nicht befüllt habe
       | Name     |
       | Kurzname |
       | E-Mail   |
-    Dann kann das Gerätepark nicht gespeichert werden
-    Und I see an error message
+    Then kann das Gerätepark nicht gespeichert werden
+    And I see an error message
 
   @personas
-  Szenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks
-    Angenommen ich bin Gino
-    Und es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
-    Dann kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'
+  Scenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks
+    Given ich bin Gino
+    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
+    Then kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'
 
   @personas
-  Szenario: Aut. zuweisen beim Benutzererstellen innerhalb des Geräteparks
-    Angenommen ich bin Mike
-    Und es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    Und es ist bei meinem Gerätepark aut. Zuweisung aktiviert
-    Wenn ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar-Verwalter' erstelle
-    Dann kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung ausser meinem die Rolle 'Kunde'
-    Und in meinem Gerätepark hat er die Rolle 'Inventar-Verwalter'
+  Scenario: Aut. zuweisen beim Benutzererstellen innerhalb des Geräteparks
+    Given ich bin Mike
+    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
+    And es ist bei meinem Gerätepark aut. Zuweisung aktiviert
+    When ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar-Verwalter' erstelle
+    Then kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung ausser meinem die Rolle 'Kunde'
+    And in meinem Gerätepark hat er die Rolle 'Inventar-Verwalter'
 
   #72676850
   @personas @javascript
-  Szenario: Aut. Zuweisen entfernen
-    Angenommen ich bin Mike
-    Und es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    Und ich editiere eine Gerätepark bei dem die aut. Zuweisung aktiviert ist
-    Wenn ich die aut. Zuweisung deaktiviere
-    Und ich speichere
-    Dann ist die aut. Zuweisung deaktiviert
-    Angenommen ich bin Gino
-    Und man befindet sich auf der Benutzerliste
-    Wenn ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
-    Dann kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht
+  Scenario: Aut. Zuweisen entfernen
+    Given ich bin Mike
+    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
+    And ich editiere eine Gerätepark bei dem die aut. Zuweisung aktiviert ist
+    When ich die aut. Zuweisung deaktiviere
+    And ich speichere
+    Then ist die aut. Zuweisung deaktiviert
+    Given ich bin Gino
+    And man befindet sich auf der Benutzerliste
+    When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
+    Then kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht
 
   #72676850
   @personas
-  Szenariogrundriss: Checkboxen abwählen
-    Angenommen ich bin Mike
-    Und ich editiere eine Gerätepark
-    Wenn ich "<Checkbox>" aktiviere
-    Und ich speichere
-    Dann ist "<Checkbox>" aktiviert
-    Wenn ich "<Checkbox>" deaktiviere
-    Und ich speichere
-    Dann ist "<Checkbox>" deaktiviert
-    Beispiele:
+  Scenario Outline: Checkboxen abwählen
+    Given ich bin Mike
+    And ich editiere eine Gerätepark
+    When ich "<Checkbox>" aktiviere
+    And ich speichere
+    Then ist "<Checkbox>" aktiviert
+    When ich "<Checkbox>" deaktiviere
+    And ich speichere
+    Then ist "<Checkbox>" deaktiviert
+    Examples:
       | Checkbox                |
       | Verträge drucken        |
       | Automatische Sperrung   |
       | Automatischer Zugriff   |
 
   @personas
-  Szenario: Arbeitstage verwalten
-   Angenommen ich bin Mike
-   Und ich verwalte die Gerätepark Grundinformationen
-   Wenn ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
-   Und ich speichere
-   Dann sind die Arbeitstage gespeichert
+  Scenario: Arbeitstage verwalten
+   Given ich bin Mike
+   And ich verwalte die Gerätepark Grundinformationen
+   When ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
+   And ich speichere
+   Then sind die Arbeitstage gespeichert
 
   @javascript @personas
-  Szenario: Tage der Ausleihschliessung verwalten
-   Angenommen ich bin Mike
-   Und ich verwalte die Gerätepark Grundinformationen
-   Wenn ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
-   Und ich speichere
-   Dann werden die Ausleihschliessungszeiten gespeichert
-   Und ich kann die Ausleihschliessungszeiten wieder löschen
+  Scenario: Tage der Ausleihschliessung verwalten
+   Given ich bin Mike
+   And ich verwalte die Gerätepark Grundinformationen
+   When ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
+   And ich speichere
+   Then werden die Ausleihschliessungszeiten gespeichert
+   And ich kann die Ausleihschliessungszeiten wieder löschen
 
   @personas
-  Szenariogrundriss: Pflichtfelder der Grundinformationen einzeln prüfen
-    Angenommen ich bin Mike
-    Wenn ich die Grundinformationen des Geräteparks abfüllen möchte
-    Und jedes Pflichtfeld des Geräteparks ist gesetzt
+  Scenario Outline: Pflichtfelder der Grundinformationen einzeln prüfen
+    Given ich bin Mike
+    When ich die Grundinformationen des Geräteparks abfüllen möchte
+    And jedes Pflichtfeld des Geräteparks ist gesetzt
     | Name        |
     | Kurzname    |
     | E-Mail      |
-    Wenn ich das gekennzeichnete "<Pflichtfeld>" des Geräteparks leer lasse
-    Dann kann das Gerätepark nicht gespeichert werden
-    Und I see an error message
-    Und die anderen Angaben wurde nicht gelöscht
-    Beispiele:
+    When ich das gekennzeichnete "<Pflichtfeld>" des Geräteparks leer lasse
+    Then kann das Gerätepark nicht gespeichert werden
+    And I see an error message
+    And die anderen Angaben wurde nicht gelöscht
+    Examples:
       | Pflichtfeld |
       | Name        |
       | Kurzname    |
       | E-Mail      |
 
   @personas
-  Szenario: Automatische Benutzersperrung bei verspäteter Rückgabe
-    Angenommen ich bin Mike
-    Wenn ich die Grundinformationen des Geräteparks abfüllen möchte
-    Wenn ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte
-    Dann muss ich einen Sperrgrund angeben
-    Wenn ich speichere
-    Dann ist diese Konfiguration gespeichert
-    Wenn ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird
-    Dann wird er für diesen Gerätepark gesperrt bis zum '1.1.2099'
-    Und der Sperrgrund ist derjenige, der für diesen Park gespeichert ist
-    Wenn ich "Automatische Sperrung" deaktiviere
-    Und ich speichere
-    Dann ist "Automatische Sperrung" deaktiviert
+  Scenario: Automatische Benutzersperrung bei verspäteter Rückgabe
+    Given ich bin Mike
+    When ich die Grundinformationen des Geräteparks abfüllen möchte
+    When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte
+    Then muss ich einen Sperrgrund angeben
+    When ich speichere
+    Then ist diese Konfiguration gespeichert
+    When ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird
+    Then wird er für diesen Gerätepark gesperrt bis zum '1.1.2099'
+    And der Sperrgrund ist derjenige, der für diesen Park gespeichert ist
+    When ich "Automatische Sperrung" deaktiviere
+    And ich speichere
+    Then ist "Automatische Sperrung" deaktiviert
 
   @personas
-  Szenario: Automatische Benutzersperrung nur wenn Benutzer nicht schon gesperrt
-    Angenommen ich bin Mike
-    Wenn ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteter Rückgaben einschalte
-    Und ein Benutzer bereits gesperrt ist
-    Dann werden der bestehende Sperrgrund sowie die Sperrzeit dieses Benutzers nicht überschrieben
+  Scenario: Automatische Benutzersperrung nur wenn Benutzer nicht schon gesperrt
+    Given ich bin Mike
+    When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteter Rückgaben einschalte
+    And ein Benutzer bereits gesperrt ist
+    Then werden der bestehende Sperrgrund sowie die Sperrzeit dieses Benutzers nicht überschrieben
 

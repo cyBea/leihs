@@ -1,41 +1,40 @@
-# language: de
 
-Funktionalität: Navigation
-
-  @personas
-  Szenario: Navigation für Gruppen-Verwalter
-    Angenommen ich bin Andi
-    Und man befindet sich im Verleih-Bereich
-    Dann seh ich die Navigation
-    Und die Navigation beinhaltet "Verleih"
-    Und die Navigation beinhaltet "Ausleihen"
-    Und die Navigation beinhaltet "Benutzer"
+Feature: Navigation
 
   @personas
-  Szenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
-    Angenommen ich bin Andi
-    Und man befindet sich im Verleih-Bereich
-    Dann seh ich die Navigation
-    Und kann man auf ein der "Bestellungen" Tab klichen
-    Und kann man auf ein der "Verträge" Tab klichen
-    Und man sieht die Gerätepark-Auswahl im Verwalten-Bereich
+  Scenario: Navigation für Gruppen-Verwalter
+    Given ich bin Andi
+    And man befindet sich im Verleih-Bereich
+    Then seh ich die Navigation
+    And die Navigation beinhaltet "Verleih"
+    And die Navigation beinhaltet "Ausleihen"
+    And die Navigation beinhaltet "Benutzer"
 
   @personas
-  Szenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
-    Angenommen ich bin Mike
-    Wenn ich auf die Geraetepark-Auswahl klicke
-    Dann sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
-    Wenn ich auf einen Geraetepark klicke
-    Dann wechsle ich zu diesem Geraetepark
+  Scenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
+    Given ich bin Andi
+    And man befindet sich im Verleih-Bereich
+    Then seh ich die Navigation
+    And kann man auf ein der "Bestellungen" Tab klichen
+    And kann man auf ein der "Verträge" Tab klichen
+    And man sieht die Gerätepark-Auswahl im Verwalten-Bereich
+
+  @personas
+  Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
+    Given ich bin Mike
+    When ich auf die Geraetepark-Auswahl klicke
+    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
+    When ich auf einen Geraetepark klicke
+    Then wechsle ich zu diesem Geraetepark
 
   @personas @javascript
-  Szenario: Zuklappen der Geraeteparkauswahl
-    Angenommen ich bin Mike
-    Wenn ich auf die Geraetepark-Auswahl klicke
-    Dann sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
-    Wenn ich ausserhalb der Geraetepark-Auswahl klicke
-    Dann schliesst sich die Geraetepark-Auswahl
-    Wenn ich auf die Geraetepark-Auswahl klicke
-    Dann sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
-    Wenn ich erneut auf die Geraetepark-Auswahl klicke
-    Dann schliesst sich die Geraetepark-Auswahl
+  Scenario: Zuklappen der Geraeteparkauswahl
+    Given ich bin Mike
+    When ich auf die Geraetepark-Auswahl klicke
+    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
+    When ich ausserhalb der Geraetepark-Auswahl klicke
+    Then schliesst sich die Geraetepark-Auswahl
+    When ich auf die Geraetepark-Auswahl klicke
+    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
+    When ich erneut auf die Geraetepark-Auswahl klicke
+    Then schliesst sich die Geraetepark-Auswahl

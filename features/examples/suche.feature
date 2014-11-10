@@ -1,63 +1,62 @@
-# language: de
 
-Funktionalität: Suche
+Feature: Suche
 
   @personas
-  Szenario: Suche nach Verträgen mittels Inventarcode eines Gegenstandes der dem Vertrag zugewisen ist
-    Angenommen ich bin Mike
-    Und ich gebe den Inventarcode eines Gegenstandes der einem Vertrag zugewisen ist in die Suche ein
-    Dann sehe ich den Vertrag dem der Gegenstand zugewisen ist in der Ergebnisanzeige
+  Scenario: Suche nach Verträgen mittels Inventarcode eines Gegenstandes der dem Vertrag zugewisen ist
+    Given ich bin Mike
+    And ich gebe den Inventarcode eines Gegenstandes der einem Vertrag zugewisen ist in die Suche ein
+    Then sehe ich den Vertrag dem der Gegenstand zugewisen ist in der Ergebnisanzeige
 
   @javascript @personas
-  Szenario: Such nach einem Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
-    Angenommen ich bin Mike
-    Und es existiert ein Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
-    Wenn man nach dem Benutzer sucht
-    Dann sieht man alle Veträge des Benutzers
-    Und der Name des Benutzers ist in jeder Vertragslinie angezeigt
-    Und die Personalien des Benutzers werden im Tooltip angezeigt
+  Scenario: Such nach einem Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
+    Given ich bin Mike
+    And es existiert ein Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
+    When man nach dem Benutzer sucht
+    Then sieht man alle Veträge des Benutzers
+    And der Name des Benutzers ist in jeder Vertragslinie angezeigt
+    And die Personalien des Benutzers werden im Tooltip angezeigt
 
   @javascript @personas
-  Szenario: Keine Aushändigung ohne vorherige Genehmigung
-    Angenommen ich bin Pius
-    Und es gibt einen Benutzer, mit einer nicht genehmigter Bestellung
-    Wenn man nach diesem Benutzer sucht
-    Dann kann ich die nicht genehmigte Bestellung des Benutzers nicht aushändigen ohne sie vorher zu genehmigen
+  Scenario: Keine Aushändigung ohne vorherige Genehmigung
+    Given ich bin Pius
+    And es gibt einen Benutzer, mit einer nicht genehmigter Bestellung
+    When man nach diesem Benutzer sucht
+    Then kann ich die nicht genehmigte Bestellung des Benutzers nicht aushändigen ohne sie vorher zu genehmigen
 
   @javascript @personas
-  Szenario: Kein 'zeige alle gefundenen Verträge' Link
-    Angenommen ich bin Mike
-    Und es existiert ein Benutzer mit mindestens 3 und weniger als 5 Verträgen
-    Wenn man nach dem Benutzer sucht
-    Dann sieht man alle unterschriebenen und geschlossenen Veträge des Benutzers
-    Und man sieht keinen Link 'Zeige alle gefundenen Verträge'
+  Scenario: Kein 'zeige alle gefundenen Verträge' Link
+    Given ich bin Mike
+    And es existiert ein Benutzer mit mindestens 3 und weniger als 5 Verträgen
+    When man nach dem Benutzer sucht
+    Then sieht man alle unterschriebenen und geschlossenen Veträge des Benutzers
+    And man sieht keinen Link 'Zeige alle gefundenen Verträge'
 
   @javascript @personas
-  Szenario: Anzeige von ausgemusterten Gegenständen
-    Angenommen ich bin Mike
-    Und es gibt einen geschlossenen Vertrag mit ausgemustertem Gegenstand
-    Wenn ich anhand der Inventarnummer nach diesem Gegenstand global suche
-    Dann sehe den Gegenstand ihn im Gegenstände-Container
-    Und wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
-    Dann sehe ich im Tooltip das Modell dieses Gegenstandes
+  Scenario: Anzeige von ausgemusterten Gegenständen
+    Given ich bin Mike
+    And es gibt einen geschlossenen Vertrag mit ausgemustertem Gegenstand
+    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
+    Then sehe den Gegenstand ihn im Gegenstände-Container
+    And wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
+    Then sehe ich im Tooltip das Modell dieses Gegenstandes
 
   @javascript @personas
-  Szenario: Anzeige von Gegenständen eines anderen Geräteparks in geschlossenen Verträgen
-    Angenommen ich bin Mike
-    Und es gibt einen geschlossenen Vertrag mit einem Gegenstand, wofür ein anderer Gerätepark verantwortlich und Besitzer ist
-    Wenn ich anhand der Inventarnummer nach diesem Gegenstand global suche
-    Dann sehe ich keinen Gegenstände-Container
-    Und wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
-    Dann sehe ich im Tooltip das Modell dieses Gegenstandes
+  Scenario: Anzeige von Gegenständen eines anderen Geräteparks in geschlossenen Verträgen
+    Given ich bin Mike
+    And es gibt einen geschlossenen Vertrag mit einem Gegenstand, wofür ein anderer Gerätepark verantwortlich und Besitzer ist
+    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
+    Then sehe ich keinen Gegenstände-Container
+    And wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
+    Then sehe ich im Tooltip das Modell dieses Gegenstandes
 
   @personas @javascript
-  Szenariogrundriss: Probleme bei Gegenständen in globaler Suche anzeigen
-    Angenommen ich bin Mike
-    Und es gibt in meinem Gerätepark einen "<Zustand>"en Gegenstand
-    Wenn ich anhand der Inventarnummer nach diesem Gegenstand global suche
-    Dann sehe ich diesen Gegenstand im Gegenstände-Container
-    Und die Gegenstandszeile ist mit "<Zustand>" in rot ausgezeichnet
-    Beispiele:
+  Scenario Outline: Probleme bei Gegenständen in globaler Suche anzeigen
+    Given ich bin Mike
+    And es gibt in meinem Gerätepark einen "<Zustand>"en Gegenstand
+    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
+    Then sehe ich diesen Gegenstand im Gegenstände-Container
+    And die Gegenstandszeile ist mit "<Zustand>" in rot ausgezeichnet
+    Examples:
       | Zustand          |
       | Defekt           |
       | Ausgemustert     |

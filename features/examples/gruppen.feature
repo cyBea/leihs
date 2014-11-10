@@ -1,152 +1,151 @@
-# language: de
 
-Funktionalität: Gruppen
+Feature: Gruppen
 
   Um Benutzer in Gruppen zu organisieren und Gruppen Modell-Kapazitäten zuzuteilen
   möchte ich als Ausleih-Verwalter
-  vom System Funktionalitäten bereitgestellt bekommen
+  vom System Featureen bereitgestellt bekommen
 
   Grundlage:
-    Angenommen ich bin Pius
+    Given ich bin Pius
 
   @personas
-  Szenario: Anzeige der Gruppenliste
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Dann sehe ich die Liste der Gruppen
-    Und die Anzahl zugeteilter Benutzer
-    Und die Anzahl der zugeteilten Modell-Kapazitäten
+  Scenario: Anzeige der Gruppenliste
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    Then sehe ich die Liste der Gruppen
+    And die Anzahl zugeteilter Benutzer
+    And die Anzahl der zugeteilten Modell-Kapazitäten
 
   @personas
-  Szenario: Visierungspflichtige Gruppe erstellen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine Gruppe erstelle
-    Und ich die Eigenschaft 'Visierung erforderlich' anwähle
-    Und den Namen der Gruppe angebe
-    Und die Benutzer hinzufüge
-    Und die Modelle und deren Kapazität hinzufüge
-    Und ich speichere
-    Dann ist die Gruppe gespeichert
-    Und die Gruppe ist visierungspflichtig
-    Und die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    Und ich sehe die Gruppenliste alphabetisch sortiert
-    Und ich sehe eine Bestätigung
+  Scenario: Visierungspflichtige Gruppe erstellen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine Gruppe erstelle
+    And ich die Eigenschaft 'Visierung erforderlich' anwähle
+    And den Namen der Gruppe angebe
+    And die Benutzer hinzufüge
+    And die Modelle und deren Kapazität hinzufüge
+    And ich speichere
+    Then ist die Gruppe gespeichert
+    And die Gruppe ist visierungspflichtig
+    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
+    And ich sehe die Gruppenliste alphabetisch sortiert
+    And ich sehe eine Bestätigung
 
   @personas
-  Szenario: Gruppe editieren und als visierungspflichtig kennzeichnen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine bestehende, nicht visierungspflichtige Gruppe editiere
-    Und ich die Eigenschaft 'Visierung erforderlich' anwähle
-    Und ich den Namen der Gruppe ändere
-    Und die Benutzer hinzufüge und entferne
-    Und die Modelle und deren Kapazität hinzufüge und entferne
-    Und ich speichere
-    Dann ist die Gruppe gespeichert
-    Und die Gruppe ist visierungspflichtig
-    Und die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    Und ich sehe die Gruppenliste
-    Und ich sehe eine Bestätigung
+  Scenario: Gruppe editieren und als visierungspflichtig kennzeichnen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine bestehende, nicht visierungspflichtige Gruppe editiere
+    And ich die Eigenschaft 'Visierung erforderlich' anwähle
+    And ich den Namen der Gruppe ändere
+    And die Benutzer hinzufüge und entferne
+    And die Modelle und deren Kapazität hinzufüge und entferne
+    And ich speichere
+    Then ist die Gruppe gespeichert
+    And die Gruppe ist visierungspflichtig
+    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
+    And ich sehe die Gruppenliste
+    And ich sehe eine Bestätigung
 
   @personas
-  Szenario: Gruppe ist nicht visierungspflichtig
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine bestehende visierungspflichtige Gruppe editiere
-    Und ich die Eigenschaft 'Visierung erforderlich' abwähle
-    Und ich den Namen der Gruppe ändere
-    Und die Benutzer hinzufüge und entferne
-    Und die Modelle und deren Kapazität hinzufüge und entferne
-    Und ich speichere
-    Dann ist die Gruppe gespeichert
-    Und die Gruppe ist nicht mehr visierungspflichtig
-    Und die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    Und ich sehe die Gruppenliste
-    Und ich sehe eine Bestätigung
+  Scenario: Gruppe ist nicht visierungspflichtig
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine bestehende visierungspflichtige Gruppe editiere
+    And ich die Eigenschaft 'Visierung erforderlich' abwähle
+    And ich den Namen der Gruppe ändere
+    And die Benutzer hinzufüge und entferne
+    And die Modelle und deren Kapazität hinzufüge und entferne
+    And ich speichere
+    Then ist die Gruppe gespeichert
+    And die Gruppe ist nicht mehr visierungspflichtig
+    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
+    And ich sehe die Gruppenliste
+    And ich sehe eine Bestätigung
 
   @javascript @personas
-  Szenario: Noch nicht zugeteilten Kapazitäten
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine Gruppe erstelle
-    Und die Modelle und deren Kapazität hinzufüge
-    Dann sehe ich die noch nicht zugeteilten Kapazitäten
+  Scenario: Noch nicht zugeteilten Kapazitäten
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine Gruppe erstelle
+    And die Modelle und deren Kapazität hinzufüge
+    Then sehe ich die noch nicht zugeteilten Kapazitäten
 
   @javascript @personas
-  Szenario: Gruppe löschen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine Gruppe lösche
-    Und die Gruppe wurde aus der Liste gelöscht
-    Und die Gruppe wurde aus der Datenbank gelöscht
+  Scenario: Gruppe löschen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine Gruppe lösche
+    And die Gruppe wurde aus der Liste gelöscht
+    And die Gruppe wurde aus der Datenbank gelöscht
 
   @javascript @personas
-  Szenario: Benutzer hinzufügen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Wenn ich einen Benutzer hinzufüge
-    Dann wird der Benutzer zuoberst in der Liste hinzugefügt
+  Scenario: Benutzer hinzufügen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    When ich einen Benutzer hinzufüge
+    Then wird der Benutzer zuoberst in der Liste hinzugefügt
 
   @personas
-  Szenario: Benutzer sortieren
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Dann sind die bereits hinzugefügten Benutzer alphabetisch sortiert
+  Scenario: Benutzer sortieren
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    Then sind die bereits hinzugefügten Benutzer alphabetisch sortiert
 
   @javascript @personas
-  Szenario: Modelle hinzufügen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Wenn ich ein Modell hinzufüge
-    Dann wird das Modell zuoberst in der Liste hinzugefügt
+  Scenario: Modelle hinzufügen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    When ich ein Modell hinzufüge
+    Then wird das Modell zuoberst in der Liste hinzugefügt
 
   @personas
-  Szenario: Modelle sortieren
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Dann sind die bereits hinzugefügten Modelle alphabetisch sortiert
+  Scenario: Modelle sortieren
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    Then sind die bereits hinzugefügten Modelle alphabetisch sortiert
 
   @javascript @personas
-  Szenario: Modelle hinzufügen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Wenn ich ein Modell hinzufüge
-    Dann wird das Modell zuoberst in der Liste hinzugefügt
+  Scenario: Modelle hinzufügen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    When ich ein Modell hinzufüge
+    Then wird das Modell zuoberst in der Liste hinzugefügt
 
   @personas
-  Szenario: Modelle sortieren
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Dann sind die bereits hinzugefügten Modelle alphabetisch sortiert
+  Scenario: Modelle sortieren
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    Then sind die bereits hinzugefügten Modelle alphabetisch sortiert
 
   @javascript @personas
-  Szenario: bereits bestehende Modelle hinzufügen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Wenn ich ein bereits hinzugefügtes Modell hinzufüge
-    Dann wird das Modell nicht erneut hinzugefügt
-    Und das vorhandene Modell ist nach oben gerutscht
-    Und das vorhandene Modell behält die eingestellte Anzahl
+  Scenario: bereits bestehende Modelle hinzufügen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    When ich ein bereits hinzugefügtes Modell hinzufüge
+    Then wird das Modell nicht erneut hinzugefügt
+    And das vorhandene Modell ist nach oben gerutscht
+    And das vorhandene Modell behält die eingestellte Anzahl
 
   @javascript @personas
-  Szenario: bereits bestehende Benutzer hinzufügen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Und ich eine bestehende Gruppe editiere
-    Wenn ich einen bereits hinzugefügten Benutzer hinzufüge
-    Dann wird der Benutzer nicht hinzugefügt
-    Und der vorhandene Benutzer ist nach oben gerutscht
+  Scenario: bereits bestehende Benutzer hinzufügen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    And ich eine bestehende Gruppe editiere
+    When ich einen bereits hinzugefügten Benutzer hinzufüge
+    Then wird der Benutzer nicht hinzugefügt
+    And der vorhandene Benutzer ist nach oben gerutscht
 
   @personas
-  Szenario: Gruppenliste Sortierung
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Dann sehe ich die Liste der Gruppen
-    Und die Liste ist alphabetisch sortiert
+  Scenario: Gruppenliste Sortierung
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    Then sehe ich die Liste der Gruppen
+    And die Liste ist alphabetisch sortiert
 
   @javascript @personas
-  Szenario: Gruppe erstellen
-    Angenommen ich befinde mich im Admin-Bereich im Reiter Gruppen
-    Wenn ich eine Gruppe erstelle
-    Und den Namen der Gruppe angebe
-    Und die Benutzer hinzufüge
-    Und die Modelle und deren Kapazität hinzufüge
-    Und ich speichere
-    Dann ist die Gruppe gespeichert
-    Und die Gruppe ist nicht visierungspflichtig
-    Und die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    Und ich sehe die Gruppenliste alphabetisch sortiert
-    Und ich sehe eine Bestätigung
+  Scenario: Gruppe erstellen
+    Given ich befinde mich im Admin-Bereich im Reiter Gruppen
+    When ich eine Gruppe erstelle
+    And den Namen der Gruppe angebe
+    And die Benutzer hinzufüge
+    And die Modelle und deren Kapazität hinzufüge
+    And ich speichere
+    Then ist die Gruppe gespeichert
+    And die Gruppe ist nicht visierungspflichtig
+    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
+    And ich sehe die Gruppenliste alphabetisch sortiert
+    And ich sehe eine Bestätigung

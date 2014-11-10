@@ -1,11 +1,10 @@
-# language: de
 
-Funktionalität: Bestellenden wechseln
+Feature: Bestellenden wechseln
 
   Grundlage:
-    Angenommen ich bin Pius
+    Given ich bin Pius
 
   @javascript @personas
-  Szenario: Bestellende Person wechseln
-    Angenommen ich öffne eine Bestellung
-    Dann kann ich die bestellende Person wechseln
+  Scenario: Bestellende Person wechseln
+    Given ich öffne eine Bestellung
+    Then kann ich die bestellende Person wechseln

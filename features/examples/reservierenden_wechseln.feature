@@ -1,11 +1,10 @@
-# language: de
 
-Funktionalität: Reservierenden wechseln
+Feature: Reservierenden wechseln
 
   Grundlage:
-    Angenommen ich bin Pius
+    Given ich bin Pius
 
   @javascript @personas
-  Szenario: Reservierende Person für ausgewählte Linien wechseln
-    Angenommen I am doing a hand over
-    Dann kann ich die reservierende Person für eine Auswahl an Linien wechseln
+  Scenario: Reservierende Person für ausgewählte Linien wechseln
+    Given I am doing a hand over
+    Then kann ich die reservierende Person für eine Auswahl an Linien wechseln
