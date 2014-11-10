@@ -429,3 +429,19 @@ When(/^I enter something in the "(.*?)" field$/) do |field_label|
     find("[data-add-contract-line]").set " "
   end
 end
+
+When(/^I open a take back that contains options$/) do
+  @customer = @current_inventory_pool.users.all.select {|x| x.contracts.signed.size > 0 and !x.contracts.signed.detect{|c| c.options.size > 0}.nil? }.first
+  visit manage_take_back_path(@current_inventory_pool, @customer)
+  expect(has_selector?("#take-back-view")).to be true
+end
+
+When(/^I manually change the number of options to return$/) do
+  @option_line = find(".line[data-line-type='option_line']", match: :first)
+  @option_line.find("[data-quantity-returned]").set 1
+end
+
+Then(/^the option is selected and the box is checked$/) do
+  @option_line.find("input[data-select-line]:checked")
+  step 'the count matches the amount of selected lines'
+end

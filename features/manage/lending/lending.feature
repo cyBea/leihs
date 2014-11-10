@@ -141,3 +141,30 @@ Feature: Lending
     When ich etwas zuweise, das nicht in den Rücknahmen vorkommt
     Then I see an error message
     And I see the error message "_for_sure_this_is_not_part_of_the_take_back was not found for this take back"
+
+  @javascript @personas
+  Scenario: Selection during manual interaction while taking back
+    When I open a take back that contains options
+    And I manually change the number of options to return
+    Then the option is selected and the box is checked
+
+  @javascript @personas
+  Scenario: Searching within orders
+    Given orders exist
+    When I am listing the orders
+    And I search for an order
+    Then all listed orders match the search term
+
+  @javascript @personas
+  Scenario: Searching within contracts
+    Given contracts exist
+    When I am listing the contracts
+    And I search for a contract
+    Then all listed contracts match the search term
+
+  @javascript @personas
+  Scenario: Searching within visits
+    Given visits exist
+    When I am listing the visits
+    And I search for a visit
+    Then all listed visits match the search term

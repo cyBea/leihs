@@ -27,21 +27,6 @@ Wenn /^ich etwas zuweise, das nicht in den Rücknahmen vorkommt$/ do
 end
 
 
-Wenn /^ich eine Rücknahme mache die Optionen beinhaltet$/ do
-  @customer = @current_inventory_pool.users.all.select {|x| x.contracts.signed.size > 0 and !x.contracts.signed.detect{|c| c.options.size > 0}.nil? }.first
-  visit manage_take_back_path(@current_inventory_pool, @customer)
-  expect(has_selector?("#take-back-view")).to be true
-end
-
-Wenn /^die Anzahl einer zurückzugebenden Option manuell ändere$/ do
-  @option_line = find(".line[data-line-type='option_line']", match: :first)
-  @option_line.find("[data-quantity-returned]").set 1
-end
-
-Dann /^wird die Option ausgewählt und der Haken gesetzt$/ do
-  @option_line.find("input[data-select-line]:checked")
-  step 'the count matches the amount of selected lines'
-end
 
 
 

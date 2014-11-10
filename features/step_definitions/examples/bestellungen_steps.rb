@@ -293,7 +293,7 @@ When(/^I search for (an order|a contract|a visit)$/) do |arg1|
   end
 end
 
-Then(/^all listed (orders|contracts|visits), are matched by the search term$/) do |arg1|
+Then(/^all listed (orders|contracts|visits) match the search term$/) do |arg1|
   el = arg1 == "visits" ? "#visits-index-view" : "#contracts-index-view"
   within el do
     within ".list-of-lines" do
