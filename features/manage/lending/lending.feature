@@ -122,3 +122,22 @@ Feature: Lending
     Then all these items are listed
     And I see one line per model
     And each line shows the sum of items of the respective model
+
+  @javascript @personas
+  Scenario: Clicking the last user after editing an order
+    Given I open the daily view
+    And I open an order
+    Then I return to the daily view
+    Then I see the last visitors
+    And I see the previously opened order's user as last visitor
+    When I click on the last visitor's name
+    Then I see search results matching that user's name
+
+  @javascript @personas
+  Scenario: Autocomplete during take back
+    When I open a take back
+    And I enter something in the "Inventory Code/Name" field
+    Then werden mir diejenigen Gegenstände vorgeschlagen, die in den dargestellten Rücknahmen vorkommen
+    When ich etwas zuweise, das nicht in den Rücknahmen vorkommt
+    Then I see an error message
+    And I see the error message "_for_sure_this_is_not_part_of_the_take_back was not found for this take back"

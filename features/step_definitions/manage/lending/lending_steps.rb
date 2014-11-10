@@ -391,4 +391,41 @@ Then /^each line shows the sum of items of the respective model$/ do
 end
 
 
+Then /^I open an order placed by "(.*?)"$/ do |arg1|
+  find("[data-collapsed-toggle='#open-orders']").click unless all("[data-collapsed-toggle='#open-orders']").empty?
+  @contract = @current_inventory_pool.contracts.find find("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1)["data-id"]
+  @user = @contract.user
+  within("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1) do
+    find(".line-actions .multibutton .dropdown-holder").click
+    find(".dropdown-item", :text => _("Edit")).click
+  end
+  find("h1", text: _("Edit %s") % _("Order"))
+  find("h2", text: arg1)
+end
 
+Wenn /^I open an order$/ do
+  step 'I open an order placed by ""'
+end
+
+Then /^I see the last visitors$/ do
+  find("#daily-view strong", :text => _("Last Visitors:"))
+end
+
+
+Then(/^I see the previously opened order's user as last visitor$/) do
+  find("#daily-view #last-visitors", :text => @user.name)
+end
+
+When(/^I click on the last visitor's name$/) do
+  find("#daily-view #last-visitors a", :text => @user.name).click
+end
+
+Then(/^I see search results matching that user's name$/) do
+  find("#search-overview h1", text: _("Search Results for \"%s\"") % @user.name)
+end
+
+When(/^I enter something in the "(.*?)" field$/) do |field_label|
+  if field_label == "Inventarcode/Name"
+    find("[data-add-contract-line]").set " "
+  end
+end

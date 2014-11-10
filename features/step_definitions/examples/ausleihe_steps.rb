@@ -1,25 +1,6 @@
 # -*- encoding : utf-8 -*-
 
 
-Wenn /^ich öffne eine Bestellung von "(.*?)"$/ do |arg1|
-  find("[data-collapsed-toggle='#open-orders']").click unless all("[data-collapsed-toggle='#open-orders']").empty?
-  @contract = @current_inventory_pool.contracts.find find("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1)["data-id"]
-  @user = @contract.user
-  within("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1) do
-    find(".line-actions .multibutton .dropdown-holder").click
-    find(".dropdown-item", :text => _("Edit")).click
-  end
-  find("h1", text: _("Edit %s") % _("Order"))
-  find("h2", text: arg1)
-end
-
-Wenn /^ich öffne eine Bestellung$/ do
-  step 'ich öffne eine Bestellung von ""'
-end
-
-Dann /^sehe ich die letzten Besucher$/ do
-  find("#daily-view strong", :text => _("Last Visitors:"))
-end
 
 Dann /^ich sehe "(.*?)" als letzten Besucher$/ do |arg1|
   find("#daily-view #last-visitors", :text => arg1)
@@ -33,11 +14,6 @@ Dann /^wird mir ich ein Suchresultat nach "(.*?)" angezeigt/ do |arg1|
   find("#search-overview h1", text: _("Search Results for \"%s\"") % arg1)
 end
 
-Wenn /^etwas in das Feld "(.*?)" schreibe$/ do |field_label|
-  if field_label == "Inventarcode/Name"
-    find("[data-add-contract-line]").set " "
-  end
-end
 
 Dann /^werden mir diejenigen Gegenstände vorgeschlagen, die in den dargestellten Rücknahmen vorkommen$/ do
   @customer.visits.where(inventory_pool_id: @current_inventory_pool).take_back.first.lines.all do |line|
@@ -118,15 +94,4 @@ Dann(/^erscheint der Benutzer unter den letzten Besuchern$/) do
 end
 
 
-Dann(/^ich sehe den Benutzer der vorher geöffneten Bestellung als letzten Besucher$/) do
-  find("#daily-view #last-visitors", :text => @user.name)
-end
-
-Wenn(/^ich auf den Namen des letzten Benutzers klicke$/) do
-  find("#daily-view #last-visitors a", :text => @user.name).click
-end
-
-Dann(/^wird mir ich ein Suchresultat nach dem Namen des letzten Benutzers angezeigt$/) do
-  find("#search-overview h1", text: _("Search Results for \"%s\"") % @user.name)
-end
 
