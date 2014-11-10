@@ -85,3 +85,40 @@ Feature: Lending
     When I change values during inspection
     And I save the inspection
     Then the item is saved with the currently set states
+
+  @javascript @browser @personas
+  Scenario: Automatic printing during hand over
+    When I open a hand over
+    Then the print dialog opens automatically
+
+  @javascript @personas
+  Scenario: Default start and end date
+    When I open a hand over
+    Then start and end date are set to the corresponding dates of the hand over's first time window
+
+  @javascript @personas
+  Scenario: Show all search results
+    Given I search for 'a'
+    Then I see search results in the following categories:
+    | category  |
+    | Users     |
+    | Models    |
+    | Items     |
+    | Contracts |
+    | Orders    |
+    | Options   |
+    And I see at most the first 3 results from each category
+    When a category has more than 3 results
+    Then I can choose to see more results from that category
+    When I choose to see more results
+    Then I see the first 5 results
+    When the category has more than 5 results
+    Then I can choose to see all results
+    When I choose to see all results, I receive a separate list with all results from this category
+
+  @javascript @personas @browser
+  Scenario: Merging the numbers in an item popup
+    Given I hover over the number of items in a line
+    Then all these items are listed
+    And I see one line per model
+    And each line shows the sum of items of the respective model

@@ -5,37 +5,6 @@ Funktionalität: Ausleihe
   Grundlage:
     Angenommen ich bin Pius
 
-
-  @javascript @browser @personas
-  Szenario: Automatischer Druck Dialog beim Aushändigen
-    Wenn ich eine Aushändigung mache
-    Dann wird automatisch der Druck-Dialog geöffnet
-
-  @javascript @personas
-  Szenario: Default des Start- und Enddatums
-    Wenn ich eine Aushändigung mache
-    Dann ist das Start- und Enddatum gemäss dem ersten Zeitfenster der Aushändigung gesetzt
-
-  @javascript @personas
-  Szenario: Alle Suchresultate anzeigen
-    Angenommen ich suche 'a'
-    Dann erhalte ich Suchresultate in den Kategorien:
-    | category     |
-    | Benutzer     |
-    | Modelle      |
-    | Gegenstände  |
-    | Verträge     |
-    | Bestellungen |
-    | Optionen     |
-    Und ich sehe aus jeder Kategorie maximal die 3 ersten Resultate
-    Wenn eine Kategorie mehr als 3 Resultate bringt
-    Dann kann ich wählen, ob ich aus einer Kategorie mehr Resultate sehen will
-    Wenn ich mehr Resultate wähle
-    Dann sehe ich die ersten 5 Resultate
-    Wenn die Kategorie mehr als 5 Resultate bringt
-    Dann kann ich wählen, ob ich alle Resultate sehen will
-    Wenn ich alle Resultate wähle erhalte ich eine separate Liste aller Resultate dieser Kategorie
-
   @javascript @personas @browser
   Szenario: Zusammenziehen der Anzahlen im Item-Popup
     Angenommen man fährt über die Anzahl von Gegenständen in einer Zeile

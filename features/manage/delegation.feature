@@ -71,7 +71,7 @@ Funktionalität: Delegation
   @javascript @personas
   Szenario: Globale Suche
     Angenommen ich bin Pius
-    Und ich suche 'Julie'
+    Und I search for 'Julie'
     Wenn Julie in einer Delegation ist
     Dann werden mir im alle Suchresultate von Julie oder Delegation mit Namen Julie angezeigt
     Und mir werden alle Delegationen angezeigt, den Julie zugeteilt ist
