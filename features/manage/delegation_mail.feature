@@ -7,7 +7,7 @@ Feature: Mailversand bei Delegationsbestellungen und -besuchen
     And es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
     When I edit the order
     And die Bestellung genehmige
-    Then ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
     And wird das Genehmigungsmail an den Besteller versendet
     And das Genehmigungsmail wird nicht an den Delegationsverantwortlichen versendet
 

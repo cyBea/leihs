@@ -51,7 +51,9 @@ Dann(/^ich erhalte eine Meldung$/) do
   find("#flash .notice")
 end
 
-Dann(/^ich erhalte eine Erfolgsmeldung$/) do
+
+#Dann(/^ich erhalte eine Erfolgsmeldung$/) do
+Then(/^I receive a notification of success$/) do
   find("#flash .success")
 end
 

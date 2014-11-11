@@ -14,7 +14,8 @@ Angenommen(/^es besteht bereits eine Aushändigung mit mindestens (\d+) zugewies
   expect(@hand_over).not_to be_nil
 end
 
-Wenn(/^ich die Aushändigung öffne$/) do
+#Wenn(/^ich die Aushändigung öffne$/) do
+When(/^I open the hand over$/) do
   visit manage_hand_over_path(@current_inventory_pool, @hand_over.user)
   step "the availability is loaded"
 end
@@ -40,7 +41,8 @@ Angenommen(/^ich öffne eine Aushändigung( mit einer Software)?$/) do |arg1|
   step "ich die Aushändigung öffne"
 end
 
-Angenommen(/^es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell( und einer Option)?$/) do |arg1|
+#Angenommen(/^es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell( und einer Option)?$/) do |arg1|
+Given(/^there is a hand over with at least one unproblematic model( and an option)?$/) do |arg1|
   @models_in_stock = @current_inventory_pool.items.in_stock.map(&:model).uniq
   @hand_over = @current_inventory_pool.visits.hand_over.detect do |v|
     b = v.lines.select do |line|
@@ -75,7 +77,8 @@ Angenommen(/^es gibt eine Aushändigung mit mindestens (einer problematischen Li
   expect(@hand_over).not_to be_nil
 end
 
-Wenn(/^ich dem nicht problematischen Modell einen Inventarcode zuweise$/) do
+#Wenn(/^ich dem nicht problematischen Modell einen Inventarcode zuweise$/) do
+When(/^I assign an inventory code to the unproblematic model$/) do
   @contract_line = @hand_over.lines.find {|l| !l.start_date.past? and !l.item and @models_in_stock.include?(l.model) }
   @line_css = ".line[data-id='#{@contract_line.id}']"
   within @line_css do
@@ -84,43 +87,48 @@ Wenn(/^ich dem nicht problematischen Modell einen Inventarcode zuweise$/) do
   end
 end
 
-Dann(/^wird der Gegenstand der Zeile zugeteilt$/) do
+#Dann(/^wird der Gegenstand der Zeile zugeteilt$/) do
+Then(/^the item is assigned to the line$/) do
   find("#flash")
   expect(@contract_line.reload.item).not_to be_nil
 end
 
-Dann(/^die Zeile wird selektiert|wird die Zeile selektiert$/) do
+
+#Dann(/^die Zeile wird selektiert|wird die Zeile selektiert$/) do
+Then(/^the line is selected$/) do
   find(@line_css).find("input[type=checkbox]:checked")
 end
 
-Dann(/^die Zeile wird grün markiert|wird die Zeile grün markiert$/) do
+#Dann(/^die Zeile wird grün markiert|wird die Zeile grün markiert$/) do
+Dann(/^the line is highlighted in green$/) do
   expect(find(@line_css).native.attribute("class")).to include "green"
 end
 
-Wenn(/^ich die Zeile deselektiere$/) do
+
+#Wenn(/^ich die Zeile deselektiere$/) do
+When(/^I deselect the line$/) do
   within @line_css do
     find("input[type=checkbox]").click
     expect(find("input[type=checkbox]").checked?).to be false
   end
 end
 
-Dann(/^ist die Zeile nicht mehr grün eingefärbt$/) do
+#Dann(/^ist die Zeile nicht mehr grün eingefärbt$/) do
+Then(/^the line is no longer highlighted in green$/) do
   expect(find(@line_css).native.attribute("class")).not_to include "green"
 end
 
-Wenn(/^ich die Zeile wieder selektiere$/) do
+#Wenn(/^ich die Zeile wieder selektiere$/) do
+When(/^I reselect the line$/) do
   within @line_css do
     find("input[type=checkbox]").click
     find("input[type=checkbox]:checked")
   end
 end
 
-Wenn(/^ich den zugeteilten Gegenstand auf der Zeile entferne$/) do
+#Wenn(/^ich den zugeteilten Gegenstand auf der Zeile entferne$/) do
+When(/^I remove the assigned item from the line$/) do
   find(@line_css).find(".icon-remove-sign").click
-end
-
-Dann(/^ist die Zeile nicht mehr grün markiert$/) do
-  expect(find(@line_css).native.attribute("class")).not_to include "green"
 end
 
 Wenn(/^ich eine Option hinzufüge$/) do

@@ -14,7 +14,7 @@ Feature: Rücknahme
     When ich einen Gegenstand über das Zuweisenfeld zurücknehme
     Then wird die Zeile selektiert
     And die Zeile wird grün markiert
-    And ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
 
   @personas @javascript
   Scenario: Deselektieren einer Linie
@@ -30,7 +30,7 @@ Feature: Rücknahme
     Then wird die Zeile grün markiert
     And die Zeile wird selektiert
     And das Problemfeld für die Linie wird angezeigt
-    And ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
 
   @javascript @browser @personas
   Scenario: Festhalten wer einen Gegenstand zurückgenommen hat
@@ -47,11 +47,11 @@ Feature: Rücknahme
     Given ich befinde mich in einer Rücknahme mit mindestens zwei gleichen Optionen
     When ich eine Option über das Zuweisenfeld zurücknehme
     Then wird die Zeile selektiert
-    And ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
     And die Zeile ist nicht grün markiert
     When ich alle Optionen der gleichen Zeile zurücknehme
     Then wird die Zeile grün markiert
-    And ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
 
   @javascript @browser @personas
   Scenario: Inspektion während einer Rücknahme

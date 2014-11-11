@@ -1,29 +1,28 @@
+Feature: Edit a hand over
 
-Feature: Aushändigung editieren
-
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @browser @personas
-  Scenario: Systemfeedback bei erfolgreicher manueller Interaktion bei Aushändigung
-    Given es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell
-    And ich die Aushändigung öffne
-    When ich dem nicht problematischen Modell einen Inventarcode zuweise
-    Then wird der Gegenstand der Zeile zugeteilt
-    And die Zeile wird selektiert
-    And die Zeile wird grün markiert
-    And ich erhalte eine Erfolgsmeldung
-    When ich die Zeile deselektiere
-    Then ist die Zeile nicht mehr grün eingefärbt
-    When ich die Zeile wieder selektiere
-    Then wird die Zeile grün markiert
-    When ich den zugeteilten Gegenstand auf der Zeile entferne
-    Then ist die Zeile nicht mehr grün markiert
+  Scenario: Feedback on a successful manual interaction during hand over
+    Given there is a hand over with at least one unproblematic model and an option
+    And I open the hand over
+    When I assign an inventory code to the unproblematic model
+    Then the item is assigned to the line
+    And the line is selected
+    And the line is highlighted in green
+    Then I receive a notification of success
+    When I deselect the line
+    Then the line is no longer highlighted in green
+    When I reselect the line
+    Then the line is highlighted in green
+    When I remove the assigned item from the line
+    Then the line is no longer highlighted in green
 
   @javascript @browser @personas
   Scenario: Systemfeedback bei Zuteilen eines Gegenstandes zur problematischen Linie
     Given es gibt eine Aushändigung mit mindestens einer problematischen Linie
-    And ich die Aushändigung öffne
+    And I open the hand over
     Then wird das Problemfeld für das problematische Modell angezeigt
     When ich dieser Linie einen Inventarcode manuell zuweise
     And die Zeile wird selektiert
@@ -38,7 +37,7 @@ Feature: Aushändigung editieren
 
   @javascript @browser @personas
   Scenario: Systemfeedback bei Zuteilen einer Option
-    Given ich öffne eine Aushändigung
+    Given I open a hand over
     When ich eine Option hinzufüge
     Then wird die Zeile selektiert
     And die Zeile wird grün markiert
@@ -107,5 +106,5 @@ Feature: Aushändigung editieren
   @personas @javascript @browser
   Scenario: Anzeige von bereits zugewiesenen Gegenständen
     Given es besteht bereits eine Aushändigung mit mindestens 21 zugewiesenen Gegenständen für einen Benutzer
-    When ich die Aushändigung öffne
+    When I open the hand over
     Then sehe ich all die bereits zugewiesenen Gegenstände mittels Inventarcodes

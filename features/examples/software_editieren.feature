@@ -65,7 +65,7 @@ Feature: Software editieren
       | Lizenzablaufdatum       |
       | Rechnungsdatum          |
     And ich speichere
-    Then ich erhalte eine Erfolgsmeldung
+    Then I receive a notification of success
     When ich die gleiche Lizenz editiere
     Then sind die folgenden Felder der Lizenz leer:
       | Maintenance-Ablaufdatum |
