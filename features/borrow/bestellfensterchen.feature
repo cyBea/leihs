@@ -6,7 +6,7 @@ Feature: Bestellfensterchen
   die möglichkeit haben Modelle zu bestellen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Bestellfensterchen

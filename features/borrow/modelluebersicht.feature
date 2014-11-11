@@ -7,7 +7,7 @@ Feature: Modellübersicht
 
   @personas
   Scenario: Modellübersicht
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Liste der Modelle
     When ich ein Modell auswähle
     Then lande ich auf der Modellübersicht
@@ -22,7 +22,7 @@ Feature: Modellübersicht
 
   @javascript @personas
   Scenario: Bilder vergrössern
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich in einer Modellübersicht mit Bildern
     When ich über ein solches Bild hovere
     Then wird das Bild zum Hauptbild
@@ -33,7 +33,7 @@ Feature: Modellübersicht
 
   @javascript @personas
   Scenario: Eigenschaften anzeigen
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich in einer Modellübersicht mit Eigenschaften
     Then werden die ersten fünf Eigenschaften mit Schlüssel und Wert angezeigt
     And wenn man 'Alle Eigenschaften anzeigen' wählt

@@ -4,7 +4,7 @@ Feature: Suche
   Um etwas zu finden möchte ich als Ausleiher eine Suchfunktionalität
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Suchfeld

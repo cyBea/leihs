@@ -2,7 +2,7 @@
 Feature: Modell
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
     And man öffnet die Liste des Inventars
 
   @javascript @personas

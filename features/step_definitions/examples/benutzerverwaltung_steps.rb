@@ -1,28 +1,28 @@
 # -*- encoding : utf-8 -*-
 
 Angenommen /^man ist Inventar\-Verwalter oder Ausleihe\-Verwalter$/ do
-  step 'ich bin %s' % ["Mike", "Pius"].sample
+  step 'I am %s' % ["Mike", "Pius"].sample
   ar = @current_user.access_rights.active.where(role: [:lending_manager, :inventory_manager]).first
   expect(ar).not_to be_nil
   @inventory_pool = ar.inventory_pool
 end
 
 Angenommen /^man ist Ausleihe\-Verwalter$/ do
-  step 'ich bin %s' % "Pius"
+  step 'I am %s' % "Pius"
   ar = @current_user.access_rights.active.where(role: :lending_manager).first
   expect(ar).not_to be_nil
   @inventory_pool = ar.inventory_pool
 end
 
 Angenommen /^man ist Inventar\-Verwalter$/ do
-  step 'ich bin %s' % "Mike"
+  step 'I am %s' % "Mike"
   ar = @current_user.access_rights.active.where(role: :inventory_manager).first
   expect(ar).not_to be_nil
   @inventory_pool = ar.inventory_pool
 end
 
 Angenommen /^man ist Administrator$/ do
-  step 'ich bin %s' % "Ramon"
+  step 'I am %s' % "Ramon"
 end
 
 ####################################################################
@@ -732,7 +732,7 @@ end
 
 Dann(/^der Benutzer ist nicht gelöscht$/) do
   find("#user-list")
-  step 'man bis zum Ende der Liste fährt' # loading pages (but probably only the last one)
+  step 'I scroll to the end of the list' # loading pages (but probably only the last one)
   find("#user-list .line", text: @user.name)
   expect(User.find_by_id(@user.id)).not_to be_nil
 end

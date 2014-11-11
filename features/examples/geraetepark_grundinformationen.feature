@@ -7,7 +7,7 @@ Feature: Gerätepark-Grundinformationen
 
   @javascript @personas
   Scenario: Grundinformationen erfassen
-    Given ich bin Mike
+    Given I am Mike
     When ich den Admin-Bereich betrete
     Then kann ich die Gerätepark-Grundinformationen eingeben
     | Name |
@@ -24,7 +24,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
-    Given ich bin Mike
+    Given I am Mike
     And ich die Grundinformationen des Geräteparks abfüllen möchte
     And ich die folgenden Felder nicht befüllt habe
       | Name     |
@@ -35,7 +35,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks
-    Given ich bin Gino
+    Given I am Gino
     And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
     And man befindet sich auf der Benutzerliste
     When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
@@ -43,7 +43,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Aut. zuweisen beim Benutzererstellen innerhalb des Geräteparks
-    Given ich bin Mike
+    Given I am Mike
     And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
     And es ist bei meinem Gerätepark aut. Zuweisung aktiviert
     When ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar-Verwalter' erstelle
@@ -53,13 +53,13 @@ Feature: Gerätepark-Grundinformationen
   #72676850
   @personas @javascript
   Scenario: Aut. Zuweisen entfernen
-    Given ich bin Mike
+    Given I am Mike
     And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
     And ich editiere eine Gerätepark bei dem die aut. Zuweisung aktiviert ist
     When ich die aut. Zuweisung deaktiviere
     And ich speichere
     Then ist die aut. Zuweisung deaktiviert
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Benutzerliste
     When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
     Then kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht
@@ -67,7 +67,7 @@ Feature: Gerätepark-Grundinformationen
   #72676850
   @personas
   Scenario Outline: Checkboxen abwählen
-    Given ich bin Mike
+    Given I am Mike
     And ich editiere eine Gerätepark
     When ich "<Checkbox>" aktiviere
     And ich speichere
@@ -83,7 +83,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Arbeitstage verwalten
-   Given ich bin Mike
+   Given I am Mike
    And ich verwalte die Gerätepark Grundinformationen
    When ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
    And ich speichere
@@ -91,7 +91,7 @@ Feature: Gerätepark-Grundinformationen
 
   @javascript @personas
   Scenario: Tage der Ausleihschliessung verwalten
-   Given ich bin Mike
+   Given I am Mike
    And ich verwalte die Gerätepark Grundinformationen
    When ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
    And ich speichere
@@ -100,7 +100,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario Outline: Pflichtfelder der Grundinformationen einzeln prüfen
-    Given ich bin Mike
+    Given I am Mike
     When ich die Grundinformationen des Geräteparks abfüllen möchte
     And jedes Pflichtfeld des Geräteparks ist gesetzt
     | Name        |
@@ -118,7 +118,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Automatische Benutzersperrung bei verspäteter Rückgabe
-    Given ich bin Mike
+    Given I am Mike
     When ich die Grundinformationen des Geräteparks abfüllen möchte
     When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte
     Then muss ich einen Sperrgrund angeben
@@ -133,7 +133,7 @@ Feature: Gerätepark-Grundinformationen
 
   @personas
   Scenario: Automatische Benutzersperrung nur wenn Benutzer nicht schon gesperrt
-    Given ich bin Mike
+    Given I am Mike
     When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteter Rückgaben einschalte
     And ein Benutzer bereits gesperrt ist
     Then werden der bestehende Sperrgrund sowie die Sperrzeit dieses Benutzers nicht überschrieben

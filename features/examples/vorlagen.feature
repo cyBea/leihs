@@ -5,7 +5,7 @@ Feature: Vorlagen verwalten
   die Möglichkeit haben, Vorlagen zu verwalten
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @personas
   Scenario: Liste aller Vorlagen anzeigen

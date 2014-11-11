@@ -7,7 +7,7 @@ Feature: Geräteparks administrieren
 
   @javascript @personas
   Scenario: Geräteparkauswahl
-    Given ich bin Gino
+    Given I am Gino
     When ich in den Admin-Bereich wechsel
     Then ich sehe die Geräteparkliste
     When ich auf die Geraetepark-Auswahl klicke
@@ -16,7 +16,7 @@ Feature: Geräteparks administrieren
 
   @personas
   Scenario: Den ersten Gerätepark erstellen
-    Given ich bin Gino
+    Given I am Gino
     When ich im Admin-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle
     And ich Name und Kurzname und Email eingebe
     And ich speichere
@@ -26,7 +26,7 @@ Feature: Geräteparks administrieren
 
   @personas
   Scenario Outline: Pflichtfelder beim erstmaligen Erstellen eines Geräteparks
-    Given ich bin Ramon
+    Given I am Ramon
     When ich im Admin-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle
     And ich <Pflichtfeld> nicht eingebe
     And ich speichere
@@ -41,7 +41,7 @@ Feature: Geräteparks administrieren
 
   @personas
   Scenario: Gerätepark ändern
-    Given ich bin Ramon
+    Given I am Ramon
     When ich im Admin-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark ändere
     And ich Name und Kurzname und Email ändere
     And ich speichere
@@ -49,7 +49,7 @@ Feature: Geräteparks administrieren
 
   @javascript @personas
   Scenario: Gerätepark löschen
-    Given ich bin Ramon
+    Given I am Ramon
     When ich im Admin-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark lösche
     And der Gerätepark wurde aus der Liste gelöscht
     And der Gerätepark wurde aus der Datenbank gelöscht

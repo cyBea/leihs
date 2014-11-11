@@ -2,7 +2,7 @@
 Feature: Hinzufügen von Modellen
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @browser @personas
   Scenario: Verfügbarkeitsanzeige beim Hinzufügen zu einer Bestellung

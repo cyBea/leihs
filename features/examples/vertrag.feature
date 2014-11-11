@@ -6,7 +6,7 @@ Feature: Vertrag
   das mir das System einen Vertrag bereitstellen kann
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @browser @personas
   Scenario: Was ich auf dem Vertrag sehen möchte

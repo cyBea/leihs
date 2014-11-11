@@ -2,7 +2,7 @@
 Feature: Gegenstand kopieren
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @personas
   Scenario: Gegenstand erstellen und kopieren
@@ -70,7 +70,7 @@ Feature: Gegenstand kopieren
   @javascript @personas
   Scenario: Gegenstand aus einem anderem Gerätepark kopieren
     Given I go to logout
-    And ich bin Matti
+    And I am Matti
     And man editiert ein Gegenstand eines anderen Besitzers
     When man speichert und kopiert
     Then wird eine neue Gegenstandskopieransicht geöffnet

@@ -3,7 +3,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Felder beim Erstellen eines Gegenstandes
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And I select "Ja" from "item[retired]"
     And I choose "Investition"
@@ -53,7 +53,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen fehlenden Pflichtangaben erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And man setzt Bezug auf Investition
     And kein Pflichtfeld ist gesetzt
@@ -66,7 +66,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And man setzt Bezug auf Investition
     And jedes Pflichtfeld ist gesetzt
@@ -81,7 +81,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And man setzt Bezug auf Investition
     And jedes Pflichtfeld ist gesetzt
@@ -96,13 +96,13 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Wo man einen Gegenstand erstellen kann
-    Given ich bin Matti
+    Given I am Matti
     And man befindet sich auf der Liste des Inventars
     Then kann man einen Gegenstand erstellen
 
   @javascript @personas
   Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
-    Given ich bin Mike
+    Given I am Mike
     And ich befinde mich auf der Erstellungsseite eines Gegenstandes
     And jedes Pflichtfeld ist gesetzt
       | Modell        |
@@ -116,7 +116,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
@@ -141,7 +141,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
@@ -167,7 +167,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And man setzt Bezug auf Investition
     And jedes Pflichtfeld ist gesetzt
@@ -182,7 +182,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     And man setzt Bezug auf Investition
     And jedes Pflichtfeld ist gesetzt
@@ -197,7 +197,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
@@ -222,7 +222,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     When ich die folgenden Informationen erfasse
     | Feldname                     | Type         | Wert                          |
@@ -247,13 +247,13 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Wo man einen Gegenstand erstellen kann
-    Given ich bin Matti
+    Given I am Matti
     And man befindet sich auf der Liste des Inventars
     Then kann man einen Gegenstand erstellen
 
   @javascript @personas
   Scenario: Felder die bereits vorausgefüllt sind
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     Then ist der Barcode bereits gesetzt
     And Letzte Inventur ist das heutige Datum
@@ -267,7 +267,7 @@ Feature: Gegenstand erstellen
 
   @javascript @personas
   Scenario: Werte für Anschaffungskategorie hinterlegen
-    Given ich bin Matti
+    Given I am Matti
     And man navigiert zur Gegenstandserstellungsseite
     Then sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt
     | Anschaffungskategorie |

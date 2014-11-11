@@ -2,7 +2,7 @@
 Feature: Software löschen
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @browser @personas
   Scenario: Software-Produkt löschen

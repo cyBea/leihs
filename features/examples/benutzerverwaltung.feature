@@ -38,7 +38,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Als Administrator einen anderen Benutzer Administrator machen
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat
     When man diesen Benutzer die Rolle Administrator zuweist
     And ich speichere
@@ -48,7 +48,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Als Administrator einem anderen Benutzer die Rolle Administrator wegnehmen
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat
     When man diesem Benutzer die Rolle Administrator wegnimmt
     And ich speichere
@@ -57,7 +57,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario Outline: Als Ausleihe- oder Inventar-Verwalter hat man kein Zugriff auf die Administrator-User-Pfade
-    Given ich bin <Person>
+    Given I am <Person>
     When man versucht auf die Administrator Benutzererstellenansicht zu gehen
     Then gelangt man auf diese Seite nicht
     When man versucht auf die Administrator Benutzereditieransicht zu gehen
@@ -69,7 +69,7 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Neuen Benutzer im Geräterpark als Ausleihe-Verwalter hinzufügen
-    Given ich bin Pius
+    Given I am Pius
     When man in der Benutzeransicht ist
     And man einen Benutzer hinzufügt
     And die folgenden Informationen eingibt
@@ -94,7 +94,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Als Administrator neuen Benutzer erstellen
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
     When man von hier auf die Benutzererstellungsseite geht
     And den Nachnamen eingibt
@@ -109,14 +109,14 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Auflistung der Inventarpools eines Benutzers
-    Given ich bin Ramon
+    Given I am Ramon
     And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
     And man einen Benutzer mit Zugriffsrechten editiert
     Then werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet
 
   @javascript @browser @personas
   Scenario: Voraussetzungen fürs Löschen eines Benutzers im Gerätepark
-    Given ich bin Ramon
+    Given I am Ramon
     And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
     And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
     When ich diesen Benutzer aus der Liste lösche
@@ -125,12 +125,12 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Alphabetische Sortierung der Benutzer ausserhalb vom Inventarpool
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
 
   @personas
   Scenario: Zugriff entfernen als Ausleihe-Verwalter
-    Given ich bin Pius
+    Given I am Pius
     And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
     And ich speichere
@@ -138,7 +138,7 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Benutzer im Geräterpark als Administrator löschen
-    Given ich bin Gino
+    Given I am Gino
     And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
     And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
     When ich diesen Benutzer aus der Liste lösche
@@ -147,7 +147,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff entfernen als Administrator
-    Given ich bin Gino
+    Given I am Gino
     And man editiert einen Benutzer der Zugriff auf ein Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
     And ich speichere
@@ -155,7 +155,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Startseite setzen
-    Given ich bin Pius
+    Given I am Pius
     And man befindet sich auf der Liste der Benutzer
     When man die Startseite setzt
     Then ist die Liste der Benutzer die Startseite
@@ -239,7 +239,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff entfernen als Inventar-Verwalter
-    Given ich bin Mike
+    Given I am Mike
     And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
     And ich speichere
@@ -247,7 +247,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario Outline: Zugriff entfernen für einen Benutzer mit offenen Vertrag
-    Given ich bin <Persona>
+    Given I am <Persona>
     And es existiert ein Vertrag mit Status "<Vertragsstatus>" für einen Benutzer mit sonst keinem anderen Verträgen
     When man den Benutzer für diesen Vertrag editiert
     Then hat dieser Benutzer Zugriff auf das aktuelle Inventarpool
@@ -265,7 +265,7 @@ Feature: Benutzer verwalten
 
    @upcoming
   Scenario: Gruppenzuteilung in Benutzeransicht hinzufügen/entfernen
-    Given ich bin Pius
+    Given I am Pius
     And man editiert einen Benutzer
     Then kann man Gruppen über eine Autocomplete-Liste hinzufügen
     And kann Gruppen entfernen
@@ -274,7 +274,7 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Neuen Benutzer im Geräterpark als Inventar-Verwalter hinzufügen
-    Given ich bin Mike
+    Given I am Mike
     When man in der Benutzeransicht ist
     And man einen Benutzer hinzufügt
     And die folgenden Informationen eingibt
@@ -306,7 +306,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff auf Ausleihe-Verwalter ändern als Ausleihe-Verwalter
-    Given ich bin Pius
+    Given I am Pius
     And man editiert einen Benutzer der Kunde ist
     Then man hat nur die folgenden Rollen zur Auswahl
       | No access          |
@@ -319,7 +319,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff auf Kunde ändern als Ausleihe-Verwalter
-    Given ich bin Pius
+    Given I am Pius
     And man editiert einen Benutzer der Ausleihe-Verwalter ist
     When man den Zugriff auf "Kunde" ändert
     And ich speichere
@@ -327,7 +327,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff ändern als Inventar-Verwalter
-    Given ich bin Mike
+    Given I am Mike
     And man editiert einen Benutzer der Kunde ist
     Then man hat nur die folgenden Rollen zur Auswahl
       | No access          |
@@ -341,7 +341,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff auf ein Inventarpool gewährleisten als Inventar-Verwalter
-    Given ich bin Mike
+    Given I am Mike
     And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
     When man den Zugriff auf "Kunde" ändert
     And ich speichere
@@ -350,7 +350,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Zugriff ändern als Administrator
-    Given ich bin Gino
+    Given I am Gino
     And man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist
     Then man hat nur die folgenden Rollen zur Auswahl
       | No access          |
@@ -364,7 +364,7 @@ Feature: Benutzer verwalten
 
   @javascript @browser @personas
   Scenario: Voraussetzungen fürs Löschen eines Benutzers
-    Given ich bin Ramon
+    Given I am Ramon
     And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
     And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
     When ich diesen Benutzer aus der Liste lösche
@@ -373,13 +373,13 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Alphabetische Sortierung der Benutzer innerhalb vom Inventarpool
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
     Then sind die Benutzer nach ihrem Vornamen alphabetisch sortiert
 
   @personas
   Scenario: Benutzer ohne Zugriff im Inventarpool editieren ohne ihm dabei Zugriff zu gewährleisten
-    Given ich bin Pius
+    Given I am Pius
     And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
     When man ändert die Email
     And ich speichere
@@ -389,7 +389,7 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Neuen Benutzer im Geräterpark als Administrator hinzufügen
-    Given ich bin Gino
+    Given I am Gino
     When man in der Benutzeransicht ist
     And man einen Benutzer hinzufügt
     And die folgenden Informationen eingibt
@@ -416,7 +416,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario Outline: Neuen Benutzer hinzufügen - ohne Eingabe der Pflichtfelder
-    Given ich bin Pius
+    Given I am Pius
     When man in der Benutzeransicht ist
     And man einen Benutzer hinzufügt
     And alle Pflichtfelder sind sichtbar und abgefüllt
@@ -431,7 +431,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Benutzer den Zugriff auf ein Inventarpool reaktivieren
-    Given ich bin Mike
+    Given I am Mike
     And man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
     When man den Zugriff auf "Kunde" ändert
     And ich speichere
@@ -440,7 +440,7 @@ Feature: Benutzer verwalten
 
   @javascript @personas
   Scenario: Benutzer als Administrator löschen
-    Given ich bin Gino
+    Given I am Gino
     And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
     And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
     When ich diesen Benutzer aus der Liste lösche
@@ -449,7 +449,7 @@ Feature: Benutzer verwalten
 
   @personas
   Scenario: Startseite zurücksetzen
-    Given ich bin Pius
+    Given I am Pius
     And man hat eine Startseite gesetzt
     When man seine Startseite zurücksetzt
     Then ist ist keine Startseite gesetzt

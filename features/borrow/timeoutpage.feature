@@ -3,7 +3,7 @@ Feature: Timeout Page
 
   @personas
   Scenario: Bestellung abgelaufen
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     And ich habe Gegenstände der Bestellung hinzugefügt
     And die letzte Aktivität auf meiner Bestellung ist mehr als 30 minuten her
@@ -13,7 +13,7 @@ Feature: Timeout Page
 
   @personas
   Scenario: Ansicht
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     Then sehe ich meine Bestellung
     And die nicht mehr verfügbaren Modelle sind hervorgehoben
@@ -23,14 +23,14 @@ Feature: Timeout Page
 
   @javascript @browser @personas
   Scenario: Eintrag löschen
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     And ich lösche einen Eintrag
     Then wird der Eintrag aus der Bestellung gelöscht
 
   @javascript @browser @personas
   Scenario: In Bestellung übernehmen nicht möglich
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit 2 Konfliktmodellen weitergeleitet werde
     When I click on "Continue this order"
     Then lande ich wieder auf der Timeout Page
@@ -44,7 +44,7 @@ Feature: Timeout Page
 
   @personas
   Scenario: Bestellung löschen
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     When ich die Bestellung lösche
     Then werden die Modelle meiner Bestellung freigegeben
@@ -53,7 +53,7 @@ Feature: Timeout Page
 
   @personas
   Scenario: Nur verfügbare Modelle aus Bestellung übernehmen
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     When ein Modell nicht verfügbar ist
     And I click on "Continue with available models only"
@@ -63,7 +63,7 @@ Feature: Timeout Page
 
   @javascript @browser @personas
   Scenario: Eintrag ändern
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     And ich einen Eintrag ändere
     Then werden die Änderungen gespeichert
@@ -71,7 +71,7 @@ Feature: Timeout Page
 
   @javascript @browser @personas
   Scenario: Die Menge eines Eintrags heruntersetzen
-    Given ich bin Normin
+    Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     When ich die Menge eines Eintrags heraufsetze
     Then werden die Änderungen gespeichert

@@ -6,7 +6,7 @@ Feature: Explorative Suche
   eine entsprehende Interaktionsmöglichkeit haben
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Explorative Suche in Modellliste

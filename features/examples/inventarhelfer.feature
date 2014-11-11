@@ -2,7 +2,7 @@
 Feature: Inventarhelfer
 
   Grundlage:
-    Given ich bin Matti
+    Given I am Matti
 
   @personas
   Scenario: Wie man den Helferschirm erreicht

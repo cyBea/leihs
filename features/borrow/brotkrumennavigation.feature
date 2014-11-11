@@ -6,7 +6,7 @@ Feature: Brotkrumennavigation
   die möglichkeit haben schnell von A nach Z zu kommen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Brotkrumennavigation

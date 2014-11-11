@@ -30,6 +30,6 @@ Feature: Verfügbarkeit
 
   @javascript @browser @personas
   Scenario: Keine Verfügbarkeitsberechnung bei Optionen
-    Given ich bin Pius
+    Given I am Pius
     When eine Rücknahme nur Optionen enthält
     Then wird für diese Optionen keine Verfügbarkeit berechnet

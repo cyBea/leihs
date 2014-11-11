@@ -2,7 +2,7 @@
 Feature: Software kopieren
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @personas @javascript @browser
   Scenario: Software kopieren

@@ -7,7 +7,7 @@ Feature: Modellliste
 
   @personas
   Scenario: Modelllistenübersicht
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then sieht man die Explorative Suche
     And man sieht die Modelle der ausgewählten Kategorie
@@ -17,7 +17,7 @@ Feature: Modellliste
 
   @personas
   Scenario: Ein einzelner Modelllisteneintrag
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     And einen einzelner Modelleintrag beinhaltet
     | Bild                 |
@@ -27,16 +27,16 @@ Feature: Modellliste
 
   @javascript @browser @personas
   Scenario: Modellliste scrollen
-    Given ich bin Normin
+    Given I am Normin
     And man sieht eine Modellliste die gescroll werden muss
     When bis ans ende der bereits geladenen Modelle fährt
     Then wird der nächste Block an Modellen geladen und angezeigt
-    When man bis zum Ende der Liste fährt
+    When I scroll to the end of the list
     Then wurden alle Modelle der ausgewählten Kategorie geladen und angezeigt
 
   @javascript @personas
   Scenario: Modellliste sortieren
-    Given ich bin Normin
+    Given I am Normin
     And man sich auf der Modellliste befindet
     When man die Liste nach "Modellname (alphabetisch aufsteigend)" sortiert
     Then ist die Liste nach "Modellname" "(alphabetisch aufsteigend)" sortiert
@@ -49,25 +49,25 @@ Feature: Modellliste
 
   @personas
   Scenario: Ausleihezeitraum Standarteinstellung
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then ist kein Ausleihzeitraum ausgewählt
 
   @javascript @personas
   Scenario: Geräteparkauswahl kann nicht leer sein
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen
 
   @personas
   Scenario: Geräteparkauswahl sortierung
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then ist die Geräteparkauswahl alphabetisch sortiert
 
   @javascript @browser @personas
   Scenario: Geräteparkauswahl "alle auswählen"
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     And man wählt alle Geräteparks bis auf einen ab
     And man wählt "Alle Geräteparks"
@@ -77,13 +77,13 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Geräteparkauswahl kann nicht leer sein
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen
 
   @javascript @personas @browser
   Scenario: Ausleihezeitraum Startdatum wählen
-    Given ich bin Petra
+    Given I am Petra
     When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
     And man ein Startdatum auswählt
     Then wird automatisch das Enddatum auf den folgenden Tag gesetzt
@@ -91,7 +91,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Ausleihezeitraum Enddatum wählen
-    Given ich bin Petra
+    Given I am Petra
     When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
     And man ein Enddatum auswählt
     Then wird automatisch das Startdatum auf den vorhergehenden Tag gesetzt
@@ -99,7 +99,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Ausleihzeitraum löschen
-    Given ich bin Petra
+    Given I am Petra
     When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
     And das Startdatum und Enddatum des Ausleihzeitraums sind ausgewählt
     When man das Startdatum und Enddatum leert
@@ -107,20 +107,20 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Ausleihzeitraum Datepicker
-    Given ich bin Normin
+    Given I am Normin
     And man sich auf der Modellliste befindet
     Then kann man für das Startdatum und für das Enddatum den Datepick benutzen
 
   @javascript @personas
   Scenario: Modell suchen
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste 
     When man ein Suchwort eingibt
     Then werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen
 
   @javascript @browser @personas
   Scenario: Hovern über Modellen
-    Given ich bin Normin
+    Given I am Normin
     And es gibt ein Modell mit Bilder, Beschreibung und Eigenschaften
     And man befindet sich auf der Modellliste mit diesem Modell
     When man über das Modell hovered
@@ -130,7 +130,7 @@ Feature: Modellliste
 
   @personas
   Scenario: Geräteparkauswahl Standartwert
-    Given ich bin Normin
+    Given I am Normin
     When man sich auf der Modellliste befindet
     Then sind alle Geräteparks ausgewählt
     And die Modellliste zeigt Modelle aller Geräteparks an
@@ -138,7 +138,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelauswählen
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste
     When man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt
     Then sind alle anderen Geräteparks abgewählt
@@ -148,7 +148,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelabwahl
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste
     When man einige Geräteparks abwählt
     Then wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert
@@ -157,7 +157,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelabwahl bis auf einen Gerätepark
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste
     When man alle Geräteparks bis auf einen abwählt
     Then wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert
@@ -166,7 +166,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Alles zurücksetzen
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste
     And Filter sind ausgewählt
     And die Schaltfläche "Alles zurücksetzen" ist aktivert
@@ -180,7 +180,7 @@ Feature: Modellliste
 
   @javascript @personas
   Scenario: Alles zurücksetzen verschwindet automatisch, wenn die Filter wieder auf die Starteinstellungen gesetzt werden
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Modellliste
     And Filter sind ausgewählt
     And die Schaltfläche "Alles zurücksetzen" ist aktivert

@@ -2,7 +2,7 @@
 Feature: Software editieren
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @personas
   Scenario: Software-Produkt editieren

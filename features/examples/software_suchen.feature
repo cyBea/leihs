@@ -2,7 +2,7 @@
 Feature: Software suchen
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @personas
   Scenario: Software anhand eines Suchbegriffs finden

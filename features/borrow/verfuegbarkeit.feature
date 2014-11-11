@@ -2,17 +2,17 @@
 Feature: Verfügbarkeit
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
     And ich habe eine offene Bestellung mit Modellen
     And die Bestellung Timeout ist 30 Minuten
 
   @personas
   Scenario: Überbuchung durch Ausleih-Manager
     When ich ein Modell der Bestellung hinzufüge
-    Given ich bin Pius
+    Given I am Pius
     When ich dasselbe Modell einer Bestellung hinzufüge
     And die maximale Anzahl der Gegenstände überschritten ist
-    Given ich bin Normin
+    Given I am Normin
     When ich die Bestellübersicht öffne
     And ich die Bestellung abschliesse
     Then wird die Bestellung nicht abgeschlossen

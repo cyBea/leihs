@@ -2,7 +2,7 @@
 Feature: Statistiken von Ausleihe und Inventar
 
   Grundlage:
-    Given ich bin Ramon
+    Given I am Ramon
 
   @personas
   Scenario: Wo die Statistik-Ansicht erscheint

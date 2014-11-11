@@ -340,7 +340,8 @@ Dann(/^wird der nächste Block an Modellen geladen und angezeigt$/) do
   end
 end
 
-Wenn(/^man bis zum Ende der Liste fährt$/) do
+#Wenn(/^man bis zum Ende der Liste fährt$/) do
+Wenn(/^I scroll to the end of the list$/) do
   find("footer").click
 end
 
@@ -399,7 +400,7 @@ end
 
 Dann(/^die Liste zeigt Modelle aller Geräteparks$/) do
   ip_ids = find("#ip-selector").all(".dropdown-item[data-id]").map{|ip| ip["data-id"]}
-  step 'man bis zum Ende der Liste fährt'
+  step 'I scroll to the end of the list'
   models = @current_user.models.borrowable.from_category_and_all_its_descendants(@category.id).
     all_from_inventory_pools(ip_ids).
     order_by_attribute_and_direction "model", "name"

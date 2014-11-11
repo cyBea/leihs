@@ -6,7 +6,7 @@ Feature: Kalender
   den Gegenstand der Bestellung hinzufügen können
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @javascript @browser @personas
   Scenario: Kalenderkomponenten

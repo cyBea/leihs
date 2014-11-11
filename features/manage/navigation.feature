@@ -3,7 +3,7 @@ Feature: Navigation
 
   @personas
   Scenario: Navigation für Gruppen-Verwalter
-    Given ich bin Andi
+    Given I am Andi
     And man befindet sich im Verleih-Bereich
     Then seh ich die Navigation
     And die Navigation beinhaltet "Verleih"
@@ -12,7 +12,7 @@ Feature: Navigation
 
   @personas
   Scenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
-    Given ich bin Andi
+    Given I am Andi
     And man befindet sich im Verleih-Bereich
     Then seh ich die Navigation
     And kann man auf ein der "Bestellungen" Tab klichen
@@ -21,7 +21,7 @@ Feature: Navigation
 
   @personas
   Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
-    Given ich bin Mike
+    Given I am Mike
     When ich auf die Geraetepark-Auswahl klicke
     Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
     When ich auf einen Geraetepark klicke
@@ -29,7 +29,7 @@ Feature: Navigation
 
   @personas @javascript
   Scenario: Zuklappen der Geraeteparkauswahl
-    Given ich bin Mike
+    Given I am Mike
     When ich auf die Geraetepark-Auswahl klicke
     Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
     When ich ausserhalb der Geraetepark-Auswahl klicke

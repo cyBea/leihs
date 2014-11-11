@@ -3,15 +3,15 @@ Feature: Inventar
 
   @personas
   Scenario: Globaler Export des Inventars aller Geräteparks
-    Given ich bin Gino
+    Given I am Gino
     And man öffnet die Liste der Geräteparks
     Then kann man das globale Inventar als CSV-Datei exportieren
 
   @javascript @personas @browser
   Scenario: Export der aktuellen Ansicht als CSV
-    Given ich bin Mike
+    Given I am Mike
     And man öffnet die Liste des Inventars
-    When ich den Reiter "Modelle" einsehe
+    When I view the tab "Models"
     Then kann man diese Daten als CSV-Datei exportieren
     And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
     And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
@@ -63,7 +63,7 @@ Feature: Inventar
     | Ankunftsdatum                     |
     | Ankunftszustand                   |
     | Ankunftsnotiz                     |
-    When ich den Reiter "Software" einsehe
+    When I view the tab "Software"
     Then kann man diese Daten als CSV-Datei exportieren
     And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
     And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge

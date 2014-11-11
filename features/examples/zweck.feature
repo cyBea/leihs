@@ -6,7 +6,7 @@ Feature: Zweck
   den vom Benutzer angegebenen Zweck sehen
   
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @personas
   Scenario: Unabhängigkeit

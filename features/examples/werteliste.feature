@@ -6,7 +6,7 @@ Feature: Werteliste
   das mir das System für eine Auswahl eine Werteliste zur verfügung stellen kann
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @browser @personas
   Scenario: Was ich auf der Werteliste sehen möchte

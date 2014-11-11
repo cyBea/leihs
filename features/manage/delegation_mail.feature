@@ -3,7 +3,7 @@ Feature: Mailversand bei Delegationsbestellungen und -besuchen
 
   @javascript @personas
   Scenario: Handhabung der Genehmigungsmails
-    Given ich bin Pius
+    Given I am Pius
     And es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
     When I edit the order
     And die Bestellung genehmige
@@ -13,7 +13,7 @@ Feature: Mailversand bei Delegationsbestellungen und -besuchen
 
   @javascript @personas
   Scenario: Handhabung der Erinnerungsmails
-    Given ich bin Pius
+    Given I am Pius
     And es existiert eine Rücknahme von einer Delegation
     When ich bei dieser Rücknahme eine Erinnerung sende
     Then wird das Erinnerungsmail an den Abholenden versendet
@@ -21,7 +21,7 @@ Feature: Mailversand bei Delegationsbestellungen und -besuchen
 
   @javascript @personas
   Scenario: Mail an Delegation senden
-    Given ich bin Pius
+    Given I am Pius
     When ich nach einer Delegation suche
     And ich die Mailfunktion wähle
     Then wird das Mail an den Delegationsverantwrotlichen verschickt

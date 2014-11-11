@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^es existiert eine leere Bestellung$/) do
+Given(/^there is an empty order$/) do
   @current_inventory_pool = @current_user.managed_inventory_pools.detect do |ip|
     @customer = ip.users.to_a.shuffle.detect {|c| c.visits.hand_over.empty? }
   end
@@ -9,7 +9,7 @@ Angenommen(/^es existiert eine leere Bestellung$/) do
   @contract = @current_inventory_pool.contracts.approved.where(user_id: @customer.id).last
 end
 
-Dann(/^sehe ich diese Bestellung nicht in der Liste der Bestellungen$/) do
+Then(/^I don't see this order in the list of orders$/) do
   find('a', text: _('Orders')).click
   expect(has_no_selector?("[data-id='#{@contract.id}']")).to be true
 end
@@ -52,7 +52,7 @@ Then(/^I cannot force the order to be approved$/) do
   expect(has_no_content?(_("Approve anyway"))).to be true
 end
 
-Dann(/^sehe ich die Reiter "(.*?)"$/) do |tabs|
+Then(/^I see the tabs "(.*?)"$/) do |tabs|
   within ".inline-tab-navigation" do
     tabs.split(", ").each do |tab|
       find(".inline-tab-item", text: tab)
@@ -60,39 +60,46 @@ Dann(/^sehe ich die Reiter "(.*?)"$/) do |tabs|
   end
 end
 
-Angenommen(/^es existiert eine visierpflichtige Bestellung$/) do
+#Given(/^es existiert eine visierpflichtige Bestellung$/) do
+Given(/^a verifiable order exists$/) do
   @contract = Contract.with_verifiable_user_and_model.first
   expect(@contract).not_to be_nil
 end
 
-Dann(/^wurde diese Bestellung von einem Benutzer aus einer visierpflichtigen Gruppe erstellt$/) do
+#Dann(/^wurde diese Bestellung von einem Benutzer aus einer visierpflichtigen Gruppe erstellt$/) do
+Then(/^this order was created by a user that is in a group whose orders require verification$/) do
   Group.where(is_verification_required: true).flat_map(&:users).uniq.include? @contract.user
 end
 
-Dann(/^diese Bestellung beinhaltet ein Modell aus einer visierpflichtigen Gruppe$/) do
+#Dann(/^diese Bestellung beinhaltet ein Modell aus einer visierpflichtigen Gruppe$/) do
+Then(/^this order contains a model from a group whose orders require verification$/) do
   @contract.models.any? do |m|
     Group.where(is_verification_required: true).flat_map(&:models).uniq.include? m
   end
 end
 
-Wenn(/^ich den Reiter "(.*?)" einsehe$/) do |tab|
+#Wenn(/^ich den Reiter "(.*?)" einsehe$/) do |tab|
+When(/^I view the tab "(.*?)"$/) do |tab|
   find(".inline-tab-navigation .inline-tab-item", text: tab).click
 end
 
-Dann(/^sehe ich alle visierpflichtigen Bestellungen$/) do
-  step 'man bis zum Ende der Liste fährt'
+#Dann(/^sehe ich alle visierpflichtigen Bestellungen$/) do
+Then(/^I see all verifiable orders$/) do
+  step 'I scroll to the end of the list'
   @contracts = @current_inventory_pool.contracts.where(status: [:submitted, :approved, :rejected]).with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
   }
 end
 
-Dann(/^diese Bestellungen sind nach Erstelltdatum aufgelistet$/) do
+#Dann(/^diese Bestellungen sind nach Erstelltdatum aufgelistet$/) do
+Then(/^these orders are ordered by creation date$/) do
   expect(@contracts.order("created_at DESC").map{|c| c.id.to_s }).to eq all("[data-type='contract']").map{|x| x["data-id"]}
 end
 
-Dann(/^sehe ich alle offenen visierpflichtigen Bestellungen$/) do
-  step 'man bis zum Ende der Liste fährt'
+#Dann(/^sehe ich alle offenen visierpflichtigen Bestellungen$/) do
+Then(/^I see all pending verifiable orders$/) do
+  step 'I scroll to the end of the list'
   @contracts = @current_inventory_pool.contracts.where(status: :submitted).with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
@@ -101,26 +108,28 @@ Dann(/^sehe ich alle offenen visierpflichtigen Bestellungen$/) do
   @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
 end
 
-Dann(/^ich sehe auf der Bestellungszeile den Besteller mit Popup\-Ansicht der Benutzerinformationen$/) do
+#Dann(/^ich sehe auf der Bestellungszeile den Besteller mit Popup\-Ansicht der Benutzerinformationen$/) do
+Then(/^I see who placed this order on the order line and can view a popup with user details$/) do
   find(@line_css).has_text? @contract.user.name
   find("[data-firstname][data-id='#{@contract.user.id}']").hover
   expect(has_selector?(".tooltipster-base", text: @contract.user.name)).to be true
 end
 
-Dann(/^ich sehe auf der Bestellungszeile das Erstelldatum$/) do
+#Dann(/^ich sehe auf der Bestellungszeile das Erstelldatum$/) do
+Then(/^I see the order's creation date on the order line$/) do
   extend ActionView::Helpers::DateHelper
   text = if @contract.created_at.today?
            _("Today")
          elsif @contract.created_at.to_date == Date.yesterday
            _("one day ago")
          else
-           # TODO translate properly
-           "vor #{time_ago_in_words(@contract.created_at)}n"
+           "#{time_ago_in_words(@contract.created_at)} ago"
          end
   find(@line_css, text: text)
 end
 
-Dann(/^ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup\-Ansicht der bestellten Gegenstände$/) do
+#Dann(/^ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup\-Ansicht der bestellten Gegenstände$/) do
+Then(/^I see the number of items on the order line and can view a popup containing the items ordered$/) do
   find("#{@line_css} [data-type='lines-cell']", text: "#{@contract.lines.count} #{n_("Item", "Items", @contract.lines.count)}")
   find("#{@line_css} [data-type='lines-cell']").hover
   @contract.models.each {|m|
@@ -128,32 +137,40 @@ Dann(/^ich sehe auf der Bestellungszeile die Anzahl Gegenstände mit Popup\-Ansi
   }
 end
 
-Dann(/^ich sehe auf der Bestellungszeile die Dauer der Bestellung$/) do
-  expect(find(@line_css).has_content? "#{@contract.max_range} #{n_("Day", "Days", @contract.max_range)}").to be true
+#Dann(/^ich sehe auf der Bestellungszeile die Dauer der Bestellung$/) do
+Then(/^I see the duration of the order on the order line$/) do
+  expect(find(@line_css).has_content? "#{@contract.max_range} #{n_("day", "days", @contract.max_range)}").to be true
 end
 
-Dann(/^ich sehe auf der Bestellungszeile den Zweck$/) do
+#Dann(/^ich sehe auf der Bestellungszeile den Zweck$/) do
+Then(/^I see the purpose on the order line$/) do
   expect(find(@line_css).has_content? @contract.purpose.to_s).to be true
 end
 
-Dann(/^ich kann die Bestellung genehmigen$/) do
+
+#Dann(/^ich kann die Bestellung genehmigen$/) do
+Then(/^I can approve the order$/) do
   expect(find(@line_css).has_selector? "[data-order-approve]").to be true
 end
 
-Dann(/^ich kann die Bestellung ablehnen$/) do
+#Dann(/^ich kann die Bestellung ablehnen$/) do
+Then(/^I can reject the order$/) do
   expect(find(@line_css).has_selector? "[data-order-reject]", visible: false).to be true
 end
 
-Dann(/^ich kann die Bestellung editieren$/) do
+#Dann(/^ich kann die Bestellung editieren$/) do
+Then(/^I can edit the order$/) do
   expect(find(@line_css).has_selector? "[href*='#{manage_edit_contract_path(@current_inventory_pool, @contract)}']", visible: false).to be true
 end
 
-Dann(/^ich kann keine Bestellungen aushändigen$/) do
+#Dann(/^ich kann keine Bestellungen aushändigen$/) do
+Then(/^I cannot hand over orders$/) do
   find(@line_css).has_no_css? "[href*='#{manage_hand_over_contract_path(@current_inventory_pool, @contract)}']", visible: false
 end
 
-Dann(/^sehe ich alle genehmigten visierpflichtigen Bestellungen$/) do
-  step 'man bis zum Ende der Liste fährt'
+#Dann(/^sehe ich alle genehmigten visierpflichtigen Bestellungen$/) do
+Then(/^I see all verified and approved orders$/) do
+  step 'I scroll to the end of the list'
   @contracts = @current_inventory_pool.contracts.where(status: :approved).with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
@@ -162,12 +179,14 @@ Dann(/^sehe ich alle genehmigten visierpflichtigen Bestellungen$/) do
   @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
 end
 
-Dann(/^ich sehe auf der Bestellungszeile den Status$/) do
+#Dann(/^ich sehe auf der Bestellungszeile den Status$/) do
+Then(/^I see the order's status on the order line$/) do
   find(@line_css, text: _(@contract.status.to_s.capitalize))
 end
 
-Dann(/^sehe ich alle abgelehnten visierpflichtigen Bestellungen$/) do
-  step 'man bis zum Ende der Liste fährt'
+#Dann(/^sehe ich alle abgelehnten visierpflichtigen Bestellungen$/) do
+Then(/^I see all verifiable rejected orders$/) do
+  step 'I scroll to the end of the list'
   @contracts = @current_inventory_pool.contracts.where(status: :rejected).with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
@@ -176,12 +195,14 @@ Dann(/^sehe ich alle abgelehnten visierpflichtigen Bestellungen$/) do
   @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
 end
 
-Wenn(/^ich den Filter "(.*?)" aufhebe$/) do |filter|
+#Wenn(/^ich den Filter "(.*?)" aufhebe$/) do |filter|
+When(/^I uncheck the filter "(.*?)"$/) do |filter|
   uncheck filter
 end
 
-Dann(/^sehe ich alle Bestellungen, welche von Benutzern der visierpflichtigen Gruppen erstellt wurden$/) do
-  step 'man bis zum Ende der Liste fährt'
+#Dann(/^sehe ich alle Bestellungen, welche von Benutzern der visierpflichtigen Gruppen erstellt wurden$/) do
+Then(/^I see orders placed by users in groups requiring verification$/) do
+  step 'I scroll to the end of the list'
   within "#contracts" do
     @contracts = @current_inventory_pool.contracts.where(status: [:submitted, :approved, :rejected]).with_verifiable_user
     @contracts.each do |contract|
@@ -195,23 +216,26 @@ Dann(/^ist die Bestellung wieder im Status noch nicht genehmigt$/) do
   expect(@contract.reload.status).to eq :submitted
 end
 
-Dann(/^ich eine bereits gehmigte Bestellung editiere$/) do
+#Dann(/^ich eine bereits gehmigte Bestellung editiere$/) do
+When(/^I edit an already approved order$/) do
   within "#contracts" do
     find(".line[data-id]", match: :first)
     within all(".line[data-id]").sample do
-      a = find("a", text: _("Editieren"))
+      a = find("a", text: _("Edit"))
       @target_url = a[:href]
       a.click
     end
   end
 end
 
-Dann(/^gelange ich in die Ansicht der Aushändigung$/) do
+#Dann(/^gelange ich in die Ansicht der Aushändigung$/) do
+Then(/^I am directed to the hand over view$/) do
   find("#hand-over-view")
   expect(current_url).to eq @target_url
 end
 
-Aber(/^ich kann nicht aushändigen$/) do
+#Aber(/^ich kann nicht aushändigen$/) do
+But(/^I cannot hand over$/) do
   find("[data-line-type='item_line']", match: :first)
   all("[data-line-type='item_line'] input[type='checkbox']:checked").each &:click
   unless page.has_selector?("[data-hand-over-selection][disabled]")
@@ -234,12 +258,14 @@ Then(/^I can add models$/) do
   hand_over_assign_or_add @model.to_s
 end
 
-Dann(/^ich kann Optionen hinzufügen$/) do
+#Dann(/^ich kann Optionen hinzufügen$/) do
+Then(/^I can add options$/) do
   option = @current_inventory_pool.options.sample
   hand_over_assign_or_add option.to_s
 end
 
-Aber(/^ich kann keine Gegenstände zuteilen$/) do
+#Aber(/^ich kann keine Gegenstände zuteilen$/) do
+But(/^I cannot assign items$/) do
   find("[data-line-type='item_line']", match: :first)
   all("[data-line-type='item_line']").to_a.shuffle.each do |dom_line|
     within dom_line do

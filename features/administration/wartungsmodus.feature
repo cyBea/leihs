@@ -5,7 +5,7 @@ Als Administrator möchte ich die Möglichkeit haben,
 für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu sperren und dem Benutzer eine Meldung anzuzeigen
 
   Grundlage:
-    Given ich bin Gino
+    Given I am Gino
 
   @javascript @personas
   Scenario: Verwalten-Bereich sperren

@@ -2,7 +2,7 @@
 Feature: Anzeige von Problemen
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @browser @personas
   Scenario: Problemanzeige wenn Modell nicht verfügbar bei Bestellungen

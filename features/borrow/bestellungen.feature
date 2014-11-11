@@ -2,7 +2,7 @@
 Feature: Bestellungen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Anzahl

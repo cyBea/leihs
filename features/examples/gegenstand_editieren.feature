@@ -2,7 +2,7 @@
 Feature: Gegenstand bearbeiten
 
   Grundlage:
-    Given ich bin Matti
+    Given I am Matti
 
   @javascript @personas
   Scenario: Reihenfolge der Felder

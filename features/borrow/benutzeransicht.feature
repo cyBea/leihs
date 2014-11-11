@@ -4,7 +4,7 @@ Feature: Benutzeransicht
   Als Benutzer möchte ich die Möglichkeit haben meine Benutzerdaten zu sehen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Benutzerdaten ansehen

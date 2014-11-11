@@ -6,7 +6,7 @@ Feature: Rücknahme
   Gegenstände Zurücknehmen können
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @personas
   Scenario: Hinzufügen eines Gegenstandes in der Rücknahme

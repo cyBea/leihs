@@ -2,7 +2,7 @@
 Feature: Vorlagen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
 
   @personas
   Scenario: Liste der Vorlagen finden

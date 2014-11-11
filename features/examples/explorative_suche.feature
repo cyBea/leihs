@@ -6,7 +6,7 @@ Feature: Explorative Suche
   eine entsprehende Interaktionsmöglichkeit haben
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @personas
   Scenario: Explorative Suche in der Liste des Inventars

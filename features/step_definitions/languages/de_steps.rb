@@ -1,9 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^ich bin (.*?)$/ do |persona_name|
-  step "I am %s" % persona_name
-end
-
 Wenn /^einem Gegenstand einen Inventarcode manuell zuweise$/ do
   step 'I click an inventory code input field of an item line'
   step 'I select one of those'
@@ -1019,8 +1015,4 @@ end
 
 Dann(/^kann man das globale Inventar als CSV\-Datei exportieren$/) do
   step "I can export to a csv-file"
-end
-
-Wenn(/^ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen$/) do
-  step "I am in an inventory pool with verifiable orders"
 end

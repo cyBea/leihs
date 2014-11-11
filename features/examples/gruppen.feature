@@ -6,7 +6,7 @@ Feature: Gruppen
   vom System Featureen bereitgestellt bekommen
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @personas
   Scenario: Anzeige der Gruppenliste

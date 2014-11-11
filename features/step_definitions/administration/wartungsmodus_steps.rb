@@ -28,11 +28,11 @@ Dann(/^der Bereich "(.*)" ist für die Benutzer gesperrt$/) do |arg1|
   step "I log out"
   case arg1
     when "Verwalten"
-      step %Q(ich bin Mike)
+      step %Q(I am Mike)
       expect(current_path).to eq manage_maintenance_path
       @section = _("Manage section")
     when "Ausleihen"
-      step %Q(ich bin Normin)
+      step %Q(I am Normin)
       expect(current_path).to eq borrow_maintenance_path
       @section = _("Borrow section")
     else
@@ -100,16 +100,16 @@ Wenn(/^ich die Funktion "(.*)" deselektiere$/) do |arg1|
 end
 
 Dann(/^ist der Bereich "(.*)" für den Benutzer nicht mehr gesperrt$/) do |arg1|
-  step "I log out"
+  step 'I log out'
   case arg1
-    when "Verwalten"
-      step %Q(ich bin Mike)
-      expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
-    when "Ausleihen"
-      step %Q(ich bin Normin)
-      expect(current_path).to eq borrow_root_path
-    else
-      raise
+  when 'Verwalten'
+    step %Q(I am Mike)
+    expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
+  when "Ausleihen"
+    step %Q(I am Normin)
+    expect(current_path).to eq borrow_root_path
+  else
+    raise
   end
 end
 

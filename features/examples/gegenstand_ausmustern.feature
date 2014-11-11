@@ -3,7 +3,7 @@ Feature: Ausmustern
 
   @javascript @personas
   Scenario Outline: Ausmustern
-    Given ich bin Matti
+    Given I am Matti
     And man sucht nach einem nicht ausgeliehenen <Objekt>, wo man der Besitzer ist
     Then kann man diesen <Objekt> mit Angabe des Grundes erfolgreich ausmustern
     And der gerade ausgemusterte <Objekt> verschwindet sofort aus der Inventarliste
@@ -14,7 +14,7 @@ Feature: Ausmustern
 
   @javascript @personas
   Scenario Outline: Verhinderung von Ausmusterung eines ausgeliehenen Objektes
-    Given ich bin Mike
+    Given I am Mike
     And man sucht nach einem ausgeliehenen <Objekt>
     Then hat man keine Möglichkeit solchen <Objekt> auszumustern
     Examples:
@@ -24,7 +24,7 @@ Feature: Ausmustern
 
   @javascript @personas
   Scenario Outline: Verhinderung von Ausmusterung eines Objektes bei dem ich nicht als Besitzer eingetragen bin
-    Given ich bin Matti
+    Given I am Matti
     And man sucht nach einem <Objekt> bei dem ich nicht als Besitzer eingetragen bin
     Then hat man keine Möglichkeit solchen <Objekt> auszumustern
     Examples:
@@ -34,7 +34,7 @@ Feature: Ausmustern
 
   @javascript @personas
   Scenario Outline: Fehlermeldung bei der Ausmusterung ohne angabe eines Grundes
-    Given ich bin Matti
+    Given I am Matti
     And man sucht nach einem nicht ausgeliehenen <Objekt>, wo man der Besitzer ist
     And man gibt bei der Ausmusterung keinen Grund an
     And der <Objekt> ist noch nicht Ausgemustert
@@ -45,7 +45,7 @@ Feature: Ausmustern
 
   @javascript @personas
   Scenario Outline: Ausmusterung rückgangig machen
-    Given ich bin Mike
+    Given I am Mike
     And man sucht nach einem ausgemusterten <Objekt>, wo man der Besitzer ist
     And man befindet sich auf der Editierseite von diesem <Objekt>
     When man die Ausmusterung bei diesem <Objekt> zurück setzt
@@ -60,7 +60,7 @@ Feature: Ausmustern
 
   @personas
   Scenario Outline: Ansichtseite von einem ausgemusterten Objekt für Verantwortlichen anzeigen
-    Given ich bin Mike
+    Given I am Mike
     And man sucht nach einem ausgemusterten <Objekt>, wo man der Verantwortliche und nicht der Besitzer ist
     Then man befindet sich auf der Editierseite von diesem <Objekt>
     Examples:

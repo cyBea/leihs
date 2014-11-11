@@ -2,7 +2,7 @@
 Feature: Kalender-Ansicht im Backend
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @personas
   Scenario: Verfügbare Anzahl immer anzeigen

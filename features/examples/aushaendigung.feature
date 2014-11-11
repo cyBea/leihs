@@ -2,7 +2,7 @@
 Feature: Aushändigung editieren
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @browser @personas
   Scenario: Systemfeedback bei erfolgreicher manueller Interaktion bei Aushändigung

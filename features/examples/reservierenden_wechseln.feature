@@ -2,7 +2,7 @@
 Feature: Reservierenden wechseln
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @personas
   Scenario: Reservierende Person für ausgewählte Linien wechseln

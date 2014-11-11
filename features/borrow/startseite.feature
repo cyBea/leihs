@@ -7,7 +7,7 @@ Feature: Startseite
 
   @personas
   Scenario: Startseite
-    Given ich bin Normin
+    Given I am Normin
     And es existiert eine Hauptkategorie mit eigenem Bild
     And es existiert eine Hauptkategorie ohne eigenes Bild aber mit einem Modell mit Bild
     And man befindet sich auf der Seite der Hauptkategorien
@@ -18,7 +18,7 @@ Feature: Startseite
 
   @javascript @personas
   Scenario: Haupt-Kategorien aufklappen
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Seite der Hauptkategorien
     When ich über eine Hauptkategorie mit Kindern fahre
     Then sehe ich nur die Kinder dieser Hauptkategorie, die dem User zur Verfügung stehende Gegenstände enthalten
@@ -27,7 +27,7 @@ Feature: Startseite
 
   @personas
   Scenario: Kinder-Kategorien Dropdown nicht sichtbar
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Seite der Hauptkategorien
     And es gibt eine Hauptkategorie, derer Kinderkategorien keine dem User zur Verfügung stehende Gegenstände enthalten
     Then hat diese Hauptkategorie keine Kinderkategorie-Dropdown

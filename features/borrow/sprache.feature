@@ -7,7 +7,7 @@ Feature: Suche
 
   @personas
   Scenario: Wechsel der Sprache
-    Given ich bin Normin
+    Given I am Normin
     And man sich auf der Modellliste befindet
     When ich die Sprache auf "English" umschalte
     Then ist die Sprache "English"

@@ -2,7 +2,7 @@
 Feature: Automatischer E-Mail versand
   Grundlage:
     Given Das System ist für den Mailversand im Testmodus konfiguriert
-    And ich bin Normin
+    And I am Normin
 
   @personas
   Scenario: Automatische Rückgabeerinnerung

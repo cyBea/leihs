@@ -2,7 +2,7 @@
 Feature: Ausleihe
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
     And I open the daily view
 
   @personas

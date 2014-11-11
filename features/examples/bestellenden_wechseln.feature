@@ -2,7 +2,7 @@
 Feature: Bestellenden wechseln
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @javascript @personas
   Scenario: Bestellende Person wechseln

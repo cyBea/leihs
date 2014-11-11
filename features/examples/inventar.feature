@@ -2,7 +2,7 @@
 Feature: Inventar
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
     And man öffnet die Liste des Inventars
 
   @javascript @personas
@@ -224,7 +224,7 @@ Feature: Inventar
 
   @javascript @personas @browser
   Scenario: Aussehen einer Gegenstands-Zeile
-    When ich den Reiter "Modelle" einsehe
+    When I view the tab "Models"
     And der Gegenstand an Lager ist und meine Abteilung für den Gegenstand verantwortlich ist
     Then enthält die Gegenstands-Zeile folgende Informationen:
       | information      |
@@ -237,7 +237,7 @@ Feature: Inventar
       | Verantwortliche Abteilung |
       | Gebäudeabkürzung          |
       | Raum                      |
-    When ich den Reiter "Modelle" einsehe
+    When I view the tab "Models"
     And der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gegenstand verantwortlich ist
     Then enthält die Gegenstands-Zeile folgende Informationen:
       | information               |

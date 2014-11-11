@@ -2,7 +2,7 @@
 Feature: Modell Eigenschaften
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @personas
   Scenario: Eigenschaften erstellen

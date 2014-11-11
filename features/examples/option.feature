@@ -2,7 +2,7 @@
 Feature: Option
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @browser @personas
   Scenario: Option hinzufügen

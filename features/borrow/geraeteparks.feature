@@ -3,7 +3,7 @@ Feature: Geräteparks
 
   @personas
   Scenario: Gerätepark Informationen
-    Given ich bin Normin
+    Given I am Normin
     When ich den Gerätepark Link drücke
     Then sehe ich die Geräteparks für die ich berechtigt bin
     And ich sehe nur die Geräteparks, die ausleihbare Gegenstände enthalten

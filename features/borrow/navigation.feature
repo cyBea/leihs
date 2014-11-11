@@ -7,7 +7,7 @@ Feature: Navigation
 
   @personas
   Scenario: Navigation für Ausleihenden
-    Given ich bin Normin
+    Given I am Normin
     And man befindet sich auf der Seite der Hauptkategorien
     Then seh ich die Navigation
     And die Navigation beinhaltet "Abzuholen"
@@ -19,7 +19,7 @@ Feature: Navigation
 
   @personas
   Scenario: Navigation für Manager
-    Given ich bin Pius
+    Given I am Pius
     And man befindet sich auf der Seite der Hauptkategorien
     Then seh ich die Navigation
     And die Navigation beinhaltet "Abzuholen"
@@ -32,7 +32,7 @@ Feature: Navigation
 
   @personas
   Scenario: Navigation für Prüfer
-    Given ich bin Andi
+    Given I am Andi
     And man befindet sich auf der Seite der Hauptkategorien
     Then seh ich die Navigation
     And die Navigation beinhaltet "Abzuholen"
@@ -45,7 +45,7 @@ Feature: Navigation
 
   @personas
   Scenario: Home-Button
-    Given ich bin Normin
+    Given I am Normin
     Then seh ich in der Navigation den Home-Button
     When ich den Home-Button bediene
     Then lande ich auf der Seite der Hauptkategorien

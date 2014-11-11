@@ -6,7 +6,7 @@ Feature: Bestellübersicht
   die Möglichkeit haben meine bestellten Gegenstände in der Übersicht zu sehen
 
   Grundlage:
-    Given ich bin Normin
+    Given I am Normin
     And ich habe Gegenstände der Bestellung hinzugefügt
     When ich die Bestellübersicht öffne
 

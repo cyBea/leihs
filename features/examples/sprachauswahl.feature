@@ -7,7 +7,7 @@ Feature: Sprachauswahl
 
   @personas
   Scenario: Navigation für Ausleihenden
-    Given ich bin Mike
+    Given I am Mike
     And ich sehe die Sprachauswahl
     When ich die Sprache ändere
     Then ist die Sprache für mich geändert  

@@ -2,7 +2,7 @@
 Feature: Software erfassen
 
   Grundlage:
-    Given ich bin Mike
+    Given I am Mike
 
   @javascript @personas
   Scenario: Software-Produkt erfassen

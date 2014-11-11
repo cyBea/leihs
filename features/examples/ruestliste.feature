@@ -6,7 +6,7 @@ Feature: Rüstliste
   dass mir das System eine Rüstliste mit Auflistung der jeweiligen Gestellen gibt
 
   Grundlage:
-    Given ich bin Pius
+    Given I am Pius
 
   @personas
   Scenario: Was ich auf der Rüstliste sehen möchte
