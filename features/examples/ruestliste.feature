@@ -22,7 +22,7 @@ Feature: Rüstliste
   @personas @javascript @browser
   Scenario: Inhalt der Rüstliste vor Aushändigung - keine Zuteilung von Inventarcode
     Given es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell und einer Option
-    And ich die Aushändigung öffne
+    And I open the hand over
     And ein Gegenstand zugeteilt ist und diese Zeile markiert ist
     And einer Zeile noch kein Gegenstand zugeteilt ist und diese Zeile markiert ist
     And eine Option markiert ist
@@ -42,8 +42,8 @@ Feature: Rüstliste
 
   @personas @javascript @browser
   Scenario: Inhalt der Rüstliste vor Aushändigung - nicht verfügbare Gegenstände
-    Given es gibt eine Aushändigung mit mindestens einer problematischen Linie
-    And ich die Aushändigung öffne
+    Given there is a hand over with at least one problematic line
+    And I open the hand over
     And einer Zeile noch kein Gegenstand zugeteilt ist und diese Zeile markiert ist
     When man öffnet die Rüstliste
     Then sind die Listen zuerst nach Ausleihdatum sortiert
@@ -52,7 +52,7 @@ Feature: Rüstliste
   @personas @javascript @browser
   Scenario: Inhalt der Rüstliste vor Aushändigung - nicht zugeteilt Raum und Gestell
     Given es gibt eine Aushändigung mit mindestens einem Gegenstand ohne zugeteilt Raum und Gestell
-    And ich die Aushändigung öffne
+    And I open the hand over
     And einer Zeile mit einem Gegenstand ohne zugeteilt Raum und Gestell markiert ist
     When man öffnet die Rüstliste
     Then Gegenständen kein Raum oder Gestell zugeteilt sind, wird "Ort nicht definiert" angezeigt
@@ -85,24 +85,3 @@ Feature: Rüstliste
     When ich mich im Verleih in einer Aushändigung befinde
     And ich mindestens eine Zeile in dieser Aushändigung markiere
     Then kann ich die Rüstliste öffnen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

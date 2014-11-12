@@ -27,7 +27,9 @@ Dann(/^sehe ich all die bereits zugewiesenen Gegenstände mittels Inventarcodes$
   end
 end
 
-When(/^der Benutzer für die Aushändigung ist gesperrt$/) do
+
+#When(/^der Benutzer für die Aushändigung ist gesperrt$/) do
+When(/^the user in this hand over is suspended$/) do
   ensure_suspended_user(@customer, @current_inventory_pool)
   step "I open a hand over to this customer"
 end
@@ -56,17 +58,19 @@ Given(/^there is a hand over with at least one unproblematic model( and an optio
   expect(@hand_over).not_to be_nil
 end
 
-Angenommen(/^es gibt eine Aushändigung mit mindestens (einer problematischen Linie|einem Gegenstand ohne zugeteilt Raum und Gestell)$/) do |arg1|
+
+#Angenommen(/^es gibt eine Aushändigung mit mindestens (einer problematischen Linie|einem Gegenstand ohne zugeteilt Raum und Gestell)$/) do |arg1|
+Given(/^there is a hand over with at least (one problematic line|an item without room or shelf)$/) do |arg1|
   @hand_over = @current_inventory_pool.visits.hand_over.find do |ho|
     ho.lines.any? do |l|
       if l.is_a? ItemLine
         case arg1
-          when "einer problematischen Linie"
+          when "one problematic line"
             #old#
             # av = l.model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(l.start_date, l.end_date, ho.user.group_ids)
             # l.start_date.past? and av > 1
             not l.complete?
-          when "einem Gegenstand ohne zugeteilt Raum und Gestell"
+          when "an item without room or shelf"
             l.item and (l.item.location.nil? or (l.item.location.room.blank? and l.item.location.shelf.blank?))
           else
             raise
@@ -150,7 +154,7 @@ Dann(/^wird das Problemfeld für das problematische Modell angezeigt$/) do
     end
   end
   @line_css = ".line[data-id='#{@contract_line.id}']"
-  step "die problematischen Auszeichnungen bleiben bei der Linie bestehen"
+  step "the problem notifications remain on the line"
 end
 
 Wenn(/^ich dieser Linie einen Inventarcode manuell zuweise$/) do
@@ -158,7 +162,8 @@ Wenn(/^ich dieser Linie einen Inventarcode manuell zuweise$/) do
   find(@line_css).find("li.ui-menu-item a", match: :first).click
 end
 
-Dann(/^die problematischen Auszeichnungen bleiben bei der Linie bestehen$/) do
+#Dann(/^die problematischen Auszeichnungen bleiben bei der Linie bestehen$/) do
+Then(/^the problem notifications remain on the line$/) do
   within(@line_css) do
     expect(has_selector?(".line-info.red")).to be true
     expect(has_selector?(".tooltip.red")).to be true

@@ -20,20 +20,20 @@ Feature: Edit a hand over
     Then the line is no longer highlighted in green
 
   @javascript @browser @personas
-  Scenario: Systemfeedback bei Zuteilen eines Gegenstandes zur problematischen Linie
-    Given es gibt eine Aushändigung mit mindestens einer problematischen Linie
+  Scenario: Feedback on assigning an item to a problematic line
+    Given there is a hand over with at least one problematic line
     And I open the hand over
     Then wird das Problemfeld für das problematische Modell angezeigt
     When ich dieser Linie einen Inventarcode manuell zuweise
-    And die Zeile wird selektiert
-    Then wird die Zeile grün markiert
-    And die problematischen Auszeichnungen bleiben bei der Linie bestehen
+    And the line is selected
+    And the line is highlighted in green
+    And the problem notifications remain on the line
 
   @personas @javascript
-  Scenario: Sperrstatus des Benutzers anzeigen
+  Scenario: Show user's suspended state
     Given I open a hand over
-    And der Benutzer für die Aushändigung ist gesperrt
-    Then sehe ich neben seinem Namen den Sperrstatus 'Gesperrt!'
+    And the user in this hand over is suspended
+    Then I see the note 'Suspended!' next to their name
 
   @javascript @browser @personas
   Scenario: Systemfeedback bei Zuteilen einer Option
