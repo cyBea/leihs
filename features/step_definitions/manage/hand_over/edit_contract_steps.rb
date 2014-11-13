@@ -46,6 +46,17 @@ When(/^I add an option$/) do
   @line_css = ".line[data-id='#{@option_line.id}']"
 end
 
+# Which implementation is better?
+#When(/^I add an option$/) do
+#  @option = @current_inventory_pool.options.first
+#  find("input#assign-or-add-input").set @option.inventory_code
+#  find("form#assign-or-add .ui-menu-item a", match: :first).click
+#  find("#flash")
+#  @option_line = @hand_over.user.contracts.approved.flat_map(&:lines).find{|l| l.item == @option}
+#  @line_css = ".line[data-id='#{@option_line.id}']"
+#end
+
+
 When(/^I change the quantity right on the line$/) do
   @quantity = rand(2..9)
   within(".line[data-line-type='option_line'][data-id='#{@option_line.id}']") do

@@ -9,6 +9,7 @@ Given /^the availability is loaded$/ do
   end
 end
 
+
 Angenommen(/^es besteht bereits eine Aushändigung mit mindestens (\d+) zugewiesenen Gegenständen für einen Benutzer$/) do |count|
   @hand_over = @current_inventory_pool.visits.hand_over.find {|ho| ho.contract_lines.select(&:item).size >= count.to_i}
   expect(@hand_over).not_to be_nil

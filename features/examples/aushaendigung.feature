@@ -62,7 +62,7 @@ Feature: Edit a hand over
   @javascript @personas
   Scenario: Contract note
     When I open a hand over
-    When I hand over the items
+    And I hand over the items
     Then a dialog appears
     And I can enter some text in the contract note field
     When I enter "something" in the contract note field
@@ -70,17 +70,17 @@ Feature: Edit a hand over
     Then "something" appears on the contract
 
   @javascript @browser @personas
-  Scenario: Optionen mit einer Mindestmenge 1 ausgeben
-    Given ich öffne eine Aushändigung
-    When ich eine Option hinzufüge
-    And ich die Anzahl "0" in das Mengenfeld schreibe
-    Then wird die Menge mit dem ursprünglichen Wert überschrieben
-    When ich die Anzahl "-1" in das Mengenfeld schreibe
-    Then wird die Menge mit dem ursprünglichen Wert überschrieben
+  Scenario: Hand over options with at least quantity 1
+    When I open a hand over
+    And I add an option
+    And I change the quantity to "0"
+    Then the quantity will be restored to the original value
+    And I change the quantity to "-1"
+    Then the quantity will be restored to the original value
     When ich die Anzahl "abc" in das Mengenfeld schreibe
-    Then wird die Menge mit dem ursprünglichen Wert überschrieben
-    When ich die Anzahl "2" in das Mengenfeld schreibe
-    Then wird die Menge mit dem Wert "2" gespeichert
+    Then the quantity will be restored to the original value
+    And I change the quantity to "2"
+    Then the quantity will be stored to the value "2"
 
   @javascript @browser @personas
   Scenario: Anzeige der Seriennummer bei Zuteilung der Software-Lizenz
