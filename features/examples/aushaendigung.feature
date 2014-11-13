@@ -83,19 +83,22 @@ Feature: Edit a hand over
     Then the quantity will be stored to the value "2"
 
   @javascript @browser @personas
-  Scenario: Anzeige der Seriennummer bei Zuteilung der Software-Lizenz
-    Given ich öffne eine Aushändigung mit einer Software
-    When ich in das Zuteilungsfeld links vom Software-Namen klicke
-    Then wird mir der Inventarcode sowie die vollständige Seriennummer angezeigt
+  Scenario: Displaying serial number while handing over software licenses
+    When I open a hand over containing software
+    And I click on the assignment field of software names
+    Then I see the inventory codes and the complete serial numbers of that software
 
+
+  # Not implemented, so not translated.
   @javascript @browser @personas
-  Scenario: Listung von problematischen Gegenständen
+  Scenario: Listing problematic items
     Given there is a model with a problematic item
     And ich öffne eine Aushändigung für irgendeinen Benutzer
     When ich diesen Modell der Aushändigung hinzufüge
     And ich auf der Modelllinie die Gegenstandsauswahl öffne
     Then wird der problematische Gegenstand in rot aufgelistet
 
+  # Not implemented, so not translated.
   @javascript @browser @personas
   Scenario: Keine Auflistung von ausgemusterten Gegenständen
     Given es existiert ein Modell mit einem ausgemusterten und einem ausleihbaren Gegenstand
@@ -105,7 +108,7 @@ Feature: Edit a hand over
     Then wird der ausgemusterte Gegenstand nicht aufgelistet
 
   @personas @javascript @browser
-  Scenario: Anzeige von bereits zugewiesenen Gegenständen
-    Given es besteht bereits eine Aushändigung mit mindestens 21 zugewiesenen Gegenständen für einen Benutzer
+  Scenario: Displaying already assigned items
+    Given there is a hand over with at least 21 assigned items for a user
     When I open the hand over
-    Then sehe ich all die bereits zugewiesenen Gegenstände mittels Inventarcodes
+    Then I see the already assigned items and their inventory codes

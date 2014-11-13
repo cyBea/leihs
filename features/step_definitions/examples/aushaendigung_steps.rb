@@ -10,7 +10,8 @@ Given /^the availability is loaded$/ do
 end
 
 
-Angenommen(/^es besteht bereits eine Aushändigung mit mindestens (\d+) zugewiesenen Gegenständen für einen Benutzer$/) do |count|
+#Angenommen(/^es besteht bereits eine Aushändigung mit mindestens (\d+) zugewiesenen Gegenständen für einen Benutzer$/) do |count|
+Given(/^there is a hand over with at least (\d+) assigned items for a user$/) do |count|
   @hand_over = @current_inventory_pool.visits.hand_over.find {|ho| ho.contract_lines.select(&:item).size >= count.to_i}
   expect(@hand_over).not_to be_nil
 end
@@ -21,7 +22,8 @@ When(/^I open the hand over$/) do
   step "the availability is loaded"
 end
 
-Dann(/^sehe ich all die bereits zugewiesenen Gegenstände mittels Inventarcodes$/) do
+#Dann(/^sehe ich all die bereits zugewiesenen Gegenstände mittels Inventarcodes$/) do
+Then(/^I see the already assigned items and their inventory codes$/) do
   @hand_over.contract_lines.each do |line|
     next if not line.is_a?(ItemLine) or line.item_id.nil?
     find("[data-assign-item][disabled][value='#{line.item.inventory_code}']")
@@ -35,13 +37,11 @@ When(/^the user in this hand over is suspended$/) do
   step "I open a hand over to this customer"
 end
 
-Angenommen(/^ich öffne eine Aushändigung( mit einer Software)?$/) do |arg1|
-  @hand_over = if arg1
-                 @current_inventory_pool.visits.hand_over.shuffle.detect {|v| v.contract_lines.any?{|cl| cl.model.is_a? Software } }
-               else
-                 @current_inventory_pool.visits.hand_over.sample
-               end
-  step "ich die Aushändigung öffne"
+# Superseded by sign_contract_steps.rb
+#Angenommen(/^ich öffne eine Aushändigung( mit einer Software)?$/) do |arg1|
+Given(/^I open a hand over containing software$/) do
+  @hand_over = @current_inventory_pool.visits.hand_over.shuffle.detect {|v| v.contract_lines.any?{|cl| cl.model.is_a? Software } }
+  step "I open the hand over"
 end
 
 #Angenommen(/^es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell( und einer Option)?$/) do |arg1|
