@@ -197,17 +197,37 @@ Then(/^the line remains highlighted in green$/) do
   expect(has_selector?("#{@line_css}.green")).to be true
 end
 
-Angenommen(/^für den Gerätepark ist eine Standard\-Vertragsnotiz konfiguriert$/) do
+
+#Angenommen(/^für den Gerätepark ist eine Standard\-Vertragsnotiz konfiguriert$/) do
+Given(/^there is a default contract note for the inventory pool$/) do
   expect(@current_inventory_pool.default_contract_note).not_to be_nil
 end
 
-Dann(/^erscheint ein Aushändigungsdialog$/) do
+
+#Dann(/^erscheint ein Aushändigungsdialog$/) do
+Then(/^a hand over dialog appears$/) do
   expect(has_selector?(".modal [data-hand-over]")).to be true
 end
 
-Dann(/^diese Standard\-Vertragsnotiz erscheint im Textfeld für die Vertragsnotiz$/) do
+Then(/^a dialog appears$/) do
+  expect(has_selector?(".modal")).to be true
+end
+
+
+#Dann(/^diese Standard\-Vertragsnotiz erscheint im Textfeld für die Vertragsnotiz$/) do
+Then(/^the contract note field in this dialog is already filled in with the default note$/) do
   find("textarea[name='note']", text: @current_inventory_pool.default_contract_note)
 end
+
+Then(/^I can enter some text in the contract note field$/) do
+  find("textarea[name='note']")
+end
+
+When(/^I enter "(.*?)" in the contract note field$/) do |string|
+  field = find("textarea[name='note']")
+  fill_in field[:id], :with => string
+end
+
 
 When(/^I change the quantity to "(.*?)"$/) do |arg1|
   within @line_css do
@@ -250,15 +270,19 @@ When(/^I select at least one line$/) do
   step "ich die Zeile wieder selektiere"
 end
 
-Given(/^there exists a model with a problematic item$/) do
+Given(/^there is a model with a problematic item$/) do
   @item = @current_inventory_pool.items.borrowable.in_stock.find {|item| item.is_broken? or item.is_incomplete?}
   expect(@item).not_to be_nil
   @model = @item.model
   expect(@model).not_to be_nil
 end
 
-When(/^I add this model to the hand over$/) do
-  fill_in_via_autocomplete css: "#assign-or-add-input", value: @model.name
+Then(/^"(.*?)" appears on the contract$/) do |string|
+  new_window = page.driver.browser.window_handles.last
+  page.driver.browser.switch_to.window new_window
+  contract_element = find(".contract")
+  note_field = contract_element.find("section.note")
+  expect(note_field.text.match(/#{string}/)).not_to be_nil
 end
 
 When(/^I open the item choice list on the model line$/) do
@@ -272,7 +296,7 @@ Then(/^the problematic item is displayed red$/) do
   find(".ui-menu .ui-menu-item .light-red", text: @item.inventory_code)
 end
 
-Given(/^there exists a model with a retired and a borrowable item$/) do
+Given(/^there is a model with a retired and a borrowable item$/) do
   @model = @current_inventory_pool.models.find { |m| m.items.borrowable.where(retired: nil).exists? and m.items.retired.exists? }
   expect(@model).not_to be_nil
   @item = @model.items.retired.sample

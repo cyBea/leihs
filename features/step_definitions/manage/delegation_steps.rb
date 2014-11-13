@@ -494,7 +494,8 @@ Dann(/^ich bestätige den Benutzerwechsel$/) do
   find(".modal button[type='submit']").click
 end
 
-Wenn(/^ich die Gegenstände aushändige$/) do
+#Wenn(/^ich die Gegenstände aushändige$/) do
+When(/^I hand over the items$/) do
   line = find(".line[data-line-type='item_line'] input[id*='assigned-item'][value][disabled]", match: :first).find(:xpath, "ancestor::div[@data-line-type]")
   line.find("input[data-select-line]").click
   find(".multibutton", text: _("Hand Over Selection")).find("button").click

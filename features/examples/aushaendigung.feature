@@ -52,21 +52,22 @@ Feature: Edit a hand over
     And the line remains highlighted in green
 
   @javascript @personas
-  Scenario: Standard-Vertragsnotiz
-    Given für den Gerätepark ist eine Standard-Vertragsnotiz konfiguriert
-    And ich öffne eine Aushändigung mit mindestens einem zugewiesenen Gegenstand
-    When ich die Gegenstände aushändige
-    Then erscheint ein Aushändigungsdialog
-    And diese Standard-Vertragsnotiz erscheint im Textfeld für die Vertragsnotiz
+  Scenario: Default contract note
+    Given there is a default contract note for the inventory pool
+    And I open a hand over with at least one assigned item
+    When I hand over the items
+    Then a hand over dialog appears
+    And the contract note field in this dialog is already filled in with the default note
 
   @javascript @personas
-  Scenario: Vertragsnotiz
+  Scenario: Contract note
     When I open a hand over
-    When ich aushändige
-    Then erscheint ein Dialog
-    And ich kann eine Notiz für diesen Vertrag eingeben
-    When ich eine Notiz für diesen Vertrag eingebe
-    Then erscheint diese Notiz auf dem Vertrag
+    When I hand over the items
+    Then a dialog appears
+    And I can enter some text in the contract note field
+    When I enter "something" in the contract note field
+    And I click hand over inside the dialog
+    Then "something" appears on the contract
 
   @javascript @browser @personas
   Scenario: Optionen mit einer Mindestmenge 1 ausgeben
@@ -89,7 +90,7 @@ Feature: Edit a hand over
 
   @javascript @browser @personas
   Scenario: Listung von problematischen Gegenständen
-    Given es existiert ein Modell mit einem problematischen Gegenstand
+    Given there is a model with a problematic item
     And ich öffne eine Aushändigung für irgendeinen Benutzer
     When ich diesen Modell der Aushändigung hinzufüge
     And ich auf der Modelllinie die Gegenstandsauswahl öffne

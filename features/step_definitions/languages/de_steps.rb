@@ -19,6 +19,14 @@ Wenn(/^ich einen Gegenstand zurücknehme$/) do
   step 'the contract is closed and all items are returned'
 end
 
+Given /^I open a contract during take back$/ do
+  step 'I open a take back'
+  step 'I select all lines of an open contract'
+  step 'I click take back'
+  step 'I click take back inside the dialog'
+end
+
+
 Angenommen /^man öffnet einen Vertrag bei der Rücknahme/ do
   step 'I open a take back'
   step 'I select all lines of an open contract'
