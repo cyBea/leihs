@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^man ist Inventar\-Verwalter oder Ausleihe\-Verwalter$/ do
+
+
+#Angenommen /^man ist Inventar\-Verwalter oder Ausleihe\-Verwalter$/ do
+Given(/^I am inventory manager or lending manager$/) do
   step 'I am %s' % ["Mike", "Pius"].sample
   ar = @current_user.access_rights.active.where(role: [:lending_manager, :inventory_manager]).first
   expect(ar).not_to be_nil
@@ -90,38 +93,42 @@ Dann /^man kann für jeden Benutzer die Editieransicht aufrufen$/ do
   end
 end
 
-Dann /^man kann einen neuen Benutzer erstellen$/ do
+Dann(/^man kann einen neuen Benutzer erstellen$/) do
   find(".top .content_navigation .button .icon.user")
 end
 
 ####################################################################
 
-Angenommen /^man editiert einen (Benutzer|Delegation)$/ do |arg1|
+#Angenommen /^man editiert einen (Benutzer|Delegation)$/ do |arg1|
+Given(/^I edit a (user|delegation)$/) do |user_type|
   @inventory_pool ||= @current_user.managed_inventory_pools.first
-  @customer = case arg1
-                when "Delegation"
+  @customer = case user_type
+                when "delegation"
                   @inventory_pool.users.customers.as_delegations
-                when "Benutzer"
+                when "user"
                   @inventory_pool.users.customers.not_as_delegations
               end.sample
   visit manage_edit_inventory_pool_user_path(@inventory_pool, @customer)
 end
 
-Angenommen /^man nutzt die Sperrfunktion$/ do
+#Angenommen /^man nutzt die Sperrfunktion$/ do
+When(/^I use the suspend feature$/) do
   el = find("[data-suspended-until-input]")
   el.click
-  date_s = (Date.today+1.month).strftime("%d.%m.%Y")
+  date_s = (Date.today+1.month).strftime("%d/%m/%Y") # Use UK date format (from en-GB)
   el.set(date_s)
   find(".ui-state-active").click
 end
 
-Dann /^muss man den Grund der Sperrung eingeben$/ do
+#Dann /^muss man den Grund der Sperrung eingeben$/ do
+Then(/^I have to specify a reason for suspension$/) do
   el = find("[name='access_right[suspended_reason]']")
   el.click
   el.set("this is the reason")
 end
 
-Dann /^sofern der (Benutzer|Delegation) gesperrt ist, kann man die Sperrung aufheben$/ do |arg1|
+#Dann /^sofern der (Benutzer|Delegation) gesperrt ist, kann man die Sperrung aufheben$/ do |arg1|
+Then /^if the (user|delegation) is suspended, I can remove the suspension$/ do |arg1|
   visit manage_edit_inventory_pool_user_path(@inventory_pool, @customer)
   find("[data-suspended-until-input]").set("")
   find(".button", text: _("Save")).click

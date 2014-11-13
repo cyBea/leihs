@@ -1,17 +1,16 @@
-
-Feature: Benutzer verwalten 
+Feature: Manage users
 
   @javascript @personas
-  Scenario Outline: Sperrfunktion für Benutzer und Delegation
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    And man editiert einen <Benutzertyp>
-    And man nutzt die Sperrfunktion
-    Then muss man den Grund der Sperrung eingeben
-    And sofern der <Benutzertyp> gesperrt ist, kann man die Sperrung aufheben
+  Scenario Outline: Suspend feature for users and delegations
+    Given I am inventory manager or lending manager
+    And I edit a <user_type>
+    When I use the suspend feature
+    Then I have to specify a reason for suspension
+    And if the <user_type> is suspended, I can remove the suspension
     Examples:
-      | Benutzertyp |
-      | Benutzer    |
-      | Delegation  |
+      | user_type |
+      | user      |
+      | delegation|
 
   @upcoming @personas
   Scenario: Elemente der Editieransicht
