@@ -36,7 +36,7 @@ Feature: Edit a hand over
     Then I see the note 'Suspended!' next to their name
 
   @javascript @browser @personas
-  Scenario: Systemfeedback bei Zuteilen einer Option
+  Scenario: System feedback when adding an option
     Given I open a hand over
     When I add an option
     Then the line is selected
@@ -44,12 +44,12 @@ Feature: Edit a hand over
     And I receive a notification
 
   @javascript @personas
-  Scenario: Aushändigung eines bereits zugeteilten Gegenstandes
-    Given ich öffne eine Aushändigung mit mindestens einem zugewiesenen Gegenstand
-    When ich einen bereits hinzugefügten Gegenstand zuteile
-    Then erhalte ich eine entsprechende Info-Meldung 'XY ist bereits diesem Vertrag zugewiesen'
-    And die Zeile bleibt selektiert
-    And die Zeile bleibt grün markiert
+  Scenario: Handing over an already assigned item
+    Given I open a hand over with at least one assigned item
+    When I assign an already added item
+    Then I see the error message 'XY is already assigned to this contract'
+    And the line remains selected
+    And the line remains highlighted in green
 
   @javascript @personas
   Scenario: Standard-Vertragsnotiz

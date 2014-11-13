@@ -163,7 +163,8 @@ Then(/^the problem notifications remain on the line$/) do
   end
 end
 
-Wenn(/^ich einen bereits hinzugefügten Gegenstand zuteile$/) do
+#Wenn(/^ich einen bereits hinzugefügten Gegenstand zuteile$/) do
+When(/^I assign an already added item$/) do
   @contract_line = @hand_over.lines.find {|l| l.is_a? ItemLine and l.item}
   @line_css = ".line[data-id='#{@contract_line.id}']"
   find(@line_css).find("input[type='checkbox']").click
@@ -172,20 +173,27 @@ Wenn(/^ich einen bereits hinzugefügten Gegenstand zuteile$/) do
   find("form#assign-or-add button .icon-plus-sign-alt", match: :first).click
 end
 
-Dann(/^erhalte ich eine entsprechende Info\-Meldung 'XY ist bereits diesem Vertrag zugewiesen'$/) do
-  find "#flash", text: "#{@contract_line.item.inventory_code} ist bereits diesem Vertrag zugewiesen"
+
+
+#Dann(/^erhalte ich eine entsprechende Info\-Meldung 'XY ist bereits diesem Vertrag zugewiesen'$/) do
+Then(/^I see the error message 'XY is already assigned to this contract'$/) do
+  find "#flash", text: _("%s is already assigned to this contract") % @contract_line.item.inventory_code
 end
 
-Angenommen(/^ich öffne eine Aushändigung mit mindestens einem zugewiesenen Gegenstand$/) do
+
+#Angenommen(/^ich öffne eine Aushändigung mit mindestens einem zugewiesenen Gegenstand$/) do
+Given(/^I open a hand over with at least one assigned item$/) do
   @hand_over = @current_inventory_pool.visits.hand_over.find {|ho| ho.lines.any? &:item_id}
-  step "ich die Aushändigung öffne"
+  step "I open the hand over"
 end
 
-Dann(/^die Zeile bleibt selektiert$/) do
+#Dann(/^die Zeile bleibt selektiert$/) do
+Then(/^the line remains selected$/) do
   expect(has_selector?("#{@line_css} input[type='checkbox']:checked")).to be true
 end
 
-Dann(/^die Zeile bleibt grün markiert$/) do
+#Dann(/^die Zeile bleibt grün markiert$/) do
+Then(/^the line remains highlighted in green$/) do
   expect(has_selector?("#{@line_css}.green")).to be true
 end
 
