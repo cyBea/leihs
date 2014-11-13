@@ -47,7 +47,8 @@ Angenommen(/^ich befinde mich in einer Rücknahme$/) do
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
 
-Dann(/^ich erhalte eine Meldung$/) do
+#Dann(/^ich erhalte eine Meldung$/) do
+Then(/^I receive a notification$/) do
   find("#flash .notice")
 end
 

@@ -135,15 +135,6 @@ When(/^I remove the assigned item from the line$/) do
   find(@line_css).find(".icon-remove-sign").click
 end
 
-Wenn(/^ich eine Option hinzufüge$/) do
-  @option = @current_inventory_pool.options.first
-  find("input#assign-or-add-input").set @option.inventory_code
-  find("form#assign-or-add .ui-menu-item a", match: :first).click
-  find("#flash")
-  @option_line = @hand_over.user.contracts.approved.flat_map(&:lines).find{|l| l.item == @option}
-  @line_css = ".line[data-id='#{@option_line.id}']"
-end
-
 #Dann(/^wird das Problemfeld für das problematische Modell angezeigt$/) do
 Then(/^problem notifications are shown for the problematic model$/) do
   @contract_line = @hand_over.lines.find do |l|

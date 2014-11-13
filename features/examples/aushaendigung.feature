@@ -38,10 +38,10 @@ Feature: Edit a hand over
   @javascript @browser @personas
   Scenario: Systemfeedback bei Zuteilen einer Option
     Given I open a hand over
-    When ich eine Option hinzufüge
-    Then wird die Zeile selektiert
-    And die Zeile wird grün markiert
-    And ich erhalte eine Meldung
+    When I add an option
+    Then the line is selected
+    And the line is highlighted in green
+    And I receive a notification
 
   @javascript @personas
   Scenario: Aushändigung eines bereits zugeteilten Gegenstandes
