@@ -10,7 +10,7 @@ Feature: Kategorien
     When man das Register Kategorien wählt
     And man eine neue Kategorie erstellt
     And man gibt den Namen der Kategorie ein
-    And ich speichere
+    And I save
     Then ist die Kategorie mit dem angegegebenen Namen erstellt
 
   @javascript @personas
@@ -25,7 +25,7 @@ Feature: Kategorien
   Scenario: Kategorien editieren
     When man eine Kategorie editiert
     And man den Namen und die Elternelemente anpasst
-    And ich speichere
+    And I save
     Then werden die Werte gespeichert
 
   @javascript @personas
@@ -84,7 +84,7 @@ Feature: Kategorien
     And man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein
     And ich füge ein Bild hinzu
     Then kann ich kein zweites Bild hinzufügen
-    When ich speichere
+    When I save
     Then ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Elternelementen und dem Bild erstellt
 
   @personas @javascript
@@ -93,5 +93,5 @@ Feature: Kategorien
     And man editiert diese Kategorie
     When ich das Bild entferne
     And ich ein neues Bild wähle
-    And ich speichere
+    And I save
     Then ist die Kategorie mit dem neuen Bild gespeichert

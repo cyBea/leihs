@@ -23,7 +23,7 @@ Feature: Vorlagen verwalten
     Then steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
     And für jedes hinzugefügte Modell ist die Mindestanzahl 1
     When ich zu jedem Modell die Anzahl angebe
-    And ich speichere
+    And I save
     Then ich wurde auf die Liste der Vorlagen weitergeleitet
     And ich sehe die Erfolgsbestätigung
     And die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
@@ -34,13 +34,13 @@ Feature: Vorlagen verwalten
     And ich habe den Namen der Vorlage eingegeben
     When ich Modelle hinzufüge
     And ich bei einem Modell eine Anzahl eingebe, welche höher ist als die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
-    When ich speichere
+    When I save
     Then ich sehe eine Warnmeldung wegen nicht erfüllbaren Vorlagen
     And die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
     And die Vorlage ist in der Liste als unerfüllbar markiert
     When ich die gleiche Vorlage bearbeite
     And ich die korrekte Anzahl angebe
-    And ich speichere
+    And I save
     Then ich sehe die Erfolgsbestätigung
     And die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
     And die Vorlage ist in der Liste nicht als unerfüllbar markiert
@@ -63,7 +63,7 @@ Feature: Vorlagen verwalten
     And ich ein zusätzliches Modell hinzufüge
     Then für das hinzugefügte Modell ist die Mindestanzahl 1
     And die Anzahl bei einem der Modell ändere
-    And ich speichere
+    And I save
     Then ich wurde auf die Liste der Vorlagen weitergeleitet
     And ich sehe die Erfolgsbestätigung
     And die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
@@ -73,11 +73,11 @@ Feature: Vorlagen verwalten
     And ich befinde mich auf der Editieransicht einer Vorlage
     When der Name nicht ausgefüllt ist
     And es ist mindestens ein Modell dem Template hinzugefügt
-    And ich speichere
+    And I save
     Then I see an error message
     When ich den Name ausgefüllt habe
     And kein Modell hinzugefügt habe
-    And ich speichere
+    And I save
     Then I see an error message
 
   @javascript @personas
@@ -85,9 +85,9 @@ Feature: Vorlagen verwalten
     And ich befinde mich auf der Erstellungsansicht einer Vorlage
     When der Name nicht ausgefüllt ist
     And es ist mindestens ein Modell dem Template hinzugefügt
-    And ich speichere
+    And I save
     Then I see an error message
     When ich den Name ausgefüllt habe
     And kein Modell hinzugefügt habe
-    And ich speichere
+    And I save
     Then I see an error message

@@ -59,7 +59,7 @@ Feature: Rücknahme
     When ich bei der Option eine Stückzahl von 1 eingebe
     And beim Gegenstand eine Inspektion durchführe
     And ich setze "Zustand" auf "Defekt"
-    And ich speichere
+    And I save
     Then steht bei der Option die zuvor angegebene Stückzahl
 
   @javascript @browser @personas

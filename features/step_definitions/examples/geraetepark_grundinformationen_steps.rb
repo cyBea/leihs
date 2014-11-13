@@ -107,7 +107,7 @@ end
 Dann(/^ich kann die Ausleihschliessungszeiten wieder löschen$/) do
   holiday = @holidays.last
   find(".row[data-holidays-list] .line", :text => holiday[:name]).find(".button[data-remove-holiday]").click
-  step 'ich speichere'
+  step 'I save'
   expect(@current_inventory_pool.holidays.where(:start_date => holiday[:start_date], :end_date => holiday[:end_date], :name => holiday[:name]).empty?).to be true
 end
 
@@ -127,11 +127,11 @@ end
 
 Dann(/^muss ich einen Sperrgrund angeben$/) do
   fill_in "inventory_pool[automatic_suspension_reason]", with: ""
-  step 'ich speichere'
+  step 'I save'
   step 'ich sehe eine Fehlermeldung'
   @reason = Faker::Lorem.sentence
   fill_in "inventory_pool[automatic_suspension_reason]", with: @reason
-  step 'ich speichere'
+  step 'I save'
 end
 
 Dann(/^ist diese Konfiguration gespeichert$/) do
@@ -205,18 +205,18 @@ end
 
 Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
   steps %Q{
-    Wenn man in der Benutzeransicht ist
-    Und man einen Benutzer hinzufügt
-    Und die folgenden Informationen eingibt
+    When man in der Benutzeransicht ist
+    And man einen Benutzer hinzufügt
+    And die folgenden Informationen eingibt
       | Nachname       |
       | Vorname        |
       | E-Mail         |
-    Und man gibt die Login-Daten ein
-    Und man gibt eine Badge-Id ein
-    Und eine der folgenden Rollen auswählt
+    And man gibt die Login-Daten ein
+    And man gibt eine Badge-Id ein
+    And eine der folgenden Rollen auswählt
       | tab                | role              |
       | Inventar-Verwalter | inventory_manager   |
-    Und ich speichere
+    And I save 
   }
   @user = User.find_by_lastname "test"
 end

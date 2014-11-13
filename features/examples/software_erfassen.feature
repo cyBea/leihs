@@ -15,7 +15,7 @@ Feature: Software erfassen
     When der Hersteller bereits existiert
     Then kann der Hersteller aus der Liste ausgewählt werden
     When ich einen nicht existierenden Hersteller eingebe
-    And ich speichere
+    And I save
     Then ist die neue Software erstellt und unter Software auffindbar
     When ich das Software-Produkt wieder editiere
     Then werden nur die Linien mit Links zusätzlich ausserhalb des Textfeldes angezeigt
@@ -94,7 +94,7 @@ Feature: Software erfassen
     When ich als Bezug "Investition" wähle
     Then muss ich eine Projektnummer eingeben
     And ich die den Wert "ausleihbar" setze
-    And ich speichere
+    And I save
     Then sind die Informationen dieser Software-Lizenz gespeichert
 
   @personas @javascript @browser
@@ -128,5 +128,5 @@ Feature: Software erfassen
     When ich eine neue Software-Lizenz hinzufüge
     And ich alle Pflichtfelder für die Lizenz ausfülle
     And ich im Feld "Anschaffungswert" den Wert "1200" eingebe
-    And ich speichere
+    And I save
     Then ist der "Anschaffungswert" als "1'200.00" gespeichert

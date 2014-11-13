@@ -13,7 +13,7 @@ Feature: Software editieren
       | Version                | Test Version I                                                 |
       | Hersteller             | Neuer Hersteller                                               |
       | Software Informationen | Installationslink beachten: http://wwww.dokuwiki.ch/neue_seite |
-    When ich speichere
+    When I save
     And ich mich auf der Softwareliste befinde
     Then die Informationen sind gespeichert
     And die Daten wurden entsprechend aktualisiert
@@ -54,7 +54,7 @@ Feature: Software editieren
     And ich die Gesamtanzahl ändere
     And ich die Anzahl-Zuteilungen ändere
     #But ich kann den Inventarcode nicht ändern # really? inventory manager can change the inventory number of an item right now...
-    When ich speichere
+    When I save
     Then sind die Informationen dieser Software-Lizenz erfolgreich aktualisiert worden
 
   @javascript @personas
@@ -64,7 +64,7 @@ Feature: Software editieren
       | Maintenance-Ablaufdatum |
       | Lizenzablaufdatum       |
       | Rechnungsdatum          |
-    And ich speichere
+    And I save
     Then I receive a notification of success
     When ich die gleiche Lizenz editiere
     Then sind die folgenden Felder der Lizenz leer:

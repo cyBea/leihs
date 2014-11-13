@@ -58,7 +58,7 @@ Feature: Gegenstand bearbeiten
     Given man editiert einen Gegenstand, wo man der Besitzer ist
     Given man navigiert zur Bearbeitungsseite eines Gegenstandes mit gesetztem Lieferanten
     When ich den Lieferanten lösche
-    And ich speichere
+    And I save
     Then ist bei dem bearbeiteten Gegenstand keiner Lieferant eingetragen
 
   @javascript @personas @browser
@@ -79,7 +79,7 @@ Feature: Gegenstand bearbeiten
       | Inventarrelevant       | select       | Ja                  |
       | Anschaffungskategorie  | select       | Werkstatt-Technik   |
 
-    And ich speichere
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen gespeichert
 
@@ -94,14 +94,14 @@ Feature: Gegenstand bearbeiten
   Scenario: Lieferanten ändern
     Given man editiert einen Gegenstand, wo man der Besitzer ist
     When ich den Lieferanten ändere
-    And ich speichere
+    And I save
     Then ist bei dem bearbeiteten Gegestand der geänderte Lieferant eingetragen
 
   @javascript @personas
   Scenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
     Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist
     When ich die verantwortliche Abteilung ändere
-    And ich speichere
+    And I save
     Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
 
   @javascript @personas @browser
@@ -133,7 +133,7 @@ Feature: Gegenstand bearbeiten
       | Raum                  |              | Test Raum           |
       | Gestell               |              | Test Gestell        |
 
-    And ich speichere
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen gespeichert
 
@@ -153,7 +153,7 @@ Feature: Gegenstand bearbeiten
   Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
     Given man editiert einen Gegenstand, wo man der Besitzer ist
     When ich einen nicht existierenen Lieferanten angebe
-    And ich speichere
+    And I save
     Then wird der neue Lieferant erstellt
     And bei dem bearbeiteten Gegestand ist der neue Lieferant eingetragen
 
@@ -161,7 +161,7 @@ Feature: Gegenstand bearbeiten
   Scenario: Neuen Lieferanten nicht erstellen falls einer mit gleichem Namen schon vorhanden
     Given man editiert einen Gegenstand, wo man der Besitzer ist
     When ich einen existierenen Lieferanten angebe
-    And ich speichere
+    And I save
     Then wird kein neuer Lieferant erstellt
     And bei dem bearbeiteten Gegestand ist der bereits vorhandenen Lieferant eingetragen
   
@@ -170,14 +170,14 @@ Feature: Gegenstand bearbeiten
   Scenario: Bei Gegenständen, die in Verträgen vorhanden sind, kann man das Modell nicht ändern
     Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist
     When ich das Modell ändere
-    And ich speichere
+    And I save
     Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist
 
   @javascript @personas
   Scenario: Einen Gegenstand, der ausgeliehen ist, kann man nicht ausmustern
     Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist
     When ich den Gegenstand ausmustere
-    And ich speichere
+    And I save
     Then erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist
 
   @javascript @personas @browser
@@ -200,7 +200,7 @@ Feature: Gegenstand bearbeiten
       | Garantieablaufdatum   |              | 01.01.2013          |
       | Vertragsablaufdatum   |              | 01.01.2013          |
 
-    And ich speichere
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen gespeichert
 
@@ -220,6 +220,6 @@ Feature: Gegenstand bearbeiten
       | Verantwortliche Person    |              | Matus Kmit          |
       | Benutzer/Verwendung       |              | Test Verwendung     |
 
-    And ich speichere
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen gespeichert

@@ -50,7 +50,7 @@ Feature: Ausmustern
     And man befindet sich auf der Editierseite von diesem <Objekt>
     When man die Ausmusterung bei diesem <Objekt> zurück setzt
     And die Anschaffungskategorie ist ausgewählt
-    And ich speichere
+    And I save
     Then wurde man auf die Inventarliste geleitet
     And dieses <Objekt> ist nicht mehr ausgemustert
     Examples:

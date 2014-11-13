@@ -182,8 +182,10 @@ end
 
 ####################################################################
 
-Dann /^sieht man als Titel den Vornamen und Namen des Benutzers, sofern bereits vorhanden$/ do
-  find(".top h1", :text => @customer.to_s)
+
+#Then /^sieht man als Titel den Vornamen und Namen des Benutzers, sofern bereits vorhanden$/ do
+Then /^the user's first and last name are used as a title$/ do
+  find("h1.headline-l", :text => @customer.to_s)
 end
 
 Dann /^sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:$/ do |table|
@@ -613,21 +615,28 @@ Dann(/^man sieht eine Bestätigungsmeldung$/) do
   find("#flash .notice")
 end
 
-Angenommen(/^man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat$/) do
+
+#Angenommen(/^man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat$/) do
+Given(/^I am editing a user that has no access rights and is not an admin$/) do
   @user = User.find { |u| not u.has_role? :admin and u.has_role? :customer }
   @previous_access_rights = @user.access_rights.freeze
   visit manage_edit_user_path(@user)
 end
 
-Wenn(/^man diesen Benutzer die Rolle Administrator zuweist$/) do
+
+#Wenn(/^man diesen Benutzer die Rolle Administrator zuweist$/) do
+When(/^I assign the admin role to this user$/) do
   select _("Yes"), from: "user_admin"
 end
 
-Dann(/^hat dieser Benutzer die Rolle Administrator$/) do
+#Dann(/^hat dieser Benutzer die Rolle Administrator$/) do
+Then(/^this user has the admin role$/) do
   expect(@user.reload.has_role?(:admin)).to be true
 end
 
-Dann(/^alle andere Zugriffe auf Inventarpools bleiben beibehalten$/) do
+
+#Dann(/^alle andere Zugriffe auf Inventarpools bleiben beibehalten$/) do
+Then(/^all previous access rights remain intact$/) do
   expect((@previous_access_rights - @user.access_rights.reload).empty?).to be true
 end
 
@@ -819,7 +828,8 @@ Wenn(/^man ändert die Email$/) do
   find(".row.emboss", match: :prefer_exact, text: _("E-Mail")).find("input,textarea").set "changed@test.ch"
 end
 
-Dann(/^sieht man die Erfolgsbestätigung$/) do
+#Dann(/^sieht man die Erfolgsbestätigung$/) do
+Then(/^I see a confirmation of success on list of users$/) do
   expect(has_content?(_("List of Users"))).to be true
   find(".notice", match: :first)
 end

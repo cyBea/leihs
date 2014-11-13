@@ -13,11 +13,10 @@ Feature: Manage users
       | delegation|
 
   @upcoming @personas
-  Scenario: Elemente der Editieransicht
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    And man editiert einen Benutzer
-    Then sieht man als Titel den Vornamen und Namen des Benutzers, sofern bereits vorhanden
-    Then sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
+  Scenario: Elements of the edit view
+    Given I am inventory manager or lending manager
+    And I edit a user
+    Then the user's first and last name are used as a title
     Then sieht man die Sperrfunktion für diesen Benutzer
     And sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung
     Then sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
@@ -36,21 +35,21 @@ Feature: Manage users
     And man kann die vorgenommenen Änderungen abspeichern
 
   @personas
-  Scenario: Als Administrator einen anderen Benutzer Administrator machen
+  Scenario: Give admin rights to another user (as administrator)
     Given I am Gino
-    And man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat
-    When man diesen Benutzer die Rolle Administrator zuweist
-    And ich speichere
-    Then sieht man die Erfolgsbestätigung
-    And hat dieser Benutzer die Rolle Administrator
-    And alle andere Zugriffe auf Inventarpools bleiben beibehalten
+    And I am editing a user that has no access rights and is not an admin
+    When I assign the admin role to this user
+    And I save
+    Then I see a confirmation of success on list of users
+    And this user has the admin role
+    And all previous access rights remain intact
 
   @personas
   Scenario: Als Administrator einem anderen Benutzer die Rolle Administrator wegnehmen
     Given I am Gino
     And man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat
     When man diesem Benutzer die Rolle Administrator wegnimmt
-    And ich speichere
+    And I save
     Then hat dieser Benutzer die Rolle Administrator nicht mehr
     And alle andere Zugriffe auf Inventarpools bleiben beibehalten
 
@@ -88,7 +87,7 @@ Feature: Manage users
       | Gruppen-Verwalter  | group_manager   |
       | Ausleihe-Verwalter | lending_manager   |
     And man teilt mehrere Gruppen zu
-    And ich speichere
+    And I save
     Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
@@ -100,7 +99,7 @@ Feature: Manage users
     And den Vornahmen eingibt
     And die Email-Addresse eingibt
     And man gibt die Login-Daten ein
-    And ich speichere
+    And I save
     Then wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet
     And man sieht eine Bestätigungsmeldung
     And der neue Benutzer wurde erstellt
@@ -132,7 +131,7 @@ Feature: Manage users
     Given I am Pius
     And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
-    And ich speichere
+    And I save
     Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @javascript @personas
@@ -149,7 +148,7 @@ Feature: Manage users
     Given I am Gino
     And man editiert einen Benutzer der Zugriff auf ein Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
-    And ich speichere
+    And I save
     Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @personas
@@ -241,7 +240,7 @@ Feature: Manage users
     Given I am Mike
     And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
-    And ich speichere
+    And I save
     Then hat der Benutzer keinen Zugriff auf das Inventarpool
 
   @personas
@@ -251,7 +250,7 @@ Feature: Manage users
     When man den Benutzer für diesen Vertrag editiert
     Then hat dieser Benutzer Zugriff auf das aktuelle Inventarpool
     When man den Zugriff entfernt
-    And ich speichere
+    And I save
     Then erhalte ich die Fehlermeldung "<Fehlermeldung>"
     Examples:
       | Persona | Vertragsstatus | Fehlermeldung                          |
@@ -300,7 +299,7 @@ Feature: Manage users
     | Ausleihe-Verwalter | lending_manager     |
     | Inventar-Verwalter | inventory_manager   |
     And man teilt mehrere Gruppen zu
-    And ich speichere
+    And I save
     Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
@@ -313,7 +312,7 @@ Feature: Manage users
       | Group manager      |
       | Lending manager    |
     When man den Zugriff auf "Ausleihe-Verwalter" ändert
-    And ich speichere
+    And I save
     Then hat der Benutzer die Rolle Ausleihe-Verwalter
 
   @personas
@@ -321,7 +320,7 @@ Feature: Manage users
     Given I am Pius
     And man editiert einen Benutzer der Ausleihe-Verwalter ist
     When man den Zugriff auf "Kunde" ändert
-    And ich speichere
+    And I save
     Then hat der Benutzer die Rolle Kunde
 
   @personas
@@ -335,7 +334,7 @@ Feature: Manage users
       | Lending manager    |
       | Inventory manager  |
     When man den Zugriff auf "Inventar-Verwalter" ändert
-    And ich speichere
+    And I save
     Then hat der Benutzer die Rolle Inventar-Verwalter
 
   @personas
@@ -343,8 +342,8 @@ Feature: Manage users
     Given I am Mike
     And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
     When man den Zugriff auf "Kunde" ändert
-    And ich speichere
-    Then sieht man die Erfolgsbestätigung
+    And I save
+    Then I see a confirmation of success on list of users
     And hat der Benutzer die Rolle Kunde
 
   @personas
@@ -358,7 +357,7 @@ Feature: Manage users
       | Lending manager    |
       | Inventory manager  |
     When man den Zugriff auf "Inventar-Verwalter" ändert
-    And ich speichere
+    And I save
     Then hat der Benutzer die Rolle Inventar-Verwalter
 
   @javascript @browser @personas
@@ -381,8 +380,8 @@ Feature: Manage users
     Given I am Pius
     And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
     When man ändert die Email
-    And ich speichere
-    Then sieht man die Erfolgsbestätigung
+    And I save
+    Then I see a confirmation of success on list of users
     And die neue Email des Benutzers wurde gespeichert
     And der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool
 
@@ -410,7 +409,7 @@ Feature: Manage users
       | Ausleihe-Verwalter | lending_manager     |
       | Inventar-Verwalter | inventory_manager   |
     And man teilt mehrere Gruppen zu
-    And ich speichere
+    And I save
     Then ist der Benutzer mit all den Informationen gespeichert
 
   @personas
@@ -420,7 +419,7 @@ Feature: Manage users
     And man einen Benutzer hinzufügt
     And alle Pflichtfelder sind sichtbar und abgefüllt
     When man ein <Pflichtfeld> nicht eingegeben hat
-    And ich speichere
+    And I save
     Then I see an error message
     Examples:
       | Pflichtfeld |
@@ -433,8 +432,8 @@ Feature: Manage users
     Given I am Mike
     And man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
     When man den Zugriff auf "Kunde" ändert
-    And ich speichere
-    Then sieht man die Erfolgsbestätigung
+    And I save
+    Then I see a confirmation of success on list of users
     And hat der Benutzer die Rolle Kunde
 
   @javascript @personas

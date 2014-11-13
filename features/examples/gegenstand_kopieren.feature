@@ -49,7 +49,7 @@ Feature: Gegenstand kopieren
     | Name                         |
     | Seriennummer                 |
     And der Inventarcode ist vorausgefüllt
-    When ich speichere
+    When I save
     Then wird der kopierte Gegenstand gespeichert
     And man wird zur Liste des Inventars zurückgeführt
 
@@ -82,6 +82,6 @@ Feature: Gegenstand kopieren
     Then wird eine neue Gegenstandskopieransicht geöffnet
     When ich einen nicht existierenen Lieferanten angebe
     And ich merke mir den Inventarcode für weitere Schritte
-    And ich speichere
+    And I save
     Then wird der neue Lieferant erstellt
     And bei dem kopierten Gegestand ist der neue Lieferant eingetragen

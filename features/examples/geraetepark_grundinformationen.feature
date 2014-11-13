@@ -57,7 +57,7 @@ Feature: Gerätepark-Grundinformationen
     And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
     And ich editiere eine Gerätepark bei dem die aut. Zuweisung aktiviert ist
     When ich die aut. Zuweisung deaktiviere
-    And ich speichere
+    And I save
     Then ist die aut. Zuweisung deaktiviert
     Given I am Gino
     And man befindet sich auf der Benutzerliste
@@ -70,10 +70,10 @@ Feature: Gerätepark-Grundinformationen
     Given I am Mike
     And ich editiere eine Gerätepark
     When ich "<Checkbox>" aktiviere
-    And ich speichere
+    And I save
     Then ist "<Checkbox>" aktiviert
     When ich "<Checkbox>" deaktiviere
-    And ich speichere
+    And I save
     Then ist "<Checkbox>" deaktiviert
     Examples:
       | Checkbox                |
@@ -86,7 +86,7 @@ Feature: Gerätepark-Grundinformationen
    Given I am Mike
    And ich verwalte die Gerätepark Grundinformationen
    When ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
-   And ich speichere
+   And I save
    Then sind die Arbeitstage gespeichert
 
   @javascript @personas
@@ -94,7 +94,7 @@ Feature: Gerätepark-Grundinformationen
    Given I am Mike
    And ich verwalte die Gerätepark Grundinformationen
    When ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
-   And ich speichere
+   And I save
    Then werden die Ausleihschliessungszeiten gespeichert
    And ich kann die Ausleihschliessungszeiten wieder löschen
 
@@ -122,13 +122,13 @@ Feature: Gerätepark-Grundinformationen
     When ich die Grundinformationen des Geräteparks abfüllen möchte
     When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte
     Then muss ich einen Sperrgrund angeben
-    When ich speichere
+    When I save
     Then ist diese Konfiguration gespeichert
     When ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird
     Then wird er für diesen Gerätepark gesperrt bis zum '1.1.2099'
     And der Sperrgrund ist derjenige, der für diesen Park gespeichert ist
     When ich "Automatische Sperrung" deaktiviere
-    And ich speichere
+    And I save
     Then ist "Automatische Sperrung" deaktiviert
 
   @personas

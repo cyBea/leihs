@@ -20,7 +20,7 @@ Wenn(/^ich die Funktion "(.*)" wähle$/) do |arg1|
 end
 
 Dann(/^muss ich eine Bemerkung angeben$/) do
-  step 'ich speichere'
+  step 'I save'
   step 'ich sehe eine Fehlermeldung'
 end
 

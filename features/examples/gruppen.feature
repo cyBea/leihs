@@ -23,7 +23,7 @@ Feature: Gruppen
     And den Namen der Gruppe angebe
     And die Benutzer hinzufüge
     And die Modelle und deren Kapazität hinzufüge
-    And ich speichere
+    And I save
     Then ist die Gruppe gespeichert
     And die Gruppe ist visierungspflichtig
     And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
@@ -38,7 +38,7 @@ Feature: Gruppen
     And ich den Namen der Gruppe ändere
     And die Benutzer hinzufüge und entferne
     And die Modelle und deren Kapazität hinzufüge und entferne
-    And ich speichere
+    And I save
     Then ist die Gruppe gespeichert
     And die Gruppe ist visierungspflichtig
     And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
@@ -53,7 +53,7 @@ Feature: Gruppen
     And ich den Namen der Gruppe ändere
     And die Benutzer hinzufüge und entferne
     And die Modelle und deren Kapazität hinzufüge und entferne
-    And ich speichere
+    And I save
     Then ist die Gruppe gespeichert
     And die Gruppe ist nicht mehr visierungspflichtig
     And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
@@ -143,7 +143,7 @@ Feature: Gruppen
     And den Namen der Gruppe angebe
     And die Benutzer hinzufüge
     And die Modelle und deren Kapazität hinzufüge
-    And ich speichere
+    And I save
     Then ist die Gruppe gespeichert
     And die Gruppe ist nicht visierungspflichtig
     And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt

@@ -19,7 +19,7 @@ Wenn(/^ich Name und Kurzname und Email eingebe$/) do
   find("input[name='inventory_pool[email]']").set "test@test.ch"
 end
 
-Wenn(/^ich speichere$/) do
+Wenn(/^I save$/) do
   find("button", :text => /#{_("Save")}/i).click
 end
 

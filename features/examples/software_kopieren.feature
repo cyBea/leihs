@@ -12,7 +12,7 @@ Feature: Software kopieren
     And der Titel heisst "Neue Software-Lizenz erstellen"
     And der Speichern-Button heisst "Lizenz speichern"
     And ein neuer Inventarcode vergeben wird
-    When ich speichere
+    When I save
     Then ist die neue Lizenz erstellt
     And wurden die folgenden Felder von der kopierten Lizenz übernommen
       | Software                  |

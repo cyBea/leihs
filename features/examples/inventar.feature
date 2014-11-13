@@ -299,7 +299,7 @@ Feature: Inventar
     When ich einen Reiter auswähle
     And ich eine oder mehrere Filtermöglichkeiten verwende
     When ich eine aufgeführte Zeile editiere
-    And ich speichere
+    And I save
     Then werde ich zur Liste des eben gewählten Reiters mit den eben ausgewählten Filtern zurueckgefuehrt
 
   @personas @javascript

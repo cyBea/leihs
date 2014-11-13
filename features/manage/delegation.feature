@@ -103,7 +103,7 @@ Feature: Delegation
     And ich dieser Delegation keinen, einen oder mehrere Gruppen zuteile
     And ich kann dieser Delegation keine Delegation zuteile
     And ich genau einen Verantwortlichen eintrage
-    And ich speichere
+    And I save
     Then ist die neue Delegation mit den aktuellen Informationen gespeichert
 
   @javascript @personas
@@ -131,11 +131,11 @@ Feature: Delegation
     And ich eine neue Delegation erstelle
     When ich dieser Delegation einen Namen gebe
     And ich keinen Verantwortlichen zuteile
-    And ich speichere
+    And I save
     Then I see an error message
     When ich genau einen Verantwortlichen eintrage
     And ich keinen Namen angebe
-    And ich speichere
+    And I save
     Then I see an error message
 
   @javascript @personas
@@ -148,7 +148,7 @@ Feature: Delegation
     And ich einen bestehenden Benutzer lösche
     And ich der Delegation einen neuen Benutzer hinzufüge
     And man teilt mehrere Gruppen zu
-    And ich speichere
+    And I save
     Then sieht man die Erfolgsbestätigung
     And ist die bearbeitete Delegation mit den aktuellen Informationen gespeichert
 
@@ -157,7 +157,7 @@ Feature: Delegation
     Given I am Pius
     When ich eine Delegation mit Zugriff auf das aktuelle Gerätepark editiere
     And ich dieser Delegation den Zugriff für den aktuellen Gerätepark entziehe
-    And ich speichere
+    And I save
     Then können keine Bestellungen für diese Delegation für dieses Gerätepark erstellt werden
 
   @javascript @personas @browser

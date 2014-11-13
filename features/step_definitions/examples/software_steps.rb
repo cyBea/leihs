@@ -308,7 +308,7 @@ When(/^I choose "(.*?)" as reference$/) do |arg1|
 end
 
 Then(/^I have to enter a project number$/) do
-  step "ich speichere"
+  step "I save"
   step "ich sehe eine Fehlermeldung"
   @project_number = Faker::Lorem.characters(10)
   find(".field", text: _("Project Number")).find("input").set @project_number
@@ -710,7 +710,7 @@ Then(/^I choose dongle as activation type$/) do
 end
 
 Then(/^I have to provide a dongle id$/) do
-  step "ich speichere"
+  step "I save"
   step "ich sehe eine Fehlermeldung"
   @dongle_id = Faker::Lorem.characters(10)
   find(".field", text: _("Dongle ID")).find("input").set @dongle_id
