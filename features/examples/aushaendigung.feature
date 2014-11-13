@@ -23,8 +23,8 @@ Feature: Edit a hand over
   Scenario: Feedback on assigning an item to a problematic line
     Given there is a hand over with at least one problematic line
     And I open the hand over
-    Then wird das Problemfeld für das problematische Modell angezeigt
-    When ich dieser Linie einen Inventarcode manuell zuweise
+    Then problem notifications are shown for the problematic model
+    When I manually assign an inventory code to that line
     And the line is selected
     And the line is highlighted in green
     And the problem notifications remain on the line

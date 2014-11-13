@@ -144,7 +144,8 @@ Wenn(/^ich eine Option hinzufüge$/) do
   @line_css = ".line[data-id='#{@option_line.id}']"
 end
 
-Dann(/^wird das Problemfeld für das problematische Modell angezeigt$/) do
+#Dann(/^wird das Problemfeld für das problematische Modell angezeigt$/) do
+Then(/^problem notifications are shown for the problematic model$/) do
   @contract_line = @hand_over.lines.find do |l|
     if l.is_a? ItemLine
       #old#
@@ -157,7 +158,8 @@ Dann(/^wird das Problemfeld für das problematische Modell angezeigt$/) do
   step "the problem notifications remain on the line"
 end
 
-Wenn(/^ich dieser Linie einen Inventarcode manuell zuweise$/) do
+#Wenn(/^ich dieser Linie einen Inventarcode manuell zuweise$/) do
+When(/^I manually assign an inventory code to that line$/) do
   find(@line_css).find("input[data-assign-item]").click
   find(@line_css).find("li.ui-menu-item a", match: :first).click
 end
