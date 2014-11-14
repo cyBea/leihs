@@ -167,21 +167,22 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
       user.access_rights.active.delete_all
       expect(user.access_rights.active.empty?).to be true
   end
-  step %Q(I search for "%s") % user.to_s # this step is needed for CI in order show a line entry which would otherwise be in a non displayed scrollable page
-  @el = find("#user-list .line", text: user.to_s)
+  step %Q(I search for '%s') % user.to_s # this step is needed for CI in order show a line entry which would otherwise be in a non displayed scrollable page
+  @el = find("#users .line", text: user.to_s)
 end
 
-Dann /^sieht man folgende Informationen in folgender Reihenfolge:$/ do |table|
+#Dann /^sieht man folgende Informationen in folgender Reihenfolge:$/ do |table|
+Then /^I see the following information, in order:$/ do |table|
   user = User.find @el.find("[data-id]")["data-id"]
   access_right = user.access_right_for(@inventory_pool)
 
   strings = table.hashes.map do |x|
     case x[:attr]
-      when "Vorname Name"
+      when "First name/last name"
         user.name
-      when "Telefonnummer"
+      when "Phone number"
         user.phone
-      when "Rolle"
+      when "Role"
         role = access_right.try(:role) || "no access"
         _(role.to_s.humanize)
       when "Sperr-Status 'Gesperrt bis dd.mm.yyyy'"

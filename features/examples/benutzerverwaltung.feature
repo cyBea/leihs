@@ -178,11 +178,12 @@ Feature: Manage users
   Scenario: Displaying a user and their roles in lists
     Given I am inventory manager or lending manager
     And a user with assigned role appears in the user list
-    Then sieht man folgende Informationen in folgender Reihenfolge:
+    #Then sieht man folgende Informationen in folgender Reihenfolge:
+    Then I see the following information about the user, in order:
       |attr |
-      |Vorname Name|
-      |Telefonnummer|
-      |Rolle|
+      |First name/last name|
+      |Phone number|
+      |Role|
 
   @javascript @personas
   Scenario: Darstellung eines Benutzers in Listen ohne zugeteilte Rolle
