@@ -860,13 +860,15 @@ Angenommen(/^man editiert einen Benutzer der mal einen Zugriff auf das aktuelle 
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Angenommen(/^man einen Benutzer mit Zugriffsrechten editiert$/) do
+#Angenommen(/^man einen Benutzer mit Zugriffsrechten editiert$/) do
+When(/^I edit a user that has access rights$/) do
   @user = User.find { |u| u.access_rights.active.count >= 2 }
   expect(@user.access_rights.active.count).to be >= 2
   visit manage_edit_user_path(@user)
 end
 
-Dann(/^werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet$/) do
+#Dann(/^werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet$/) do
+Then(/^inventory pools they have access to are listed with the respective role$/) do
   @user.access_rights.active.each do |access_right|
     find(".row.emboss .padding-inset-s", text: access_right.to_s)
   end

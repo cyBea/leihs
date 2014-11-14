@@ -109,9 +109,9 @@ Feature: Manage users
   @personas
   Scenario: Auflistung der Inventarpools eines Benutzers
     Given I am Ramon
-    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    And man einen Benutzer mit Zugriffsrechten editiert
-    Then werden die ihm zugeteilt Geräteparks mit entsprechender Rolle aufgelistet
+    And I am looking at the user list outside an inventory pool
+    And I edit a user that has access rights
+    Then inventory pools they have access to are listed with the respective role
 
   @javascript @browser @personas
   Scenario: Voraussetzungen fürs Löschen eines Benutzers im Gerätepark
