@@ -510,25 +510,32 @@ Dann(/^ist die Gruppenzugehörigkeit gespeichert$/) do
   end
 end
 
-Wenn(/^man in der Benutzeransicht ist$/) do
+
+#Wenn(/^man in der Benutzeransicht ist$/) do
+When(/^I am looking at the user list$/) do
   visit manage_inventory_pool_users_path(@current_inventory_pool)
 end
 
-Wenn(/^man einen Benutzer hinzufügt$/) do
+
+#Wenn(/^man einen Benutzer hinzufügt$/) do
+When(/^I add a new user$/) do
   find_link(_("New User")).click
 end
 
-Wenn(/^die folgenden Informationen eingibt$/) do |table|
+#Wenn(/^die folgenden Informationen eingibt$/) do |table|
+When(/^I enter the following information$/) do |table|
   table.raw.flatten.each do |field_name|
     find(".row.emboss", match: :prefer_exact, text: field_name).find("input,textarea").set (field_name == "E-Mail" ? "test@test.ch" : "test")
   end
 end
 
-Wenn(/^man gibt eine Badge\-Id ein$/) do
+#Wenn(/^man gibt eine Badge\-Id ein$/) do
+When(/^I enter a badge ID$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Badge ID")).find("input,textarea").set 123456
 end
 
-Wenn(/^eine der folgenden Rollen auswählt$/) do |table|
+#Wenn(/^eine der folgenden Rollen auswählt$/) do |table|
+When(/^I choose one of the following roles$/) do |table|
   @role_hash = table.hashes[rand table.hashes.length]
   page.select @role_hash[:tab], from: "access_right[role]"
 end
@@ -540,7 +547,8 @@ Wenn(/^man wählt ein Sperrdatum und ein Sperrgrund$/) do
   suspended_reason.set "test"
 end
 
-Wenn(/^man teilt mehrere Gruppen zu$/) do
+#Wenn(/^man teilt mehrere Gruppen zu$/) do
+When(/^I assign multiple groups$/) do
   @current_inventory_pool.groups.each do |group|
     find("#change-groups input").click
     find(".ui-autocomplete .ui-menu-item a", match: :first)
@@ -548,7 +556,8 @@ Wenn(/^man teilt mehrere Gruppen zu$/) do
   end
 end
 
-Dann(/^ist der Benutzer mit all den Informationen gespeichert$/) do
+#Dann(/^ist der Benutzer mit all den Informationen gespeichert$/) do
+Then(/^the user and all their information is saved$/) do
   find_link _("New User")
   find("#flash .notice", text: _("User created successfully"))
   user = User.find_by_lastname "test"
@@ -579,35 +588,30 @@ Wenn(/^man ein Sperrgrund nicht eingegeben hat$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("input,textarea").set ""
 end
 
-Angenommen(/^man befindet sich auf der Benutzerliste ausserhalb der Inventarpools$/) do
+
+#Angenommen(/^man befindet sich auf der Benutzerliste ausserhalb der Inventarpools$/) do
+Given(/^I am looking at the user list outside an inventory pool$/) do
   visit manage_users_path
 end
 
-Wenn(/^man von hier auf die Benutzererstellungsseite geht$/) do
+
+#Wenn(/^man von hier auf die Benutzererstellungsseite geht$/) do
+When(/^I navigate from here to the user creation page$/) do
   click_link _("New User")
 end
 
-Wenn(/^den Nachnamen eingibt$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("Last name")).find("input").set "admin"
-end
-
-Wenn(/^den Vornahmen eingibt$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("First name")).find("input").set "test"
-end
-
-Wenn(/^die Email\-Addresse eingibt$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("E-Mail")).find("input").set "test@test.ch"
-end
-
-Dann(/^wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet$/) do
+#Dann(/^wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet$/) do
+Then(/^I am redirected to the user list outside an inventory pool$/) do
   expect(current_path).to eq manage_users_path
 end
 
-Dann(/^der neue Benutzer wurde erstellt$/) do
-  @user = User.find_by_firstname_and_lastname "test", "admin"
+#Dann(/^der neue Benutzer wurde erstellt$/) do
+Then(/^the new user has been created$/) do
+  @user = User.find_by_email "test@test.ch"
 end
 
-Dann(/^er hat keine Zugriffe auf Inventarpools und ist kein Administrator$/) do
+#Dann(/^er hat keine Zugriffe auf Inventarpools und ist kein Administrator$/) do
+Then(/^he does not have access to any inventory pools and is not an administrator$/) do
   expect(@user.access_rights.active.empty?).to be true
 end
 
@@ -658,21 +662,25 @@ Then(/^this user no longer has the admin role$/) do
   expect(@user.reload.has_role?(:admin)).to be false
 end
 
-Wenn(/^man versucht auf die Administrator Benutzererstellenansicht zu gehen$/) do
+#Wenn(/^man versucht auf die Administrator Benutzererstellenansicht zu gehen$/) do
+When(/^I try to access the admin area's user editing page$/) do
   @path = manage_edit_user_path(User.first)
   visit @path
 end
 
-Dann(/^gelangt man auf diese Seite nicht$/) do
+#Dann(/^gelangt man auf diese Seite nicht$/) do
+Then(/^I can't access that page$/) do
   expect(current_path).not_to eq @path
 end
 
-Wenn(/^man versucht auf die Administrator Benutzereditieransicht zu gehen$/) do
+#Wenn(/^man versucht auf die Administrator Benutzereditieransicht zu gehen$/) do
+When(/^I try to access the admin area's user creation page$/) do
   @path = "/manage/users/new"
   visit @path
 end
 
-Wenn(/^man hat nur die folgenden Rollen zur Auswahl$/) do |table|
+#Wenn(/^man hat nur die folgenden Rollen zur Auswahl$/) do |table|
+Then(/^I can only choose the following roles$/) do |table|
   expect(find(".row.emboss", match: :prefer_exact, text: _("Access as")).all("option").length).to eq table.raw.length
   table.raw.flatten.each do |role|
     find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("option", text: _(role))
@@ -816,7 +824,8 @@ Dann(/^sind die Benutzer nach ihrem Vornamen alphabetisch sortiert$/) do
   end
 end
 
-Und(/^man gibt die Login-Daten ein$/) do
+#Und(/^man gibt die Login-Daten ein$/) do
+When(/^I enter the login data$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Login")).find("input").set "username"
   find(".row.emboss", match: :prefer_exact, text: _("Password")).find("input").set "password"
   find(".row.emboss", match: :prefer_exact, text: _("Password Confirmation")).find("input").set "password"

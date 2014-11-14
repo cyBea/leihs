@@ -54,56 +54,57 @@ Feature: Manage users
     And all their previous access rights remain intact
 
   @personas
-  Scenario Outline: Als Ausleihe- oder Inventar-Verwalter hat man kein Zugriff auf die Administrator-User-Pfade
-    Given I am <Person>
-    When man versucht auf die Administrator Benutzererstellenansicht zu gehen
-    Then gelangt man auf diese Seite nicht
-    When man versucht auf die Administrator Benutzereditieransicht zu gehen
-    Then gelangt man auf diese Seite nicht
+  Scenario Outline: As lending or inventory manager I can't access the admin area
+    Given I am <person>
+    When I try to access the admin area's user editing page
+    Then I can't access that page
+    When I try to access the admin area's user creation page
+    Then I can't access that page
     Examples:
-      | Person |
+      | person |
       | Pius   |
       | Mike   |
 
   @javascript @personas
-  Scenario: Neuen Benutzer im Geräterpark als Ausleihe-Verwalter hinzufügen
+  Scenario: Add new user as inventory manager to an inventory pool
     Given I am Pius
-    When man in der Benutzeransicht ist
-    And man einen Benutzer hinzufügt
-    And die folgenden Informationen eingibt
-      | Nachname       |
-      | Vorname        |
+    When I am looking at the user list
+    And I add a new user
+    And I enter the following information
+      | First name       |
+      | Last name        |
       | E-Mail         |
-    And man gibt die Login-Daten ein
-    And man gibt eine Badge-Id ein
-    And man hat nur die folgenden Rollen zur Auswahl
+    And I enter the login data
+    And I enter a badge ID
+    And I can only choose the following roles
       | No access |
       | Customer  |
       | Group manager  |
       | Lending manager  |
-    And eine der folgenden Rollen auswählt
+    When I choose one of the following roles
       | tab                | role              |
-      | Kunde              | customer          |
-      | Gruppen-Verwalter  | group_manager   |
-      | Ausleihe-Verwalter | lending_manager   |
-    And man teilt mehrere Gruppen zu
+      | Customer              | customer          |
+      | Group manager | group_manager   |
+      | Lending manager | lending_manager   |
+    And I assign multiple groups
     And I save
-    Then ist der Benutzer mit all den Informationen gespeichert
+    Then the user and all their information is saved
 
   @personas
-  Scenario: Als Administrator neuen Benutzer erstellen
+  Scenario: Add a new user as an administrator, from outside the inventory pool
     Given I am Gino
-    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    When man von hier auf die Benutzererstellungsseite geht
-    And den Nachnamen eingibt
-    And den Vornahmen eingibt
-    And die Email-Addresse eingibt
-    And man gibt die Login-Daten ein
+    And I am looking at the user list outside an inventory pool
+    When I navigate from here to the user creation page
+    And I enter the following information
+      | First name       |
+      | Last name        |
+      | E-Mail         |
+    And I enter the login data
     And I save
-    Then wird man auf die Benutzerliste ausserhalb der Inventarpools umgeleitet
-    And man sieht eine Bestätigungsmeldung
-    And der neue Benutzer wurde erstellt
-    And er hat keine Zugriffe auf Inventarpools und ist kein Administrator
+    Then I am redirected to the user list outside an inventory pool
+    And I receive a notification
+    And the new user has been created
+    And he does not have access to any inventory pools and is not an administrator
 
   @personas
   Scenario: Auflistung der Inventarpools eines Benutzers
@@ -273,7 +274,7 @@ Feature: Manage users
   @javascript @personas
   Scenario: Neuen Benutzer im Geräterpark als Inventar-Verwalter hinzufügen
     Given I am Mike
-    When man in der Benutzeransicht ist
+    When I am looking at the user list
     And man einen Benutzer hinzufügt
     And die folgenden Informationen eingibt
       | Nachname       |
@@ -386,37 +387,37 @@ Feature: Manage users
     And der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool
 
   @javascript @personas
-  Scenario: Neuen Benutzer im Geräterpark als Administrator hinzufügen
+  Scenario: Add new user to the inventory pool as administrator
     Given I am Gino
-    When man in der Benutzeransicht ist
-    And man einen Benutzer hinzufügt
-    And die folgenden Informationen eingibt
-      | Nachname       |
-      | Vorname        |
+    When I am looking at the user list
+    And I add a new user
+    And I enter the following information
+      | Last name      |
+      | First name     |
       | E-Mail         |
-    And man gibt die Login-Daten ein
-    And man gibt eine Badge-Id ein
-    And man hat nur die folgenden Rollen zur Auswahl
+    And I enter the login data
+    And I enter a badge ID
+    Then I can only choose the following roles
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    And eine der folgenden Rollen auswählt
+    When I choose one of the following roles
       | tab                | role                |
-      | Kunde              | customer            |
-      | Gruppen-Verwalter  | group_manager       |
-      | Ausleihe-Verwalter | lending_manager     |
-      | Inventar-Verwalter | inventory_manager   |
-    And man teilt mehrere Gruppen zu
+      | Customer              | customer            |
+      | Group manager  | group_manager       |
+      | Lending manager| lending_manager     |
+      | Inventory manager| inventory_manager   |
+    And I assign multiple groups
     And I save
-    Then ist der Benutzer mit all den Informationen gespeichert
+    Then the user and all their information is saved
 
   @personas
   Scenario Outline: Neuen Benutzer hinzufügen - ohne Eingabe der Pflichtfelder
     Given I am Pius
-    When man in der Benutzeransicht ist
-    And man einen Benutzer hinzufügt
+    When I am looking at the user list
+    And I add a new user
     And alle Pflichtfelder sind sichtbar und abgefüllt
     When man ein <Pflichtfeld> nicht eingegeben hat
     And I save
@@ -445,6 +446,7 @@ Feature: Manage users
     Then wurde der Benutzer aus der Liste gelöscht
     And der Benutzer ist gelöscht
 
+  # Unimplemented, so not translated.
   @personas
   Scenario: Startseite zurücksetzen
     Given I am Pius

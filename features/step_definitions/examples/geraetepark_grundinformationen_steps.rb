@@ -205,7 +205,7 @@ end
 
 Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
   steps %Q{
-    When man in der Benutzeransicht ist
+    When I am looking at the user list
     And man einen Benutzer hinzufügt
     And die folgenden Informationen eingibt
       | Nachname       |
