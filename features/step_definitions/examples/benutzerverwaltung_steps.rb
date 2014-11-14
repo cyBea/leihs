@@ -799,7 +799,8 @@ Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( u
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
+#Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
+Given(/^I am editing a user who has access to (and no items from )?the current inventory pool$/) do |arg1|
   access_rights = @current_inventory_pool.access_rights.active.select { |ar| ar.role == :customer }
   @user = if arg1
             access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
@@ -809,11 +810,13 @@ Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpo
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Wenn(/^man den Zugriff entfernt$/) do
+#Wenn(/^man den Zugriff entfernt$/) do
+When(/^I remove their access$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("No access")
 end
 
-Dann(/^hat der Benutzer keinen Zugriff auf das Inventarpool$/) do
+#Dann(/^hat der Benutzer keinen Zugriff auf das Inventarpool$/) do
+Then(/^the user has no access to the inventory pool$/) do
   find_link _("New User")
   expect(@user.reload.access_right_for(@current_inventory_pool)).to eq nil
 end

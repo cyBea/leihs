@@ -123,17 +123,18 @@ Feature: Manage users
     And the user is not deleted
 
   @personas
-  Scenario: Alphabetische Sortierung der Benutzer ausserhalb vom Inventarpool
+  Scenario: Alphabetic sort order of users outside an inventory pool
     Given I am Gino
-    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
+    And I am looking at the user list outside an inventory pool
+    # What's here? We need to confirm that A comes before B in the list
 
   @personas
-  Scenario: Zugriff entfernen als Ausleihe-Verwalter
+  Scenario: Remove access as an inventory manager
     Given I am Pius
-    And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
-    When man den Zugriff entfernt
+    And I am editing a user who has access to and no items from the current inventory pool
+    When I remove their access
     And I save
-    Then hat der Benutzer keinen Zugriff auf das Inventarpool
+    Then the user has no access to the inventory pool
 
   @javascript @personas
   Scenario: Benutzer im Geräterpark als Administrator löschen
