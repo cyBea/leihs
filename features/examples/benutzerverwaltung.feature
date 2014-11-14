@@ -42,16 +42,16 @@ Feature: Manage users
     And I save
     Then I see a confirmation of success on list of users
     And this user has the admin role
-    And all previous access rights remain intact
+    And all their previous access rights remain intact
 
   @personas
-  Scenario: Als Administrator einem anderen Benutzer die Rolle Administrator wegnehmen
+  Scenario: Remove admin rights from a user, as administrator
     Given I am Gino
-    And man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat
-    When man diesem Benutzer die Rolle Administrator wegnimmt
+    And I am editing a user who has the admin role and access to inventory pools
+    When I remove the admin role from this user
     And I save
-    Then hat dieser Benutzer die Rolle Administrator nicht mehr
-    And alle andere Zugriffe auf Inventarpools bleiben beibehalten
+    Then this user no longer has the admin role
+    And all their previous access rights remain intact
 
   @personas
   Scenario Outline: Als Ausleihe- oder Inventar-Verwalter hat man kein Zugriff auf die Administrator-User-Pfade

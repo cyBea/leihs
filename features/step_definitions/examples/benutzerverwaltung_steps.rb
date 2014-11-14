@@ -636,22 +636,25 @@ end
 
 
 #Dann(/^alle andere Zugriffe auf Inventarpools bleiben beibehalten$/) do
-Then(/^all previous access rights remain intact$/) do
+Then(/^all their previous access rights remain intact$/) do
   expect((@previous_access_rights - @user.access_rights.reload).empty?).to be true
 end
 
-Angenommen(/^man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat$/) do
+#Angenommen(/^man befindet sich auf der Editierseite eines Benutzers, der ein Administrator ist und der Zugriffe auf Inventarpools hat$/) do
+Given(/^I am editing a user who has the admin role and access to inventory pools$/) do
   @user = User.find { |u| u.has_role? :admin and u.has_role? :customer }
   raise "user not found" unless @user
   @previous_access_rights = @user.access_rights.select { |ar| ar.role != :admin }.freeze
   visit manage_edit_user_path(@user)
 end
 
-Wenn(/^man diesem Benutzer die Rolle Administrator wegnimmt$/) do
+#Wenn(/^man diesem Benutzer die Rolle Administrator wegnimmt$/) do
+When(/^I remove the admin role from this user$/) do
   select _("No"), from: "user_admin"
 end
 
-Dann(/^hat dieser Benutzer die Rolle Administrator nicht mehr$/) do
+#Dann(/^hat dieser Benutzer die Rolle Administrator nicht mehr$/) do
+Then(/^this user no longer has the admin role$/) do
   expect(@user.reload.has_role?(:admin)).to be false
 end
 
