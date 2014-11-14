@@ -738,7 +738,8 @@ Angenommen(/^man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und
   @user = User.find { |u| u.access_rights.active.empty? and u.contracts.empty? }
 end
 
-Wenn(/^ich diesen Benutzer aus der Liste lösche$/) do
+#Wenn(/^ich diesen Benutzer aus der Liste lösche$/) do
+When(/^I delete that user from the list$/) do
   @user ||= @users.sample
   step %Q(ich nach "%s" suche) % @user.to_s
   within("#user-list .line", text: @user.name) do
@@ -752,23 +753,28 @@ Dann(/^wurde der Benutzer aus der Liste gelöscht$/) do
   expect(has_no_selector?("#user-list .line", text: @user.name)).to be true
 end
 
+
 Dann(/^der Benutzer ist gelöscht$/) do
   find("#flash .success")
   expect(User.find_by_id(@user.id)).to eq nil
 end
 
-Dann(/^der Benutzer ist nicht gelöscht$/) do
+#Dann(/^der Benutzer ist nicht gelöscht$/) do
+Then(/^the user is not deleted$/) do
   find("#user-list")
   step 'I scroll to the end of the list' # loading pages (but probably only the last one)
   find("#user-list .line", text: @user.name)
   expect(User.find_by_id(@user.id)).not_to be_nil
 end
 
-Angenommen(/^man befindet sich auf der Benutzerliste im beliebigen Inventarpool$/) do
+
+#Angenommen(/^man befindet sich auf der Benutzerliste im beliebigen Inventarpool$/) do
+Given(/^I am looking at the user list in any inventory pool$/) do
   visit manage_inventory_pool_users_path(InventoryPool.first)
 end
 
-Angenommen(/^man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus$/) do
+#Angenommen(/^man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus$/) do
+Given(/^I pick one user with access rights, one with orders and one with contracts$/) do
   @users = []
   @users << User.find { |u| not u.access_rights.active.empty? and u.contracts.empty? }
   @users << User.find { |u| not u.contracts.empty? }

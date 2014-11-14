@@ -114,13 +114,13 @@ Feature: Manage users
     Then inventory pools they have access to are listed with the respective role
 
   @javascript @browser @personas
-  Scenario: Voraussetzungen fürs Löschen eines Benutzers im Gerätepark
+  Scenario: Requirements for deleting a user in an inventory pool
     Given I am Ramon
-    And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
-    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    When ich diesen Benutzer aus der Liste lösche
+    And I pick one user with access rights, one with orders and one with contracts
+    And I am looking at the user list in any inventory pool
+    When I delete that user from the list
     Then I see an error message
-    And der Benutzer ist nicht gelöscht
+    And the user is not deleted
 
   @personas
   Scenario: Alphabetische Sortierung der Benutzer ausserhalb vom Inventarpool
