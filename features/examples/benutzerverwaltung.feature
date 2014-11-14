@@ -17,9 +17,9 @@ Feature: Manage users
     Given I am inventory manager or lending manager
     And I edit a user
     Then the user's first and last name are used as a title
-    Then sieht man die Sperrfunktion für diesen Benutzer
-    And sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung
-    Then sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:
+    And I see the suspend button for this user
+    And I see reason and duration of suspension for this user, if they are suspended
+    Then I see the following information about the user, in order:
     |en         |de           |
     |Last name  |Name         |
     |First name |Vorname      |
@@ -29,10 +29,10 @@ Feature: Manage users
     |Country    |Land         |
     |Phone      |Telefonnummer|
     |E-Mail     |E-Mail-Adresse|
-    And man kann die Informationen ändern, sofern es sich um einen externen Benutzer handelt
-    And man kann die Informationen nicht verändern, sofern es sich um einen Benutzer handelt, der über ein externes Authentifizierungssystem eingerichtet wurde
-    And man sieht die Rollen des Benutzers und kann diese entsprechend seiner Rolle verändern
-    And man kann die vorgenommenen Änderungen abspeichern
+    And I can change this user's information, as long as they use local database authentication and not another adapter
+    And I cannot change this user's information if they use something other than local database authentication
+    And I see the user's role and can change them depending on my own role
+    And my changes are saved if I save the user
 
   @personas
   Scenario: Give admin rights to another user (as administrator)
@@ -175,9 +175,9 @@ Feature: Manage users
     And I can open the edit view for each user
 
   @javascript @personas
-  Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    And ein Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
+  Scenario: Displaying a user and their roles in lists
+    Given I am inventory manager or lending manager
+    And a user with assigned role appears in the user list
     Then sieht man folgende Informationen in folgender Reihenfolge:
       |attr |
       |Vorname Name|
@@ -186,6 +186,7 @@ Feature: Manage users
 
   @javascript @personas
   Scenario: Darstellung eines Benutzers in Listen ohne zugeteilte Rolle
+    Given I am inventory manager or lending manager
     Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
     And ein Benutzer ohne zugeteilte Rolle erscheint in einer Benutzerliste
     Then sieht man folgende Informationen in folgender Reihenfolge:
@@ -196,7 +197,7 @@ Feature: Manage users
 
   @javascript @personas
   Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle und Status gesperrt
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
+    Given I am inventory manager or lending manager
     And ein gesperrter Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
     Then sieht man folgende Informationen in folgender Reihenfolge:
       |attr |
@@ -438,6 +439,7 @@ Feature: Manage users
     And I save
     Then I see a confirmation of success on list of users
     And hat der Benutzer die Rolle Kunde
+
 
   @javascript @personas
   Scenario: Benutzer als Administrator löschen

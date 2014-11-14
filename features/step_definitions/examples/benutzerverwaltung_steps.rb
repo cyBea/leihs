@@ -152,21 +152,22 @@ Then /^I can find the user administration features in the "Admin" area under "Us
   step 'I follow "%s"' % _("Users")
 end
 
-Angenommen /^ein (.*?)Benutzer (mit zugeteilter|ohne zugeteilte) Rolle erscheint in einer Benutzerliste$/ do |arg1, arg2|
+#Angenommen /^ein (.*?)Benutzer (mit zugeteilter|ohne zugeteilte) Rolle erscheint in einer Benutzerliste$/ do |arg1, arg2|
+Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |suspended, with_or_without|
   user = User.where(:login => "normin").first
   step 'I can find the user administration features in the "Admin" area under "Users"'
-  case arg1
-    when "gesperrter "
+  case suspended
+    when "suspended "
       user.access_rights.active.first.update_attributes(suspended_until: Date.today + 1.year, suspended_reason: "suspended reason")
   end
-  case arg2
-    when "mit zugeteilter"
+  case with_or_without
+    when "with"
       expect(user.access_rights.active.empty?).to be false
-    when "ohne zugeteilte"
+    when "without"
       user.access_rights.active.delete_all
       expect(user.access_rights.active.empty?).to be true
   end
-  step %Q(ich nach "%s" suche) % user.to_s # this step is needed for CI in order show a line entry which would otherwise be in a non displayed scrollable page
+  step %Q(I search for "%s") % user.to_s # this step is needed for CI in order show a line entry which would otherwise be in a non displayed scrollable page
   @el = find("#user-list .line", text: user.to_s)
 end
 
@@ -199,46 +200,55 @@ Then /^the user's first and last name are used as a title$/ do
   find("h1.headline-l", :text => @customer.to_s)
 end
 
-Dann /^sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:$/ do |table|
+#Dann /^sieht man die folgenden Daten des Benutzers in der folgenden Reihenfolge:$/ do |table|
+Then /^I see the following information about the user, in order:$/ do |table|
   values = table.hashes.map do |x|
     _(x[:en])
   end
   expect(page.text).to match Regexp.new(values.join('.*'), Regexp::MULTILINE)
 end
 
-Dann /^sieht man die Sperrfunktion für diesen Benutzer$/ do
+#Dann /^sieht man die Sperrfunktion für diesen Benutzer$/ do
+Then /^I see the suspend button for this user$/ do
   find("[data-suspended-until-input]")
 end
 
-Dann /^sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung$/ do
+#Dann /^sofern dieser Benutzer gesperrt ist, sieht man Grund und Dauer der Sperrung$/ do
+Then /^I see reason and duration of suspension for this user, if they are suspended$/ do
   if @customer.access_right_for(@inventory_pool).suspended?
     find("[name='access_right[suspended_reason]']")
   end
 end
 
-Dann /^man kann die Informationen ändern, sofern es sich um einen externen Benutzer handelt$/ do
+#Dann /^man kann die Informationen ändern, sofern es sich um einen externen Benutzer handelt$/ do
+Then /^I can change this user's information, as long as they use local database authentication and not another adapter$/ do
   if @customer.authentication_system.class_name == "DatabaseAuthentication"
     @attrs = [:lastname, :firstname, :address, :zip, :city, :country, :phone, :email]
     @attrs.each do |attr|
       orig_value = @customer.send(attr)
-      f = find("input[ng-model='user.#{attr}']")
-      expect(f.value).to eq orig_value
-      f.set("#{attr}#{orig_value}")
+      field = find("input[name='user[#{attr}]']")
+      #f = find("input[ng-model='user.#{attr}']") # This never worked?
+      expect(field.value).to eq orig_value.to_s
+      field.set("#{attr}#{orig_value}")
     end
   end
 end
 
-Dann /^man kann die Informationen nicht verändern, sofern es sich um einen Benutzer handelt, der über ein externes Authentifizierungssystem eingerichtet wurde$/ do
+#Dann /^man kann die Informationen nicht verändern, sofern es sich um einen Benutzer handelt, der über ein externes Authentifizierungssystem eingerichtet wurde$/ do
+Then /^I cannot change this user's information if they use something other than local database authentication$/ do
   if @customer.authentication_system.class_name != "DatabaseAuthentication"
   end
 end
 
-Dann /^man sieht die Rollen des Benutzers und kann diese entsprechend seiner Rolle verändern$/ do
-  find("select[ng-model='user.access_right.role']")
+#Dann /^man sieht die Rollen des Benutzers und kann diese entsprechend seiner Rolle verändern$/ do
+Then /^I see the user's role and can change them depending on my own role$/ do
+  find("select[name='access_right[role]']")
 end
 
-Dann /^man kann die vorgenommenen Änderungen abspeichern$/ do
-  find(".content_navigation > button.green").click
+
+#Dann /^man kann die vorgenommenen Änderungen abspeichern$/ do
+Then /^my changes are saved if I save the user$/ do
+  step 'I save'
   if @customer.authentication_system.class_name == "DatabaseAuthentication"
     @customer.reload
     @attrs.each do |attr|
