@@ -43,17 +43,21 @@ def check_user_list(users)
   end
 end
 
-Dann /^sieht man eine Liste aller Benutzer$/ do
+#Dann /^sieht man eine Liste aller Benutzer$/ do
+Then /^I see a list of all users$/ do
   users = User.order("firstname ASC").paginate(page: 1, per_page: 20)
   check_user_list(users)
 end
 
-Dann /^man kann filtern nach "(.*?)" Rolle$/ do |role|
+#Dann /^man kann filtern nach "(.*?)" Rolle$/ do |role|
+Then /^I can filter by the role "(.*?)"$/ do |role|
   find("#user-index-view .inline-tab-navigation .inline-tab-item", text: role).click
 end
 
-Dann /^man kann filtern nach den folgenden Eigenschaften: gesperrt$/ do
-  step 'man kann filtern nach "%s" Rolle' % _("Customer")
+
+#Dann /^man kann filtern nach den folgenden Eigenschaften: gesperrt$/ do
+Then /^I can filter to see only suspended users$/ do
+  step 'I can filter by the role "%s"' % _("Customer")
 
   find("#list-filters [type='checkbox'][name='suspended']").click
   users = @inventory_pool.suspended_users.customers.paginate(page: 1, per_page: 20)
@@ -64,9 +68,10 @@ Dann /^man kann filtern nach den folgenden Eigenschaften: gesperrt$/ do
   check_user_list(users)
 end
 
-Dann /^man kann filtern nach den folgenden Rollen:$/ do |table|
+#Dann /^man kann filtern nach den folgenden Rollen:$/ do |table|
+Then /^I can filter by the following roles:$/ do |table|
   table.hashes.each do |row|
-    step 'man kann filtern nach "%s" Rolle' % row["tab"]
+    step 'I can filter by the role "%s"' % row["tab"]
     role = row["role"]
     users = case role
               when "admins"
@@ -82,8 +87,9 @@ Dann /^man kann filtern nach den folgenden Rollen:$/ do |table|
   end
 end
 
-Dann /^man kann für jeden Benutzer die Editieransicht aufrufen$/ do
-  step 'man kann filtern nach "%s" Rolle' % "All"
+#Dann /^man kann für jeden Benutzer die Editieransicht aufrufen$/ do
+Then /^I can open the edit view for each user$/ do
+  step 'I can filter by the role "%s"' % "All"
   expect(has_selector?("#user-list [data-type='user-cell']")).to be true
   all("#user-list > .line").each do |line|
     within line.find(".multibutton") do
@@ -141,9 +147,14 @@ end
 
 ####################################################################
 
+Then /^I can find the user administration features in the "Admin" area under "Users"$/ do
+  step 'I follow "Admin"'
+  step 'I follow "%s"' % _("Users")
+end
+
 Angenommen /^ein (.*?)Benutzer (mit zugeteilter|ohne zugeteilte) Rolle erscheint in einer Benutzerliste$/ do |arg1, arg2|
   user = User.where(:login => "normin").first
-  step 'findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"'
+  step 'I can find the user administration features in the "Admin" area under "Users"'
   case arg1
     when "gesperrter "
       user.access_rights.active.first.update_attributes(suspended_until: Date.today + 1.year, suspended_reason: "suspended reason")
@@ -734,7 +745,8 @@ Dann(/^hat der Benutzer die Rolle Inventar-Verwalter$/) do
   expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :inventory_manager
 end
 
-Angenommen(/^man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus$/) do
+#Angenommen(/^man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus$/) do
+Given(/^I pick a user without access rights, orders or contracts$/) do
   @user = User.find { |u| u.access_rights.active.empty? and u.contracts.empty? }
 end
 
@@ -749,12 +761,14 @@ When(/^I delete that user from the list$/) do
   end
 end
 
-Dann(/^wurde der Benutzer aus der Liste gelöscht$/) do
+#Dann(/^wurde der Benutzer aus der Liste gelöscht$/) do
+Then(/^that user has been deleted from the list$/) do
   expect(has_no_selector?("#user-list .line", text: @user.name)).to be true
 end
 
 
-Dann(/^der Benutzer ist gelöscht$/) do
+#Dann(/^der Benutzer ist gelöscht$/) do
+Then(/^the user is deleted$/) do
   find("#flash .success")
   expect(User.find_by_id(@user.id)).to eq nil
 end

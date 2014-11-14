@@ -137,22 +137,23 @@ Feature: Manage users
     Then the user has no access to the inventory pool
 
   @javascript @personas
-  Scenario: Benutzer im Geräterpark als Administrator löschen
+  Scenario: Delete user from an inventory pool as admin
     Given I am Gino
-    And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
-    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    When ich diesen Benutzer aus der Liste lösche
-    Then wurde der Benutzer aus der Liste gelöscht
-    And der Benutzer ist gelöscht
+    And I pick a user without access rights, orders or contracts
+    And I am looking at the user list in any inventory pool
+    When I delete that user from the list
+    Then that user has been deleted from the list
+    And the user is deleted
 
   @personas
-  Scenario: Zugriff entfernen als Administrator
+  Scenario: Remove access as an administrator
     Given I am Gino
-    And man editiert einen Benutzer der Zugriff auf ein Inventarpool hat und keine Gegenstände hat
-    When man den Zugriff entfernt
+    And I am editing a user who has access to and no items from the current inventory pool
+    When I remove their access
     And I save
-    Then hat der Benutzer keinen Zugriff auf das Inventarpool
+    Then the user has no access to the inventory pool
 
+  # This feature has been removed, no point in translating
   @personas
   Scenario: Startseite setzen
     Given I am Pius
@@ -161,17 +162,17 @@ Feature: Manage users
     Then ist die Liste der Benutzer die Startseite
 
   @javascript @personas @browser
-  Scenario: Elemente der Benutzeradministration
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    Then findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"
-    Then sieht man eine Liste aller Benutzer
-    And man kann filtern nach den folgenden Eigenschaften: gesperrt
-    And man kann filtern nach den folgenden Rollen:
+  Scenario: Elements of user administration
+    Given I am inventory manager or lending manager
+    Then I can find the user administration features in the "Admin" area under "Users"
+    Then I see a list of all users
+    And I can filter to see only suspended users
+    And I can filter by the following roles:
       | tab                | role               |
-      | Kunde              | customers          |
-      | Ausleihe-Verwalter | lending_managers   |
-      | Inventar-Verwalter | inventory_managers |
-    And man kann für jeden Benutzer die Editieransicht aufrufen
+      | Customer              | customers          |
+      | Lending manager | lending_managers   |
+      | Inventory manager | inventory_managers |
+    And I can open the edit view for each user
 
   @javascript @personas
   Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle

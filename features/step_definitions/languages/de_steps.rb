@@ -5,10 +5,6 @@ Wenn /^einem Gegenstand einen Inventarcode manuell zuweise$/ do
   step 'I select one of those'
 end
 
-Dann /^findet man die Benutzeradministration im Bereich "Administration" unter "Benutzer"$/ do
-  step 'I follow "Admin"'
-  step 'I follow "%s"' % _("Users")
-end
 
 Wenn(/^ich einen Gegenstand zurücknehme$/) do
   step 'I open a take back'
