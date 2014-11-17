@@ -249,8 +249,8 @@ Feature: Manage users
   Scenario Outline: Zugriff entfernen für einen Benutzer mit offenen Vertrag
     Given I am <Persona>
     And es existiert ein Vertrag mit Status "<Vertragsstatus>" für einen Benutzer mit sonst keinem anderen Verträgen
-    When man den Benutzer für diesen Vertrag editiert
-    Then hat dieser Benutzer Zugriff auf das aktuelle Inventarpool
+    When I edit the user of this contract
+    Then this user has access to the current inventory pool
     When man den Zugriff entfernt
     And I save
     Then erhalte ich die Fehlermeldung "<Fehlermeldung>"

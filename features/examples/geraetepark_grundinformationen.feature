@@ -134,7 +134,7 @@ Feature: Gerätepark-Grundinformationen
   @personas
   Scenario: Automatische Benutzersperrung nur wenn Benutzer nicht schon gesperrt
     Given I am Mike
-    When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteter Rückgaben einschalte
-    And ein Benutzer bereits gesperrt ist
-    Then werden der bestehende Sperrgrund sowie die Sperrzeit dieses Benutzers nicht überschrieben
+    When on the inventory pool I enable the automatic suspension for users with overdue take backs
+    And a user is already suspended for this inventory pool
+    Then the existing suspension motivation and the suspended time for this user are not overwritten
 

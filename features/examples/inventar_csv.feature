@@ -5,7 +5,7 @@ Feature: Inventar
   Scenario: Globaler Export des Inventars aller Geräteparks
     Given I am Gino
     And man öffnet die Liste der Geräteparks
-    Then kann man das globale Inventar als CSV-Datei exportieren
+    Then I can export to a csv-file
 
   @javascript @personas @browser
   Scenario: Export der aktuellen Ansicht als CSV

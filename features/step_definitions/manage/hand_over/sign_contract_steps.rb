@@ -96,7 +96,7 @@ When /^I select (an item|a license) line and assign an inventory code$/ do |arg1
   step 'I assign an inventory code to the item line'
   find(".button[data-edit-lines][data-ids='[#{@item_line.id}]']").click
   step "ich setze das Startdatum im Kalendar auf '#{I18n.l(Date.today)}'"
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
   find(".button[data-edit-lines][data-ids='[#{@item_line.id}]']")
 end
 

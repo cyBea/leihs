@@ -82,16 +82,16 @@ Feature: Kategorien
     And man eine neue Kategorie erstellt
     And man gibt den Namen der Kategorie ein
     And man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein
-    And ich füge ein Bild hinzu
-    Then kann ich kein zweites Bild hinzufügen
+    And I add an image
+    Then I can not add a second image
     When I save
     Then ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Elternelementen und dem Bild erstellt
 
   @personas @javascript
   Scenario: Kategorien bearbeiten
-    Given es existiert eine Kategorie mit Bild
-    And man editiert diese Kategorie
-    When ich das Bild entferne
-    And ich ein neues Bild wähle
+    Given there exists a category with an image
+    And one edits this category
+    When I remove the image
+    And I add a new image
     And I save
-    Then ist die Kategorie mit dem neuen Bild gespeichert
+    Then the category was saved with the new image

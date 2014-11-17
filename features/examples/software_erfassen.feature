@@ -12,14 +12,14 @@ Feature: Software erfassen
       | Produkt                            | Test Software              |
       | Version                            | Test Version               |
       | Software Informationen             | Installationslink beachten: http://wwww.dokuwiki.ch\n\nDies ist nur ein Text |
-    When der Hersteller bereits existiert
-    Then kann der Hersteller aus der Liste ausgewählt werden
-    When ich einen nicht existierenden Hersteller eingebe
+    When there exists already a manufacturer
+    Then the manufacturer can be selected from the list
+    When I set a non existing manufacturer
     And I save
     Then ist die neue Software erstellt und unter Software auffindbar
-    When ich das Software-Produkt wieder editiere
-    Then werden nur die Linien mit Links zusätzlich ausserhalb des Textfeldes angezeigt
-    And der neue Hersteller ist in der Herstellerliste auffindbar
+    When I edit again this software product
+    Then outside the the text field, they will additionally displayed lines with link only
+    And the new manufacturer can be found in the manufacturer list
 
   # marked as upcoming due to ticket 71745006
   @upcoming @javascript @personas
@@ -57,7 +57,7 @@ Feature: Software erfassen
       |laufende Rechnung|
       |Investition                 |
     Then kann man als "Lizenzablaufdatum" ein Datum auswählen
-    Then die mögliche Werte für Maintenance-Vertrag sind in der folgenden Reihenfolge:
+    Then for maintenance contract the available options are in the following order:
       | Nein |
       | Ja   |
     Then kann man als "Rechnungsdatum" ein Datum auswählen
@@ -73,26 +73,26 @@ Feature: Software erfassen
   Scenario: Software-Lizenz erfassen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
-    And ich die Software setze
+    And I fill in the software
     And ein neuer Inventarcode vergeben wird
     And ich eine Seriennummer eingebe
-    When ich als Aktivierungsart Dongle wähle
-    Then muss ich eine Dongle-ID eingeben
-    When ich einen der folgenden Lizenztypen wähle:
+    When I choose dongle as activation type
+    Then I have to provide a dongle id
+    When I choose one of the following license types
       | Mehrplatz   |
       | Konkurrent  |
       | Site-Lizenz |
-    And ich eine Gesamtanzahl eingebe
-    And ich die Anzahl-Zuteilungen hinzufüge
-    And ich als Betriebssystem keine, eine oder mehrere der vorhandenen Möglichkeiten auswähle
-    And ich als Installation keine, eine oder mehrere der vorhandenen Möglichkeiten auswähle
-    And ich als Lizenzablaufdatum ein Datum auswähle
+    And I fill in the value of total quantity
+    And I add the quantity allocations
+    And if I choose none, one or more of the available options for operating system
+    And if I choose none, one or more of the available options for installation
+    And I choose a date for license expiration
     When ich als Maintenance-Vertrag "Nein" auswähle
-    Then kann ich für den Maintenance-Vertrag kein Ablaufdatum wählen
+    Then I am not able to choose the maintenance expiration date
     When ich als Maintenance-Vertrag "Ja" auswähle
-    And ich für den Maintenance-Vertrag ein Ablaufdatum wähle
+    And I choose a date for the maintenance expiration
     When ich als Bezug "Investition" wähle
-    Then muss ich eine Projektnummer eingeben
+    Then I have to enter a project number
     And ich die den Wert "ausleihbar" setze
     And I save
     Then sind die Informationen dieser Software-Lizenz gespeichert
@@ -101,23 +101,23 @@ Feature: Software erfassen
   Scenario: Lizenzanzahl bei Mehrplatz/Konkurrent/Site-Lizenzen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
-    And ich alle Pflichtfelder für die Lizenz ausfülle
-    When ich einen der folgenden Lizenztypen wähle:
+    And I fill in all the required fields for the license
+    When I choose one of the following license types
       | Mehrplatz   |
       | Konkurrent  |
       | Site-Lizenz |
     And ich die Gesamtanzahl "50" eingebe
     Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 50"
-    And ich die folgenden Anzahl-Zuteilungen hinzufüge
+    And I add the following quantity allocations:
       | Anzahl   | Text | 
       | 1        | Christina Meier| 
       | 10       | Raum ITZ.Z40| 
     Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 39"
-    And ich die folgenden Anzahl-Zuteilungen hinzufüge
+    And I add the following quantity allocations:
       | Anzahl   | Text | 
       | 40       | Raum Z50 | 
     Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend -1"
-    When ich die folgenden Anzahl-Zuteilungen lösche
+    When I delete the following quantity allocations:
       | Anzahl   | Text | 
       | 1        | Christina Meier| 
     Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 0" 
@@ -126,7 +126,7 @@ Feature: Software erfassen
   Scenario: Software-Lizenz Anschaffungswert mit 2 Dezimalstellen erfassen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
-    And ich alle Pflichtfelder für die Lizenz ausfülle
+    And I fill in all the required fields for the license
     And ich im Feld "Anschaffungswert" den Wert "1200" eingebe
     And I save
     Then ist der "Anschaffungswert" als "1'200.00" gespeichert

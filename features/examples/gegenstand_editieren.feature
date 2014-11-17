@@ -86,9 +86,9 @@ Feature: Gegenstand bearbeiten
   @javascript @personas
   Scenario: Ein Modell ohne Version für den Gegestand wählen
     Given man editiert einen Gegenstand, wo man der Besitzer ist
-    And ein Modell existiert, welches keine Version hat
-    When ich dieses Modell dem Gegestand zuweise
-    Then steht in dem Modellfeld nur der Produktname dieses Modell
+    And there is a model without a version
+    When I assign this model to the item
+    Then there is only product name in the input field of the model
 
   @javascript @personas
   Scenario: Lieferanten ändern

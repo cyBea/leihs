@@ -90,7 +90,7 @@ Feature: Modell mit Paketen erstellen
     And ich das Paket und das Modell speichere
     Then sehe ich die Meldung "Modell gespeichert / Pakete erstellt"
     And besitzt das Paket alle angegebenen Informationen
-    And alle die zugeteilten Gegenstände erhalten dieselben Werte, die auf diesem Paket erfasst sind
+    And all the packaged items receive these same values store to this package
     | Feldname                   |
     | Verantwortliche Abteilung  |
     | Verantwortliche Person     |
@@ -114,4 +114,4 @@ Feature: Modell mit Paketen erstellen
   @personas @javascript @browser
   Scenario: Nur meine Pakete werden im Modell angezeigt
     When ich ein Modell editiere, welches bereits Pakete in meine und andere Gerätepark hat
-    Then sehe ich nur diejenigen Pakete, für welche ich verantwortlich bin
+    Then I only see packages which I am responsible for

@@ -89,8 +89,8 @@ Feature: Vertrag
     | Modellname    |
     | Enddatum      |
     | Rückgabedatum / Rücknehmende Person |
-    When der Vertrag eine Software-Lizenz beinhaltet
-    Then sehe ich zusätzlich die folgende Information
+    When the contract contains a software license
+    Then I additionally see the following informations
     | Seriennummer  |
 
   @javascript @browser @personas

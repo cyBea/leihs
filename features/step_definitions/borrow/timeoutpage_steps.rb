@@ -91,7 +91,7 @@ Angenommen(/^ich einen Eintrag ändere$/) do
   step "ich den Eintrag ändere"
   step "öffnet der Kalender"
   step "ich ändere die aktuellen Einstellung"
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
 end
 
 When(/^ich die Menge eines Eintrags (heraufsetze|heruntersetze)$/) do |arg1|
@@ -106,7 +106,7 @@ When(/^ich die Menge eines Eintrags (heraufsetze|heruntersetze)$/) do |arg1|
                       raise
                   end
   find("#booking-calendar-quantity").set(@new_quantity)
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
 end
 
 Dann(/^werden die Änderungen gespeichert$/) do

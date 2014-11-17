@@ -11,7 +11,7 @@ Feature: Geräteparks administrieren
     When ich in den Admin-Bereich wechsel
     Then ich sehe die Geräteparkliste
     When ich auf die Geraetepark-Auswahl klicke
-    Then sehe ich alle Geraeteparks
+    Then I see all the inventory pools
     And die Geräteparkauswahl ist alphabetish sortiert
 
   @personas

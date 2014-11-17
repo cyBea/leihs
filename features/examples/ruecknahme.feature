@@ -55,12 +55,12 @@ Feature: Rücknahme
 
   @javascript @browser @personas
   Scenario: Inspektion während einer Rücknahme
-    Given ich befinde mich in einer Rücknahme mit mindestens einem Gegenstand und einer Option
+    Given I open a take back with at least one item and one option
     When ich bei der Option eine Stückzahl von 1 eingebe
-    And beim Gegenstand eine Inspektion durchführe
+    And I inspect an item
     And ich setze "Zustand" auf "Defekt"
     And I save
-    Then steht bei der Option die zuvor angegebene Stückzahl
+    Then the option line has still the same quantity
 
   @javascript @browser @personas
   Scenario: Festhalten wer einen Gegenstand zurückgenommen hat
