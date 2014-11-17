@@ -240,28 +240,28 @@ Feature: Manage users
   @personas
   Scenario: Remove access as inventory manager
     Given I am Mike
-    And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
-    When man den Zugriff entfernt
+    And I am editing a user who has access to and no items from the current inventory pool
+    When I remove their access
     And I save
-    Then hat der Benutzer keinen Zugriff auf das Inventarpool
+    Then the user has no access to the inventory pool
 
   @personas
-  Scenario Outline: Zugriff entfernen für einen Benutzer mit offenen Vertrag
-    Given I am <Persona>
-    And es existiert ein Vertrag mit Status "<Vertragsstatus>" für einen Benutzer mit sonst keinem anderen Verträgen
+  Scenario Outline: Remove access for a user with open contracts
+    Given I am <persona>
+    And there exists a contract with status "<contract_status>" for a user without any other contracts
     When I edit the user of this contract
     Then this user has access to the current inventory pool
-    When man den Zugriff entfernt
+    When I remove their access
     And I save
-    Then erhalte ich die Fehlermeldung "<Fehlermeldung>"
+    Then I see the error message "<error_message>"
     Examples:
-      | Persona | Vertragsstatus | Fehlermeldung                          |
-      | Mike    | abgeschickt    | Hat momentan offene Bestellungen       |
-      | Pius    | abgeschickt    | Hat momentan offene Bestellungen       |
-      | Mike    | genehmigt      | Hat momentan offene Bestellungen       |
-      | Pius    | genehmigt      | Hat momentan offene Bestellungen       |
-      | Mike    | unterschrieben | Hat momentan Gegenstände zurückzugeben |
-      | Pius    | unterschrieben | Hat momentan Gegenstände zurückzugeben |
+      | persona | contract_status | error_message                  |
+      | Mike    | submitted       | Currently has open orders      |
+      | Pius    | submitted       | Currently has open orders      |
+      | Mike    | approved        | Currently has open orders      |
+      | Pius    | approved        | Currently has open orders      |
+      | Mike    | signed          | Currently has items to return |
+      | Pius    | signed          | Currently has items to return |
 
    @upcoming
   Scenario: Gruppenzuteilung in Benutzeransicht hinzufügen/entfernen

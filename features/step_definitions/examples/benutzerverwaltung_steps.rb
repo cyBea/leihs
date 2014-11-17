@@ -926,13 +926,14 @@ Then(/^inventory pools they have access to are listed with the respective role$/
   end
 end
 
-Given(/^there exists a contract with status "(.*?)" for a user with otherwise no other contracts$/) do |arg1|
+#Given(/^there exists a contract with status "(.*?)" for a user with otherwise no other contracts$/) do |arg1|
+Given(/^there exists a contract with status "(.*?)" for a user without any other contracts$/) do |arg1|
   state = case arg1
-            when "abgeschickt" then
+            when "submitted" then
               :submitted
-            when "genehmigt" then
+            when "approved" then
               :approved
-            when "unterschrieben" then
+            when "signed" then
               :signed
           end
   @contract = @current_inventory_pool.contracts.send(state).detect { |c| c.user.contracts.all? { |c| c.status == state } }
