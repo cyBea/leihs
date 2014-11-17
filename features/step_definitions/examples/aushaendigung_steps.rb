@@ -152,13 +152,15 @@ end
 
 #Wenn(/^ich dieser Linie einen Inventarcode manuell zuweise$/) do
 When(/^I manually assign an inventory code to that line$/) do
-  find(@line_css).find("input[data-assign-item]").click
-  find(@line_css).find("li.ui-menu-item a", match: :first).click
+  within @line_css do
+    find("input[data-assign-item]").click
+    find("li.ui-menu-item a", match: :first).click
+  end
 end
 
 #Dann(/^die problematischen Auszeichnungen bleiben bei der Linie bestehen$/) do
 Then(/^the problem notifications remain on the line$/) do
-  within(@line_css) do
+  within @line_css do
     expect(has_selector?(".line-info.red")).to be true
     expect(has_selector?(".tooltip.red")).to be true
   end

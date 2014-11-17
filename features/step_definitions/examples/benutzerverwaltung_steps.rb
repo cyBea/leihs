@@ -784,9 +784,11 @@ When(/^I delete that user from the list$/) do
   @user ||= @users.sample
   step %Q(ich nach "%s" suche) % @user.to_s
   within("#user-list .line", text: @user.name) do
-    find(".multibutton .dropdown-toggle").click
-    find(".multibutton .dropdown-toggle").click
-    find(".multibutton .dropdown-item.red", text: _("Delete")).click
+    within(".multibutton") do
+      find(".dropdown-toggle").click
+      find(".dropdown-toggle").click
+      find(".dropdown-item.red", text: _("Delete")).click
+    end
   end
 end
 

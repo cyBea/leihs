@@ -36,6 +36,10 @@ Given(/^an order contains overbooked models$/) do
   expect(@contract).not_to be_nil
 end
 
+When(/^I edit this submitted contract$/) do
+  visit manage_edit_contract_path(@current_inventory_pool, @contract)
+end
+
 When(/^I approve the order$/) do
   if page.has_selector? "button", text: _("Approve order")
     click_button _("Approve order")
