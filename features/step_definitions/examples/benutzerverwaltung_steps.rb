@@ -323,7 +323,8 @@ Then(/^I can create and suspend users$/) do
   expect(@user.reload.access_right_for(@inventory_pool).suspended?).to be true
 end
 
-Dann /^man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist$/ do |table|
+#Dann /^man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist$/ do |table|
+Then(/^I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager$/) do |table|
   table.hashes.map do |x|
     unknown_user = User.select { |u| not u.access_right_for(@inventory_pool) }.sample
     expect(unknown_user).not_to be_nil
@@ -402,7 +403,8 @@ Then(/^I can create new models$/) do
   expect(Model.count).to eq c+1
 end
 
-Dann /^man kann sie einem anderen Gerätepark als Besitzer zuweisen$/ do
+#Dann /^man kann sie einem anderen Gerätepark als Besitzer zuweisen$/ do
+Then(/^I can make another inventory pool the owner of the items$/) do
   attributes = {
       owner_id: (InventoryPool.pluck(:id) - [@inventory_pool.id]).sample
   }
@@ -412,7 +414,8 @@ Dann /^man kann sie einem anderen Gerätepark als Besitzer zuweisen$/ do
   expect(@item.reload.owner_id).to eq attributes[:owner_id]
 end
 
-Wenn /^man keine verantwortliche Abteilung auswählt$/ do
+#Wenn /^man keine verantwortliche Abteilung auswählt$/ do
+When(/^I don't choose a responsible department when creating or editing items$/) do
   @item = @inventory_pool.own_items.find &:in_stock?
   attributes = {
       inventory_pool_id: (InventoryPool.pluck(:id) - [@inventory_pool.id, @item.inventory_pool_id]).sample
@@ -430,11 +433,13 @@ Wenn /^man keine verantwortliche Abteilung auswählt$/ do
   expect(page.driver.browser.process(:put, manage_update_item_path(@inventory_pool, @item, format: :json), item: attributes).successful?).to be true
 end
 
-Dann /^ist die Verantwortliche Abteilung gleich wie der Besitzer$/ do
+#Dann /^ist die Verantwortliche Abteilung gleich wie der Besitzer$/ do
+Then(/^the responsible department is the same as the owner$/) do
   expect(@item.reload.inventory_pool_id).to eq @item.owner_id
 end
 
-Dann /^man kann Gegenstände ausmustern, sofern man deren Besitzer ist$/ do
+#Dann /^man kann Gegenstände ausmustern, sofern man deren Besitzer ist$/ do
+Then(/^I can retire these items if my inventory pool is their owner$/) do
   item = @inventory_pool.own_items.find &:in_stock?
   attributes = {
       retired: true,
@@ -448,7 +453,8 @@ Dann /^man kann Gegenstände ausmustern, sofern man deren Besitzer ist$/ do
   expect(item.retired_reason).to eq attributes[:retired_reason]
 end
 
-Dann /^man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist$/ do
+#Dann /^man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist$/ do
+Then(/^I can unretire items if my inventory pool is their owner$/) do
   item = Item.unscoped { @inventory_pool.own_items.where.not(retired: nil).first }
   attributes = {
       retired: nil
@@ -461,11 +467,14 @@ Dann /^man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jew
   expect(item.retired_reason).to eq nil
 end
 
-Dann /^man kann die Arbeitstage und Ferientage seines Geräteparks anpassen$/ do
+
+#Dann /^man kann die Arbeitstage und Ferientage seines Geräteparks anpassen$/ do
+Then(/^I can specify workdays and holidays for my inventory pool$/) do
   visit manage_edit_inventory_pool_path @inventory_pool
 end
 
-Dann /^man kann alles, was ein Ausleihe\-Verwalter kann$/ do
+#Dann /^man kann alles, was ein Ausleihe\-Verwalter kann$/ do
+Then(/^I can do everything a lending manager can do$/) do
   expect(@current_user.has_role?(:lending_manager, @inventory_pool)).to be true
   expect(@current_user.has_role?(:inventory_manager, @inventory_pool)).to be true
 end

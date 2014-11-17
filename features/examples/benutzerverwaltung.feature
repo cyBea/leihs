@@ -217,28 +217,28 @@ Feature: Manage users
 
   # English: inventory manager
   @personas
-  Scenario: Benutzerolle "Inventar-Verwalter"
+  Scenario: Role 'inventory manager'
     Given I am an inventory manager
     Then I can create new models
     And I can create new items
     And these items can be inventory relevant
-    And man kann sie einem anderen Gerätepark als Besitzer zuweisen
-    And man kann Gegenstände ausmustern, sofern man deren Besitzer ist
-    And man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist
-    And man kann die Arbeitstage und Ferientage seines Geräteparks anpassen
-    And man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist
+    And I can make another inventory pool the owner of the items
+    And I can retire these items if my inventory pool is their owner
+    And I can unretire items if my inventory pool is their owner
+    And I can specify workdays and holidays for my inventory pool
+    And I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager
     | role                |
-    | Kein Zugriff        |
-    | Kunde               |
-    | Gruppen-Verwalter   |
-    | Ausleihe-Verwalter  |
-    | Inventar-Verwalter  |
-    And man kann alles, was ein Ausleihe-Verwalter kann
-    When man keine verantwortliche Abteilung auswählt
-    Then ist die Verantwortliche Abteilung gleich wie der Besitzer
+    | No access        |
+    | Customer               |
+    | Group manager   |
+    | Lending manager  |
+    | Inventory manager  |
+    And I can do everything a lending manager can do
+    When I don't choose a responsible department when creating or editing items
+    Then the responsible department is the same as the owner
 
   @personas
-  Scenario: Zugriff entfernen als Inventar-Verwalter
+  Scenario: Remove access as inventory manager
     Given I am Mike
     And man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat und keine Gegenstände hat
     When man den Zugriff entfernt
