@@ -178,7 +178,6 @@ Feature: Manage users
   Scenario: Displaying a user and their roles in lists
     Given I am inventory manager or lending manager
     And a user with assigned role appears in the user list
-    #Then sieht man folgende Informationen in folgender Reihenfolge:
     Then I see the following information about the user, in order:
       |attr |
       |First name/last name|
@@ -186,26 +185,24 @@ Feature: Manage users
       |Role|
 
   @javascript @personas
-  Scenario: Darstellung eines Benutzers in Listen ohne zugeteilte Rolle
+  Scenario: Not displaying a user's role in lists if that user doesn't have a role
     Given I am inventory manager or lending manager
-    Given man ist Inventar-Verwalter oder Ausleihe-Verwalter
-    And ein Benutzer ohne zugeteilte Rolle erscheint in einer Benutzerliste
-    Then sieht man folgende Informationen in folgender Reihenfolge:
+    And a user without assigned role appears in the user list
+    Then I see the following information about the user, in order:
       |attr |
       |Vorname Name|
-      |Telefonnummer|
       |Rolle|
+      |Telefonnummer|
 
   @javascript @personas
-  Scenario: Darstellung eines Benutzers in Listen mit zugeteilter Rolle und Status gesperrt
+  Scenario: Displaying a user in a list with their assigned roles and suspension status
     Given I am inventory manager or lending manager
-    And ein gesperrter Benutzer mit zugeteilter Rolle erscheint in einer Benutzerliste
-    Then sieht man folgende Informationen in folgender Reihenfolge:
+    And a suspended user with assigned role appears in the user list
+    Then I see the following information, in order:
       |attr |
-      |Vorname Name|
-      |Telefonnummer|
-      |Rolle|
-      |Sperr-Status 'Gesperrt bis dd.mm.yyyy'|
+      |First name/last name|
+      |Suspended|
+      |Phone number|
 
   # English: lending manager
   @personas

@@ -185,11 +185,10 @@ Then /^I see the following information, in order:$/ do |table|
       when "Role"
         role = access_right.try(:role) || "no access"
         _(role.to_s.humanize)
-      when "Sperr-Status 'Gesperrt bis dd.mm.yyyy'"
-        "#{_("Suspended until")} %s" % access_right.suspended_until.strftime("%d.%m.%Y")
+      when "Suspended"
+        "Suspended!"
     end
   end
-
   expect(@el.text).to match Regexp.new(strings.join(".*"))
 end
 
