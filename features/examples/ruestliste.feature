@@ -23,7 +23,8 @@ Feature: Rüstliste
   Scenario: Inhalt der Rüstliste vor Aushändigung - keine Zuteilung von Inventarcode
     Given es gibt eine Aushändigung mit mindestens einem nicht problematischen Modell und einer Option
     And I open the hand over
-    And ein Gegenstand zugeteilt ist und diese Zeile markiert ist
+    And ich dem nicht problematischen Modell einen Inventarcode zuweise
+    And wird der Gegenstand der Zeile zugeteilt
     And a line has no item assigned yet and this line is marked
     And an option line is marked
     When man öffnet die Rüstliste

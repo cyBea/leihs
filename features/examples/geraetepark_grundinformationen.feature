@@ -84,7 +84,7 @@ Feature: Gerätepark-Grundinformationen
   @personas
   Scenario: Arbeitstage verwalten
    Given I am Mike
-   And ich verwalte die Gerätepark Grundinformationen
+   And I edit my inventory pool settings
    When ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
    And I save
    Then sind die Arbeitstage gespeichert
@@ -92,7 +92,7 @@ Feature: Gerätepark-Grundinformationen
   @javascript @personas
   Scenario: Tage der Ausleihschliessung verwalten
    Given I am Mike
-   And ich verwalte die Gerätepark Grundinformationen
+   And I edit my inventory pool settings
    When ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
    And I save
    Then werden die Ausleihschliessungszeiten gespeichert

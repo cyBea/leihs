@@ -108,21 +108,21 @@ Feature: Software erfassen
       | Mehrplatz   |
       | Konkurrent  |
       | Site-Lizenz |
-    And ich die Gesamtanzahl "50" eingebe
-    Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 50"
+    And I fill in total quantity with value "50"
+    Then I see the remaining number of licenses shown as follows "verbleibend 50"
     And I add the following quantity allocations:
       | Anzahl   | Text | 
       | 1        | Christina Meier| 
       | 10       | Raum ITZ.Z40| 
-    Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 39"
+    Then I see the remaining number of licenses shown as follows "verbleibend 39"
     And I add the following quantity allocations:
       | Anzahl   | Text | 
       | 40       | Raum Z50 | 
-    Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend -1"
+    Then I see the remaining number of licenses shown as follows "verbleibend -1"
     When I delete the following quantity allocations:
       | Anzahl   | Text | 
       | 1        | Christina Meier| 
-    Then wird mir die verbleibende Anzahl der Lizenzen wie folgt angezeigt "verbleibend 0" 
+    Then I see the remaining number of licenses shown as follows "verbleibend 0"
 
   @javascript @personas
   Scenario: Software-Lizenz Anschaffungswert mit 2 Dezimalstellen erfassen

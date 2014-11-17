@@ -37,7 +37,7 @@ Wenn(/^ich (.+) nicht eingebe$/) do |must_field|
 end
 
 Dann(/^wird mir eine Fehlermeldung angezeigt$/) do
-  step "ich sehe eine Fehlermeldung"
+  step "I see an error message"
 end
 
 Dann(/^der Gerätepark wird nicht erstellt$/) do

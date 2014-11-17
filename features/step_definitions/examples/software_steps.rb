@@ -311,7 +311,7 @@ end
 
 Then(/^I have to enter a project number$/) do
   step "I save"
-  step "ich sehe eine Fehlermeldung"
+  step "I see an error message"
   @project_number = Faker::Lorem.characters(10)
   find(".field", text: _("Project Number")).find("input").set @project_number
 end
@@ -715,7 +715,7 @@ end
 
 Then(/^I have to provide a dongle id$/) do
   step "I save"
-  step "ich sehe eine Fehlermeldung"
+  step "I see an error message"
   @dongle_id = Faker::Lorem.characters(10)
   find(".field", text: _("Dongle ID")).find("input").set @dongle_id
 end

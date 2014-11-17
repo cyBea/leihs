@@ -22,7 +22,7 @@ Feature: Navigation
   @personas
   Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
     Given I am Mike
-    When ich auf die Geraetepark-Auswahl klicke
+    When I click on the inventory pool selection toggler again
     Then I see all inventory pools for which I am a manager
     When I click on one of the inventory pools
     Then I switch to that inventory pool
@@ -30,11 +30,11 @@ Feature: Navigation
   @personas @javascript
   Scenario: Zuklappen der Geraeteparkauswahl
     Given I am Mike
-    When ich auf die Geraetepark-Auswahl klicke
+    When I click on the inventory pool selection toggler again
     Then I see all inventory pools for which I am a manager
     When I click somewhere outside of the inventory pool menu list
     Then the inventory pool menu list closes
-    When ich auf die Geraetepark-Auswahl klicke
+    When I click on the inventory pool selection toggler again
     Then I see all inventory pools for which I am a manager
-    When ich erneut auf die Geraetepark-Auswahl klicke
+    When I click on the inventory pool selection toggler again
     Then the inventory pool menu list closes

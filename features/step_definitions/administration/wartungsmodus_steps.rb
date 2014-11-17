@@ -21,7 +21,7 @@ end
 
 Dann(/^muss ich eine Bemerkung angeben$/) do
   step 'I save'
-  step 'ich sehe eine Fehlermeldung'
+  step 'I see an error message'
 end
 
 Dann(/^der Bereich "(.*)" ist für die Benutzer gesperrt$/) do |arg1|

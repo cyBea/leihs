@@ -12,14 +12,14 @@ Feature: Kalender-Ansicht im Backend
   @javascript @browser @personas
   Scenario: Anzahl im Buchungskalender während einer Bestellung überbuchen
     Given ich editiere eine Bestellung
-     And ich öffne den Kalender
+     And I open the booking calendar
      Then kann ich die Anzahl unbegrenzt erhöhen / überbuchen
      And die Bestellung kann gespeichert werden
 
   @javascript @browser @personas
   Scenario: Anzahl im Buchungskalender während einer Aushändigung überbuchen
     Given I am doing a hand over
-     And ich öffne den Kalender
+     And I open the booking calendar
      Then kann ich die Anzahl unbegrenzt erhöhen / überbuchen
      And die Aushändigung kann gespeichert werden
 

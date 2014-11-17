@@ -116,8 +116,8 @@ Feature: Inventar
   @personas @javascript @browser
   Scenario Outline: Auswahlmöglichkeiten: genutzt & ungenutzt
     Given I see retired and not retired inventory
-    When ich innerhalb des gesamten Inventars als "<Select-Feld>" die Option "<Eigenschaft>" wähle
-    Then wird nur das "<Eigenschaft>" Inventar angezeigt
+    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
+    Then only the "<Eigenschaft>" inventory is shown
   Examples:
     | Select-Feld         | Eigenschaft   |
     | genutzt & ungenutzt | genutzt       |
@@ -126,8 +126,8 @@ Feature: Inventar
   @personas @javascript @browser
   Scenario Outline: Auswahlmöglichkeiten: ausleihbar & nicht ausleihbar
     Given I see retired and not retired inventory
-    When ich innerhalb des gesamten Inventars als "<Select-Feld>" die Option "<Eigenschaft>" wähle
-    Then wird nur das "<Eigenschaft>" Inventar angezeigt
+    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
+    Then only the "<Eigenschaft>" inventory is shown
   Examples:
     | Select-Feld                   | Eigenschaft      |
     | ausleihbar & nicht ausleihbar | ausleihbar       |
@@ -136,8 +136,8 @@ Feature: Inventar
   @personas @javascript @browser
   Scenario Outline: Auswahlmöglichkeiten: ausgemustert & nicht ausgemustert
     Given I see retired and not retired inventory
-    When ich innerhalb des gesamten Inventars als "<Select-Feld>" die Option "<Eigenschaft>" wähle
-    Then wird nur das "<Eigenschaft>" Inventar angezeigt
+    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
+    Then only the "<Eigenschaft>" inventory is shown
   Examples:
     | Select-Feld                       | Eigenschaft        |
     | ausgemustert & nicht ausgemustert | ausgemustert       |
@@ -146,8 +146,8 @@ Feature: Inventar
   @personas @javascript @browser
   Scenario Outline: Auswahlmöglichkeiten: Checkboxen
     Given I see retired and not retired inventory
-    When ich innerhalb des gesamten Inventars die "<Filterwahl>" setze
-    Then wird nur das "<Filterwahl>" Inventar angezeigt
+    When I set the option "<Filterwahl>" inside of the full inventory
+    Then only the "<Filterwahl>" inventory is shown
   Examples:
     | Filterwahl    |
     | Im Besitz     |
@@ -163,7 +163,7 @@ Feature: Inventar
 
   @personas @javascript
   Scenario: Default-Filter "nicht ausgemustert"
-    Then ist bei folgenden Inventargruppen der Filter "nicht ausgemustert" per Default eingestellt:
+    Then for the following inventory groups the filter "nicht ausgemustert" is set
       | Alle     |
       | Modelle  |
       | Software |

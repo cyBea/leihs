@@ -54,7 +54,7 @@ end
 
 Dann(/^kann das Gerätepark nicht gespeichert werden$/) do
   click_button _("Save")
-  step "ich sehe eine Fehlermeldung"
+  step "I see an error message"
 end
 
 Angenommen(/^ich die folgenden Felder nicht befüllt habe$/) do |table|
@@ -128,7 +128,7 @@ end
 Dann(/^muss ich einen Sperrgrund angeben$/) do
   fill_in "inventory_pool[automatic_suspension_reason]", with: ""
   step 'I save'
-  step 'ich sehe eine Fehlermeldung'
+  step 'I see an error message'
   @reason = Faker::Lorem.sentence
   fill_in "inventory_pool[automatic_suspension_reason]", with: @reason
   step 'I save'

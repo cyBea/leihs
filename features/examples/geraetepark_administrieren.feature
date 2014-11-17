@@ -10,7 +10,7 @@ Feature: Geräteparks administrieren
     Given I am Gino
     When ich in den Admin-Bereich wechsel
     Then ich sehe die Geräteparkliste
-    When ich auf die Geraetepark-Auswahl klicke
+    When I click on the inventory pool selection toggler again
     Then I see all the inventory pools
     And die Geräteparkauswahl ist alphabetish sortiert
 
