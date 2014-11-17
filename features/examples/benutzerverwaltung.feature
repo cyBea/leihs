@@ -206,14 +206,14 @@ Feature: Manage users
 
   # English: lending manager
   @personas
-  Scenario: Benutzerolle "Ausleihe-Verwalter"
+  Scenario: Role 'lending manager'
     Given I am a lending manager
-    When man im Inventar Bereich ist
-    Then kann man neue Gegenstände erstellen
-    And diese Gegenstände ausschliesslich nicht inventarrelevant sind
-    And man kann Optionen erstellen
-    And man kann neue Benutzer erstellen und für die Ausleihe sperren
-    And man kann nicht inventarrelevante Gegenstände ausmustern, sofern man deren Besitzer ist
+    When I open the inventory
+    Then I can create new items
+    And these items cannot be inventory relevant
+    And I can create options
+    And I can create and suspend users
+    And I can retire items if my inventory pool is their owner and they are not inventory relevant
 
   # English: inventory manager
   @personas

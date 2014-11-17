@@ -2,7 +2,7 @@ Given(/^I am on the Inventory$/) do
   visit manage_inventory_path(@current_inventory_pool)
 end
 
-When(/^I open the Inventory$/) do
+When(/^I open the inventory$/) do
   find("#topbar .topbar-navigation .topbar-item a", :text => _("Inventory")).click
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end

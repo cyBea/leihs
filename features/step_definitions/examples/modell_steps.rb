@@ -19,7 +19,7 @@ Wenn(/^ich ein Modell öffne, das bereits ergänzende Modelle hat$/) do
 
   @model ||= begin
     @current_inventory_pool = @current_user.managed_inventory_pools.select {|ip| not ip.models.empty? and ip.models.any? {|m| m.compatibles.exists?} }.sample
-    step "I open the Inventory"
+    step "I open the inventory"
     @current_inventory_pool.models.select {|m| m.compatibles.exists? }.sample
   end
 
@@ -164,7 +164,7 @@ Wenn(/^ich ein bestehendes, genutztes Modell bearbeite$/) do
 end
 
 Wenn(/^I delete this (.+) from the list$/) do |entity|
-  step "I open the Inventory"
+  step "I open the inventory"
 
   case _(entity)
   when "Modell"

@@ -35,7 +35,7 @@ def check_fields_and_their_values table
 end
 
 Angenommen /^man befindet sich auf der Liste des Inventars$/ do
-  step "I open the Inventory"
+  step "I open the inventory"
 end
 
 Dann /^kann man einen Gegenstand erstellen$/ do

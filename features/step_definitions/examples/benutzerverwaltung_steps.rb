@@ -271,7 +271,8 @@ Then(/^I can create new items$/) do
   @item = Item.last
 end
 
-Dann /^diese Gegenstände ausschliesslich nicht inventarrelevant sind$/ do
+#Dann /^diese Gegenstände ausschliesslich nicht inventarrelevant sind$/ do
+Then(/^these items cannot be inventory relevant$/) do
   expect(page.driver.browser.process(:put, manage_update_item_path(@inventory_pool, @item.id, format: :json), {:item => {is_inventory_relevant: true}}).successful?).to be false
 end
 
@@ -281,7 +282,8 @@ Then(/^these items can be inventory relevant$/) do
   expect(@item.reload.is_inventory_relevant).to be true
 end
 
-Dann /^man kann Optionen erstellen$/ do
+#Dann /^man kann Optionen erstellen$/ do
+Then(/^I can create options$/) do
   c = Option.count
   factory_attributes = FactoryGirl.attributes_for(:option)
   attributes = {
@@ -313,7 +315,8 @@ Dann /^man kann neue Benutzer erstellen (.*?) inventory_pool$/ do |arg1|
   @user = User.find(id)
 end
 
-Dann /^man kann neue Benutzer erstellen und für die Ausleihe sperren$/ do
+#Dann /^man kann neue Benutzer erstellen und für die Ausleihe sperren$/ do
+Then(/^I can create and suspend users$/) do
   step 'man kann neue Benutzer erstellen für inventory_pool'
   expect(@user.access_right_for(@inventory_pool).suspended?).to be false
   expect(page.driver.browser.process(:put, manage_update_inventory_pool_user_path(@inventory_pool, @user, format: :json), access_right: {suspended_until: Date.today + 1.year, suspended_reason: "suspended reason"}).successful?).to be true
@@ -371,7 +374,10 @@ Dann /^man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei dies
   end
 end
 
-Dann /^man kann nicht inventarrelevante Gegenstände ausmustern, sofern man deren Besitzer ist$/ do
+
+
+#Dann /^man kann nicht inventarrelevante Gegenstände ausmustern, sofern man deren Besitzer ist$/ do
+Then(/^I can retire items if my inventory pool is their owner and they are not inventory relevant$/) do
   item = @inventory_pool.own_items.where(:is_inventory_relevant => false).first
   expect(item.retired?).to be false
   attributes = {

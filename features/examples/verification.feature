@@ -2,7 +2,7 @@ Feature: Verification
 
   Background:
     Given I am Andi
-    When I open the Inventory
+    When I open the inventory
 
   @personas @javascript @browser
   Scenario: Show inventory to group-manager

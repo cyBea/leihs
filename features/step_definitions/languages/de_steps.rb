@@ -1014,7 +1014,7 @@ Dann(/^speichere die Einstellungen$/) do
 end
 
 Wenn /^man im Inventar Bereich ist$/ do
-  step "I open the Inventory"
+  step "I open the inventory"
 end
 
 Dann(/^kann man das globale Inventar als CSV\-Datei exportieren$/) do
