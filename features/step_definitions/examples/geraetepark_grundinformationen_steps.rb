@@ -206,17 +206,17 @@ end
 Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
   steps %Q{
     When I am looking at the user list
-    And man einen Benutzer hinzufügt
-    And die folgenden Informationen eingibt
+    And I add a new user
+    And I enter the following information
       | Nachname       |
       | Vorname        |
       | E-Mail         |
-    And man gibt die Login-Daten ein
-    And man gibt eine Badge-Id ein
-    And eine der folgenden Rollen auswählt
+    And I enter login details
+    And I enter a badge ID
+    And I select the following roles
       | tab                | role              |
       | Inventar-Verwalter | inventory_manager   |
-    And I save 
+    And I save
   }
   @user = User.find_by_lastname "test"
 end

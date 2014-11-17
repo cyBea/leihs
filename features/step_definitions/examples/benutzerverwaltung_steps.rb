@@ -521,7 +521,8 @@ Dann /^man kann Benutzern jegliche Rollen zuweisen und wegnehmen$/ do
   expect(user.access_rights.where.not(deleted_at: nil).where(inventory_pool_id: inventory_pool).first.deleted_at).not_to be_nil
 end
 
-Dann(/^kann man Gruppen über eine Autocomplete\-Liste hinzufügen$/) do
+#Dann(/^kann man Gruppen über eine Autocomplete\-Liste hinzufügen$/) do
+Then(/^I can add groups using a list with autocomplete$/) do
   @groups_added = (@inventory_pool.groups - @customer.groups)
   @groups_added.each do |group|
     find(".row.emboss", match: :prefer_exact, :text => _("Groups")).find(".autocomplete").click
@@ -529,19 +530,22 @@ Dann(/^kann man Gruppen über eine Autocomplete\-Liste hinzufügen$/) do
   end
 end
 
-Dann(/^kann Gruppen entfernen$/) do
+#Dann(/^kann Gruppen entfernen$/) do
+Then(/^I can remove groups$/) do
   @groups_removed = @customer.groups
   @groups_removed.each do |group|
     find(".row.emboss", match: :prefer_exact, :text => _("Groups")).find(".field-inline-entry", :text => group.name).find(".clickable", :text => _("Remove")).click
   end
 end
 
-Dann(/^speichert den Benutzer$/) do
+#Dann(/^speichert den Benutzer$/) do
+Then(/^I save the user$/) do
   find(".button", :text => _("Save %s") % _("User")).click
   step "man sieht eine Bestätigungsmeldung"
 end
 
-Dann(/^ist die Gruppenzugehörigkeit gespeichert$/) do
+#Dann(/^ist die Gruppenzugehörigkeit gespeichert$/) do
+Then(/^their group membership is saved$/) do
   @groups_removed.each do |group|
     expect(@customer.reload.groups.include?(group)).to be false
   end

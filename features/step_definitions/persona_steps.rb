@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Given /^I am ([a-zA-Z]*)$/ do |persona_name|
-  step 'man ist eingeloggt als "%s"' % persona_name
+Given(/^I am ([a-zA-Z]*)$/) do |persona_name|
+  step 'I am logged in as "%s"' % persona_name
   case persona_name
     when "Andi"
       step "I am in an inventory pool with verifiable orders"
@@ -20,6 +20,6 @@ Angenommen(/^man ist ein Kunde mit Verträge$/) do
   step %Q(I am logged in as '#{user.login}' with password 'password')
 end
 
-When /^I am in an inventory pool with verifiable orders$/ do
+When(/^I am in an inventory pool with verifiable orders$/) do
   @current_inventory_pool = @current_user.managed_inventory_pools.find {|ip| not ip.contracts.with_verifiable_user_and_model.empty? }
 end

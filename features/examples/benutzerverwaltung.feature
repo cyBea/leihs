@@ -263,46 +263,46 @@ Feature: Manage users
       | Mike    | signed          | Currently has items to return |
       | Pius    | signed          | Currently has items to return |
 
-   @upcoming
-  Scenario: Gruppenzuteilung in Benutzeransicht hinzufügen/entfernen
+  @upcoming
+  Scenario: Editing the groups of a user
     Given I am Pius
-    And man editiert einen Benutzer
-    Then kann man Gruppen über eine Autocomplete-Liste hinzufügen
-    And kann Gruppen entfernen
-    And speichert den Benutzer
-    Then ist die Gruppenzugehörigkeit gespeichert 
+    And I edit a user
+    Then I can add groups using a list with autocomplete
+    And I can remove groups
+    And I save the user
+    Then their group membership is saved
 
   @javascript @personas
-  Scenario: Neuen Benutzer im Geräterpark als Inventar-Verwalter hinzufügen
+  Scenario: As an inventory manager, add a new user to the inventory pool
     Given I am Mike
     When I am looking at the user list
-    And man einen Benutzer hinzufügt
-    And die folgenden Informationen eingibt
-      | Nachname       |
-      | Vorname        |
-      | Adresse        |
-      | PLZ            |
-      | Ort            |
-      | Land           |
-      | Telefon        |
-      | E-Mail         |
-    And man gibt die Login-Daten ein
-    And man gibt eine Badge-Id ein
-    And man hat nur die folgenden Rollen zur Auswahl
+    And I add a new user
+    And I enter the following information
+      | Last name    |
+      | First name   |
+      | Address      |
+      | Zip          |
+      | City         |
+      | Country      |
+      | Phone        |
+      | E-Mail       |
+    And I enter the login data
+    And I enter a badge ID
+    And I can only choose the following roles
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    And eine der folgenden Rollen auswählt
-    | tab                | role                |
-    | Kunde              | customer            |
-    | Gruppen-Verwalter  | group_manager       |
-    | Ausleihe-Verwalter | lending_manager     |
-    | Inventar-Verwalter | inventory_manager   |
-    And man teilt mehrere Gruppen zu
+    And I choose one of the following roles
+    | tab               | role                |
+    | Customer          | customer            |
+    | Group manager     | group_manager       |
+    | Lending manager   | lending_manager     |
+    | Inventory manager | inventory_manager   |
+    And I assign multiple groups
     And I save
-    Then ist der Benutzer mit all den Informationen gespeichert
+    Then the user and all their information is saved
 
   @personas
   Scenario: Zugriff auf Ausleihe-Verwalter ändern als Ausleihe-Verwalter
