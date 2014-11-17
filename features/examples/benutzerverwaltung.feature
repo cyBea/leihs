@@ -207,7 +207,7 @@ Feature: Manage users
   # English: lending manager
   @personas
   Scenario: Benutzerolle "Ausleihe-Verwalter"
-    Given man ist Ausleihe-Verwalter
+    Given I am a lending manager
     When man im Inventar Bereich ist
     Then kann man neue Gegenstände erstellen
     And diese Gegenstände ausschliesslich nicht inventarrelevant sind
@@ -218,10 +218,10 @@ Feature: Manage users
   # English: inventory manager
   @personas
   Scenario: Benutzerolle "Inventar-Verwalter"
-    Given man ist Inventar-Verwalter
-    Then kann man neue Modelle erstellen
-    And kann man neue Gegenstände erstellen
-    And diese Gegenstände können inventarrelevant sein
+    Given I am an inventory manager
+    Then I can create new models
+    And I can create new items
+    And these items can be inventory relevant
     And man kann sie einem anderen Gerätepark als Besitzer zuweisen
     And man kann Gegenstände ausmustern, sofern man deren Besitzer ist
     And man kann Ausmusterungen wieder zurücknehmen, sofern man Besitzer der jeweiligen Gegenstände ist

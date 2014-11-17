@@ -10,14 +10,15 @@ Given(/^I am inventory manager or lending manager$/) do
   @inventory_pool = ar.inventory_pool
 end
 
-Angenommen /^man ist Ausleihe\-Verwalter$/ do
+#Angenommen /^man ist Ausleihe\-Verwalter$/ do
+Given(/^I am a lending manager$/) do
   step 'I am %s' % "Pius"
   ar = @current_user.access_rights.active.where(role: :lending_manager).first
   expect(ar).not_to be_nil
   @inventory_pool = ar.inventory_pool
 end
 
-Angenommen /^man ist Inventar\-Verwalter$/ do
+Given(/^I am an inventory manager$/) do
   step 'I am %s' % "Mike"
   ar = @current_user.access_rights.active.where(role: :inventory_manager).first
   expect(ar).not_to be_nil
@@ -259,7 +260,8 @@ end
 
 ####################################################################
 
-Dann /^kann man neue Gegenstände erstellen$/ do
+#Dann /^kann man neue Gegenstände erstellen$/ do
+Then(/^I can create new items$/) do
   c = Item.count
   attributes = {
       model_id: @inventory_pool.models.first.id
@@ -273,7 +275,8 @@ Dann /^diese Gegenstände ausschliesslich nicht inventarrelevant sind$/ do
   expect(page.driver.browser.process(:put, manage_update_item_path(@inventory_pool, @item.id, format: :json), {:item => {is_inventory_relevant: true}}).successful?).to be false
 end
 
-Dann /^diese Gegenstände können inventarrelevant sein$/ do
+#Dann /^diese Gegenstände können inventarrelevant sein$/ do
+Then(/^these items can be inventory relevant$/) do
   expect(page.driver.browser.process(:put, manage_update_item_path(@inventory_pool, @item.id, format: :json), item: {is_inventory_relevant: true}).successful?).to be true
   expect(@item.reload.is_inventory_relevant).to be true
 end
@@ -384,7 +387,8 @@ end
 
 ####################################################################
 
-Dann /^kann man neue Modelle erstellen$/ do
+#Dann /^kann man neue Modelle erstellen$/ do
+Then(/^I can create new models$/) do
   c = Model.count
   attributes = FactoryGirl.attributes_for :model
 
