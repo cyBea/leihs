@@ -150,11 +150,6 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/examples/aushaendigung.feature"
-- name: examples/ausleihe
-  scripts:
-    cucumber:
-      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        "features/examples/ausleihe.feature"
 - name: examples/benutzerverwaltung
   scripts:
     cucumber:
@@ -196,13 +191,6 @@ tasks:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/examples/gegenstand_editieren.feature"
 - name: examples/gegenstand_erstellen
-        "features/manage/booking_calendar/closed_day_alert.feature"
-- name: manage/lending/lending
-  scripts:
-    cucumber:
-      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        "features/manage/lending/lending.feature"
-- name: manage/lending/day_navigation
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
@@ -552,6 +540,11 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/manage/lending/day_navigation.feature"
+- name: manage/lending/lending
+  scripts:
+    cucumber:
+      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
+        "features/manage/lending/lending.feature"
 - name: manage/lending/tabs_navigation
   scripts:
     cucumber:
