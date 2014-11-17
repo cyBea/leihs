@@ -8,11 +8,11 @@ Feature: Startseite
   @personas
   Scenario: Startseite
     Given I am Normin
-    And es existiert eine Hauptkategorie mit eigenem Bild
-    And es existiert eine Hauptkategorie ohne eigenes Bild aber mit einem Modell mit Bild
+    And there exists a main category with own image
+    And there exists a main category without own image but with a model with image
     And man befindet sich auf der Seite der Hauptkategorien
     Then sieht man genau die für den User bestimmte Haupt-Kategorien mit Namen
-    And man sieht für jede Kategorie ihr Bild, oder falls nicht vorhanden, das erste Bild eines Modells dieser Kategorie
+    And one sees for each category its image, or if not set, the first image of a model from this category
     When man eine Hauptkategorie auswählt
     Then lande ich in der Modellliste für diese Hauptkategorie
 

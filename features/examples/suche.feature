@@ -34,28 +34,28 @@ Feature: Suche
   @javascript @personas
   Scenario: Anzeige von ausgemusterten Gegenständen
     Given I am Mike
-    And es gibt einen geschlossenen Vertrag mit ausgemustertem Gegenstand
-    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
+    And there exists a closed contract with a retired item
+    When I search globally after this item with its inventory code
     Then sehe den Gegenstand ihn im Gegenstände-Container
-    And wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
-    Then sehe ich im Tooltip das Modell dieses Gegenstandes
+    And I hover over the list of items on the contract line
+    Then I see in the tooltip the model of this item
 
   @javascript @personas
   Scenario: Anzeige von Gegenständen eines anderen Geräteparks in geschlossenen Verträgen
     Given I am Mike
-    And es gibt einen geschlossenen Vertrag mit einem Gegenstand, wofür ein anderer Gerätepark verantwortlich und Besitzer ist
-    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
-    Then sehe ich keinen Gegenstände-Container
-    And wenn ich über die Liste der Gegenstände auf der Vertragslinie hovere
-    Then sehe ich im Tooltip das Modell dieses Gegenstandes
+    And there exists a closed contract with an item, for which an other inventory pool is responsible and owner
+    When I search globally after this item with its inventory code
+    Then I do not see the items container
+    And I hover over the list of items on the contract line
+    Then I see in the tooltip the model of this item
 
   @personas @javascript
   Scenario Outline: Probleme bei Gegenständen in globaler Suche anzeigen
     Given I am Mike
-    And es gibt in meinem Gerätepark einen "<Zustand>"en Gegenstand
-    When ich anhand der Inventarnummer nach diesem Gegenstand global suche
-    Then sehe ich diesen Gegenstand im Gegenstände-Container
-    And die Gegenstandszeile ist mit "<Zustand>" in rot ausgezeichnet
+    And there is a "<Zustand>" item in my inventory pool
+    When I search globally after this item with its inventory code
+    Then I see the item in the items container
+    And the item line ist marked as "<Zustand>" in red
     Examples:
       | Zustand          |
       | Defekt           |

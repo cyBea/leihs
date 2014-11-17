@@ -49,7 +49,7 @@ Feature: Suche
   @javascript @personas
   Scenario: Suchbegriff mit Leerschlag anzeigen
     Given man befindet sich auf der Seite der Hauptkategorien
-    When ich einen Suchbegriff bestehend aus mindestens zwei Wörtern und einem Leerschlage eigebe
+    When I search for models giving at least two space separated terms
     And drückt ENTER
     Then wird die Such-Resultatseite angezeigt
     And man sieht alle gefundenen Modelle mit Bild, Modellname und Herstellername

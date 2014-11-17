@@ -22,52 +22,52 @@ Feature: Software editieren
   @javascript @personas
   Scenario: Grösse des Software Informationen-Felds
     Given eine Software-Produkt mit mehr als 6 Zeilen Text im Feld "Software Informationen" existiert
-    When ich diese Software editiere
-    And ich in das Feld "Software Informationen" klicke
-    Then wächst das Feld, bis es den ganzen Text anzeigt
-    When ich aus dem Feld herausgehe
-    Then schrumpft das Feld wieder auf die Ausgangsgrösse
+    When I edit this software
+    And I click in the field "Software Informationen"
+    Then this field grows up till showing the complete text
+    When I release the focus from this field
+    Then this field shrinks back to the original size
 
   @javascript @personas
   Scenario: Software-Lizenz editieren
-    When ich eine bestehende Software-Lizenz mit Software-Informationen, Anzahl-Zuteilungen und Anhängen editiere
-    Then sehe ich die "Software Informationen" angezeigt
-    And die "Software Informationen" sind nicht editierbar
-    And die bestehende Links der "Software Informationen" öffnen beim Klicken in neuem Browser-Tab
-    Then sehe ich die "Anhänge" der Software angezeigt
-    And ich kann die Anhänge in neuem Browser-Tab öffnen
+    When I edit an existing software license with software information, quantity allocations and attachments
+    Then I see the "Software Information"
+    And the software information is not editable
+    And the links of software information open in a new tab upon clicking
+    Then I see the attachments of the software
+    And I can open the attachments in a new tab
     When ich eine andere Software auswähle
     And ich eine andere Seriennummer eingebe
     And ich einen anderen Aktivierungstyp wähle
     And ich den Wert "Ausleihbar" ändere
-    And ich die Optionen für das Betriebssystem ändere
-    And ich die Optionen für die Installation ändere
-    And ich das Lizenzablaufdatum ändere
-    And ich den Wert für den Maintenance-Vertrag ändere
-    And ich den Wert für Bezug ändere
-    And ich den Wert der Notiz ändere
-    And ich die Dongle-ID ändere
-    And ich einen der folgenden Lizenztypen wähle:
+    And I change the options for operating system
+    And I change the options for installation
+    And I change the license expiration date
+    And I change the value for maintenance contract
+    And I change the value for reference
+    And I change the value of the note
+    And I change the value of dongle id
+    And I choose one of the following license types
       | Mehrplatz   |
       | Konkurrent  |
       | Site-Lizenz |
-    And ich die Gesamtanzahl ändere
-    And ich die Anzahl-Zuteilungen ändere
+    And I change the value of total quantity
+    And I change the quantity allocations
     #But ich kann den Inventarcode nicht ändern # really? inventory manager can change the inventory number of an item right now...
     When I save
     Then sind die Informationen dieser Software-Lizenz erfolgreich aktualisiert worden
 
   @javascript @personas
   Scenario: Software-Lizenz editieren - Werte der Datenfelder löschen
-    When ich eine Software-Lizenz mit gesetztem Maintenance-Ablaufdatum, Lizenzablaufdatum und Rechnungsdatum editiere
-    And ich die Daten für die folgenden Feldern lösche:
+    When I edit a license with set dates for maintenance expiration, license expiration and invoice date
+    And I delete the data for the following fields:
       | Maintenance-Ablaufdatum |
       | Lizenzablaufdatum       |
       | Rechnungsdatum          |
     And I save
     Then I receive a notification of success
-    When ich die gleiche Lizenz editiere
-    Then sind die folgenden Felder der Lizenz leer:
+    When I edit the same license
+    Then the following fields of the license are empty:
       | Maintenance-Ablaufdatum |
       | Lizenzablaufdatum       |
       | Rechnungsdatum          |

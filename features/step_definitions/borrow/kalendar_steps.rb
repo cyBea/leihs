@@ -102,7 +102,7 @@ Wenn(/^alle Angaben die ich im Kalender mache gültig sind$/) do
   start_date = select_available_not_closed_date
   select_available_not_closed_date(:end, start_date)
 
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
 end
 
 Dann(/^ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden$/) do
@@ -380,7 +380,7 @@ Dann(/^kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin$/) do
   select_available_not_closed_date(:end, start_date)
 
   find(".fc-widget-content", :match => :first)
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
   expect(find("#current-order-lines").has_content?(@model.name)).to be true
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).map(&:model).include?(@model)).to be true
 end

@@ -42,7 +42,7 @@ Feature: Bestellübersicht
     When ich den Eintrag ändere
     Then öffnet der Kalender
     And ich ändere die aktuellen Einstellung
-    And speichere die Einstellungen
+    And I save the booking calendar
     Then wird der Eintrag gemäss aktuellen Einstellungen geändert
     And der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert
 

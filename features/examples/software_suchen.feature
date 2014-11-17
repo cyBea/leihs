@@ -14,7 +14,7 @@ Feature: Software suchen
       | Seriennummer         | suchbegriff3 |
       | Dongle-ID            | suchbegriff5 |
       | Anzahl-Zuteilung     | 1 / Christina Meier |
-    And diese Software-Lizenz ist an jemanden ausgeliehen
+    And this software license is handed over to somebody
     When ich nach einer dieser Software-Produkt Eigenschaften suche
     Then es erscheinen alle zutreffenden Software-Produkte
     And es erscheinen alle zutreffenden Software-Lizenzen
@@ -25,16 +25,16 @@ Feature: Software suchen
 
   @javascript @personas
   Scenario: Verträge für Software-Lizenzen anhand des Ausleihenden finden
-    Given es existiert eine Software-Lizenz
-    And diese Software-Lizenz ist an jemanden ausgeliehen
-    When ich nach dem Namen dieser Person suche
-    Then erscheint der Vertrag dieser Person in den Suchresultaten
-    And es erscheint diese Person in den Suchresultaten
+    Given a software license exists
+    And this software license is handed over to somebody
+    When I search after the name of that person
+    Then it appears the contract of this person in the search results
+    And it appears this person in the search results
 
   @javascript @personas
   Scenario: Aufteilung der Suchresultate
-    Given es existieren Software-Produkte
-    And es existieren für diese Produkte Software-Lizenzen
-    When ich diese in meinen Suchresultaten sehe
-    Then kann ich wählen, ausschliesslich Software-Produkte aufzulisten
-    And ich kann wählen, ausschliesslich Software-Lizenzen aufzulisten
+    Given a software product exists
+    And there exist licenses for this software product
+    When I see these in my search result
+    Then I can select to list only software products
+    And I can select to list only software licenses

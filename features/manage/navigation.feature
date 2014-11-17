@@ -4,7 +4,7 @@ Feature: Navigation
   @personas
   Scenario: Navigation für Gruppen-Verwalter
     Given I am Andi
-    And man befindet sich im Verleih-Bereich
+    And I visit the lending section
     Then seh ich die Navigation
     And die Navigation beinhaltet "Verleih"
     And die Navigation beinhaltet "Ausleihen"
@@ -13,7 +13,7 @@ Feature: Navigation
   @personas
   Scenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
     Given I am Andi
-    And man befindet sich im Verleih-Bereich
+    And I visit the lending section
     Then seh ich die Navigation
     And kann man auf ein der "Bestellungen" Tab klichen
     And kann man auf ein der "Verträge" Tab klichen
@@ -23,18 +23,18 @@ Feature: Navigation
   Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
     Given I am Mike
     When ich auf die Geraetepark-Auswahl klicke
-    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
-    When ich auf einen Geraetepark klicke
-    Then wechsle ich zu diesem Geraetepark
+    Then I see all inventory pools for which I am a manager
+    When I click on one of the inventory pools
+    Then I switch to that inventory pool
 
   @personas @javascript
   Scenario: Zuklappen der Geraeteparkauswahl
     Given I am Mike
     When ich auf die Geraetepark-Auswahl klicke
-    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
-    When ich ausserhalb der Geraetepark-Auswahl klicke
-    Then schliesst sich die Geraetepark-Auswahl
+    Then I see all inventory pools for which I am a manager
+    When I click somewhere outside of the inventory pool menu list
+    Then the inventory pool menu list closes
     When ich auf die Geraetepark-Auswahl klicke
-    Then sehe ich alle Geraeteparks, zu denen ich Zugriff als Verwalter habe
+    Then I see all inventory pools for which I am a manager
     When ich erneut auf die Geraetepark-Auswahl klicke
-    Then schliesst sich die Geraetepark-Auswahl
+    Then the inventory pool menu list closes

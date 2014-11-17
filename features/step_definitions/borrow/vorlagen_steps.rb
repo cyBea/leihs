@@ -171,7 +171,7 @@ end
 Dann(/^ich kann das Zeitfenster für die Verfügbarkeitsberechnung einzelner Modelle ändern$/) do
   start_date = select_available_not_closed_date
   select_available_not_closed_date(:end, start_date)
-  step "speichere die Einstellungen"
+  step "I save the booking calendar"
 end
 
 Wenn(/^ich sämtliche Verfügbarkeitsprobleme gelöst habe$/) do

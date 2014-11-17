@@ -6,7 +6,7 @@ Feature: Inventarhelfer
 
   @personas
   Scenario: Wie man den Helferschirm erreicht
-    When man im Inventar Bereich ist
+    When I open the Inventory
     Then kann man über die Tabnavigation zum Helferschirm wechseln
 
   @javascript @personas

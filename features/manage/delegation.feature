@@ -194,7 +194,7 @@ Feature: Delegation
     Given I am Julie
     When ich eine Bestellung für eine Delegationsgruppe erstelle
     Then bin ich die Kontaktperson für diesen Auftrag
-    Given heute entspricht dem Startdatum der Bestellung
+    Given today corresponds to the start date of the order
     And I am Pius
     When ich die Gegenstände für die Delegation an "Mina" aushändige
     Then ist "Mina" die neue Kontaktperson dieses Auftrages

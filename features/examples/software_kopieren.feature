@@ -6,15 +6,15 @@ Feature: Software kopieren
 
   @personas @javascript @browser
   Scenario: Software kopieren
-    Given es existiert eine Software-Lizenz
-    When ich eine bestehende Software-Lizenz kopiere
-    Then wird die Editieransicht der neuen Software-Lizenz geöffnet
+    Given a software license exists
+    When I copy an existing software license
+    Then it opens the edit view of the new software license
     And der Titel heisst "Neue Software-Lizenz erstellen"
     And der Speichern-Button heisst "Lizenz speichern"
     And ein neuer Inventarcode vergeben wird
     When I save
-    Then ist die neue Lizenz erstellt
-    And wurden die folgenden Felder von der kopierten Lizenz übernommen
+    Then the new software license is created
+    And the following fields were copied from the original software license
       | Software                  |
       | Bezug                     |
       | Besitzer                  |
@@ -35,8 +35,8 @@ Feature: Software kopieren
 
   @personas @javascript @browser
   Scenario: Wo kann Software kopiert werden
-    Given es existiert eine Software-Lizenz
-    When man im Inventar Bereich ist
-    Then kann ich die bestehende Software-Lizenz kopieren
+    Given a software license exists
+    When I open the Inventory
+    Then I can copy an existing software license
     When ich mich in der Editieransicht einer Sofware-Lizenz befinde
-    Then kann ich die bestehende Software-Lizenz speichern und kopieren
+    Then I can save and copy the existing software license
