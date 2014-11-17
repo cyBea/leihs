@@ -19,6 +19,7 @@ Feature: Add Item during acknowledge process
     When I start to type the name of a model which is not yet in the contract
     And I wait until the autocompletion is loaded
     Then I already see possible matches of models
+    And only models related to my current pool are suggested
     When I select one of the matched models
     Then the model is added to the contract
 

@@ -60,8 +60,10 @@ end
 
 Wenn(/^ich einen Gegenstand über das Zuweisenfeld zurücknehme$/) do
   @contract_line = @take_back.lines.select{|l| l.is_a? ItemLine}.sample
-  find("form#assign input#assign-input").set @contract_line.item.inventory_code
-  find("form#assign button .icon-ok-sign").click
+  within "form#assign" do
+    find("input#assign-input").set @contract_line.item.inventory_code
+    find("button .icon-ok-sign").click
+  end
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
@@ -73,8 +75,10 @@ end
 
 Wenn(/^ich einen verspäteten Gegenstand über das Zuweisenfeld zurücknehme$/) do
   @contract_line = @take_back.lines.find{|l| l.end_date.past?}
-  find("form#assign input#assign-input").set @contract_line.item.inventory_code
-  find("form#assign button .icon-ok-sign").click
+  within "form#assign" do
+    find("input#assign-input").set @contract_line.item.inventory_code
+    find("button .icon-ok-sign").click
+  end
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
@@ -91,8 +95,10 @@ end
 
 Wenn(/^ich eine Option über das Zuweisenfeld zurücknehme$/) do
   @contract_line = @take_back.lines.find {|l| l.quantity >= 2 }
-  find("form#assign input#assign-input").set @contract_line.item.inventory_code
-  find("form#assign button .icon-ok-sign").click
+  within "form#assign" do
+    find("input#assign-input").set @contract_line.item.inventory_code
+    find("button .icon-ok-sign").click
+  end
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
@@ -102,8 +108,10 @@ end
 
 Wenn(/^ich alle Optionen der gleichen Zeile zurücknehme$/) do
   (@contract_line.quantity - find(@line_css).find("input[data-quantity-returned]").value.to_i).times do
-    find("form#assign input#assign-input").set @contract_line.item.inventory_code
-    find("form#assign button .icon-ok-sign").click
+    within "form#assign" do
+      find("input#assign-input").set @contract_line.item.inventory_code
+      find("button .icon-ok-sign").click
+    end
   end
 end
 
@@ -117,8 +125,10 @@ end
 
 Wenn(/^ich diese Option zurücknehme$/) do
   @option = Option.find {|o| o.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}.count >= 2}
-  find("form#assign input#assign-input").set @option.inventory_code
-  find("form#assign button .icon-ok-sign").click
+  within "form#assign" do
+    find("input#assign-input").set @option.inventory_code
+    find("button .icon-ok-sign").click
+  end
 end
 
 Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
@@ -128,14 +138,18 @@ Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
 end
 
 Wenn(/^ich dieselbe Option nochmals hinzufüge$/) do
-  find("form#assign input#assign-input").set @option.inventory_code
-  find("form#assign button .icon-ok-sign").click
+  within "form#assign" do
+    find("input#assign-input").set @option.inventory_code
+    find("button .icon-ok-sign").click
+  end
 end
 
 Wenn(/^im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht ist$/) do
   until find("[data-selected-lines-container]", match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i == @option_line.quantity
-    find("form#assign input#assign-input").set @option.inventory_code
-    find("form#assign button .icon-ok-sign").click
+    within "form#assign" do
+      find("input#assign-input").set @option.inventory_code
+      find("button .icon-ok-sign").click
+    end
   end
 end
 

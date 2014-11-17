@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.39, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.48, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: leihs2_test
 -- ------------------------------------------------------
--- Server version	5.5.39-1
+-- Server version	5.1.48
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -972,10 +972,10 @@ DROP TABLE IF EXISTS `partitions_with_generals`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `partitions_with_generals` (
-  `model_id` tinyint NOT NULL,
-  `inventory_pool_id` tinyint NOT NULL,
-  `group_id` tinyint NOT NULL,
-  `quantity` tinyint NOT NULL
+  `model_id` int(11),
+  `inventory_pool_id` int(11),
+  `group_id` int(11),
+  `quantity` decimal(33,0)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1048,7 +1048,7 @@ CREATE TABLE `schema_migrations` (
 
 LOCK TABLES `schema_migrations` WRITE;
 /*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
-INSERT INTO `schema_migrations` VALUES ('20140410180000'),('20140414100000'),('20140415083535'),('20140417113831'),('20140428092844'),('20140515131025'),('20140812132326'),('20140820100242'),('20140828082448'),('20140901141016'),('20140903105715'),('20140905091014');
+INSERT INTO `schema_migrations` VALUES ('20140410180000'),('20140414100000'),('20140415083535'),('20140417113831'),('20140428092844'),('20140515131025'),('20140812132326'),('20140820100242'),('20140828082448'),('20140901141016'),('20140903105715'),('20140905091014'),('20141110113231');
 /*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1179,15 +1179,15 @@ DROP TABLE IF EXISTS `visit_lines`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `visit_lines` (
-  `visit_id` tinyint NOT NULL,
-  `inventory_pool_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `delegated_user_id` tinyint NOT NULL,
-  `status` tinyint NOT NULL,
-  `action` tinyint NOT NULL,
-  `date` tinyint NOT NULL,
-  `quantity` tinyint NOT NULL,
-  `contract_line_id` tinyint NOT NULL
+  `visit_id` varchar(148),
+  `inventory_pool_id` int(11),
+  `user_id` int(11),
+  `delegated_user_id` int(11),
+  `status` enum('unsubmitted','submitted','rejected','approved','signed','closed'),
+  `action` varchar(9),
+  `date` date,
+  `quantity` int(11),
+  `contract_line_id` int(11)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1200,13 +1200,13 @@ DROP TABLE IF EXISTS `visits`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `visits` (
-  `id` tinyint NOT NULL,
-  `inventory_pool_id` tinyint NOT NULL,
-  `user_id` tinyint NOT NULL,
-  `status` tinyint NOT NULL,
-  `action` tinyint NOT NULL,
-  `date` tinyint NOT NULL,
-  `quantity` tinyint NOT NULL
+  `id` varchar(148),
+  `inventory_pool_id` int(11),
+  `user_id` int(11),
+  `status` enum('unsubmitted','submitted','rejected','approved','signed','closed'),
+  `action` varchar(9),
+  `date` date,
+  `quantity` decimal(32,0)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1227,6 +1227,8 @@ CREATE TABLE `workdays` (
   `friday` tinyint(1) DEFAULT '1',
   `saturday` tinyint(1) DEFAULT '0',
   `sunday` tinyint(1) DEFAULT '0',
+  `reservation_advance_days` int(11) DEFAULT '0',
+  `max_visits` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_workdays_on_inventory_pool_id` (`inventory_pool_id`),
   CONSTRAINT `workdays_inventory_pool_id_fk` FOREIGN KEY (`inventory_pool_id`) REFERENCES `inventory_pools` (`id`) ON DELETE CASCADE
@@ -1305,4 +1307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-07 16:56:06
+-- Dump completed on 2014-11-14 15:18:49

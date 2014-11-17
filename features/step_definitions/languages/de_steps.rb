@@ -543,6 +543,7 @@ end
 
 Dann(/^speichere die Einstellungen$/) do
   step "I save the booking calendar"
+  step 'the booking calendar is closed'
 end
 
 Wenn /^man im Inventar Bereich ist$/ do
@@ -551,4 +552,24 @@ end
 
 Dann(/^kann man das globale Inventar als CSV\-Datei exportieren$/) do
   step "I can export to a csv-file"
+end
+
+Wenn(/^ich befinde mich im Gerätepark mit visierpflichtigen Bestellungen$/) do
+  step "I am in an inventory pool with verifiable orders"
+end
+
+Wenn(/^ich die Bestellung editiere$/) do
+  step "I edit this submitted contract"
+end
+
+Dann /^(?:sehe ich|ich sehe) eine Fehlermeldung$/ do
+  step "I see an error message"
+end
+
+Wenn /^ich öffne den Kalender$/ do
+  step "I open the booking calendar"
+end
+
+Angenommen(/^ich verwalte die Gerätepark Grundinformationen$/) do
+  step "I edit my inventory pool settings"
 end

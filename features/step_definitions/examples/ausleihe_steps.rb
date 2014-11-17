@@ -26,6 +26,15 @@ Wenn /^ich etwas zuweise, das nicht in den Rücknahmen vorkommt$/ do
   find("[data-add-contract-line] + .addon").click
 end
 
+Then /^I see an error message( within the booking calendar)?$/ do |arg1|
+  if arg1
+    within ".modal" do
+      find("#booking-calendar-errors", text: /.*/)
+    end
+  else
+    find("#flash .error")
+  end
+end
 
 
 
