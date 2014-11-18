@@ -879,7 +879,8 @@ Then(/^the user has no access to the inventory pool$/) do
   expect(@user.reload.access_right_for(@current_inventory_pool)).to eq nil
 end
 
-Dann(/^sind die Benutzer nach ihrem Vornamen alphabetisch sortiert$/) do
+#Dann(/^sind die Benutzer nach ihrem Vornamen alphabetisch sortiert$/) do
+Then(/^users are sorted alphabetically by first name$/) do
   within("#user-list") do
     find(".line", match: :first)
     t = if current_path == manage_users_path

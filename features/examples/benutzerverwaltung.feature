@@ -372,10 +372,10 @@ Feature: Manage users
     And the user is not deleted
 
   @javascript @personas
-  Scenario: Alphabetische Sortierung der Benutzer innerhalb vom Inventarpool
+  Scenario: Alphabetical sorting of users within an inventory pool
     Given I am Gino
-    And man befindet sich auf der Benutzerliste im beliebigen Inventarpool
-    Then sind die Benutzer nach ihrem Vornamen alphabetisch sortiert
+    And I am looking at the user list in any inventory pool
+    Then users are sorted alphabetically by first name
 
   @personas
   Scenario: Benutzer ohne Zugriff im Inventarpool editieren ohne ihm dabei Zugriff zu gewährleisten
