@@ -111,7 +111,7 @@ Dann(/^die Modelle wurden nach dieser Kategorie gefiltert$/) do
 end
 
 Angenommen(/^ich befinde mich in einer Bestellung$/) do
-  step 'ich öffne eine Bestellung'
+  step 'I open an order'
 end
 
 Dann(/^kann ich ein Modell anhand der explorativen Suche wählen$/) do

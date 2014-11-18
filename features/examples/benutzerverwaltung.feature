@@ -446,7 +446,7 @@ Feature: Manage users
     And I pick a user without access rights, orders or contracts
     When I delete that user from the list
     Then that user has been deleted from the list
-    And the user is deleted
+    And the user is deleted 
 
   # Unimplemented, so not translated.
   @personas
