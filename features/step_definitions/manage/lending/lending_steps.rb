@@ -72,8 +72,14 @@ When /^the chosen items contain some from a future hand over$/ do
   step 'I add an item to the hand over by providing an inventory code'
 end
 
-Then /^I see an error message$/ do
-  find("#flash .error")
+Then /^I see an error message( within the booking calendar)?$/ do |arg1|
+  if arg1
+    within ".modal" do
+      find("#booking-calendar-errors", text: /.*/)
+    end
+  else
+    find("#flash .error")
+  end
 end
 
 Then /^I cannot hand over the items$/ do
