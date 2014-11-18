@@ -7,9 +7,9 @@ Feature: Retire
     Then I can retire this <object> if I give a reason for retiring
     And the newly retired <object> immediately disappears from the inventory list
     Examples:
-      | object     |
-      | item |
-      | license     |
+      | object  |
+      | item    |
+      | license |
 
   @javascript @personas
   Scenario Outline: Preventing retiring an object that isn't in stock
@@ -17,9 +17,9 @@ Feature: Retire
     And I search for a <object> that is not in stock
     Then I cannot retire such a <object>
     Examples:
-      | object     |
-      | item |
-      | license     |
+      | object  |
+      | item    |
+      | license |
 
   @javascript @personas
   Scenario Outline: Verhinderung von Ausmusterung eines Objektes bei dem ich nicht als Besitzer eingetragen bin
