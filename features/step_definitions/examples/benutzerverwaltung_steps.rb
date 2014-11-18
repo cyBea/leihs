@@ -745,7 +745,8 @@ Given(/^I edit a user who has access as lending manager$/) do
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Angenommen(/^man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist$/) do
+#Angenommen(/^man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist$/) do
+Given(/^I edit a user who is customer in any inventory pool$/) do
   access_right = AccessRight.find { |ar| ar.role == :customer }
   @user = access_right.user
   @current_inventory_pool = access_right.inventory_pool
@@ -897,7 +898,9 @@ When(/^I enter the login data$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Password Confirmation")).find("input").set "password"
 end
 
-Angenommen(/^man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat$/) do
+
+#Angenommen(/^man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat$/) do
+Given(/^I edit a user who doesn't have access to the current inventory pool$/) do
   @user = User.find { |u| u.access_rights.active.blank? }
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end

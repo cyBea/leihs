@@ -340,27 +340,27 @@ Feature: Manage users
     Then the user has the role "inventory manager"
 
   @personas
-  Scenario: Zugriff auf ein Inventarpool gewährleisten als Inventar-Verwalter
+  Scenario: Grant access to an inventory pool as an inventory manager
     Given I am Mike
-    And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
-    When man den Zugriff auf "Kunde" ändert
+    And I edit a user who doesn't have access to the current inventory pool
+    When I change the access level to "customer"
     And I save
     Then I see a confirmation of success on list of users
-    And hat der Benutzer die Rolle Kunde
+    And the user has the role "customer"
 
   @personas
-  Scenario: Zugriff ändern als Administrator
+  Scenario: Change access as an administrator
     Given I am Gino
-    And man editiert in irgendeinem Inventarpool einen Benutzer der Kunde ist
-    Then man hat nur die folgenden Rollen zur Auswahl
+    And I edit a user who is customer in any inventory pool
+    Then I can only choose the following roles
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    When man den Zugriff auf "Inventar-Verwalter" ändert
+    When I change the access level to "inventory manager"
     And I save
-    Then hat der Benutzer die Rolle Inventar-Verwalter
+    Then the user has the role "inventory manager"
 
   @javascript @browser @personas
   Scenario: Voraussetzungen fürs Löschen eines Benutzers
