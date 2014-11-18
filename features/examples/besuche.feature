@@ -1,8 +1,8 @@
 
-Feature: Ausleihe
+Feature: Visits
 
   @javascript @personas
-  Scenario: Menschlich lesbare Anzeige der Differenz zum Datum
+  Scenario: Human-readable display of dates on visits
     Given I am Pius
-    Given ich befinde mich auf der Seite der Besuche
-    Then wird für jeden Besuch korrekt, menschlich lesbar die Differenz zum jeweiligen Datum angezeigt
+      And I am listing visits
+    Then each visit shows a human-readable difference between now and its respective date
