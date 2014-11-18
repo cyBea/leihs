@@ -305,39 +305,39 @@ Feature: Manage users
     Then the user and all their information is saved
 
   @personas
-  Scenario: Zugriff auf Ausleihe-Verwalter ändern als Ausleihe-Verwalter
+  Scenario: Access rights available when editing a user as a lending manager
     Given I am Pius
-    And man editiert einen Benutzer der Kunde ist
-    Then man hat nur die folgenden Rollen zur Auswahl
+    And I edit a user who has access as customer
+    Then I can only choose the following roles
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
-    When man den Zugriff auf "Ausleihe-Verwalter" ändert
+    When I change the access level to "lending manager"
     And I save
-    Then hat der Benutzer die Rolle Ausleihe-Verwalter
+    Then the user has the role "lending manager"
 
   @personas
-  Scenario: Zugriff auf Kunde ändern als Ausleihe-Verwalter
+  Scenario: Switching a user to "customer"
     Given I am Pius
-    And man editiert einen Benutzer der Ausleihe-Verwalter ist
-    When man den Zugriff auf "Kunde" ändert
+    And I edit a user who has access as lending manager
+    When I change the access level to "customer"
     And I save
-    Then hat der Benutzer die Rolle Kunde
+    Then the user has the role "customer"
 
   @personas
-  Scenario: Zugriff ändern als Inventar-Verwalter
+  Scenario: Access rights available when editing a user as an inventory manager
     Given I am Mike
-    And man editiert einen Benutzer der Kunde ist
-    Then man hat nur die folgenden Rollen zur Auswahl
+    And I edit a user who has access as customer
+    Then I can only choose the following roles
       | No access          |
       | Customer           |
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    When man den Zugriff auf "Inventar-Verwalter" ändert
+    When I change the access level to "inventory manager"
     And I save
-    Then hat der Benutzer die Rolle Inventar-Verwalter
+    Then the user has the role "inventory manager"
 
   @personas
   Scenario: Zugriff auf ein Inventarpool gewährleisten als Inventar-Verwalter

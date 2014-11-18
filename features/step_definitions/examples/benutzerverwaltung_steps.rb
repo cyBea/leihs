@@ -731,13 +731,15 @@ Then(/^I can only choose the following roles$/) do |table|
   end
 end
 
-Angenommen(/^man editiert einen Benutzer der Kunde ist$/) do
+#Angenommen(/^man editiert einen Benutzer der Kunde ist$/) do
+Given(/^I edit a user who has access as customer$/) do
   access_right = AccessRight.find { |ar| ar.role == :customer and ar.inventory_pool == @current_inventory_pool }
   @user = access_right.user
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Angenommen(/^man editiert einen Benutzer der Ausleihe-Verwalter ist$/) do
+#Angenommen(/^man editiert einen Benutzer der Ausleihe-Verwalter ist$/) do
+Given(/^I edit a user who has access as lending manager$/) do
   access_right = AccessRight.find { |ar| ar.role == :lending_manager and ar.inventory_pool == @current_inventory_pool and ar.user != @current_user }
   @user = access_right.user
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
@@ -750,29 +752,35 @@ Angenommen(/^man editiert in irgendeinem Inventarpool einen Benutzer der Kunde i
   visit manage_edit_inventory_pool_user_path(access_right.inventory_pool, @user)
 end
 
-Wenn(/^man den Zugriff auf "Kunde" ändert$/) do
+#Wenn(/^man den Zugriff auf "Kunde" ändert$/) do
+When(/^I change the access level to "customer"$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Customer")
 end
 
-Wenn(/^man den Zugriff auf "Ausleihe-Verwalter" ändert$/) do
+#Wenn(/^man den Zugriff auf "Ausleihe-Verwalter" ändert$/) do
+When(/^I change the access level to "lending manager"$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Lending manager")
 end
 
-Wenn(/^man den Zugriff auf "Inventar-Verwalter" ändert$/) do
+#Wenn(/^man den Zugriff auf "Inventar-Verwalter" ändert$/) do
+When(/^I change the access level to "inventory manager"$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Inventory manager")
 end
 
-Dann(/^hat der Benutzer die Rolle Kunde$/) do
+#Dann(/^hat der Benutzer die Rolle Kunde$/) do
+Then(/^the user has the role "customer"$/) do
   expect(has_content?(_("List of Users"))).to be true
   expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :customer
 end
 
-Dann(/^hat der Benutzer die Rolle Ausleihe-Verwalter$/) do
+#Dann(/^hat der Benutzer die Rolle Ausleihe-Verwalter$/) do
+Then(/^the user has the role "lending manager"$/) do
   find_link _("New User")
   expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :lending_manager
 end
 
-Dann(/^hat der Benutzer die Rolle Inventar-Verwalter$/) do
+#Dann(/^hat der Benutzer die Rolle Inventar-Verwalter$/) do
+Then(/^the user has the role "inventory manager"$/) do
   find("#flash .notice", text: _("User details were updated successfully."))
   find_link _("New User")
   expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :inventory_manager
