@@ -1,16 +1,15 @@
-
-Feature: Ausmustern
+Feature: Retire
 
   @javascript @personas
-  Scenario Outline: Ausmustern
+  Scenario Outline: Retire
     Given I am Matti
-    And man sucht nach einem nicht ausgeliehenen <Objekt>, wo man der Besitzer ist
-    Then kann man diesen <Objekt> mit Angabe des Grundes erfolgreich ausmustern
-    And der gerade ausgemusterte <Objekt> verschwindet sofort aus der Inventarliste
+    And I search for a <object> that is in stock and belongs to me
+    Then I can retire this <object> if I give a reason for retiring
+    And the newly retired <object> immediately disappears from the inventory list
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
 
   @javascript @personas
   Scenario Outline: Verhinderung von Ausmusterung eines ausgeliehenen Objektes

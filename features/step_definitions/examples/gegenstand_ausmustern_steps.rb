@@ -2,22 +2,25 @@
 
 def get_scope(item_type)
   case item_type
-  when "Gegenstand" then :items
-  when "Lizenz" then :licenses
+  when "item" then :items
+  when "license" then :licenses
   end
 end
 
-Angenommen /^man sucht nach eine(?:m|r) nicht ausgeliehenen (Lizenz|Gegenstand)$/ do |item_type|
+#Angenommen /^man sucht nach eine(?:m|r) nicht ausgeliehenen (Lizenz|Gegenstand)$/ do |item_type|
+Given(/^I search for a (license|item) that is in stock$/) do |item_type|
   @item = Item.send(get_scope item_type).where(inventory_pool_id: @current_inventory_pool.id).detect {|i| not i.retired? and i.is_borrowable? and i.in_stock?}
-  step "man befindet sich auf der Editierseite von diesem %s" % item_type
+  step "I am on this %s's edit page" % item_type
 end
 
-Angenommen /^man sucht nach eine(?:m|r) nicht ausgeliehenen (Lizenz|Gegenstand), wo man der Besitzer ist$/ do |item_type|
+#Angenommen /^man sucht nach eine(?:m|r) nicht ausgeliehenen (Lizenz|Gegenstand), wo man der Besitzer ist$/ do |item_type|
+Given(/^I search for a (license|item) that is in stock and belongs to me$/) do |item_type|
   @item = Item.send(get_scope item_type).where(inventory_pool_id: @current_inventory_pool.id).detect {|i| not i.retired? and i.is_borrowable? and i.in_stock? and i.owner_id == @current_inventory_pool.id}
-  step "man befindet sich auf der Editierseite von diesem %s" % item_type
+  step "I am on this %s's edit page" % item_type
 end
 
-Dann /^kann man diese(?:.?) (?:.*) mit Angabe des Grundes erfolgreich ausmustern$/ do
+#Dann /^kann man diese(?:.?) (?:.*) mit Angabe des Grundes erfolgreich ausmustern$/ do
+Then(/^I can retire this (?:.*) if I give a reason for retiring$/) do
   field = find("[data-type='field']", text: _("Retirement"))
   field.find("option[value='true']").select_option
   field = find("[data-type='field']", text: _("Reason for Retirement"))
@@ -42,18 +45,19 @@ Dann(/^hat man keine Möglichkeit solche(?:.?) (?:.*) auszumustern$/) do
   expect(@item.retired).to eq nil
 end
 
-Dann /^(?:die|der) gerade ausgemusterte (?:.*) verschwindet sofort aus der Inventarliste$/ do
+#Dann /^(?:die|der) gerade ausgemusterte (?:.*) verschwindet sofort aus der Inventarliste$/ do
+Then(/^the newly retired (?:.*) immediately disappears from the inventory list$/) do
   expect(has_no_content?(@item.inventory_code)).to be true
 end
 
 Angenommen /^man sucht nach eine(?:.?) ausgeliehenen (.*)$/ do |item_type|
   @item = Item.send(get_scope item_type).where(inventory_pool_id: @current_inventory_pool.id).detect {|i| not (i.retired? or i.in_stock?)}
-  step "man befindet sich auf der Editierseite von diesem %s" % item_type
+  step "I am on this %s's edit page" % item_type
 end
 
 Angenommen /^man sucht nach eine(?:.?) (.*) bei dem ich nicht als Besitzer eingetragen bin$/ do |item_type|
   @item = Item.send(get_scope item_type).where(inventory_pool_id: @current_inventory_pool.id).detect {|i| i.in_stock? and i.owner_id != @current_inventory_pool.id}
-  step "man befindet sich auf der Editierseite von diesem %s" % item_type
+  step "I am on this %s's edit page" % item_type
 end
 
 Angenommen /^man gibt bei der Ausmusterung keinen Grund an$/ do
@@ -73,7 +77,8 @@ Angenommen(/^man sucht nach eine(?:.) ausgemusterten (.*), wo man der Besitzer i
   @item = Item.unscoped.send(get_scope item_type).find {|i| i.retired? and i.owner_id == @current_inventory_pool.id}
 end
 
-Angenommen(/^man befindet sich auf der Editierseite von diesem (Gegenstand|Lizenz)$/) do |arg1|
+#Angenommen(/^man befindet sich auf der Editierseite von diesem (Gegenstand|Lizenz)$/) do |arg1|
+Given(/^I am on this (item|license)'s edit page$/) do |arg1|
   visit manage_edit_item_path(@current_inventory_pool, @item)
 end
 
