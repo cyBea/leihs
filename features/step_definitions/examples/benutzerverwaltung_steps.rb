@@ -906,21 +906,24 @@ Given(/^I edit a user who doesn't have access to the current inventory pool$/) d
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
-Wenn(/^man ändert die Email$/) do
+#Wenn(/^man ändert die Email$/) do
+When(/^I change the email address$/) do
   find(".row.emboss", match: :prefer_exact, text: _("E-Mail")).find("input,textarea").set "changed@test.ch"
 end
 
 #Dann(/^sieht man die Erfolgsbestätigung$/) do
-Then(/^I see a confirmation of success on list of users$/) do
+Then(/^I see a confirmation of success on the list of users$/) do
   expect(has_content?(_("List of Users"))).to be true
   find(".notice", match: :first)
 end
 
-Dann(/^die neue Email des Benutzers wurde gespeichert$/) do
+#Dann(/^die neue Email des Benutzers wurde gespeichert$/) do
+Then(/^the user's new email address is saved$/) do
   expect(@user.reload.email).to eq "changed@test.ch"
 end
 
-Dann(/^der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool$/) do
+#Dann(/^der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool$/) do
+Then(/^the user still has access to the current inventory pool$/) do
   expect(@user.access_rights.active.detect { |ar| ar.inventory_pool == @current_inventory_pool }).to eq nil
 end
 

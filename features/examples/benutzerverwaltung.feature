@@ -40,7 +40,7 @@ Feature: Manage users
     And I am editing a user that has no access rights and is not an admin
     When I assign the admin role to this user
     And I save
-    Then I see a confirmation of success on list of users
+    Then I see a confirmation of success on the list of users
     And this user has the admin role
     And all their previous access rights remain intact
 
@@ -345,7 +345,7 @@ Feature: Manage users
     And I edit a user who doesn't have access to the current inventory pool
     When I change the access level to "customer"
     And I save
-    Then I see a confirmation of success on list of users
+    Then I see a confirmation of success on the list of users
     And the user has the role "customer"
 
   @personas
@@ -378,14 +378,14 @@ Feature: Manage users
     Then users are sorted alphabetically by first name
 
   @personas
-  Scenario: Benutzer ohne Zugriff im Inventarpool editieren ohne ihm dabei Zugriff zu gewährleisten
+  Scenario: Editing a user who has no access rights without granting them any
     Given I am Pius
-    And man editiert einen Benutzer der kein Zugriff auf das aktuelle Inventarpool hat
-    When man ändert die Email
+    And I edit a user who doesn't have access to the current inventory pool
+    When I change the email address
     And I save
-    Then I see a confirmation of success on list of users
-    And die neue Email des Benutzers wurde gespeichert
-    And der Benutzer hat nach wie vor keinen Zugriff auf das aktuelle Inventarpool
+    Then I see a confirmation of success on the list of users
+    And the user's new email address is saved
+    And the user still has access to the current inventory pool
 
   @javascript @personas
   Scenario: Add new user to the inventory pool as administrator
@@ -435,7 +435,7 @@ Feature: Manage users
     And man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
     When man den Zugriff auf "Kunde" ändert
     And I save
-    Then I see a confirmation of success on list of users
+    Then I see a confirmation of success on the list of users
     And hat der Benutzer die Rolle Kunde
 
 
