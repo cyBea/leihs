@@ -32,7 +32,8 @@ Then(/^I can retire this (?:.*) if I give a reason for retiring$/) do
   expect(@item.retired_reason).to eq "test"
 end
 
-Dann(/^hat man keine Möglichkeit solche(?:.?) (?:.*) auszumustern$/) do
+#Dann(/^hat man keine Möglichkeit solche(?:.?) (?:.*) auszumustern$/) do
+Then(/^I cannot retire such a (?:item|license)$/) do
   field = find("[data-type='field']", text: _("Retirement"))
   if field[:"data-editable"] == "true"
     field.find("option[value='true']").select_option
@@ -46,11 +47,13 @@ Dann(/^hat man keine Möglichkeit solche(?:.?) (?:.*) auszumustern$/) do
 end
 
 #Dann /^(?:die|der) gerade ausgemusterte (?:.*) verschwindet sofort aus der Inventarliste$/ do
-Then(/^the newly retired (?:.*) immediately disappears from the inventory list$/) do
+Then(/^the newly retired (?:item|license) immediately disappears from the inventory list$/) do
   expect(has_no_content?(@item.inventory_code)).to be true
 end
 
-Angenommen /^man sucht nach eine(?:.?) ausgeliehenen (.*)$/ do |item_type|
+
+#Angenommen /^man sucht nach eine(?:.?) ausgeliehenen (.*)$/ do |item_type|
+Given(/^I search for a (item|license) that is not in stock$/) do |item_type|
   @item = Item.send(get_scope item_type).where(inventory_pool_id: @current_inventory_pool.id).detect {|i| not (i.retired? or i.in_stock?)}
   step "I am on this %s's edit page" % item_type
 end
@@ -99,6 +102,7 @@ Wenn(/^die Anschaffungskategorie ist ausgewählt$/) do
   find(".row.emboss", match: :prefer_exact, text: "Anschaffungskategorie").find("select option:not([value=''])", match: :first).select_option if @item.type == "Item"
 end
 
-Angenommen(/^man sucht nach eine(?:.) ausgemusterten (.*), wo man der Verantwortliche und nicht der Besitzer ist$/) do |item_type|
+#Angenommen(/^man sucht nach eine(?:.) ausgemusterten (.*), wo man der Verantwortliche und nicht der Besitzer ist$/) do |item_type|
+Given(/^I search for a retired (?:.*) I am owner but not responsible for$/) do |item_type|
   @item = Item.unscoped.send(get_scope item_type).find {|i| i.retired? and i.owner != @current_inventory_pool and i.inventory_pool == @current_inventory_pool}
 end

@@ -12,14 +12,14 @@ Feature: Retire
       | license     |
 
   @javascript @personas
-  Scenario Outline: Verhinderung von Ausmusterung eines ausgeliehenen Objektes
+  Scenario Outline: Preventing retiring an object that isn't in stock
     Given I am Mike
-    And man sucht nach einem ausgeliehenen <Objekt>
-    Then hat man keine Möglichkeit solchen <Objekt> auszumustern
+    And I search for a <object> that is not in stock
+    Then I cannot retire such a <object>
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
 
   @javascript @personas
   Scenario Outline: Verhinderung von Ausmusterung eines Objektes bei dem ich nicht als Besitzer eingetragen bin
