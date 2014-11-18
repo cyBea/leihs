@@ -440,13 +440,13 @@ Feature: Manage users
 
 
   @javascript @personas
-  Scenario: Benutzer als Administrator löschen
+  Scenario: Deleting a user as an administrator
     Given I am Gino
-    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    And man sucht sich einen Benutzer ohne Zugriffsrechte, Bestellungen und Verträge aus
-    When ich diesen Benutzer aus der Liste lösche
-    Then wurde der Benutzer aus der Liste gelöscht
-    And der Benutzer ist gelöscht
+    And I am looking at the user list outside an inventory pool
+    And I pick a user without access rights, orders or contracts
+    When I delete that user from the list
+    Then that user has been deleted from the list
+    And the user is deleted
 
   # Unimplemented, so not translated.
   @personas
