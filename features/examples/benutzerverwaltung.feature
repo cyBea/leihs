@@ -363,13 +363,13 @@ Feature: Manage users
     Then the user has the role "inventory manager"
 
   @javascript @browser @personas
-  Scenario: Voraussetzungen fürs Löschen eines Benutzers
+  Scenario: Requirements for deleting a user
     Given I am Ramon
-    And man befindet sich auf der Benutzerliste ausserhalb der Inventarpools
-    And man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus
-    When ich diesen Benutzer aus der Liste lösche
+    And I am looking at the user list outside an inventory pool
+    And I pick one user with access rights, one with orders and one with contracts
+    When I delete that user from the list
     Then I see an error message
-    And der Benutzer ist nicht gelöscht
+    And the user is not deleted
 
   @javascript @personas
   Scenario: Alphabetische Sortierung der Benutzer innerhalb vom Inventarpool

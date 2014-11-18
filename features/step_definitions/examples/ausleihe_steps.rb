@@ -1,7 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-
-
 Dann /^ich sehe "(.*?)" als letzten Besucher$/ do |arg1|
   find("#daily-view #last-visitors", :text => arg1)
 end
@@ -25,18 +23,6 @@ Wenn /^ich etwas zuweise, das nicht in den Rücknahmen vorkommt$/ do
   find("[data-add-contract-line]").set "_for_sure_this_is_not_part_of_the_take_back"
   find("[data-add-contract-line] + .addon").click
 end
-
-Then /^I see an error message( within the booking calendar)?$/ do |arg1|
-  if arg1
-    within ".modal" do
-      find("#booking-calendar-errors", text: /.*/)
-    end
-  else
-    find("#flash .error")
-  end
-end
-
-
 
 
 Wenn /^die Gruppenauswahl aufklappe$/ do
