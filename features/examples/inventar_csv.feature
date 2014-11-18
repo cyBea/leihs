@@ -10,7 +10,7 @@ Feature: Inventar
   @javascript @personas @browser
   Scenario: Export der aktuellen Ansicht als CSV
     Given I am Mike
-    And man öffnet die Liste des Inventars
+    And I open the inventory
     When I view the tab "Models"
     Then kann man diese Daten als CSV-Datei exportieren
     And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)

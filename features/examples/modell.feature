@@ -3,7 +3,7 @@ Feature: Modell
 
   Grundlage:
     Given I am Mike
-    And man öffnet die Liste des Inventars
+    And I open the inventory
 
   @javascript @personas
   Scenario: Übersicht neues Modell hinzufügen

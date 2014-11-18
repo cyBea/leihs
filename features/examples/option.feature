@@ -6,7 +6,7 @@ Feature: Option
 
   @javascript @browser @personas
   Scenario: Option hinzufügen
-    Given man öffnet die Liste des Inventars
+    Given I open the inventory
     When ich eine neue Option hinzufüge
     And ich ändere die folgenden Details
     | Feld             | Wert         |
@@ -18,7 +18,7 @@ Feature: Option
 
   @javascript @browser @personas
   Scenario: Option bearbeiten
-    Given man öffnet die Liste des Inventars
+    Given I open the inventory
     When ich eine bestehende Option bearbeite
     And ich erfasse die folgenden Details
     | Feld             | Wert           |
