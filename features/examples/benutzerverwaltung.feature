@@ -415,19 +415,19 @@ Feature: Manage users
     Then the user and all their information is saved
 
   @personas
-  Scenario Outline: Neuen Benutzer hinzufügen - ohne Eingabe der Pflichtfelder
+  Scenario Outline: Adding a new user without supplying require information
     Given I am Pius
     When I am looking at the user list
     And I add a new user
-    And alle Pflichtfelder sind sichtbar und abgefüllt
-    When man ein <Pflichtfeld> nicht eingegeben hat
+    And all required fields are filled in
+    When I did not enter <required_information>
     And I save
     Then I see an error message
     Examples:
-      | Pflichtfeld |
-      | Nachname    |
-      | Vorname     |
-      | E-Mail      |
+      | required_information |
+      | last name    |
+      | first name     |
+      | email address      |
 
   @personas
   Scenario: Benutzer den Zugriff auf ein Inventarpool reaktivieren

@@ -610,25 +610,30 @@ Then(/^the user and all their information is saved$/) do
   expect(user.groups).to eq @current_inventory_pool.groups
 end
 
-Wenn(/^alle Pflichtfelder sind sichtbar und abgefüllt$/) do
+#Wenn(/^alle Pflichtfelder sind sichtbar und abgefüllt$/) do
+When(/^all required fields are filled in$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Last name")).find("input,textarea").set "test"
   find(".row.emboss", match: :prefer_exact, text: _("First name")).find("input,textarea").set "test"
   find(".row.emboss", match: :prefer_exact, text: _("E-Mail")).find("input,textarea").set "test@test.ch"
 end
 
-Wenn(/^man ein Nachname nicht eingegeben hat$/) do
+#Wenn(/^man ein Nachname nicht eingegeben hat$/) do
+When(/^I did not enter last name$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Last name")).find("input,textarea").set ""
 end
 
-Wenn(/^man ein Vorname nicht eingegeben hat$/) do
+#Wenn(/^man ein Vorname nicht eingegeben hat$/) do
+When(/^I did not enter first name$/) do
   find(".row.emboss", match: :prefer_exact, text: _("First name")).find("input,textarea").set ""
 end
 
-Wenn(/^man ein E\-Mail nicht eingegeben hat$/) do
+#Wenn(/^man ein E\-Mail nicht eingegeben hat$/) do
+When(/^I did not enter email address$/) do
   find(".row.emboss", match: :prefer_exact, text: _("E-Mail")).find("input,textarea").set ""
 end
 
-Wenn(/^man ein Sperrgrund nicht eingegeben hat$/) do
+#Wenn(/^man ein Sperrgrund nicht eingegeben hat$/) do
+When(/^I did not enter reason for suspension$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("input,textarea").set ""
 end
 
