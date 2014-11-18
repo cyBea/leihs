@@ -430,13 +430,13 @@ Feature: Manage users
       | email address      |
 
   @personas
-  Scenario: Benutzer den Zugriff auf ein Inventarpool reaktivieren
+  Scenario: Reactivate a user's access to an inventory pool
     Given I am Mike
-    And man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte
-    When man den Zugriff auf "Kunde" ändert
+    And I edit a user who used to have access to the current inventory pool
+    When I change the access level to "customer"
     And I save
     Then I see a confirmation of success on the list of users
-    And hat der Benutzer die Rolle Kunde
+    And the user has the role "customer"
 
 
   @javascript @personas

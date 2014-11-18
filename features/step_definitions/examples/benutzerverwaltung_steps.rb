@@ -932,7 +932,8 @@ Then(/^the user still has access to the current inventory pool$/) do
   expect(@user.access_rights.active.detect { |ar| ar.inventory_pool == @current_inventory_pool }).to eq nil
 end
 
-Angenommen(/^man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte$/) do
+#Angenommen(/^man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte$/) do
+Given(/^I edit a user who used to have access to the current inventory pool$/) do
   @current_inventory_pool = (@current_user.managed_inventory_pools & AccessRight.select(&:deleted_at).map(&:inventory_pool)).sample
   @user = @current_inventory_pool.access_rights.select(&:deleted_at).map(&:user).sample
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
