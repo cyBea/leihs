@@ -1,57 +1,57 @@
+Feature: Editing an item
 
-Feature: Gegenstand bearbeiten
-
-  Grundlage:
+  Background:
     Given I am Matti
 
   @javascript @personas
-  Scenario: Reihenfolge der Felder
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    When I select "Ja" from "item[retired]"
-    When I choose "Investition"
-    Then sehe ich die Felder in folgender Reihenfolge:
-      | Inventarcode                 |
-      | Modell                       |
-      | - Zustand -                  |
-      | Ausmusterung                 |
-      | Grund der Ausmusterung       |
-      | Zustand                      |
-      | Vollständigkeit              |
-      | Ausleihbar                   |
-      | - Inventar -                 |
-      | Inventarrelevant             |
-      | Anschaffungskategorie        |
-      | Besitzer                     |
-      | Letzte Inventur              |
-      | Verantwortliche Abteilung    |
-      | Verantwortliche Person       |
-      | Benutzer/Verwendung          |
-      | - Umzug -                    |
-      | Umzug                        |
-      | Zielraum                     |
+  Scenario: Order of the fields
+    Given I edit an item that belongs to the current inventory pool
+    When I select "Yes" from "item[retired]"
+    When I choose "Investment"
+    Then I see form fields in the following order:
+      | field |
+      | Inventory Code |
+      | Model          |
+      | - Status -                  |
+      | Retirement                 |
+      | Reason for Retirement      |
+      | Working order                      |
+      | Completeness              |
+      | Borrowable                   |
+      | - Inventory -                 |
+      | Relevant for inventory     |
+      | Supply Category |
+      | Owner                     |
+      | Last Checked              |
+      | Responsible department    |
+      | Responsible person       |
+      | User/Typical usage        |
+      | - Move -|
+      | Move                        |
+      | Target area                     |
       | - Toni Ankunftskontrolle -   |
-      | Ankunftsdatum                |
-      | Ankunftszustand              |
-      | Ankunftsnotiz                |
-      | - Allgemeine Informationen - |
-      | Seriennummer                 |
-      | MAC-Adresse                  |
-      | IMEI-Nummer                  |
+      | Check-In Date                |
+      | Check-In State             |
+      | Check-In Note                |
+      | - General Information - |
+      | Serial Number |
+      | MAC-Address                 |
+      | IMEI-Number                  |
       | Name                         |
-      | Notiz                        |
-      | - Ort -                      |
-      | Gebäude                      |
-      | Raum                         |
-      | Gestell                      |
-      | - Rechnungsinformationen -   |
-      | Bezug                        |
-      | Projektnummer                |
-      | Rechnungsnummer              |
-      | Rechnungsdatum               |
-      | Anschaffungswert             |
-      | Lieferant                    |
-      | Garantieablaufdatum          |
-      | Vertragsablaufdatum          |
+      | Note                        |
+      | - Location -                      |
+      | Building                      |
+      | Room                         |
+      | Shelf                      |
+      | - Invoice Information -   |
+      | Reference                        |
+      | Project Number                |
+      | Invoice Number              |
+      | Invoice Date               |
+      | Initial Price             |
+      | Supplier                    |
+      | Warranty expiration          |
+      | Contract expiration          |
 
   @javascript @personas
   Scenario: Lieferanten löschen

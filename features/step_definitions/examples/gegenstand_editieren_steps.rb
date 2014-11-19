@@ -1,9 +1,11 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^man editiert einen Gegenstand, wo man der Besitzer ist(, der am Lager)?( und in keinem Vertrag vorhanden ist)?$/ do |arg1, arg2|
+
+#Angenommen /^man editiert einen Gegenstand, wo man der Besitzer ist(, der am Lager)?( und in keinem Vertrag vorhanden ist)?$/ do |arg1, arg2|
+Given(/^I edit an item that belongs to the current inventory pool( and is in stock)?( and is not part of any contract)?$/) do |in_stock, not_in_contract|
   items = @current_inventory_pool.items.items.where(owner_id: @current_inventory_pool, models: {is_package: false})
-  items = items.in_stock if arg1
-  items = items.select {|i| ContractLine.where(item_id: i.id).empty?} if arg2
+  items = items.in_stock if in_stock
+  items = items.select { |i| ContractLine.where(item_id: i.id).empty? } if not_in_contract
 
   @item = items.sample
 
@@ -50,11 +52,20 @@ Wenn /^die nicht ausgefüllten\/ausgewählten Pflichtfelder sind rot markiert$/ 
   end
 end
 
-Dann /^sehe ich die Felder in folgender Reihenfolge:$/ do |table|
-  values = table.raw.map do |x|
-    x.first.gsub(/^\-\ |\ \-$/, '')
+# Dann /^sehe ich die Felder in folgender Reihenfolge:$/ do |table|
+Then(/^I see form fields in the following order:$/) do |table|
+  expected_values = []
+  expected_headlines = []
+  table.rows.each do |tr|
+    expected_headlines << tr[0] if tr[0].match(/^\-.*\-$/)
+    expected_values << tr[0].chomp if !tr[0].match(/^\-.*\-$/)
   end
-  expect(page.text).to match Regexp.new(values.join('.*'), Regexp::MULTILINE)
+  headlines = find('#flexible-fields').all('h2').map { |hl| "- #{hl.text} -" }.compact
+  values = find('#flexible-fields').all("div[data-type='key']").map do |element|
+    element.text.gsub(' *','').chomp
+  end
+  expect(headlines).to eq(expected_headlines)
+  expect(values).to eq(expected_values)
 end
 
 Wenn(/^"(.*?)" bei "(.*?)" ausgewählt ist muss auch "(.*?)" ausgewählt werden$/) do |value, key, newkey|
