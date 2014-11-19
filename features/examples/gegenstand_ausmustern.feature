@@ -3,7 +3,7 @@ Feature: Retire
   @javascript @personas
   Scenario Outline: Retire
     Given I am Matti
-    And I search for a <object> that is in stock and belongs to me
+    And I pick a <object> that is in stock and that the current inventory pool is the owner of
     Then I can retire this <object> if I give a reason for retiring
     And the newly retired <object> immediately disappears from the inventory list
     Examples:
@@ -14,7 +14,7 @@ Feature: Retire
   @javascript @personas
   Scenario Outline: Preventing retiring an object that isn't in stock
     Given I am Mike
-    And I search for a <object> that is not in stock
+    And I pick a <object> that is not in stock
     Then I cannot retire such a <object>
     Examples:
       | object  |
@@ -22,47 +22,51 @@ Feature: Retire
       | license |
 
   @javascript @personas
-  Scenario Outline: Verhinderung von Ausmusterung eines Objektes bei dem ich nicht als Besitzer eingetragen bin
+  Scenario Outline: Preventing retiring an object I'm not the owner of
     Given I am Matti
-    And man sucht nach einem <Objekt> bei dem ich nicht als Besitzer eingetragen bin
-    Then hat man keine Möglichkeit solchen <Objekt> auszumustern
+    And I pick a <object> the current inventory pool is not the owner of
+    Then I cannot retire such a <object>
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
 
   @javascript @personas
-  Scenario Outline: Fehlermeldung bei der Ausmusterung ohne angabe eines Grundes
+  Scenario Outline: Error when trying to retire without giving a reason
     Given I am Matti
-    And man sucht nach einem nicht ausgeliehenen <Objekt>, wo man der Besitzer ist
-    And man gibt bei der Ausmusterung keinen Grund an
-    And der <Objekt> ist noch nicht Ausgemustert
+    And I pick a <object> that is in stock and that the current inventory pool is the owner of
+    And I don't give any reason for retiring this item
+    And the <object> is not retired
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
 
   @javascript @personas
-  Scenario Outline: Ausmusterung rückgangig machen
+  Scenario Outline: Unretiring an item
     Given I am Mike
-    And man sucht nach einem ausgemusterten <Objekt>, wo man der Besitzer ist
-    And man befindet sich auf der Editierseite von diesem <Objekt>
-    When man die Ausmusterung bei diesem <Objekt> zurück setzt
-    And die Anschaffungskategorie ist ausgewählt
+    And I pick a retired <object> that the current inventory pool is the owner of
+    And I am on this <object>'s edit page
+    When I unretire this <object>
+    And I fill in the supply category
     And I save
-    Then wurde man auf die Inventarliste geleitet
-    And dieses <Objekt> ist nicht mehr ausgemustert
+    Then I am redirected to the inventory list
+    And this <object> is not retired
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
 
+
+  # Not really sure what this scenario is supposed to tell us. Why are we on
+  # an edit page? We would end up on that page anyway after picking one
+  # of those items, which is what we do explicitly in this scenario.
   @personas
-  Scenario Outline: Ansichtseite von einem ausgemusterten Objekt für Verantwortlichen anzeigen
+  Scenario Outline: How retired items are displayed in a responsible department/inventory pool
     Given I am Mike
-    And man sucht nach einem ausgemusterten <Objekt>, wo man der Verantwortliche und nicht der Besitzer ist
-    Then man befindet sich auf der Editierseite von diesem <Objekt>
+    And I pick a retired <object> that the current inventory pool is responsible for but not the owner of
+    Then I am on this <object>'s edit page
     Examples:
-      | Objekt     |
-      | Gegenstand |
-      | Lizenz     |
+      | object     |
+      | item |
+      | license     |
