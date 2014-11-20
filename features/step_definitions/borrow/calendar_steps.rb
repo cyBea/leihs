@@ -89,6 +89,6 @@ end
 
 Then(/^I receive an error message within the modal$/) do
   within ".modal #booking-calendar-errors" do
-    find(".red", text: _("This inventory pool is closed on that day."))
+    find(".red")
   end
 end
