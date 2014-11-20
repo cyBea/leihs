@@ -65,12 +65,12 @@ class window.App.BorrowBookingCalendarDialogController extends App.BookingCalend
     if av.maxAvailableForGroups(@getStartDate(), @getEndDate(), _.map(@groups,(g)->g.id)) < @getQuantity()
       @errors.push _jed("Item is not available in that time range")
     if not ip.hasEnoughReservationAdvanceDays @getStartDate()
-      @errors.push _jed("No orders are possible on this start date.") # "Bestellungen sind für dieses Startdatum nicht möglich"
+      @errors.push _jed("No orders are possible on this start date")
     else
       if not ip.isVisitPossible @getStartDate()
-        @errors.push _jed("Booking is no longer possible on this start date") #"An diesem Startdatum ist keine Ausleihe mehr möglich."
+        @errors.push _jed("Booking is no longer possible on this start date")
       if not ip.isVisitPossible @getEndDate()
-        @errors.push _jed("Booking is no longer possible on this end date") #"An diesem Enddatum ist keine Ausleihe mehr möglich."
+        @errors.push _jed("Booking is no longer possible on this end date")
     if ip.isClosedOn @getStartDate()
       @errors.push _jed("Inventory pool is closed on start date")
     if ip.isClosedOn @getEndDate()
