@@ -62,26 +62,25 @@ Feature: Editing an item
     Then the item has no supplier
 
   @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen editieren
-    Given man editiert einen Gegenstand, wo man der Besitzer ist, der am Lager und in keinem Vertrag vorhanden ist
-    When ich die folgenden Informationen erfasse
-      | Feldname               | Type         | Wert                |
+  Scenario: Edit all an item's information
+    Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
+    When I enter the following item information
+      | field                  | type         | value               |
 
-      | Inventarcode           |              | Test Inventory Code |
-      | Modell                 | autocomplete | Sharp Beamer 456    |
+      | Inventory Code         |              | Test Inventory Code |
+      | Model                  | autocomplete | Sharp Beamer 456    |
 
-      | Ausmusterung           | select       | Ja                  |
-      | Grund der Ausmusterung |              | Ja                  |
-      | Zustand                | radio        | OK                  |
-      | Vollständigkeit        | radio        | OK                  |
-      | Ausleihbar             | radio        | OK                  |
+      | Retirement             | select | Yes                 |
+      | Reason for Retirement  |        | Some reason         |
+      | Working order          | radio  | OK                  |
+      | Completeness           | radio  | OK                  |
+      | Borrowable             | radio  | OK                  |
 
-      | Inventarrelevant       | select       | Ja                  |
-      | Anschaffungskategorie  | select       | Werkstatt-Technik   |
-
+      | Relevant for inventory | select | Yes                 |
+      | Supply Category        | select | Workshop Technology |
     And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen gespeichert
+    Then I am redirected to the inventory list
+    And the item is saved with all the entered information
 
   @javascript @personas
   Scenario: Ein Modell ohne Version für den Gegestand wählen

@@ -73,7 +73,7 @@ Wenn /^ich ein Modell editiere, welches bereits Pakete( in meine und andere GerÃ
   end
   expect(@model).not_to be_nil
   @model_name = @model.name
-  step 'ich nach "%s" suche' % @model.name
+  step 'I search for "%s"' % @model.name
   expect(has_selector?(".line", text: @model.name)).to be true
   find(".line", match: :prefer_exact, :text => @model.name).find(".button", match: :first, :text => _("Edit Model")).click
 end
@@ -82,7 +82,7 @@ Wenn /^ich ein Modell editiere, welches bereits GegenstÃ¤nde hat$/ do
   step "I open the inventory"
   @model = @current_inventory_pool.models.detect {|m| not (m.items.empty? and m.is_package?)}
   @model_name = @model.name
-  step 'ich nach "%s" suche' % @model.name
+  step 'I search for "%s"' % @model.name
   expect(has_selector?(".line", text: @model.name)).to be true
   find(".line", match: :prefer_exact, :text => @model.name).find(".button", match: :first, :text => _("Edit Model")).click
 end

@@ -103,6 +103,7 @@ end
 # Dann(/^wurde man auf die Inventarliste geleitet$/) do
 Then(/^I am redirected to the inventory list$/) do
   expect(has_content?(_("List of Inventory"))).to be true
+  expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 
 # Dann(/^diese(?:.?) (?:.*) ist nicht mehr ausgemustert$/) do

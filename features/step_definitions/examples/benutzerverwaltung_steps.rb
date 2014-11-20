@@ -800,7 +800,7 @@ end
 #Wenn(/^ich diesen Benutzer aus der Liste lösche$/) do
 When(/^I delete that user from the list$/) do
   @user ||= @users.sample
-  step %Q(ich nach "%s" suche) % @user.to_s
+  step %Q(I search for "%s") % @user.to_s
   within("#user-list .line", text: @user.name) do
     within(".multibutton") do
       find(".dropdown-toggle").click
@@ -846,7 +846,7 @@ end
 
 Dann(/^wird der Delete Button für diese Benutzer nicht angezeigt$/) do
   @users.each do |user|
-    step %Q(ich nach "%s" suche) % user.name
+    step %Q(I search for "%s") % user.name
     within("#user-list .line", text: user.name) do
       find(".multibutton .dropdown-toggle").click
       expect(has_no_selector?(".multibutton .dropdown-item.red", text: _("Delete"))).to be true

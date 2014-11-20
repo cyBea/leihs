@@ -11,7 +11,7 @@ Dann /^sieht man Modelle$/ do
 end
 
 Dann /^man sieht Software$/ do
-  step %Q(ich nach "%s" suche) % ""
+  step %Q(I search for "%s") % ""
   step "I scroll to the bottom of the page"
   find("#inventory .line[data-type='software']", match: :first)
 end
@@ -23,7 +23,7 @@ end
 
 Dann /^man sieht Pakete$/ do
   package = @current_inventory_pool.items.packages.sample
-  step 'ich nach "%s" suche' % package.inventory_code
+  step 'I search for "%s"' % package.inventory_code
   find(".line[data-is_package='true']", match: :prefer_exact, text: package.name)
 end
 
@@ -277,7 +277,7 @@ Wenn /^der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gege
   all("select[name='responsible_inventory_pool_id'] option:not([selected])").detect{|o| o.value != @current_inventory_pool.id.to_s and o.value != ""}.select_option
   find("input[name='in_stock']").click if find("input[name='in_stock']").checked?
   item = @current_inventory_pool.own_items.items.detect{|i| not i.inventory_pool_id.nil? and i.inventory_pool != @current_inventory_pool and not i.in_stock?}
-  step 'ich nach "%s" suche' % item.inventory_code
+  step 'I search for "%s"' % item.inventory_code
   within ".line[data-type='model'][data-id='#{item.model.id}']" do
     if has_selector?(".button[data-type='inventory-expander'] i.arrow.right")
       find(".button[data-type='inventory-expander']").click
@@ -356,7 +356,7 @@ end
 
 Dann /^kann man jedes Paket\-Modell aufklappen$/ do
   @package = @current_inventory_pool.items.packages.last.model
-  step 'ich nach "%s" suche' % @package.name
+  step 'I search for "%s"' % @package.name
   @package_line = find(".line[data-is_package='true']")
   within @package_line do
     find(".button[data-type='inventory-expander'] i.arrow.right").click
@@ -459,14 +459,14 @@ end
 Dann /^die Informationen sind gespeichert$/ do
   search_string = @table_hashes.detect {|h| h["Feld"] == "Produkt"}["Wert"]
   find(:select, "retired").first("option").select_option
-  step 'ich nach "%s" suche' % search_string
+  step 'I search for "%s"' % search_string
   find(".line", match: :prefer_exact, text: search_string)
   step 'I should see "%s"' % search_string
 end
 
 Dann /^die Daten wurden entsprechend aktualisiert$/ do
   search_string = @table_hashes.detect { |h| h["Feld"] == "Produkt" }["Wert"]
-  step 'ich nach "%s" suche' % search_string
+  step 'I search for "%s"' % search_string
   find(".line", :text => search_string).find("a", :text => Regexp.new(_("Edit"), "i")).click
 
   # check that the same model was modified
@@ -492,7 +492,8 @@ Dann /^die Daten wurden entsprechend aktualisiert$/ do
   expect(current_path).to eq @page_to_return
 end
 
-Wenn /^ich nach "(.+)" suche$/ do |search_term|
+#Wenn /^ich nach "(.+)" suche$/ do |search_term|
+When(/^I search for "(.+)"$/) do |search_term|
   fill_in "list-search", with: search_term
   sleep(0.55) # NOTE this sleep is required waiting the search result
 end
@@ -508,7 +509,7 @@ Wenn /^ich eine?n? bestehende[s|n]? (.+) bearbeite$/ do |entity|
                     @option = @current_inventory_pool.options.sample
                     @option.name
                 end
-  step 'ich nach "%s" suche' % object_name
+  step 'I search for "%s"' % object_name
   find(".line", match: :prefer_exact, :text => object_name).find(".button", :text => "#{entity} editieren").click
 end
 
@@ -612,7 +613,7 @@ Dann /^ich kann Bilder auch wieder entfernen$/ do
 end
 
 Dann /^zu grosse Bilder werden den erlaubten Grössen entsprechend verkleinert$/ do
-  step 'ich nach "%s" suche' % @model.name
+  step 'I search for "%s"' % @model.name
   find(".line[data-id='#{@model.id}']").find(".button", :text => "Modell editieren").click
   @images_to_save.each do |image_name|
     find("a[href*='#{image_name}'] img[src*='#{image_name.split(".").first}_thumb.#{image_name.split(".").last}']")
@@ -664,7 +665,7 @@ Wenn(/^ich eine resultatlose Suche mache$/) do
   begin
     search_term = Faker::Lorem.words.join
   end while not @current_inventory_pool.inventory({search_term: search_term}).empty?
-  step %Q(ich nach "%s" suche) % search_term
+  step %Q(I search for "%s") % search_term
 end
 
 Dann(/^sehe ich "(.*?)"$/) do |arg1|
@@ -685,7 +686,7 @@ end
 
 When(/^I look at this license in the software list$/) do
   find("a[data-type='license']").click
-  step 'ich nach "%s" suche' % @license.inventory_code
+  step 'I search for "%s"' % @license.inventory_code
   within ".line[data-type='software'][data-id='#{@license.model.id}']" do
     el = find(".button[data-type='inventory-expander']")
       if el.has_selector?("i.arrow.right")
@@ -872,7 +873,7 @@ Given(/^there exists an item with many problems$/) do
 end
 
 When(/^I search after this item in the inventory list$/) do
-  step 'ich nach "%s" suche' % @item.inventory_code
+  step 'I search for "%s"' % @item.inventory_code
 end
 
 When(/^I open the model line of this item$/) do

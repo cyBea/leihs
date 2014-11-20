@@ -319,7 +319,7 @@ When(/^I search for (an order|a contract|a visit)$/) do |arg1|
         cb.click
       end
     end
-    step %Q(ich nach "%s" suche) % @search_term
+    step %Q(I search for "%s") % @search_term
   end
 end
 

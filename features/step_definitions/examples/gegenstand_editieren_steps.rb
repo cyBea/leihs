@@ -77,7 +77,7 @@ end
 
 Dann(/^ist der Gegenstand mit all den angegebenen Informationen gespeichert$/) do
   find(:select, "retired").first("option").select_option if @table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" } and (@table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" }["Wert"]) == "Ja"
-  step %Q(ich nach "%s" suche) %  (@table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"])
+  step %Q(I search for "%s") %  (@table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"])
   find(".line", :text => @table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"], :visible => true)
   step "I am on this item's edit page"
   step 'hat der Gegenstand alle zuvor eingetragenen Werte'

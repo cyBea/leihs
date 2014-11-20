@@ -23,7 +23,7 @@ Wenn(/^ich ein Modell öffne, das bereits ergänzende Modelle hat$/) do
     @current_inventory_pool.models.select {|m| m.compatibles.exists? }.sample
   end
 
-  step 'ich nach "%s" suche' % @model.name
+  step 'I search for "%s"' % @model.name
   find(".line", match: :first, text: @model.name).find(".button", text: _("Edit Model")).click
 end
 

@@ -119,7 +119,7 @@ end
 
 Wenn /^man das Modell editiert$/ do
   @model = Model.find {|m| [m.name, m.product].include? "Sharp Beamer" }
-  step 'ich nach "%s" suche' % @model.name
+  step 'I search for "%s"' % @model.name
   find(".line", text: @model.name, match: :prefer_exact).find(".button", :text => _("Edit %s" % "Model")).click
 end
 
@@ -206,7 +206,7 @@ Wenn /^man nach einer Kategorie anhand des Namens sucht$/ do
   visit manage_categories_path @current_inventory_pool
   @searchTerm ||= Category.first.name[0]
   countBefore = all(".line").size
-  step %Q(ich nach "%s" suche) % @searchTerm
+  step %Q(I search for "%s") % @searchTerm
   find("#list-search")
   find(".line", match: :first)
   expect(countBefore).not_to eq all(".line").size

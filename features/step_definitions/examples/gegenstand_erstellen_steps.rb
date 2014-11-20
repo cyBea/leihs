@@ -48,14 +48,16 @@ Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
   expect(has_selector?(".row.emboss")).to be true
 end
 
-Wenn /^ich die folgenden Informationen erfasse$/ do |table|
+#Wenn /^ich die folgenden Informationen erfasse$/ do |table|
+When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
 
   @table_hashes.each do |hash_row|
-    field_name = hash_row["Feldname"]
-    field_value = hash_row["Wert"]
-    field_type = hash_row["Type"]
+    field_name = hash_row["field"]
+    field_value = hash_row["value"]
+    field_type = hash_row["type"]
     matched_field = all(".row.emboss", match: :prefer_exact, text: field_name).last
+    puts "handling field #{field_name}"
     case field_type
       when "radio", "radio must"
         matched_field.find("label", text: field_value).find("input").set true
@@ -84,32 +86,34 @@ Wenn /^ich erstellen druecke$/ do
   find("#flash")
 end
 
-Dann /^ist der Gegenstand mit all den angegebenen Informationen erstellt$/ do
-  select "true", from: "retired" if @table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" } and (@table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" }["Wert"]) == "Ja"
-  inventory_code = @table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"]
-  step %Q(ich nach "%s" suche) % inventory_code
-  within("#inventory .line[data-type='model']", match: :first, text: /#{@table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"]}/) do
-    find(".col2of5 strong", text: /#{@table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"]}/)
+#Dann /^ist der Gegenstand mit all den angegebenen Informationen erstellt$/ do
+Then(/^the item is saved with all the entered information$/) do
+  select "retired", from: "retired" if @table_hashes.detect { |r| r["field"] == "Retirement" } and (@table_hashes.detect { |r| r["field"] == "Retirement" }["value"]) == "Yes"
+  inventory_code = @table_hashes.detect { |r| r["field"] == "Inventory Code" }["value"]
+  step %Q(I search for "%s") % inventory_code
+  within("#inventory .line[data-type='model']", match: :first, text: /#{@table_hashes.detect { |r| r["field"] == "Model" }["value"]}/) do
+    find(".col2of5 strong", text: /#{@table_hashes.detect { |r| r["field"] == "Model" }["value"]}/)
     find(".button[data-type='inventory-expander'] i.arrow.right").click
     find(".button[data-type='inventory-expander'] i.arrow.down")
   end
   find(".group-of-lines .line[data-type='item']", text: inventory_code).find(".button", text: _("Edit Item")).click
-  step 'hat der Gegenstand alle zuvor eingetragenen Werte'
+  step 'the item has all previously entered values'
 end
 
-Dann /^hat der Gegenstand alle zuvor eingetragenen Werte$/ do
+#Dann /^hat der Gegenstand alle zuvor eingetragenen Werte$/ do
+Then(/^the item has all previously entered values$/) do
   expect(has_selector?(".row.emboss")).to be true
   @table_hashes.each do |hash_row|
-    field_name = hash_row["Feldname"]
-    field_value = hash_row["Wert"]
-    field_type = hash_row["Type"]
+    field_name = hash_row["field"]
+    field_value = hash_row["value"]
+    field_type = hash_row["type"]
     field = Field.all.detect { |f| _(f.label) == field_name }
     find("[data-type='field'][data-id='#{field.id}']", match: :first)
     matched_field = all("[data-type='field'][data-id='#{field.id}']").last
     expect(matched_field).not_to be_blank
     case field_type
       when "autocomplete"
-        expect(matched_field.find("input,textarea").value).to eq (field_value != "Keine/r" ? field_value : "")
+        expect(matched_field.find("input,textarea").value).to eq (field_value != "None" ? field_value : "")
       when "select"
         expect(matched_field.all("option").detect(&:selected?).text).to eq field_value
       when "radio must"
@@ -118,10 +122,6 @@ Dann /^hat der Gegenstand alle zuvor eingetragenen Werte$/ do
         expect(matched_field.find("input,textarea").value).to eq field_value
     end
   end
-end
-
-Dann /^man wird zur Liste des Inventars zurueckgefuehrt$/ do
-  expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 
 Wenn /^jedes Pflichtfeld ist gesetzt$/ do |table|

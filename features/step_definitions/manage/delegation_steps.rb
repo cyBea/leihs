@@ -321,7 +321,7 @@ Wenn(/^wenn für diese Delegation keine Zugriffsrechte für irgendwelches Gerät
 end
 
 Dann(/^kann ich diese Delegation löschen$/) do
-  step %Q(ich nach "%s" suche) % @delegation.name
+  step %Q(I search for "%s") % @delegation.name
   line = find(".line", text: @delegation.name)
   line.find(".dropdown-toggle").click
   find("[data-method='delete']").click
