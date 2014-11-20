@@ -78,4 +78,6 @@ class window.App.BorrowBookingCalendarDialogController extends App.BookingCalend
     return ! @errors.length
 
   # overwrite
-  submit: => do @validationAlerts
+  submit: =>
+    do @validationAlerts
+    super
