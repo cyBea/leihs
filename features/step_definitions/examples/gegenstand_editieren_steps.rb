@@ -79,11 +79,12 @@ Dann(/^ist der Gegenstand mit all den angegebenen Informationen gespeichert$/) d
   find(:select, "retired").first("option").select_option if @table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" } and (@table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" }["Wert"]) == "Ja"
   step %Q(ich nach "%s" suche) %  (@table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"])
   find(".line", :text => @table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"], :visible => true)
-  step "man befindet sich auf der Editierseite von diesem Gegenstand"
+  step "I am on this item's edit page"
   step 'hat der Gegenstand alle zuvor eingetragenen Werte'
 end
 
-Wenn(/^ich den Lieferanten lösche$/) do
+#Wenn(/^ich den Lieferanten lösche$/) do
+When(/^I delete the supplier$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Supplier")).find("input").set ""
 end
 
@@ -92,14 +93,16 @@ Dann(/^wird der neue Lieferant gelöscht$/) do
   expect(Supplier.find_by_name(@new_supplier)).not_to be_nil
 end
 
-Dann(/^ist bei dem bearbeiteten Gegenstand keiner Lieferant eingetragen$/) do
+#Dann(/^ist bei dem bearbeiteten Gegenstand keiner Lieferant eingetragen$/) do
+Then(/^the item has no supplier$/) do
   expect(has_content?(_("List of Inventory"))).to be true
   expect(@item.reload.supplier).to eq nil
 end
 
-Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes mit gesetztem Lieferanten$/) do
+#Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes mit gesetztem Lieferanten$/) do
+And(/^I navigate to the edit page of an item that has a supplier$/) do
   @item = @current_inventory_pool.items.find { |i| not i.supplier.nil? }
-  step "man befindet sich auf der Editierseite von diesem Gegenstand"
+  step "I am on this item's edit page"
 end
 
 Wenn(/^ich den Lieferanten ändere$/) do
@@ -114,13 +117,13 @@ end
 Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist$/) do
   @item = @current_inventory_pool.own_items.not_in_stock.sample
   @item_before = @item.to_json
-  step "man befindet sich auf der Editierseite von diesem Gegenstand"
+  step "I am on this item's edit page"
 end
 
 Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist$/) do
   @item = @current_inventory_pool.items.not_in_stock.sample
   @item_before = @item.to_json
-  step "man befindet sich auf der Editierseite von diesem Gegenstand"
+  step "I am on this item's edit page"
 end
 
 Wenn(/^ich die verantwortliche Abteilung ändere$/) do
@@ -130,7 +133,7 @@ end
 Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist$/) do
   @item = @current_inventory_pool.items.items.not_in_stock.sample
   @item_before = @item.to_json
-  step "man befindet sich auf der Editierseite von diesem Gegenstand"
+  step "I am on this item's edit page"
 end
 
 Wenn(/^ich das Modell ändere$/) do

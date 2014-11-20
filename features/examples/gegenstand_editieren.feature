@@ -9,57 +9,57 @@ Feature: Editing an item
     When I select "Yes" from "item[retired]"
     When I choose "Investment"
     Then I see form fields in the following order:
-      | field |
-      | Inventory Code |
-      | Model          |
-      | - Status -                  |
+      | field                      |
+      | Inventory Code             |
+      | Model                      |
+      | - Status -                 |
       | Retirement                 |
       | Reason for Retirement      |
-      | Working order                      |
-      | Completeness              |
-      | Borrowable                   |
-      | - Inventory -                 |
+      | Working order              |
+      | Completeness               |
+      | Borrowable                 |
+      | - Inventory -              |
       | Relevant for inventory     |
-      | Supply Category |
-      | Owner                     |
-      | Last Checked              |
-      | Responsible department    |
-      | Responsible person       |
-      | User/Typical usage        |
-      | - Move -|
-      | Move                        |
-      | Target area                     |
-      | - Toni Ankunftskontrolle -   |
-      | Check-In Date                |
+      | Supply Category            |
+      | Owner                      |
+      | Last Checked               |
+      | Responsible department     |
+      | Responsible person         |
+      | User/Typical usage         |
+      | - Move -                   |
+      | Move                       |
+      | Target area                |
+      | - Toni Ankunftskontrolle - |
+      | Check-In Date              |
       | Check-In State             |
-      | Check-In Note                |
-      | - General Information - |
-      | Serial Number |
-      | MAC-Address                 |
-      | IMEI-Number                  |
-      | Name                         |
-      | Note                        |
-      | - Location -                      |
-      | Building                      |
-      | Room                         |
+      | Check-In Note              |
+      | - General Information -    |
+      | Serial Number              |
+      | MAC-Address                |
+      | IMEI-Number                |
+      | Name                       |
+      | Note                       |
+      | - Location -               |
+      | Building                   |
+      | Room                       |
       | Shelf                      |
-      | - Invoice Information -   |
-      | Reference                        |
-      | Project Number                |
-      | Invoice Number              |
+      | - Invoice Information -    |
+      | Reference                  |
+      | Project Number             |
+      | Invoice Number             |
       | Invoice Date               |
-      | Initial Price             |
-      | Supplier                    |
-      | Warranty expiration          |
-      | Contract expiration          |
+      | Initial Price              |
+      | Supplier                   |
+      | Warranty expiration        |
+      | Contract expiration        |
 
   @javascript @personas
-  Scenario: Lieferanten löschen
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    Given man navigiert zur Bearbeitungsseite eines Gegenstandes mit gesetztem Lieferanten
-    When ich den Lieferanten lösche
+  Scenario: Delete supplier
+    Given I edit an item that belongs to the current inventory pool
+    And I navigate to the edit page of an item that has a supplier
+    When I delete the supplier
     And I save
-    Then ist bei dem bearbeiteten Gegenstand keiner Lieferant eingetragen
+    Then the item has no supplier
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen editieren
