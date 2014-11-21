@@ -23,8 +23,7 @@ class window.App.InventoryPool extends Spine.Model
 
   isVisitPossible: (date)=>
     # NOTE check if the maximum visits limit has been reached
-    @workday().reached_max_visits.indexOf(moment(date).format("YYYY-MM-DD")) is -1 and
-    @hasEnoughReservationAdvanceDays(date)
+    @workday().reached_max_visits.indexOf(moment(date).format("YYYY-MM-DD")) is -1
 
   hasEnoughReservationAdvanceDays: (date)=>
     # NOTE check number of days between order submission and hand over
