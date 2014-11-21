@@ -15,6 +15,9 @@ Feature: calendar
     When I specify this date as start or end date
     Then the day is marked red
     And I receive an error message within the modal
+    When I submit the reservation
+    Then I receive an error message within the modal
+    And the booking calendar is not closed
 
   @personas @javascript
   Scenario: hand over not possible according to days between submission and hand over
