@@ -13,19 +13,22 @@ Given(/^I edit an item that belongs to the current inventory pool( and is in sto
   expect(has_selector?(".row.emboss")).to be true
 end
 
-Dann /^muss der "(.*?)" unter "(.*?)" ausgewählt werden$/ do |key, section|
+#Dann /^muss der "(.*?)" unter "(.*?)" ausgewählt werden$/ do |key, section|
+Then(/^"(.*?)" must be selected in the "(.*?)" section$/) do |key, section|
   field = find("[data-type='field']", text: key)
   expect(field[:"data-required"]).to eq "true"
 end
 
-Wenn /^"(.*?)" bei "(.*?)" ausgewählt ist muss auch "(.*?)" angegeben werden$/ do |value, key, newkey|
+#Wenn /^"(.*?)" bei "(.*?)" ausgewählt ist muss auch "(.*?)" angegeben werden$/ do |value, key, newkey|
+When(/^"(.*?)" is selected for "(.*?)", "(.*?)" must also be supplied$/) do |value, key, newkey|
   field = find("[data-type='field']", text: key)
   field.find("label,option", match: :first, :text => value).click
   newfield = find("[data-type='field']", text: newkey)
   expect(newfield[:"data-required"]).to eq "true"
 end
 
-Dann /^sind alle Pflichtfelder mit einem Stern gekenzeichnet$/ do
+#Dann /^sind alle Pflichtfelder mit einem Stern gekenzeichnet$/ do
+Then(/^all required fields are marked with an asterisk$/) do
   all(".field[data-required='true']", :visible => true).each do |field|
     expect(field.text[/\*/]).not_to be_nil
   end
@@ -34,7 +37,8 @@ Dann /^sind alle Pflichtfelder mit einem Stern gekenzeichnet$/ do
   end
 end
 
-Wenn /^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der Gegenstand nicht speichern$/ do
+#Wenn /^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der Gegenstand nicht speichern$/ do
+Then(/^I cannot save the item if a required field is empty$/) do
   find(".field[data-required='true'] textarea", match: :first).set("")
   find(".field[data-required='true'] input[type='text']", match: :first).set("")
   find("#item-save").click
@@ -42,7 +46,8 @@ Wenn /^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der 
   expect(@item.to_json).to eq @item.reload.to_json
 end
 
-Wenn /^die nicht ausgefüllten\/ausgewählten Pflichtfelder sind rot markiert$/ do
+# Wenn /^die nicht ausgefüllten\/ausgewählten Pflichtfelder sind rot markiert$/ do
+When(/^the required fields are highlighted in red$/) do
   all(".field[data-required='true']", :visible => true).each do |field|
     if field.all("input[type=text]").any? { |input| input.value == 0 } or
         field.all("textarea").any? { |textarea| textarea.value == 0 } or
@@ -68,7 +73,8 @@ Then(/^I see form fields in the following order:$/) do |table|
   expect(values).to eq(expected_values)
 end
 
-Wenn(/^"(.*?)" bei "(.*?)" ausgewählt ist muss auch "(.*?)" ausgewählt werden$/) do |value, key, newkey|
+#Wenn(/^"(.*?)" bei "(.*?)" ausgewählt ist muss auch "(.*?)" ausgewählt werden$/) do |value, key, newkey|
+When(/^"(.*?)" is selected for "(.*?)", "(.*?)" must also be selected$/) do |value, key, newkey|
   field = find("[data-type='field']", text: key)
   field.find("option", match: :first, :text => value).select_option
   newfield = find("[data-type='field']", text: newkey)

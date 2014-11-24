@@ -130,16 +130,16 @@ Feature: Editing an item
     And the item is saved with all the entered information
 
   @javascript @personas
-  Scenario: Pflichtfelder
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    Then muss der "Bezug" unter "Rechnungsinformationen" ausgewählt werden
-    When "Investition" bei "Bezug" ausgewählt ist muss auch "Projektnummer" angegeben werden
-    When "Ja" bei "Inventarrelevant" ausgewählt ist muss auch "Anschaffungskategorie" ausgewählt werden
-    When "Ja" bei "Ausmusterung" ausgewählt ist muss auch "Grund der Ausmusterung" angegeben werden
-    Then sind alle Pflichtfelder mit einem Stern gekenzeichnet
-    When ein Pflichtfeld nicht ausgefüllt/ausgewählt ist, dann lässt sich der Gegenstand nicht speichern
+  Scenario: Required fields
+    Given I edit an item that belongs to the current inventory pool
+    Then "Reference" must be selected in the "Invoice Information" section
+    When "Investment" is selected for "Reference", "Project Number" must also be supplied
+    When "Yes" is selected for "Relevant for inventory", "Supply Category" must also be selected
+    When "Yes" is selected for "Retirement", "Reason for Retirement" must also be supplied
+    Then all required fields are marked with an asterisk
+    And I cannot save the item if a required field is empty
     And I see an error message
-    And die nicht ausgefüllten/ausgewählten Pflichtfelder sind rot markiert
+    And the required fields are highlighted in red
 
   @javascript @personas
   Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
