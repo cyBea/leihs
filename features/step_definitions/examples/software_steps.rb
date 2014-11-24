@@ -324,7 +324,7 @@ end
 Wenn(/^I change the value for maintenance contract$/) do
   within(".field", text: _("Maintenance contract")) do
     o = all("option").detect &:selected?
-    find("option[value='#{@new_maintenance_contract = !o.value}']").select_option
+    find("option[value='#{@new_maintenance_contract = !(o.value == "true")}']").select_option
   end
 
   if @new_maintenance_contract
