@@ -70,14 +70,14 @@ Feature: Editing an item
       | Inventory Code         |              | Test Inventory Code |
       | Model                  | autocomplete | Sharp Beamer 456    |
 
-      | Retirement             | select | Yes                 |
-      | Reason for Retirement  |        | Some reason         |
-      | Working order          | radio  | OK                  |
-      | Completeness           | radio  | OK                  |
-      | Borrowable             | radio  | OK                  |
+      | Retirement             | select       | Yes                 |
+      | Reason for Retirement  |              | Some reason         |
+      | Working order          | radio        | OK                  |
+      | Completeness           | radio        | OK                  |
+      | Borrowable             | radio        | OK                  |
 
-      | Relevant for inventory | select | Yes                 |
-      | Supply Category        | select | Workshop Technology |
+      | Relevant for inventory | select       | Yes                 |
+      | Supply Category        | select       | Workshop Technology |
     And I save
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
@@ -90,51 +90,44 @@ Feature: Editing an item
     Then there is only product name in the input field of the model
 
   @javascript @personas
-  Scenario: Lieferanten ändern
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    When ich den Lieferanten ändere
+  Scenario: Change supplier
+    Given I edit an item that belongs to the current inventory pool
+    When I change the supplier
     And I save
-    Then ist bei dem bearbeiteten Gegestand der geänderte Lieferant eingetragen
+    Then the edited item has the new supplier
 
   @javascript @personas
-  Scenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
-    Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist
-    When ich die verantwortliche Abteilung ändere
+  Scenario: You can't change the responsible department for items that are not in stock
+    Given I edit an item that belongs to the current inventory pool and is not in stock
+    When I change the responsible department
     And I save
-    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
+    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
   @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen editieren
-    Given man editiert einen Gegenstand, wo man der Besitzer ist, der am Lager und in keinem Vertrag vorhanden ist
-    When ich die folgenden Informationen erfasse
-      | Feldname              | Type         | Wert                |
-
-      | Inventarcode          |              | Test Inventory Code |
-      | Modell                | autocomplete | Sharp Beamer 456    |
-
-      | Inventarrelevant      | select       | Ja                  |
-      | Anschaffungskategorie | select       | Werkstatt-Technik   |
-
-      | Umzug                 | select       | sofort entsorgen    |
-      | Zielraum              |              | Test Raum           |
-
-      | Ankunftsdatum         |              | 01.01.2013          |
-      | Ankunftszustand       | select       | transportschaden    |
-      | Ankunftsnotiz         |              | Test Notiz          |
-
-      | Seriennummer          |              | Test Seriennummer   |
-      | MAC-Adresse           |              | Test MAC-Adresse    |
-      | IMEI-Nummer           |              | Test IMEI-Nummer    |
-      | Name                  |              | Test Name           |
-      | Notiz                 |              | Test Notiz          |
-
-      | Gebäude               | autocomplete | Keine/r             |
-      | Raum                  |              | Test Raum           |
-      | Gestell               |              | Test Gestell        |
-
+  Scenario: Editing an item an all its information
+    Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
+    When I enter the following item information
+      | field                  | type         | value               |
+      | Inventory Code         |              | Test Inventory Code |
+      | Model                  | autocomplete | Sharp Beamer 456    |
+      | Relevant for inventory | select       | Yes                |
+      | Supply Category        | select       | Workshop Technology |
+      | Move                   | select       | sofort entsorgen    |
+      | Target area            |              | Test room           |
+      | Check-In Date          |              | 01/01/2013          |
+      | Check-In State         | select       | transportschaden    |
+      | Check-In Note          |              | Test note           |
+      | Serial Number          |              | Test serial number  |
+      | MAC-Address            |              | Test MAC address    |
+      | IMEI-Number            |              | Test IMEI number    |
+      | Name                   |              | Test name           |
+      | Note                   |              | Test note           |
+      | Building               | autocomplete | None                |
+      | Room                   |              | Test room           |
+      | Shelf                  |              | Test shelf          |
     And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen gespeichert
+    Then I am redirected to the inventory list
+    And the item is saved with all the entered information
 
   @javascript @personas
   Scenario: Pflichtfelder

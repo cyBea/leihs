@@ -105,16 +105,19 @@ And(/^I navigate to the edit page of an item that has a supplier$/) do
   step "I am on this item's edit page"
 end
 
-Wenn(/^ich den Lieferanten ändere$/) do
+#Wenn(/^ich den Lieferanten ändere$/) do
+When(/^I change the supplier$/) do
   @supplier = Supplier.first
   fill_in_autocomplete_field _("Supplier"), @supplier.name
 end
 
-Dann(/^ist bei dem bearbeiteten Gegestand der geänderte Lieferant eingetragen$/) do
+#Dann(/^ist bei dem bearbeiteten Gegestand der geänderte Lieferant eingetragen$/) do
+Then(/^the edited item has the new supplier$/) do
   expect(@item.reload.supplier).to eq @supplier
 end
 
-Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist$/) do
+#Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist$/) do
+Given(/^I edit an item that belongs to the current inventory pool and is not in stock$/) do
   @item = @current_inventory_pool.own_items.not_in_stock.sample
   @item_before = @item.to_json
   step "I am on this item's edit page"
@@ -126,7 +129,8 @@ Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeli
   step "I am on this item's edit page"
 end
 
-Wenn(/^ich die verantwortliche Abteilung ändere$/) do
+#Wenn(/^ich die verantwortliche Abteilung ändere$/) do
+When(/^I change the responsible department$/) do
   fill_in_autocomplete_field _("Responsible"), InventoryPool.where("id != ?", @item.inventory_pool.id).sample.name
 end
 
