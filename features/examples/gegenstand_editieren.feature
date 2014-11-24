@@ -150,13 +150,12 @@ Feature: Editing an item
     And the edited item has the new supplier
 
   @javascript @personas
-  Scenario: Neuen Lieferanten nicht erstellen falls einer mit gleichem Namen schon vorhanden
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    When ich einen existierenen Lieferanten angebe
+  Scenario: Do not create a new supplier if one of the same name already exists
+    Given I edit an item that belongs to the current inventory pool
+    When I enter a supplier
     And I save
-    Then wird kein neuer Lieferant erstellt
-    And bei dem bearbeiteten Gegestand ist der bereits vorhandenen Lieferant eingetragen
-  
+    Then no new supplier is created
+    And the edited item has the existing supplier
 
   @javascript @personas
   Scenario: Bei Gegenständen, die in Verträgen vorhanden sind, kann man das Modell nicht ändern
