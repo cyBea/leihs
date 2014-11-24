@@ -51,6 +51,7 @@ end
 #Wenn /^ich die folgenden Informationen erfasse$/ do |table|
 When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
+  binding.pry
 
   @table_hashes.each do |hash_row|
     field_name = hash_row["field"]

@@ -309,7 +309,8 @@ Then(/^I see an error message that I can't change the responsible inventory pool
   expect(@item_before).to eq @item.reload.to_json
 end
 
-Dann(/^erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist$/) do
+#Dann(/^erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist$/) do
+Then(/^I see an error message that I can't retire the item because it's already handed over or assigned to a contract$/) do
   expect(has_content?(_("The item cannot be retired because it's not returned yet or has already been assigned to a contract line."))).to be true
   expect(@item_before).to eq @item.reload.to_json
 end

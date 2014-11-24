@@ -147,7 +147,8 @@ When(/^I change the model$/) do
   fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.sample.name
 end
 
-Wenn(/^ich den Gegenstand ausmustere$/) do
+#Wenn(/^ich den Gegenstand ausmustere$/) do
+When(/^I retire the item$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Retirement")).find("select", match: :first).select _("Yes")
   find(".row.emboss", match: :prefer_exact, text: _("Reason for Retirement")).find("input, textarea", match: :first).set "Retirement reason"
 end

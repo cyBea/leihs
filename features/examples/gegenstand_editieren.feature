@@ -110,7 +110,7 @@ Feature: Editing an item
       | field                  | type         | value               |
       | Inventory Code         |              | Test Inventory Code |
       | Model                  | autocomplete | Sharp Beamer 456    |
-      | Relevant for inventory | select       | Yes                |
+      | Relevant for inventory | select       | Yes                 |
       | Supply Category        | select       | Workshop Technology |
       | Move                   | select       | sofort entsorgen    |
       | Target area            |              | Test room           |
@@ -125,6 +125,17 @@ Feature: Editing an item
       | Building               | autocomplete | None                |
       | Room                   |              | Test room           |
       | Shelf                  |              | Test shelf          |
+      | Reference              | radio must   | Investment          |
+      | Project Number         |              | Test number         |
+      | Invoice Number         |              | Test number         |
+      | Invoice Date           |              | 01/01/2013          |
+      | Initial Price          |              | 50.00               |
+      | Warranty expiration    |              | 01/01/2013          |
+      | Contract expiration    |              | 01/01/2013          |
+      | Last Checked           |              | 01/01/2013          |
+      | Responsible department | autocomplete | A-Ausleihe          |
+      | Responsible person     |              | Matus Kmit          |
+      | User/Typical usage     |              | Test use            |
     And I save
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
@@ -165,52 +176,8 @@ Feature: Editing an item
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
   @javascript @personas
-  Scenario: Einen Gegenstand, der ausgeliehen ist, kann man nicht ausmustern
-    Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist
-    When ich den Gegenstand ausmustere
+  Scenario: Can't retire an item that is not in stock
+    Given I edit an item that belongs to the current inventory pool and is not in stock
+    When I retire the item
     And I save
-    Then erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist
-
-  @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen editieren
-    Given man editiert einen Gegenstand, wo man der Besitzer ist, der am Lager und in keinem Vertrag vorhanden ist
-    When ich die folgenden Informationen erfasse
-      | Feldname              | Type         | Wert                |
-
-      | Inventarcode          |              | Test Inventory Code |
-      | Modell                | autocomplete | Sharp Beamer 456    |
-
-      | Inventarrelevant      | select       | Ja                  |
-      | Anschaffungskategorie | select       | Werkstatt-Technik   |
-
-      | Bezug                 | radio must   | Investition         |
-      | Projektnummer         |              | Test Nummer         |
-      | Rechnungsnummer       |              | Test Nummer         |
-      | Rechnungsdatum        |              | 01.01.2013          |
-      | Anschaffungswert      |              | 50.00               |
-      | Garantieablaufdatum   |              | 01.01.2013          |
-      | Vertragsablaufdatum   |              | 01.01.2013          |
-
-    And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen gespeichert
-
-  @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen editieren
-    Given man editiert einen Gegenstand, wo man der Besitzer ist, der am Lager und in keinem Vertrag vorhanden ist
-    When ich die folgenden Informationen erfasse
-      | Feldname                  | Type         | Wert                |
-
-      | Inventarcode              |              | Test Inventory Code |
-      | Modell                    | autocomplete | Sharp Beamer 456    |
-
-      | Inventarrelevant          | select       | Ja                  |
-      | Anschaffungskategorie     | select       | Werkstatt-Technik   |
-      | Letzte Inventur           |              | 01.01.2013          |
-      | Verantwortliche Abteilung | autocomplete | A-Ausleihe          |
-      | Verantwortliche Person    |              | Matus Kmit          |
-      | Benutzer/Verwendung       |              | Test Verwendung     |
-
-    And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen gespeichert
+    Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
