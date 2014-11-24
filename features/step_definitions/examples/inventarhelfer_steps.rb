@@ -303,7 +303,9 @@ end
 
 #Dann(/^erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist$/) do
 Then(/^I see an error message that I can't change the responsible inventory pool for items that are not in stock$/) do
-  expect(page.has_content?(_("The responsible inventory pool cannot be changed because it's not returned yet or has already been assigned to a contract line."))).to be true
+  expect(page.has_content?(
+    _("The model cannot be changed because the item is used in contracts already."))
+  ).to be true
   expect(@item_before).to eq @item.reload.to_json
 end
 

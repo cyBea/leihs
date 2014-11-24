@@ -142,7 +142,8 @@ Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der in eine
   step "I am on this item's edit page"
 end
 
-Wenn(/^ich das Modell ändere$/) do
+#Wenn(/^ich das Modell ändere$/) do
+When(/^I change the model$/) do
   fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.sample.name
 end
 

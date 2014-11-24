@@ -158,11 +158,11 @@ Feature: Editing an item
     And the edited item has the existing supplier
 
   @javascript @personas
-  Scenario: Bei Gegenständen, die in Verträgen vorhanden sind, kann man das Modell nicht ändern
-    Given man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist
-    When ich das Modell ändere
+  Scenario: Can't change the model for items that are in contracts
+    Given I edit an item that belongs to the current inventory pool and is not in stock
+    When I change the model
     And I save
-    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist
+    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
   @javascript @personas
   Scenario: Einen Gegenstand, der ausgeliehen ist, kann man nicht ausmustern
