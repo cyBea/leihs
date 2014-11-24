@@ -83,8 +83,8 @@ Feature: Editing an item
     And the item is saved with all the entered information
 
   @javascript @personas
-  Scenario: Ein Modell ohne Version für den Gegestand wählen
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
+  Scenario: Choosing a model without a version
+    Given I edit an item that belongs to the current inventory pool
     And there is a model without a version
     When I assign this model to the item
     Then there is only product name in the input field of the model
