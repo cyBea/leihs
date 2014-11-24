@@ -94,7 +94,8 @@ When(/^I delete the supplier$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Supplier")).find("input").set ""
 end
 
-Dann(/^wird der neue Lieferant gelöscht$/) do
+#Dann(/^wird der neue Lieferant gelöscht$/) do
+Then(/^the new supplier is deleted$/) do
   expect(has_content?(_("List of Inventory"))).to be true
   expect(Supplier.find_by_name(@new_supplier)).not_to be_nil
 end
@@ -115,11 +116,6 @@ end
 When(/^I change the supplier$/) do
   @supplier = Supplier.first
   fill_in_autocomplete_field _("Supplier"), @supplier.name
-end
-
-#Dann(/^ist bei dem bearbeiteten Gegestand der geänderte Lieferant eingetragen$/) do
-Then(/^the edited item has the new supplier$/) do
-  expect(@item.reload.supplier).to eq @supplier
 end
 
 #Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist$/) do

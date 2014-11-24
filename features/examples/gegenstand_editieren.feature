@@ -142,12 +142,12 @@ Feature: Editing an item
     And the required fields are highlighted in red
 
   @javascript @personas
-  Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
-    Given man editiert einen Gegenstand, wo man der Besitzer ist
-    When ich einen nicht existierenen Lieferanten angebe
+  Scenario: Create new supplier if it does not already exist
+    Given I edit an item that belongs to the current inventory pool
+    When I enter a supplier that does not exist
     And I save
-    Then wird der neue Lieferant erstellt
-    And bei dem bearbeiteten Gegestand ist der neue Lieferant eingetragen
+    Then a new supplier is created
+    And the edited item has the new supplier
 
   @javascript @personas
   Scenario: Neuen Lieferanten nicht erstellen falls einer mit gleichem Namen schon vorhanden
