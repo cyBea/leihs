@@ -68,21 +68,26 @@ Feature: Gegenstand erstellen
     Then the model cannot be created
     And I see an error message
 
-  # TODO: scenario outline
   @javascript @personas
-  Scenario: Forgetting to fill out just one required field when creating an item
+  Scenario Outline: Forgetting to fill out just one required field when creating an item
     Given I am Matti
     And I edit an item
     And I choose "Investment" as reference
     And these required fields are filled in:
-    | Model        |
-    | Inventory Code|
-    | Project Number |
+    | Model           |
+    | Inventory Code  |
+    | Project Number  |
     | Supply Category |
-    When I leave the field "Model" empty
+    When I leave the field "<required_field>" empty
     Then the model cannot be created
     And I see an error message
     And the other fields still contain their data
+    Examples:
+      | required_field  |
+      | Model           |
+      | Inventory Code  |
+      | Project Number  |
+      | Supply Category |
 
   @javascript @personas
   Scenario: Areas where you can create an item
