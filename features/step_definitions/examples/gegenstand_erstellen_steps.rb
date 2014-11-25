@@ -121,23 +121,24 @@ Then(/^the item has all previously entered values$/) do
   end
 end
 
-Wenn /^jedes Pflichtfeld ist gesetzt$/ do |table|
+# jedes Pflichtfeld ist gesetzt
+When(/^these required fields are filled in:$/) do |table|
   table.raw.flatten.each do |must_field_name|
     case must_field_name
-      when "Inventarcode"
+      when "Inventory Code"
         @inventory_code_value = "test"
         @inventory_code_field = find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input,textarea")
         @inventory_code_field.set @inventory_code_value
-      when "Modell"
+      when "Model"
         model_name = Model.first.name
         fill_in_autocomplete_field must_field_name, model_name
-      when "Projektnummer"
-        find(".row.emboss", match: :prefer_exact, text: "Bezug").find("input[value='investment']").set true
+      when "Project Number"
+        find(".row.emboss", match: :prefer_exact, text: "Reference").find("input[value='investment']").set true
         @project_number_value = "test"
         @project_number_field = find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input,textarea")
         @project_number_field.set @project_number_value
-      when "Anschaffungskategorie"
-        find(".row.emboss", match: :prefer_exact, text: "Anschaffungskategorie").find("select option:not([value=''])", match: :first).select_option
+      when "Supply Category"
+        find(".row.emboss", match: :prefer_exact, text: "Supply Category").find("select option:not([value=''])", match: :first).select_option
       else
         raise 'unknown field'
     end
@@ -163,7 +164,8 @@ When(/^these required fields are blank:$/) do |table|
   end
 end
 
-Wenn /^ich das gekennzeichnete "(.+)" leer lasse$/ do |must_field_name|
+#Wenn /^ich das gekennzeichnete "(.+)" leer lasse$/ do |must_field_name|
+When(/^I leave the field "(.+)" empty$/) do |must_field_name|
   @must_field_name = must_field_name
   if not find(".row.emboss", match: :prefer_exact, text: @must_field_name).all("input,textarea").empty?
     find(".row.emboss", match: :prefer_exact, text: @must_field_name).find("input,textarea").set ""
@@ -181,8 +183,9 @@ Then(/^the model cannot be created$/) do
   expect(Item.find_by_inventory_code("test")).to eq nil
 end
 
-Dann /^die anderen Angaben wurde nicht gelöscht$/ do
-  if @must_field_name == "Modell"
+#Dann /^die anderen Angaben wurde nicht gelöscht$/ do
+Then(/^the other fields still contain their data$/) do
+  if @must_field_name == "Model"
     expect(@inventory_code_field.value).to eq @inventory_code_value
     expect(@project_number_field.value).to eq @project_number_value
   end

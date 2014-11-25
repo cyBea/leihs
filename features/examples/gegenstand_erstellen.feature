@@ -61,27 +61,27 @@ Feature: Gegenstand erstellen
     And I edit an item
     And I choose "Investment" as reference
     And these required fields are blank:
-    | Model        |
+    | Model           |
     | Inventory Code  |
-    | Project Number |
+    | Project Number  |
     | Supply Category |
     Then the model cannot be created
     And I see an error message
 
   @javascript @personas
-  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+  Scenario: Forgetting to fill out just one required field when creating an item
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And man setzt Bezug auf Investition
-    And jedes Pflichtfeld ist gesetzt
-    | Modell        |
-    | Inventarcode  |
-    | Projektnummer |
-    | Anschaffungskategorie |
-    When ich das gekennzeichnete "Modell" leer lasse
-    Then kann das Modell nicht erstellt werden
+    And I edit an item
+    And I choose "Investment" as reference
+    And these required fields are filled in:
+    | Model        |
+    | Inventory Code|
+    | Project Number |
+    | Supply Category |
+    When I leave the field "Model" empty
+    Then the model cannot be created
     And I see an error message
-    And die anderen Angaben wurde nicht gelöscht
+    And the other fields still contain their data
 
   @javascript @personas
   Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
