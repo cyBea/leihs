@@ -83,11 +83,6 @@ When(/^I enter the following item information$/) do |table|
   end
 end
 
-Wenn /^ich erstellen druecke$/ do
-  find("button", text: _("Save %s") % _("Item")).click
-  find("#flash")
-end
-
 #Dann /^ist der Gegenstand mit all den angegebenen Informationen erstellt$/ do
 Then(/^the item is saved with all the entered information$/) do
   select "retired", from: "retired" if @table_hashes.detect { |r| r["field"] == "Retirement" } and (@table_hashes.detect { |r| r["field"] == "Retirement" }["value"]) == "Yes"
@@ -149,17 +144,18 @@ Wenn /^jedes Pflichtfeld ist gesetzt$/ do |table|
   end
 end
 
-Wenn /^kein Pflichtfeld ist gesetzt$/ do |table|
+#Wenn /^kein Pflichtfeld ist gesetzt$/ do |table|
+When(/^these required fields are blank:$/) do |table|
   table.raw.flatten.each do |must_field_name|
     case must_field_name
-      when "Inventarcode"
+      when "Inventory Code"
         find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input,textarea").set ""
-      when "Modell"
+      when "Model"
         find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input").set ""
-      when "Projektnummer"
-        find(".row.emboss", match: :prefer_exact, text: "Bezug").find("input[value='investment']").set true
+      when "Project Number"
+        find(".row.emboss", match: :prefer_exact, text: "Reference").find("input[value='investment']").set true
         find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input,textarea").set ""
-      when "Anschaffungskategorie"
+      when "Supply Category"
         find(".row.emboss", match: :prefer_exact, text: must_field_name).find("select option[value='']").select_option
       else
         raise 'unknown field'
@@ -178,8 +174,9 @@ Wenn /^ich das gekennzeichnete "(.+)" leer lasse$/ do |must_field_name|
   end
 end
 
-Dann /^kann das Modell nicht erstellt werden$/ do
-  step "ich erstellen druecke"
+#Dann /^kann das Modell nicht erstellt werden$/ do
+Then(/^the model cannot be created$/) do
+  step "I save"
   expect(Item.find_by_inventory_code("")).to eq nil
   expect(Item.find_by_inventory_code("test")).to eq nil
 end
@@ -201,10 +198,6 @@ end
 
 Dann /^folgende Felder haben folgende Standardwerte$/ do |table|
   check_fields_and_their_values table
-end
-
-Angenommen(/^man setzt Bezug auf Investition$/) do
-  find("input[name='item[properties][reference]'][value='investment']").click
 end
 
 Dann(/^sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt$/) do |table|

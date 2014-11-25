@@ -9,7 +9,7 @@ Feature: Gegenstand erstellen
     # TODO: Explain the rationale.
     # TODO: Remove web_steps.rb
     And I select "Yes" from "item[retired]"
-    And I choose "Investment"
+    And I choose "Investment" as reference
     Then I see form fields in the following order:
       | field                      |
       | Inventory Code             |
@@ -54,17 +54,18 @@ Feature: Gegenstand erstellen
       | Supplier                   |
       | Warranty expiration        |
       | Contract expiration        |
+
   @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen fehlenden Pflichtangaben erstellen
+  Scenario: Forgetting to fill out the required fields when creating an item
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And man setzt Bezug auf Investition
-    And kein Pflichtfeld ist gesetzt
-    | Modell        |
-    | Inventarcode  |
-    | Projektnummer |
-    | Anschaffungskategorie  |
-    Then kann das Modell nicht erstellt werden
+    And I edit an item
+    And I choose "Investment" as reference
+    And these required fields are blank:
+    | Model        |
+    | Inventory Code  |
+    | Project Number |
+    | Supply Category |
+    Then the model cannot be created
     And I see an error message
 
   @javascript @personas
@@ -113,7 +114,7 @@ Feature: Gegenstand erstellen
       | Projektnummer |
       | Anschaffungskategorie |
     When ich einen nicht existierenen Lieferanten angebe
-    And ich erstellen druecke
+    And I save
     Then wird der neue Lieferant erstellt
     And bei dem erstellten Gegestand ist der neue Lieferant eingetragen
 
@@ -138,7 +139,7 @@ Feature: Gegenstand erstellen
     | Ankunftszustand              | select       | transportschaden              |
     | Ankunftsnotiz                |              | Test Notiz                    |
 
-    And ich erstellen druecke
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
@@ -164,7 +165,7 @@ Feature: Gegenstand erstellen
     | Raum                         |              | Test Raum                     |
     | Gestell                      |              | Test Gestell                  |
 
-    And ich erstellen druecke
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
@@ -219,7 +220,7 @@ Feature: Gegenstand erstellen
     | Garantieablaufdatum          |              | 01.01.2013                    |
     | Vertragsablaufdatum          |              | 01.01.2013                    |
 
-    And ich erstellen druecke
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
@@ -244,7 +245,7 @@ Feature: Gegenstand erstellen
     | Name                         |              | Test Name                     |
     | Notiz                        |              | Test Notiz                    |
 
-    And ich erstellen druecke
+    And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
