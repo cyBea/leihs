@@ -41,7 +41,7 @@ Then(/^I can create an item$/) do
 end
 
 #Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
-Given(/^I edit an item$/) do
+Given(/^I create an item$/) do
   visit manage_new_item_path(@current_inventory_pool)
   expect(has_selector?(".row.emboss")).to be true
 end
@@ -49,7 +49,6 @@ end
 #Wenn /^ich die folgenden Informationen erfasse$/ do |table|
 When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
-  binding.pry
 
   @table_hashes.each do |hash_row|
     field_name = hash_row["field"]

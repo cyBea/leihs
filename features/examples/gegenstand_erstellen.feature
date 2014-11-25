@@ -4,7 +4,7 @@ Feature: Gegenstand erstellen
   @javascript @personas
   Scenario: Order of the fields when creating an item
     Given I am Matti
-    And I edit an item
+    And I create an item
     # WHY are we retiring the item? Is it necessary so we can see an edit view?
     # TODO: Explain the rationale.
     # TODO: Remove web_steps.rb
@@ -58,7 +58,7 @@ Feature: Gegenstand erstellen
   @javascript @personas @browser
   Scenario: Forgetting to fill out the required fields when creating an item
     Given I am Matti
-    And I edit an item
+    And I create an item
     And I choose "Investment" as reference
     And these required fields are blank:
     | Model           |
@@ -71,7 +71,7 @@ Feature: Gegenstand erstellen
   @javascript @personas
   Scenario Outline: Forgetting to fill out just one required field when creating an item
     Given I am Matti
-    And I edit an item
+    And I create an item
     And I choose "Investment" as reference
     And these required fields are filled in:
     | Model           |
@@ -98,7 +98,7 @@ Feature: Gegenstand erstellen
   @javascript @personas
   Scenario: Creating a new supplier if it does not already exist
     Given I am Mike
-    And I edit an item
+    And I create an item
     And I choose "Investment" as reference
     And these required fields are filled in:
     | Model        |
@@ -111,106 +111,42 @@ Feature: Gegenstand erstellen
     And the created item has the new supplier
 
   @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen erstellen
+  Scenario: Creating an item with all its information
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    When ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-
-    | Inventarcode                 |              | Test Inventory Code           |
-    | Modell                       | autocomplete | Sharp Beamer 456              |
-
-    | Inventarrelevant             | select       | Ja                            |
-    | Anschaffungskategorie        | select       | Werkstatt-Technik             | 
-    | Letzte Inventur              |              | 01.01.2013                    |
-    | Verantwortliche Abteilung    | autocomplete | A-Ausleihe                    |
-    | Verantwortliche Person       |              | Matus Kmit                    |
-    | Benutzer/Verwendung          |              | Test Verwendung               |
-
-    | Ankunftsdatum                |              | 01.01.2013                    |
-    | Ankunftszustand              | select       | transportschaden              |
-    | Ankunftsnotiz                |              | Test Notiz                    |
-
+    And I create an item
+    And I enter the following item information
+      | field                  | type         | value               |
+      | Inventory Code         |              | Test Inventory Code |
+      | Model                  | autocomplete | Sharp Beamer 456    |
+      | Relevant for inventory | select       | Yes                 |
+      | Supply Category        | select       | Workshop Technology |
+      | Move                   | select       | sofort entsorgen    |
+      | Target area            |              | Test room           |
+      | Check-In Date          |              | 01/01/2013          |
+      | Check-In State         | select       | transportschaden    |
+      | Check-In Note          |              | Test note           |
+      | Serial Number          |              | Test serial number  |
+      | MAC-Address            |              | Test MAC address    |
+      | IMEI-Number            |              | Test IMEI number    |
+      | Name                   |              | Test name           |
+      | Note                   |              | Test note           |
+      | Building               | autocomplete | None                |
+      | Room                   |              | Test room           |
+      | Shelf                  |              | Test shelf          |
+      | Reference              | radio must   | Investment          |
+      | Project Number         |              | Test number         |
+      | Invoice Number         |              | Test number         |
+      | Invoice Date           |              | 01/01/2013          |
+      | Initial Price          |              | 50.00               |
+      | Warranty expiration    |              | 01/01/2013          |
+      | Contract expiration    |              | 01/01/2013          |
+      | Last Checked           |              | 01/01/2013          |
+      | Responsible department | autocomplete | A-Ausleihe          |
+      | Responsible person     |              | Matus Kmit          |
+      | User/Typical usage     |              | Test use            |
     And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen erstellt
-
-  @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    When ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-
-    | Inventarcode                 |              | Test Inventory Code           |
-    | Modell                       | autocomplete | Sharp Beamer 456              |
-
-    | Ausmusterung                 | select       | Nein                          |
-    | Zustand                      | radio        | OK                            |
-    | Vollständigkeit              | radio        | OK                            |
-    | Ausleihbar                   | radio        | OK                            |
-
-    | Inventarrelevant             | select       | Ja                            |
-    | Anschaffungskategorie        | select       | Werkstatt-Technik             | 
-
-    | Gebäude                      | autocomplete | Keine/r                       |
-    | Raum                         |              | Test Raum                     |
-    | Gestell                      |              | Test Gestell                  |
-
-    And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen erstellt
-
-
-  @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    When ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-
-    | Inventarcode                 |              | Test Inventory Code           |
-    | Modell                       | autocomplete | Sharp Beamer 456              |
-
-    | Inventarrelevant             | select       | Ja                            |
-    | Anschaffungskategorie        | select       | Werkstatt-Technik             | 
-
-    | Bezug                        | radio must   | Investition                   |
-    | Projektnummer                |              | Test Nummer                   |
-    | Rechnungsnummer              |              | Test Nummer                   |
-    | Rechnungsdatum               |              | 01.01.2013                    |
-    | Anschaffungswert             |              | 50.00                         |
-    | Garantieablaufdatum          |              | 01.01.2013                    |
-    | Vertragsablaufdatum          |              | 01.01.2013                    |
-
-    And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen erstellt
-
-  @javascript @personas @browser
-  Scenario: Einen Gegenstand mit allen Informationen erstellen
-    Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    When ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-
-    | Inventarcode                 |              | Test Inventory Code           |
-    | Modell                       | autocomplete | Sharp Beamer 456              |
-
-    | Inventarrelevant             | select       | Ja                            |
-    | Anschaffungskategorie        | select       | Werkstatt-Technik             | 
-    | Umzug                        | select       | sofort entsorgen              |
-    | Zielraum                     |              | Test Raum                     |
-
-    | Seriennummer                 |              | Test Seriennummer             |
-    | MAC-Adresse                  |              | Test MAC-Adresse              |
-    | IMEI-Nummer                  |              | Test IMEI-Nummer              |
-    | Name                         |              | Test Name                     |
-    | Notiz                        |              | Test Notiz                    |
-
-    And I save
-    Then man wird zur Liste des Inventars zurueckgefuehrt
-    And ist der Gegenstand mit all den angegebenen Informationen erstellt
+    Then I am redirected to the inventory list
+    And the item is saved with all the entered information
 
   @javascript @personas
   Scenario: Felder die bereits vorausgefüllt sind
