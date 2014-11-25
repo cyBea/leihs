@@ -149,23 +149,23 @@ Feature: Gegenstand erstellen
     And the item is saved with all the entered information
 
   @javascript @personas
-  Scenario: Felder die bereits vorausgefüllt sind
+  Scenario: Fields that are already filled in
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    Then ist der Barcode bereits gesetzt
-    And Letzte Inventur ist das heutige Datum
-    And folgende Felder haben folgende Standardwerte
-    | Feldname         | Type             | Wert             |
-    | Ausleihbar       | radio            | Nicht ausleihbar |
-    | Inventarrelevant | select           | Ja               |
-    | Zustand          | radio            | OK               |
-    | Vollständigkeit  | radio            | OK               |
-    | Anschaffungskategorie  | select     |                  |
+    And I create an item
+    Then the barcode is already filled in
+    And The date this item was last checked is today's date
+    And the following fields have their default values
+    | field                  | type   | value        |
+    | Borrowable             | radio  | Unborrowable |
+    | Relevant for inventory | select | Yes          |
+    | Working order          | radio  | OK           |
+    | Completeness           | radio  | OK           |
+    | Supply Category        | select |              |
 
   @javascript @personas
   Scenario: Werte für Anschaffungskategorie hinterlegen
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
+    And I create an item
     Then sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt
     | Anschaffungskategorie |
     | Werkstatt-Technik     |

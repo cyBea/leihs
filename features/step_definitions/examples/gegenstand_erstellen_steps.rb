@@ -13,14 +13,14 @@ end
 
 def check_fields_and_their_values table
   table.hashes.each do |hash_row|
-    field_name = hash_row["Feldname"]
-    field_value = hash_row["Wert"]
-    field_type = hash_row["Type"]
+    field_name = hash_row["field"]
+    field_value = hash_row["value"]
+    field_type = hash_row["type"]
 
     within(".row.emboss", match: :prefer_exact, text: field_name) do
       case field_type
         when "autocomplete"
-          expect(find("input,textarea").value).to eq (field_value != "Keine/r" ? field_value : "")
+          expect(find("input,textarea").value).to eq (field_value != 'None' ? field_value : "")
         when "select"
           expect(all("option").detect(&:selected?).text).to eq field_value
         when "radio must"
@@ -34,19 +34,19 @@ def check_fields_and_their_values table
   end
 end
 
-#Dann /^kann man einen Gegenstand erstellen$/ do
+# Dann /^kann man einen Gegenstand erstellen$/ do
 Then(/^I can create an item$/) do
   step 'I add a new Item'
   expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
 end
 
-#Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
+# Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
 Given(/^I create an item$/) do
   visit manage_new_item_path(@current_inventory_pool)
   expect(has_selector?(".row.emboss")).to be true
 end
 
-#Wenn /^ich die folgenden Informationen erfasse$/ do |table|
+# Wenn /^ich die folgenden Informationen erfasse$/ do |table|
 When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
 
@@ -79,7 +79,7 @@ When(/^I enter the following item information$/) do |table|
   end
 end
 
-#Dann /^ist der Gegenstand mit all den angegebenen Informationen erstellt$/ do
+# Dann /^ist der Gegenstand mit all den angegebenen Informationen erstellt$/ do
 Then(/^the item is saved with all the entered information$/) do
   select "retired", from: "retired" if @table_hashes.detect { |r| r["field"] == "Retirement" } and (@table_hashes.detect { |r| r["field"] == "Retirement" }["value"]) == "Yes"
   inventory_code = @table_hashes.detect { |r| r["field"] == "Inventory Code" }["value"]
@@ -93,7 +93,7 @@ Then(/^the item is saved with all the entered information$/) do
   step 'the item has all previously entered values'
 end
 
-#Dann /^hat der Gegenstand alle zuvor eingetragenen Werte$/ do
+# Dann /^hat der Gegenstand alle zuvor eingetragenen Werte$/ do
 Then(/^the item has all previously entered values$/) do
   expect(has_selector?(".row.emboss")).to be true
   @table_hashes.each do |hash_row|
@@ -117,7 +117,7 @@ Then(/^the item has all previously entered values$/) do
   end
 end
 
-# jedes Pflichtfeld ist gesetzt
+#  jedes Pflichtfeld ist gesetzt
 When(/^these required fields are filled in:$/) do |table|
   table.raw.flatten.each do |must_field_name|
     case must_field_name
@@ -141,7 +141,7 @@ When(/^these required fields are filled in:$/) do |table|
   end
 end
 
-#Wenn /^kein Pflichtfeld ist gesetzt$/ do |table|
+# Wenn /^kein Pflichtfeld ist gesetzt$/ do |table|
 When(/^these required fields are blank:$/) do |table|
   table.raw.flatten.each do |must_field_name|
     case must_field_name
@@ -160,7 +160,7 @@ When(/^these required fields are blank:$/) do |table|
   end
 end
 
-#Wenn /^ich das gekennzeichnete "(.+)" leer lasse$/ do |must_field_name|
+# Wenn /^ich das gekennzeichnete "(.+)" leer lasse$/ do |must_field_name|
 When(/^I leave the field "(.+)" empty$/) do |must_field_name|
   @must_field_name = must_field_name
   if not find(".row.emboss", match: :prefer_exact, text: @must_field_name).all("input,textarea").empty?
@@ -172,14 +172,14 @@ When(/^I leave the field "(.+)" empty$/) do |must_field_name|
   end
 end
 
-#Dann /^kann das Modell nicht erstellt werden$/ do
+# Dann /^kann das Modell nicht erstellt werden$/ do
 Then(/^the model cannot be created$/) do
   step "I save"
   expect(Item.find_by_inventory_code("")).to eq nil
   expect(Item.find_by_inventory_code("test")).to eq nil
 end
 
-#Dann /^die anderen Angaben wurde nicht gelöscht$/ do
+# Dann /^die anderen Angaben wurde nicht gelöscht$/ do
 Then(/^the other fields still contain their data$/) do
   if @must_field_name == "Model"
     expect(@inventory_code_field.value).to eq @inventory_code_value
@@ -187,15 +187,19 @@ Then(/^the other fields still contain their data$/) do
   end
 end
 
-Dann /^ist der Barcode bereits gesetzt$/ do
-  expect(find(".row.emboss", match: :prefer_exact, text: "Inventarcode").find("input").value.empty?).to be false
+
+# Dann /^ist der Barcode bereits gesetzt$/ do
+Then(/^the barcode is already filled in$/) do
+  expect(find(".row.emboss", match: :prefer_exact, text: "Inventory Code").find("input").value.empty?).to be false
 end
 
-Dann /^Letzte Inventur ist das heutige Datum$/ do
-  expect(find(".row.emboss", match: :prefer_exact, text: "Letzte Inventur").find("input").value).to eq Date.today.strftime("%d.%m.%Y")
+# Dann /^Letzte Inventur ist das heutige Datum$/ do
+Then(/^The date this item was last checked is today's date$/) do
+  expect(find(".row.emboss", match: :prefer_exact, text: "Last Checked").find("input").value).to eq Date.today.strftime("%d/%m/%Y")
 end
 
-Dann /^folgende Felder haben folgende Standardwerte$/ do |table|
+# Dann /^folgende Felder haben folgende Standardwerte$/ do |table|
+Then(/^the following fields have their default values$/) do |table|
   check_fields_and_their_values table
 end
 
@@ -210,7 +214,7 @@ Angenommen(/^ich befinde mich auf der Erstellungsseite eines Gegenstandes$/) do
   visit manage_new_item_path(@current_inventory_pool)
 end
 
-#Wenn(/^ich einen( nicht)? existierenen Lieferanten angebe$/) do |arg1|
+# Wenn(/^ich einen( nicht)? existierenen Lieferanten angebe$/) do |arg1|
 When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|
   @suppliers_count = Supplier.count
   if supplier_string
@@ -222,7 +226,7 @@ When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|
   find(".row.emboss", match: :prefer_exact, text: _("Supplier")).find("input").set @new_supplier
 end
 
-#Dann(/^wird (der neue|kein neuer) Lieferant erstellt$/) do |arg1|
+# Dann(/^wird (der neue|kein neuer) Lieferant erstellt$/) do |arg1|
 Then(/^(a new|no new) supplier is created$/) do |arg1|
   expect(has_content?(_("List of Inventory"))).to be true
   find("#inventory")
@@ -237,7 +241,7 @@ Then(/^(a new|no new) supplier is created$/) do |arg1|
 end
 
 
-#Dann(/^bei dem (erstellten|bearbeiteten|kopierten) Gegestand ist der (neue|bereits vorhandenen) Lieferant eingetragen$/) do |arg1, arg2|
+# Dann(/^bei dem (erstellten|bearbeiteten|kopierten) Gegestand ist der (neue|bereits vorhandenen) Lieferant eingetragen$/) do |arg1, arg2|
 Then(/^the (created|edited|copied) item has the (new|existing) supplier$/) do |arg1, arg2|
   expect(
     case arg1
