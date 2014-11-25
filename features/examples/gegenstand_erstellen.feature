@@ -84,25 +84,10 @@ Feature: Gegenstand erstellen
     And the other fields still contain their data
 
   @javascript @personas
-  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
+  Scenario: Areas where you can create an item
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And man setzt Bezug auf Investition
-    And jedes Pflichtfeld ist gesetzt
-    | Modell        |
-    | Inventarcode  |
-    | Projektnummer |
-    | Anschaffungskategorie |
-    When ich das gekennzeichnete "Inventarcode" leer lasse
-    Then kann das Modell nicht erstellt werden
-    And I see an error message
-    And die anderen Angaben wurde nicht gelöscht
-
-  @javascript @personas
-  Scenario: Wo man einen Gegenstand erstellen kann
-    Given I am Matti
-    And man befindet sich auf der Liste des Inventars
-    Then kann man einen Gegenstand erstellen
+    And I open the inventory
+    Then I can create an item
 
   @javascript @personas
   Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
@@ -248,12 +233,6 @@ Feature: Gegenstand erstellen
     And I save
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
-
-  @javascript @personas
-  Scenario: Wo man einen Gegenstand erstellen kann
-    Given I am Matti
-    And man befindet sich auf der Liste des Inventars
-    Then kann man einen Gegenstand erstellen
 
   @javascript @personas
   Scenario: Felder die bereits vorausgefüllt sind

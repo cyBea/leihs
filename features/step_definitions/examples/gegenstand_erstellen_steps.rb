@@ -34,12 +34,9 @@ def check_fields_and_their_values table
   end
 end
 
-Angenommen /^man befindet sich auf der Liste des Inventars$/ do
-  step "I open the inventory"
-end
-
-Dann /^kann man einen Gegenstand erstellen$/ do
-  step 'ich einen neuen Gegenstand hinzufüge'
+#Dann /^kann man einen Gegenstand erstellen$/ do
+Then(/^I can create an item$/) do
+  step 'I add a new Item'
   expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
 end
 

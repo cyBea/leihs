@@ -436,7 +436,8 @@ Dann(/^die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge$/)
   expect(csv_headers).to eq table.raw.flatten[1..-1]
 end
 
-Wenn /^ich ein[en]* neue[srn]? (.+) hinzufüge$/ do |entity|
+#Wenn /^ich ein[en]* neue[srn]? (.+) hinzufüge$/ do |entity|
+When(/^I add a new (.+)$/) do |entity|
   find(".dropdown-holder", text: _("Add inventory")).click
   click_link entity
 end

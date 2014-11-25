@@ -55,7 +55,7 @@ Feature: Gegenstand kopieren
 
   @javascript @browser @personas
   Scenario: Bestehenden Gegenstand aus Liste kopieren
-    Given man befindet sich auf der Liste des Inventars
+    Given I open the inventory
     When man einen Gegenstand kopiert
     Then wird eine neue Gegenstandskopieransicht geöffnet
     And alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
