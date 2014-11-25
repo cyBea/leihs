@@ -1451,6 +1451,15 @@ msgstr ""
 msgid "This inventory pool is closed on that day."
 msgstr ""
 
+msgid "No orders are possible on this start date"
+msgstr ""
+
+msgid "Booking is no longer possible on this start date"
+msgstr ""
+
+msgid "Booking is no longer possible on this end date"
+msgstr ""
+
 msgid "Inventory pool successfully updated."
 msgstr ""
 
@@ -2907,4 +2916,7 @@ msgid "A package item must belong to a package model"
 msgstr ""
 
 msgid "Product"
+msgstr ""
+
+msgid "Min. number of days between order and hand over"
 msgstr ""
