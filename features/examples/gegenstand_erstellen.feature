@@ -2,55 +2,58 @@
 Feature: Gegenstand erstellen
 
   @javascript @personas
-  Scenario: Felder beim Erstellen eines Gegenstandes
+  Scenario: Order of the fields when creating an item
     Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And I select "Ja" from "item[retired]"
-    And I choose "Investition"
-    Then sehe ich die Felder in folgender Reihenfolge:
-    | Inventarcode                 |
-    | Modell                       |
-    | - Zustand -                  |
-    | Ausmusterung                 |
-    | Grund der Ausmusterung       |
-    | Zustand                      |
-    | Vollständigkeit              |
-    | Ausleihbar                   |
-    | - Inventar -                 |
-    | Inventarrelevant             |
-    | Anschaffungskategorie        |    
-    | Besitzer                     |
-    | Letzte Inventur              |
-    | Verantwortliche Abteilung    |
-    | Verantwortliche Person       |
-    | Benutzer/Verwendung          |
-    | - Umzug -                    |
-    | Umzug                        |
-    | Zielraum                     |
-    | - Toni Ankunftskontrolle -   |
-    | Ankunftsdatum                |
-    | Ankunftszustand              |
-    | Ankunftsnotiz                |
-    | - Allgemeine Informationen - |
-    | Seriennummer                 |
-    | MAC-Adresse                  |
-    | IMEI-Nummer                  |
-    | Name                         |
-    | Notiz                        |
-    | - Ort -                      |
-    | Gebäude                      |
-    | Raum                         |
-    | Gestell                      |
-    | - Rechnungsinformationen -   |
-    | Bezug                        |
-    | Projektnummer                |
-    | Rechnungsnummer              |
-    | Rechnungsdatum               |
-    | Anschaffungswert             |
-    | Lieferant                    |
-    | Garantieablaufdatum          |
-    | Vertragsablaufdatum          |
-
+    And I edit an item
+    # WHY are we retiring the item? Is it necessary so we can see an edit view?
+    # TODO: Explain the rationale.
+    # TODO: Remove web_steps.rb
+    And I select "Yes" from "item[retired]"
+    And I choose "Investment"
+    Then I see form fields in the following order:
+      | field                      |
+      | Inventory Code             |
+      | Model                      |
+      | - Status -                 |
+      | Retirement                 |
+      | Reason for Retirement      |
+      | Working order              |
+      | Completeness               |
+      | Borrowable                 |
+      | - Inventory -              |
+      | Relevant for inventory     |
+      | Supply Category            |
+      | Owner                      |
+      | Last Checked               |
+      | Responsible department     |
+      | Responsible person         |
+      | User/Typical usage         |
+      | - Move -                   |
+      | Move                       |
+      | Target area                |
+      | - Toni Ankunftskontrolle - |
+      | Check-In Date              |
+      | Check-In State             |
+      | Check-In Note              |
+      | - General Information -    |
+      | Serial Number              |
+      | MAC-Address                |
+      | IMEI-Number                |
+      | Name                       |
+      | Note                       |
+      | - Location -               |
+      | Building                   |
+      | Room                       |
+      | Shelf                      |
+      | - Invoice Information -    |
+      | Reference                  |
+      | Project Number             |
+      | Invoice Number             |
+      | Invoice Date               |
+      | Initial Price              |
+      | Supplier                   |
+      | Warranty expiration        |
+      | Contract expiration        |
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen fehlenden Pflichtangaben erstellen
     Given I am Matti

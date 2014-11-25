@@ -43,7 +43,8 @@ Dann /^kann man einen Gegenstand erstellen$/ do
   expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
 end
 
-Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
+#Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
+Given(/^I edit an item$/) do
   visit manage_new_item_path(@current_inventory_pool)
   expect(has_selector?(".row.emboss")).to be true
 end

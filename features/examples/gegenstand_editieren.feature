@@ -4,8 +4,9 @@ Feature: Editing an item
     Given I am Matti
 
   @javascript @personas
-  Scenario: Order of the fields
+  Scenario: Order of the fields when editing an item
     Given I edit an item that belongs to the current inventory pool
+    # TODO: Remove web_steps.rb
     When I select "Yes" from "item[retired]"
     When I choose "Investment"
     Then I see form fields in the following order:
