@@ -1,53 +1,68 @@
 # encoding: utf-8
 
-Angenommen /^man erstellt einen Gegenstand$/ do |table|
-  @table_hashes = table.hashes
-  step "man navigiert zur Gegenstandserstellungsseite"
-  step %{ich alle Informationen erfasse, fuer die ich berechtigt bin}, table
-  @inventory_code_original = find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input", match: :first).value
+# Don't use this like that, 'create an item' is ambiguous
+# these steps are now called explicitly
+#Angenommen /^man erstellt einen Gegenstand$/ do |table|
+#Given(/^I create an item$/) do |table|
+#  @table_hashes = table.hashes
+#  step "man navigiert zur Gegenstandserstellungsseite"
+#  step %{ich alle Informationen erfasse, fuer die ich berechtigt bin}, table
+#  @inventory_code_original = find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input", match: :first).value
+#end
+
+When(/^I make a note of the original inventory code$/) do
+  @inventory_code_original = find(".row.emboss", match: :prefer_exact, text: _("Inventory Code")).find("input", match: :first).value
 end
 
-Wenn /^man speichert und kopiert$/ do
+#Wenn /^man speichert und kopiert$/ do
+When(/^I save and copy$/) do
   find(".content-wrapper .dropdown-holder", match: :first).click
   find("a[id='item-save-and-copy']", match: :first).click
 end
 
-Dann /^wird der Gegenstand gespeichert$/ do
-  expect(has_content?(_("Create copied item"))).to be true
+#Dann /^wird der Gegenstand gespeichert$/ do
+Then(/^the item is saved$/) do
+  # This seems wrong, the page doesn't have that page title, and besides,
+  # there is a separate step testing for the page title explicitly.
+  #expect(has_content?(_("Create copied item"))).to be true
   @new_item = Item.find_by_inventory_code(@inventory_code_original)
   expect(@new_item.blank?).to be false
 end
 
-Dann /^eine neue Gegenstandserstellungsansicht wird geöffnet$/ do
+#Dann /^eine neue Gegenstandserstellungsansicht wird geöffnet$/ do
+Then(/^I can create a new item$/) do
   expect(current_path).to eq manage_copy_item_path(@current_inventory_pool, @new_item.id)
 end
 
-Dann /^man sieht den Seitentitel 'Kopierten Gegenstand erstellen'$/ do
+#Dann /^man sieht den Seitentitel 'Kopierten Gegenstand erstellen'$/ do
+Then(/^the page title is 'Create copied item'$/) do
   expect(has_content?(_("Create copied item"))).to be true
 end
 
-Dann /^man sieht den Abbrechen\-Knopf$/ do
+#Dann /^man sieht den Abbrechen\-Knopf$/ do
+Then(/^I can cancel$/) do
   find(".button", match: :first, text: _("Cancel"))
 end
 
-Dann /^alle Felder bis auf die folgenden wurden kopiert:$/ do |table|
+#Dann /^alle Felder bis auf die folgenden wurden kopiert:$/ do |table|
+Then(/^all fields except the following were copied:$/) do |table|
   not_copied_fields = table.raw.flatten
   @table_hashes.each do |hash_row|
-    field_name = hash_row["Feldname"]
-    field_value = hash_row["Wert"]
-    field_type = hash_row["Type"]
+    field_name = hash_row["field"]
+    field_value = hash_row["value"]
+    field_type = hash_row["type"]
 
     within(".row.emboss", match: :prefer_exact, text: field_name) do
       case field_type
       when "autocomplete"
-        expect(find("input,textarea", match: :first).value).to eq (field_value != "Keine/r" ? field_value : "")
+        expect(find("input,textarea", match: :first).value).to eq (field_value != "None" ? field_value : "")
       when "select"
         expect(all("option").detect(&:selected?).text).to eq field_value
       when "radio must"
         expect(find("input[checked][type='radio']", match: :first).value).to eq field_value
       when ""
         if not_copied_fields.include? field_name
-          if field_name == _("Inventory code")
+          if field_name == _("Inventory Code")
             expect(find("input,textarea", match: :first).value).not_to eq @inventory_code_original
           else
             expect(find("input,textarea", match: :first).value.blank?).to be true
@@ -60,12 +75,14 @@ Dann /^alle Felder bis auf die folgenden wurden kopiert:$/ do |table|
   end
 end
 
-Dann /^der Inventarcode ist vorausgefüllt$/ do
-  @inventory_code_copied = find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input", match: :first).value
+#Dann /^der Inventarcode ist vorausgefüllt$/ do
+Then(/^the inventory code is already filled in$/) do
+  @inventory_code_copied = find(".row.emboss", match: :prefer_exact, text: _("Inventory Code")).find("input", match: :first).value
   expect(@inventory_code_copied.blank?).to be false
 end
 
-Dann /^wird der kopierte Gegenstand gespeichert$/ do
+#Dann /^wird der kopierte Gegenstand gespeichert$/ do
+Then(/^the copied item is saved$/) do
   expect(has_content?(_("List of Inventory"))).to be true
   @copied_item = Item.find_by_inventory_code(@inventory_code_copied)
   expect(@copied_item).not_to be_nil

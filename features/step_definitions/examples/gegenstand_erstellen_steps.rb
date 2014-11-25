@@ -60,7 +60,7 @@ When(/^I enter the following item information$/) do |table|
       when "radio", "radio must"
         matched_field.find("label", text: field_value).find("input").set true
       when "checkbox"
-        matched_field.find("input").set (field_value == "checked")
+        matched_field.find("input").set if field_value == "checked"
       when "select"
         matched_field.select field_value
       when "autocomplete"
@@ -69,7 +69,10 @@ When(/^I enter the following item information$/) do |table|
           find("input").click
           find("input").set field_value
         end
-        find(".ui-autocomplete a", match: :prefer_exact, text: field_value, visible: true).click
+        find('.ui-autocomplete a',
+             match: :prefer_exact,
+             text: field_value,
+             visible: true).click
       else
         within matched_field do
           find("input,textarea").set ""

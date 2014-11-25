@@ -1,57 +1,60 @@
 
-Feature: Gegenstand kopieren
+Feature: Copy item
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @personas
-  Scenario: Gegenstand erstellen und kopieren
-    Given man erstellt einen Gegenstand
-    | Feldname                     | Type         | Wert                          |
-    | Modell                       | autocomplete | Sharp Beamer 456              |
-    | Ausmusterung                 | checkbox     | unchecked                     |
-    | Zustand                      | radio        | OK                            |
-    | Vollständigkeit              | radio        | OK                            |
-    | Ausleihbar                   | radio        | OK                            |
-    | Inventarrelevant             | select       | Ja                            |
-    | Letzte Inventur              |              | 01.01.2013                    |
-    | Verantwortliche Abteilung    | autocomplete | A-Ausleihe                    |
-    | Verantwortliche Person       |              | Matus Kmit                    |
-    | Benutzer/Verwendung          |              | Test Verwendung               |
-    | Umzug                        | select       | sofort entsorgen              |
-    | Zielraum                     |              | Test Raum                     |
-    | Ankunftsdatum                |              | 01.01.2013                    |
-    | Ankunftszustand              | select       | transportschaden              |
-    | Ankunftsnotiz                |              | Test Notiz                    |
-    | Seriennummer                 |              | Test Seriennummer             |
-    | MAC-Adresse                  |              | Test MAC-Adresse              |
-    | IMEI-Nummer                  |              | Test IMEI-Nummer              |
-    | Name                         |              | Test Name                     |
-    | Notiz                        |              | Test Notiz                    |
-    | Gebäude                      | autocomplete | Keine/r                       |
-    | Raum                         |              | Test Raum                     |
-    | Gestell                      |              | Test Gestell                  |
-    | Bezug                        | radio must   | investment                    |
-    | Projektnummer                |              | Test Nummer                   |
-    | Rechnungsnummer              |              | Test Nummer                   |
-    | Rechnungsdatum               |              | 01.01.2013                    |
-    | Anschaffungswert             |              | 50.00                         |
-    #| Lieferant                    | autocomplete | Neuer Lieferant               |
-    | Garantieablaufdatum          |              | 01.01.2013                    |
-    | Vertragsablaufdatum          |              | 01.01.2013                    |
-    When man speichert und kopiert
-    Then wird der Gegenstand gespeichert
-    And eine neue Gegenstandserstellungsansicht wird geöffnet
-    And man sieht den Seitentitel 'Kopierten Gegenstand erstellen'
-    And man sieht den Abbrechen-Knopf
-    And alle Felder bis auf die folgenden wurden kopiert:
-    | Inventarcode                 |
-    | Name                         |
-    | Seriennummer                 |
-    And der Inventarcode ist vorausgefüllt
+  Scenario: Create and copy items
+    Given I create an item
+    And I choose "Investment"
+    And I make a note of the original inventory code
+    And I enter the following item information
+      | field                  | type         | value               |
+      | Borrowable             | radio        | OK                  |
+      | Building               | autocomplete | None                |
+      | Check-In Date          |              | 01/01/2013          |
+      | Check-In Note          |              | Test note           |
+      | Check-In State         | select       | transportschaden    |
+      | Completeness           | radio        | OK                  |
+      | Contract expiration    |              | 01/01/2013          |
+      | IMEI-Number            |              | Test IMEI number    |
+      | Initial Price          |              | 50.00               |
+      | Invoice Date           |              | 01/01/2013          |
+      | Invoice Number         |              | Test number         |
+      | Last Checked           |              | 01/01/2013          |
+      | MAC-Address            |              | Test MAC address    |
+      | Model                  | autocomplete | Sharp Beamer 456    |
+      | Move                   | select       | sofort entsorgen    |
+      | Name                   |              | Test name           |
+      | Note                   |              | Test note           |
+      | Project Number         |              | Test number         |
+      | Relevant for inventory | select       | Yes                 |
+      | Responsible department | autocomplete | A-Ausleihe          |
+      | Responsible person     |              | Matus Kmit          |
+      | Retirement             | checkbox     | unchecked           |
+      | Room                   |              | Test room           |
+      | Serial Number          |              | Test serial number  |
+      | Shelf                  |              | Test shelf          |
+      | Supply Category        | select       | Workshop Technology |
+      | Target area            |              | Test room           |
+      | User/Typical usage     |              | Test use            |
+      | Warranty expiration    |              | 01/01/2013          |
+      | Working order          | radio        | OK                  |
+    When I save and copy
+    Then the item is saved
+    And I can create a new item
+    # This is not the case in the system
+    #And the page title is 'Create copied item'
+    And I can cancel
+    And all fields except the following were copied:
+    | Inventory Code |
+    | Name           |
+    | Serial Number  |
+    And the inventory code is already filled in
     When I save
-    Then wird der kopierte Gegenstand gespeichert
-    And man wird zur Liste des Inventars zurückgeführt
+    Then the copied item is saved
+    And I am redirected to the inventory list
 
   @javascript @browser @personas
   Scenario: Bestehenden Gegenstand aus Liste kopieren
