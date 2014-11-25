@@ -43,7 +43,7 @@ end
 # Angenommen /^man navigiert zur Gegenstandserstellungsseite$/ do
 Given(/^I create an item$/) do
   visit manage_new_item_path(@current_inventory_pool)
-  expect(has_selector?(".row.emboss")).to be true
+  expect(has_selector?('.row.emboss')).to be true
 end
 
 # Wenn /^ich die folgenden Informationen erfasse$/ do |table|
@@ -203,11 +203,17 @@ Then(/^the following fields have their default values$/) do |table|
   check_fields_and_their_values table
 end
 
-Dann(/^sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt$/) do |table|
-  @table_hashes = table.hashes
-  @table_hashes.each do |hash|
-    find("select[name='item[properties][anschaffungskategorie]'] option[value='#{hash.values.first}']").select_option
+# Dann(/^sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt$/) do |table|
+Then(/^the field 'Supply Category' offers the following choices$/) do |table|
+  expected_values = table.raw.flatten
+  discovered_values = []
+  within "select[name='item[properties][anschaffungskategorie]']" do
+    all('option').each do |option|
+      option_text = option.text
+      discovered_values << option_text unless option_text.blank?
+    end
   end
+  expect(expected_values.sort).to eq(discovered_values.sort)
 end
 
 Angenommen(/^ich befinde mich auf der Erstellungsseite eines Gegenstandes$/) do

@@ -163,14 +163,13 @@ Feature: Gegenstand erstellen
     | Supply Category        | select |              |
 
   @javascript @personas
-  Scenario: Werte für Anschaffungskategorie hinterlegen
+  Scenario: Specifying values for supply category
     Given I am Matti
     And I create an item
-    Then sind die folgenden Werte im Feld Anschaffungskategorie hinterlegt
-    | Anschaffungskategorie |
-    | Werkstatt-Technik     |
-    | Produktionstechnik    |
-    | AV-Technik            |
-    | Musikinstrumente      |
+    Then the field 'Supply Category' offers the following choices
+    | Workshop Technology   |
+    | Production Technology |
+    | AV Technology         |
+    | Musical Instrument    |
     | Facility Management   |
-    | IC-Technik/Software   |
+    | IT/Software           |
