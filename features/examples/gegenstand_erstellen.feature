@@ -68,6 +68,7 @@ Feature: Gegenstand erstellen
     Then the model cannot be created
     And I see an error message
 
+  # TODO: scenario outline
   @javascript @personas
   Scenario: Forgetting to fill out just one required field when creating an item
     Given I am Matti
@@ -90,18 +91,19 @@ Feature: Gegenstand erstellen
     Then I can create an item
 
   @javascript @personas
-  Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
+  Scenario: Creating a new supplier if it does not already exist
     Given I am Mike
-    And ich befinde mich auf der Erstellungsseite eines Gegenstandes
-    And jedes Pflichtfeld ist gesetzt
-      | Modell        |
-      | Inventarcode  |
-      | Projektnummer |
-      | Anschaffungskategorie |
-    When ich einen nicht existierenen Lieferanten angebe
+    And I edit an item
+    And I choose "Investment" as reference
+    And these required fields are filled in:
+    | Model        |
+    | Inventory Code|
+    | Project Number |
+    | Supply Category |
+    When I enter a supplier that does not exist
     And I save
-    Then wird der neue Lieferant erstellt
-    And bei dem erstellten Gegestand ist der neue Lieferant eingetragen
+    Then a new supplier is created
+    And the created item has the new supplier
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
@@ -154,35 +156,6 @@ Feature: Gegenstand erstellen
     Then man wird zur Liste des Inventars zurueckgefuehrt
     And ist der Gegenstand mit all den angegebenen Informationen erstellt
 
-  @javascript @personas
-  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And man setzt Bezug auf Investition
-    And jedes Pflichtfeld ist gesetzt
-    | Modell        |
-    | Inventarcode  |
-    | Projektnummer |
-    | Anschaffungskategorie |
-    When ich das gekennzeichnete "Projektnummer" leer lasse
-    Then kann das Modell nicht erstellt werden
-    And I see an error message
-    And die anderen Angaben wurde nicht gelöscht
-
-  @javascript @personas
-  Scenario: Einen Gegenstand mit einer fehlenden Pflichtangabe erstellen
-    Given I am Matti
-    And man navigiert zur Gegenstandserstellungsseite
-    And man setzt Bezug auf Investition
-    And jedes Pflichtfeld ist gesetzt
-    | Modell        |
-    | Inventarcode  |
-    | Projektnummer |
-    | Anschaffungskategorie |
-    When ich das gekennzeichnete "Anschaffungskategorie" leer lasse
-    Then kann das Modell nicht erstellt werden
-    And I see an error message
-    And die anderen Angaben wurde nicht gelöscht
 
   @javascript @personas @browser
   Scenario: Einen Gegenstand mit allen Informationen erstellen
