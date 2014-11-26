@@ -1,18 +1,18 @@
 
-Feature: Geräteparks administrieren
+Feature: Administer inventory pools
 
-  Um die Geräteparks zu administrieren
-  möchte ich als Administrator
-  die nötigen Featureen
+  As an administrator
+  I want to have admin tools spanning the entire system
+  So that I can create, update and edit inventory pools
 
   @javascript @personas
-  Scenario: Geräteparkauswahl
+  Scenario: Choosing an inventory pool
     Given I am Gino
-    When ich in den Admin-Bereich wechsel
-    Then ich sehe die Geräteparkliste
+    When I navigate to the admin area
+    Then I see the list of inventory pools
     When I click on the inventory pool selection toggler again
     Then I see all the inventory pools
-    And die Geräteparkauswahl ist alphabetish sortiert
+    And the list of inventory pools is sorted alphabetically
 
   @personas
   Scenario: Den ersten Gerätepark erstellen

@@ -1,6 +1,8 @@
 # encoding: utf-8
 
-When(/^ich in den Admin-Bereich wechsel$/) do
+
+#When(/^ich in den Admin-Bereich wechsel$/) do
+When(/^I navigate to the admin area$/) do
   find(".topbar-navigation a", text: _("Admin")).click
 end
 
@@ -27,7 +29,8 @@ Dann(/^ist der Gerätepark gespeichert$/) do
   expect(InventoryPool.find_by_name_and_shortname_and_email("test", "test", "test@test.ch")).not_to be_nil
 end
 
-Dann(/^ich sehe die Geräteparkliste$/) do
+#Dann(/^ich sehe die Geräteparkliste$/) do
+Then(/^I see the list of inventory pools$/) do
   expect(has_content?(_("List of Inventory Pools"))).to be true
 end
 
@@ -82,7 +85,8 @@ Wenn(/^der Gerätepark wurde aus der Datenbank gelöscht$/) do
   expect(InventoryPool.find_by_name(@current_inventory_pool.name)).to eq nil
 end
 
-Dann(/^die Geräteparkauswahl ist alphabetish sortiert$/) do
+#Dann(/^die Geräteparkauswahl ist alphabetish sortiert$/) do
+Then(/^the list of inventory pools is sorted alphabetically$/) do
   names = all("div.dropdown-holder:nth-child(1) .dropdown .dropdown-item").map(&:text)
   expect(names.map(&:downcase).sort).to eq names.map(&:downcase)
 end
