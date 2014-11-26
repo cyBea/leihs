@@ -51,21 +51,20 @@ Then(/^the inventory pool is not created$/) do
   expect(has_no_selector?(".success")).to be true
 end
 
-Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark ändere$/) do
+#Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark ändere$/) do
+When(/^I edit an existing inventory pool in the admin area's inventory tab$/) do
   @current_inventory_pool = InventoryPool.first
   expect(has_content?(_("List of Inventory Pools"))).to be true
   find(".line", match: :prefer_exact, text: @current_inventory_pool.name).click_link _("Edit")
 end
 
-Wenn(/^ich Name und Kurzname und Email ändere$/) do
-  find(".row .col1of2 strong", text: _("Name")).find(:xpath, "./../..").find("input").set "test"
-  find(".row .col1of2 strong", text: _("Short Name")).find(:xpath, "./../..").find("input").set "test"
-  find(".row .col1of2 strong", text: _("E-Mail")).find(:xpath, "./../..").find("input").set "test@test.ch"
+#Wenn(/^ich Name und Kurzname und Email ändere$/) do
+When(/^I change name, shortname and email address$/) do
+  all(".row .col1of2 strong", text: _("Name")).first.find(:xpath, "./../..").find("input").set "test"
+  all(".row .col1of2 strong", text: _("Short Name")).first.find(:xpath, "./../..").find("input").set "test"
+  all(".row .col1of2 strong", text: _("E-Mail")).first.find(:xpath, "./../..").find("input").set "test@test.ch"
 end
 
-Dann(/^ist der Gerätepark und die eingegebenen Informationen gespeichert$/) do
-  step "ist der Gerätepark gespeichert"
-end
 
 Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark lösche$/) do
   @current_inventory_pool = InventoryPool.find(&:can_destroy?) || FactoryGirl.create(:inventory_pool)

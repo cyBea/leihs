@@ -32,7 +32,6 @@ Feature: Administer inventory pools
     And I save
     Then I see an error message
     And the inventory pool is not created
-
     Examples:
       | required_field |
       | Name        |
@@ -40,12 +39,12 @@ Feature: Administer inventory pools
       | E-Mail      |
 
   @personas
-  Scenario: Gerätepark ändern
+  Scenario: Editing inventory pool
     Given I am Ramon
-    When ich im Admin-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark ändere
-    And ich Name und Kurzname und Email ändere
+    When I edit an existing inventory pool in the admin area's inventory tab
+    And I change name, shortname and email address
     And I save
-    Then ist der Gerätepark und die eingegebenen Informationen gespeichert
+    Then the inventory pool is saved
 
   @javascript @personas
   Scenario: Gerätepark löschen
