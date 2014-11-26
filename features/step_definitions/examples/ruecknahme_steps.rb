@@ -48,6 +48,7 @@ Angenommen(/^ich befinde mich in einer Rücknahme$/) do
 end
 
 #Dann(/^ich erhalte eine Meldung$/) do
+#Dann(/^ich erhalte eine Bestätitungsmeldung$/) do
 Then(/^I receive a notification$/) do
   find("#flash .notice")
 end

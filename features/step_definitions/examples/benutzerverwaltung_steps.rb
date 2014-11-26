@@ -664,11 +664,6 @@ Then(/^he does not have access to any inventory pools and is not an administrato
   expect(@user.access_rights.active.empty?).to be true
 end
 
-Dann(/^man sieht eine Bestätigungsmeldung$/) do
-  find("#flash .notice")
-end
-
-
 #Angenommen(/^man befindet sich auf der Editierseite eines Benutzers, der kein Administrator ist und der Zugriffe auf Inventarpools hat$/) do
 Given(/^I am editing a user that has no access rights and is not an admin$/) do
   @user = User.find { |u| not u.has_role? :admin and u.has_role? :customer }

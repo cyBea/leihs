@@ -15,14 +15,14 @@ Feature: Administer inventory pools
     And the list of inventory pools is sorted alphabetically
 
   @personas
-  Scenario: Den ersten Gerätepark erstellen
+  Scenario: Creating an initial inventory pool
     Given I am Gino
-    When ich im Admin-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle
-    And ich Name und Kurzname und Email eingebe
+    When I create a new inventory pool in the admin area's inventory pool tab
+    And I enter name, shortname and email address
     And I save
-    Then ich sehe die Geräteparkliste
-    And man sieht eine Bestätigungsmeldung
-    And ist der Gerätepark gespeichert
+    Then I see all the inventory pools
+    And I receive a notification
+    And the inventory pool is saved
 
   @personas
   Scenario Outline: Pflichtfelder beim erstmaligen Erstellen eines Geräteparks

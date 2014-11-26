@@ -10,12 +10,14 @@ Angenommen(/^es existiert noch kein Gerätepark$/) do
   InventoryPool.delete_all
 end
 
-Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle$/) do
+#Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle$/) do
+When(/^I create a new inventory pool in the admin area's inventory pool tab$/) do
   expect(current_path).to eq manage_inventory_pools_path
-  click_link _("Create %s") % _("Inventory Pool")
+  click_link _("Create %s") % _("Inventory pool")
 end
 
-Wenn(/^ich Name und Kurzname und Email eingebe$/) do
+#Wenn(/^ich Name und Kurzname und Email eingebe$/) do
+When(/^I enter name, shortname and email address$/) do
   find("input[name='inventory_pool[name]']").set "test"
   find("input[name='inventory_pool[shortname]']").set "test"
   find("input[name='inventory_pool[email]']").set "test@test.ch"
@@ -25,7 +27,8 @@ Wenn(/^I save$/) do
   find("button", :text => /#{_("Save")}/i).click
 end
 
-Dann(/^ist der Gerätepark gespeichert$/) do
+#Dann(/^ist der Gerätepark gespeichert$/) do
+Then(/^the inventory pool is saved$/) do
   expect(InventoryPool.find_by_name_and_shortname_and_email("test", "test", "test@test.ch")).not_to be_nil
 end
 
