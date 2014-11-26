@@ -189,7 +189,7 @@ Dann(/^sind die Informationen dieser Software\-Lizenz erfolgreich aktualisiert w
   expect(license.invoice_date).to eq (@new_invoice_date.blank? ? nil : @new_invoice_date.to_s)
   expect(license.properties[:license_expiration]).to eq @new_license_expiration_date.to_s
   expect(license.properties[:maintenance_contract]).to eq @new_maintenance_contract.to_s
-  expect(license.properties[:maintenance_expiration]).to eq @maintenance_expiration_date.to_s if @new_maintenance_expiration_date
+  expect(license.properties[:maintenance_expiration]).to eq @new_maintenance_expiration_date.to_s if @new_maintenance_expiration_date
   expect(license.properties[:reference]).to eq @new_reference
   expect(license.properties[:project_number]).to eq @project_number if @project_number
   expect(license.note).to eq @note

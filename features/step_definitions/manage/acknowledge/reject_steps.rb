@@ -5,8 +5,11 @@ end
 
 When /^I reject a contract$/ do
   @contract = @current_inventory_pool.contracts.submitted.sample
-  find("[data-collapsed-toggle='#open-orders']").click unless all("[data-collapsed-toggle='#open-orders']").empty?
-  @daily_view_line = find("#open-orders .line[data-id='#{@contract.id}']")
+
+  cb = find("#list-filters input[name='no_verification_required']")
+  cb.click if cb.checked?
+
+  @daily_view_line = find(".line[data-id='#{@contract.id}']")
   within @daily_view_line do
     find(".dropdown-toggle").click
     find(".red[data-order-reject]", text: _("Reject")).click
