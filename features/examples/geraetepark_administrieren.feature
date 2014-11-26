@@ -25,18 +25,18 @@ Feature: Administer inventory pools
     And the inventory pool is saved
 
   @personas
-  Scenario Outline: Pflichtfelder beim erstmaligen Erstellen eines Geräteparks
+  Scenario Outline: Required fields when creating an inventory pool
     Given I am Ramon
-    When ich im Admin-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle
-    And ich <Pflichtfeld> nicht eingebe
+    When I create a new inventory pool in the admin area's inventory pool tab
+    And I don't enter <required_field>
     And I save
-    Then wird mir eine Fehlermeldung angezeigt
-    And der Gerätepark wird nicht erstellt
+    Then I see an error message
+    And the inventory pool is not created
 
     Examples:
-      | Pflichtfeld |
+      | required_field |
       | Name        |
-      | Kurzname    |
+      | Short Name    |
       | E-Mail      |
 
   @personas

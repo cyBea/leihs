@@ -37,16 +37,16 @@ Then(/^I see the list of inventory pools$/) do
   expect(has_content?(_("List of Inventory Pools"))).to be true
 end
 
-Wenn(/^ich (.+) nicht eingebe$/) do |must_field|
-  step "ich Name und Kurzname und Email eingebe"
-  find(".row .col1of2 strong", text: must_field).find(:xpath, "./../..").find("input").set ""
+#Wenn(/^ich (.+) nicht eingebe$/) do |must_field|
+When(/^I don't enter (.+)$/) do |must_field|
+  step "I enter name, shortname and email address"
+  within(all(".row .col1of2 strong", text: must_field).first) do
+    find(:xpath, './../..').find('input').set ''
+  end
 end
 
-Dann(/^wird mir eine Fehlermeldung angezeigt$/) do
-  step "I see an error message"
-end
-
-Dann(/^der Gerätepark wird nicht erstellt$/) do
+#Dann(/^der Gerätepark wird nicht erstellt$/) do
+Then(/^the inventory pool is not created$/) do
   expect(has_no_content?(_("List of Inventory Pools"))).to be true
   expect(has_no_selector?(".success")).to be true
 end
