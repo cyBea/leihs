@@ -138,7 +138,8 @@ When(/^I am editing a(?:n) (item|software license)$/) do |arg1|
   end
 end
 
-Angenommen /^man editiert ein Gegenstand eines anderen Besitzers$/ do
+#Angenommen /^man editiert ein Gegenstand eines anderen Besitzers$/ do
+When(/^I edit an item belonging to a different inventory pool$/) do
   @item = Item.find {|i| i.inventory_pool_id == @current_inventory_pool.id and @current_inventory_pool.id != i.owner_id}
   step "I am on this item's edit page"
   expect(has_selector?(".field")).to be true
@@ -146,7 +147,8 @@ Angenommen /^man editiert ein Gegenstand eines anderen Besitzers$/ do
   expect(@fields.size).to be > 0
 end
 
-Dann /^alle Felder sind editierbar, da man jetzt Besitzer von diesem Gegenstand ist$/ do
+#Dann /^alle Felder sind editierbar, da man jetzt Besitzer von diesem Gegenstand ist$/ do
+Then(/^all fields are editable, because the current inventory pool owns this new item$/) do
   expect(has_selector?(".field")).to be true
   @fields = all(".field[data-editable='false']")
   expect(@fields.size).to eq 0

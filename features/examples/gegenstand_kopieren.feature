@@ -71,13 +71,13 @@ Feature: Copy item
     And all fields except inventory code, serial number and name are copied
 
   @javascript @personas
-  Scenario: Gegenstand aus einem anderem Gerätepark kopieren
+  Scenario: Copying an item from another inventory pool
     Given I go to logout
     And I am Matti
-    And man editiert ein Gegenstand eines anderen Besitzers
-    When man speichert und kopiert
-    Then wird eine neue Gegenstandskopieransicht geöffnet
-    And alle Felder sind editierbar, da man jetzt Besitzer von diesem Gegenstand ist
+    And I edit an item belonging to a different inventory pool
+    And I save and copy
+    Then an item copy screen is shown
+    And all fields are editable, because the current inventory pool owns this new item
 
   @javascript @browser @personas
   Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
