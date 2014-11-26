@@ -57,18 +57,18 @@ Feature: Copy item
     And I am redirected to the inventory list
 
   @javascript @browser @personas
-  Scenario: Bestehenden Gegenstand aus Liste kopieren
+  Scenario: Copying an item selected from a list
     Given I open the inventory
     When I copy an item
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
 
   @javascript @browser @personas
-  Scenario: Bestehenden Gegenstand aus Editieransicht kopieren
-    When ich mich in der Editieransicht einer Gegenstand befinde
-    And man speichert und kopiert
-    Then wird eine neue Gegenstandskopieransicht geöffnet
-    And alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
+  Scenario: Copying an item from the edit view
+    When I am editing an item
+    And I save and copy
+    Then an item copy screen is shown
+    And all fields except inventory code, serial number and name are copied
 
   @javascript @personas
   Scenario: Gegenstand aus einem anderem Gerätepark kopieren

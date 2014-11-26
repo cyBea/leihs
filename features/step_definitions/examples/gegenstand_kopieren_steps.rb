@@ -118,11 +118,13 @@ When(/^I copy an item$/) do
   end
 end
 
-Wenn /^ich mich in der Editieransicht einer (Gegenstand|Sofware-Lizenz) befinde$/ do |arg1|
+
+#Wenn /^ich mich in der Editieransicht einer (Gegenstand|Sofware-Lizenz) befinde$/ do |arg1|
+When(/^I am editing a(?:n) (item|software license)$/) do |arg1|
   s0, s1, s2, s3 = case arg1
-                     when "Gegenstand"
+                     when "item"
                        ["items", "model", "item", _("Edit Item")]
-                     when "Sofware-Lizenz"
+                     when "software license"
                        ["licenses", "software", "license", _("Edit License")]
                    end
 
