@@ -24,7 +24,6 @@ Wenn /^ich etwas zuweise, das nicht in den Rücknahmen vorkommt$/ do
   find("[data-add-contract-line] + .addon").click
 end
 
-
 Wenn /^die Gruppenauswahl aufklappe$/ do
   find("#booking-calendar-partitions")
 end
@@ -48,12 +47,9 @@ Dann /^dann erkennen ich, in welchen Gruppen der Kunde nicht ist$/ do
   end
 end
 
-
-
 Angenommen /^ich fahre über das Problem$/ do
   hover_for_tooltip find(".line .problems", match: first)
 end
-
 
 def check_printed_contract(window_handles, ip = nil, contract = nil)
   while (page.driver.browser.window_handles - window_handles).empty? do end
@@ -67,11 +63,8 @@ def check_printed_contract(window_handles, ip = nil, contract = nil)
   end
 end
 
-
 Dann(/^erscheint der Benutzer unter den letzten Besuchern$/) do
   visit manage_daily_view_path @current_inventory_pool
   find("#last-visitors a", :text => @user.name)
 end
-
-
 

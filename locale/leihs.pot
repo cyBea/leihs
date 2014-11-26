@@ -799,6 +799,9 @@ msgstr ""
 msgid "Matching Templates"
 msgstr ""
 
+msgid "Max. visits"
+msgstr ""
+
 msgid "Mobile"
 msgstr ""
 

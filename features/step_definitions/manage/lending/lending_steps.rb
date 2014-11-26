@@ -396,21 +396,20 @@ Then /^each line shows the sum of items of the respective model$/ do
   end
 end
 
-
-Then /^I open an order placed by "(.*?)"$/ do |arg1|
-  find("[data-collapsed-toggle='#open-orders']").click unless all("[data-collapsed-toggle='#open-orders']").empty?
-  @contract = @current_inventory_pool.contracts.find find("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1)["data-id"]
-  @user = @contract.user
-  within("#daily-view #open-orders .line", match: :prefer_exact, :text => arg1) do
-    find(".line-actions .multibutton .dropdown-holder").click
-    find(".dropdown-item", :text => _("Edit")).click
+Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
+  if arg0
+    @contract = @current_inventory_pool.contracts.find find(".line", match: :prefer_exact, :text => arg1)["data-id"]
+    within(".line", match: :prefer_exact, :text => arg1) do
+      find(".line-actions .multibutton .dropdown-holder").click
+      find(".dropdown-item", :text => _("Edit")).click
+    end
+  else
+    @contract = @current_inventory_pool.contracts.submitted.sample
+    visit manage_edit_contract_path(@current_inventory_pool, @contract)
   end
+  @user = @contract.user
   find("h1", text: _("Edit %s") % _("Order"))
-  find("h2", text: arg1)
-end
-
-Wenn /^I open an order$/ do
-  step 'I open an order placed by ""'
+  find("h2", text: @user.to_s)
 end
 
 Then /^I see the last visitors$/ do
