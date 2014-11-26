@@ -92,19 +92,23 @@ Dann /^man wird zur Liste des Inventars zurückgeführt$/ do
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 
-Dann /^wird eine neue Gegenstandskopieransicht geöffnet$/ do
+
+#Dann /^wird eine neue Gegenstandskopieransicht geöffnet$/ do
+Then(/^an item copy screen is shown$/) do
   expect(current_path).to eq manage_copy_item_path(@current_inventory_pool, @item)
 end
 
-Dann /^alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert$/ do
-  expect(find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input,textarea", match: :first).value == @item.inventory_code).to be false
-  expect(find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input,textarea", match: :first).value.empty?).to be false
+#Dann /^alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert$/ do
+Then(/^all fields except inventory code, serial number and name are copied$/) do
+  expect(find(".row.emboss", match: :prefer_exact, text: _("Inventory Code")).find("input,textarea", match: :first).value == @item.inventory_code).to be false
+  expect(find(".row.emboss", match: :prefer_exact, text: _("Inventory Code")).find("input,textarea", match: :first).value.empty?).to be false
   expect(find(".row.emboss", match: :prefer_exact, text: _("Model")).find("input,textarea", match: :first).value).to eql @item.model.name
   expect(find(".row.emboss", match: :prefer_exact, text: _("Serial Number")).find("input,textarea", match: :first).value.empty?).to be true
   expect(find(".row.emboss", match: :prefer_exact, text: _("Name")).find("input,textarea", match: :first).value.empty?).to be true
 end
 
-Wenn /^man einen Gegenstand kopiert$/ do
+#Wenn /^man einen Gegenstand kopiert$/ do
+When(/^I copy an item$/) do
   @item = Item.where(inventory_pool_id: @current_inventory_pool).detect {|i| not i.retired? and not i.serial_number.nil? and not i.name.nil?}
   step %Q(I search for "%s") % @item.model.name
   step "expand the corresponding model"

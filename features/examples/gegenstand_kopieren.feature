@@ -59,9 +59,9 @@ Feature: Copy item
   @javascript @browser @personas
   Scenario: Bestehenden Gegenstand aus Liste kopieren
     Given I open the inventory
-    When man einen Gegenstand kopiert
-    Then wird eine neue Gegenstandskopieransicht geöffnet
-    And alle Felder bis auf Inventarcode, Seriennummer und Name wurden kopiert
+    When I copy an item
+    Then an item copy screen is shown
+    And all fields except inventory code, serial number and name are copied
 
   @javascript @browser @personas
   Scenario: Bestehenden Gegenstand aus Editieransicht kopieren
