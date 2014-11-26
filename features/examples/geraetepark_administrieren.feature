@@ -41,14 +41,14 @@ Feature: Administer inventory pools
   @personas
   Scenario: Editing inventory pool
     Given I am Ramon
-    When I edit an existing inventory pool in the admin area's inventory tab
+    When I edit an existing inventory pool in the admin area's inventory pool tab
     And I change name, shortname and email address
     And I save
     Then the inventory pool is saved
 
   @javascript @personas
-  Scenario: Gerätepark löschen
+  Scenario: Delete inventory pool
     Given I am Ramon
-    When ich im Admin-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark lösche
-    And der Gerätepark wurde aus der Liste gelöscht
-    And der Gerätepark wurde aus der Datenbank gelöscht
+    When I delete an existing inventory pool in the admin area's inventory pool tab
+    Then the inventory pool is removed from the list
+    And the inventory pool is deleted from the database

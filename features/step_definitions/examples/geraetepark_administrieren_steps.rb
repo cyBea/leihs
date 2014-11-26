@@ -52,7 +52,7 @@ Then(/^the inventory pool is not created$/) do
 end
 
 #Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark ändere$/) do
-When(/^I edit an existing inventory pool in the admin area's inventory tab$/) do
+When(/^I edit an existing inventory pool in the admin area's inventory pool tab$/) do
   @current_inventory_pool = InventoryPool.first
   expect(has_content?(_("List of Inventory Pools"))).to be true
   find(".line", match: :prefer_exact, text: @current_inventory_pool.name).click_link _("Edit")
@@ -66,7 +66,8 @@ When(/^I change name, shortname and email address$/) do
 end
 
 
-Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark lösche$/) do
+#Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Gerätepark lösche$/) do
+When(/^I delete an existing inventory pool in the admin area's inventory pool tab$/) do
   @current_inventory_pool = InventoryPool.find(&:can_destroy?) || FactoryGirl.create(:inventory_pool)
   visit manage_inventory_pools_path
   within(".line", text: @current_inventory_pool.name) do
@@ -78,12 +79,14 @@ Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen bestehenden Ger
   end
 end
 
-Wenn(/^der Gerätepark wurde aus der Liste gelöscht$/) do
+#Wenn(/^der Gerätepark wurde aus der Liste gelöscht$/) do
+Then(/^the inventory pool is removed from the list$/) do
   find("#flash .success", text: _("%s successfully deleted") % _("Inventory Pool"))
   expect(has_no_content?(@current_inventory_pool.name)).to be true
 end
 
-Wenn(/^der Gerätepark wurde aus der Datenbank gelöscht$/) do
+#Wenn(/^der Gerätepark wurde aus der Datenbank gelöscht$/) do
+Then(/^the inventory pool is deleted from the database$/) do
   expect(InventoryPool.find_by_name(@current_inventory_pool.name)).to eq nil
 end
 
