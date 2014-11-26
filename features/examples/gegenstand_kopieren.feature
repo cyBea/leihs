@@ -80,11 +80,11 @@ Feature: Copy item
     And all fields are editable, because the current inventory pool owns this new item
 
   @javascript @browser @personas
-  Scenario: Neuen Lieferanten erstellen falls nicht vorhanden
-    Given man einen Gegenstand kopiert
-    Then wird eine neue Gegenstandskopieransicht geöffnet
-    When ich einen nicht existierenen Lieferanten angebe
-    And ich merke mir den Inventarcode für weitere Schritte
+  Scenario: Creating a new supplier while copying an item
+    Given I copy an item
+    Then an item copy screen is shown
+    When I enter a supplier that does not exist
+    And I make a note of the inventory code for further steps
     And I save
-    Then wird der neue Lieferant erstellt
-    And bei dem kopierten Gegestand ist der neue Lieferant eingetragen
+    Then a new supplier is created
+    And the copied item has the new supplier

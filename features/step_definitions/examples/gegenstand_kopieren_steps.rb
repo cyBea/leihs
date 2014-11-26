@@ -154,6 +154,7 @@ Then(/^all fields are editable, because the current inventory pool owns this new
   expect(@fields.size).to eq 0
 end
 
-Wenn(/^ich merke mir den Inventarcode für weitere Schritte$/) do
-  @inventory_code = find(".row.emboss", match: :prefer_exact, text: _("Inventory code")).find("input,textarea").value
+#Wenn(/^ich merke mir den Inventarcode für weitere Schritte$/) do
+When(/^I make a note of the inventory code for further steps$/) do
+  @inventory_code = find(".row.emboss", match: :prefer_exact, text: _("Inventory Code")).find("input,textarea").value
 end
