@@ -43,30 +43,30 @@ Feature: Software erfassen
       | Ausleihbar |
       | OK |
       | Nicht ausleihbar |
-    Then kann man als "Betriebssystem" keine, eine oder mehrere der folgenden Möglichkeiten in Form einer Checkbox auswählen:
+    Then one is able to choose for "Betriebssystem" none, one or more of the following options if form of a checkbox:
       | Betriebssystem |
       | Windows |
       | Mac OS X |
       | Linux |
       | iOS |
-    Then kann man als "Installation" keine, eine oder mehrere der folgenden Möglichkeiten in Form einer Checkbox auswählen:
+    Then one is able to choose for "Installation" none, one or more of the following options if form of a checkbox:
       | Citrix |
       | Lokal |
       | Web |
-    Then kann man als "Bezug" einen der folgenden Möglichkeiten anhand eines Radio-Buttons wählen:
+    Then for "Bezug" one can select one of the following options with the help of radio button
       |laufende Rechnung|
       |Investition                 |
-    Then kann man als "Lizenzablaufdatum" ein Datum auswählen
+    Then for "Lizenzablaufdatum" one can select a date
     Then for maintenance contract the available options are in the following order:
       | Nein |
       | Ja   |
-    Then kann man als "Rechnungsdatum" ein Datum auswählen
-    Then kann man als "Anschaffungswert" eine Zahl eingeben
+    Then for "Rechnungsdatum" one can select a date
+    Then for "Anschaffungswert" one can enter a number
     Then kann man als "Beschafft durch" einen Benutzer wählen
     Then for "Lieferant" one can select a supplier
     Then for "Verantwortliche Abteilung" one can select an inventory pool
     Then for "Besitzer" one can select an inventory pool
-    Then kann man als "Notiz" einen Text eingeben
+    Then for "Notiz" one can enter some text
     And die Option "Ausleihbar" ist standardmässig auf "Nicht ausleihbar" gesetzt
 
   @javascript @personas @upcoming
