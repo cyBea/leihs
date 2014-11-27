@@ -449,7 +449,7 @@ Feature: Manage users
     And the user is deleted 
 
   # Unimplemented, so not translated.
-  @personas
+  @personas @upcoming
   Scenario: Startseite zurücksetzen
     Given I am Pius
     And man hat eine Startseite gesetzt

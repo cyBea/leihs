@@ -3,6 +3,7 @@ Feature: Edit order
   @javascript @personas
   Scenario: View suspended status of a user
     Given I am Pius
+    When I navigate to the open orders
     And I open a take back for a suspended user
     Then I see the note 'Suspended!' next to their name
 
