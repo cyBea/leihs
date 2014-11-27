@@ -95,7 +95,8 @@ Then(/^those randomly chosen workdays are saved$/) do
   end
 end
 
-Wenn(/^ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe$/) do
+#Wenn(/^ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe$/) do
+When(/^I set one or more time spans as holidays and give them names$/) do
   @holidays = []
   [1,5,8].each do |i|
     holiday = {start_date: (Date.today + i), end_date: (Date.today + i*i), name: "Test #{i}"}
@@ -107,13 +108,15 @@ Wenn(/^ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschlie
   end
 end
 
-Dann(/^werden die Ausleihschliessungszeiten gespeichert$/) do
+#Dann(/^werden die Ausleihschliessungszeiten gespeichert$/) do
+Then(/^the holidays are saved$/) do
   @holidays.each do |holiday|
     expect(@current_inventory_pool.holidays.where(:start_date => holiday[:start_date], :end_date => holiday[:end_date], :name => holiday[:name]).empty?).to be false
   end
 end
 
-Dann(/^ich kann die Ausleihschliessungszeiten wieder löschen$/) do
+#Dann(/^ich kann die Ausleihschliessungszeiten wieder löschen$/) do
+Then(/^I can delete the holidays$/) do
   holiday = @holidays.last
   find(".row[data-holidays-list] .line", :text => holiday[:name]).find(".button[data-remove-holiday]").click
   step 'I save'

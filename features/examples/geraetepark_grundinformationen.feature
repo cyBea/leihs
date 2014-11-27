@@ -92,13 +92,13 @@ Feature: Basic information for inventory pools
    Then those randomly chosen workdays are saved
 
   @javascript @personas
-  Scenario: Tage der Ausleihschliessung verwalten
+  Scenario: Manage holidays
    Given I am Mike
    And I edit my inventory pool settings
-   When ich eine oder mehrere Zeitspannen und einen Namen für die Ausleihsschliessung angebe
+   When I set one or more time spans as holidays and give them names
    And I save
-   Then werden die Ausleihschliessungszeiten gespeichert
-   And ich kann die Ausleihschliessungszeiten wieder löschen
+   Then the holidays are saved
+   And I can delete the holidays
 
   @personas
   Scenario Outline: Pflichtfelder der Grundinformationen einzeln prüfen
