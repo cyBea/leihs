@@ -10,9 +10,9 @@ Feature: Software löschen
       | in keinem Vertrag aufgeführt |
       | keiner Bestellung zugewiesen |
       | keine Lizenzen zugefügt      |
-    When ich diese "Software" aus der Liste lösche
+    When I delete this Software from the list
     Then die Software wurde aus der Liste gelöscht
-    And die "Software" ist gelöscht
+    And the "Software" is deleted
 
   @javascript @browser @personas
   Scenario: Softwareanhängsel löschen wenn Software gelöscht wird
@@ -21,7 +21,7 @@ Feature: Software löschen
       | keiner Bestellung zugewiesen |
       | keine Lizenzen zugefügt      |
       | hat Anhänge                  |
-    When ich diese "Software" aus der Liste lösche
-    And die "Software" ist gelöscht
+    When I delete this Software from the list
+    And the "Software" is deleted
     And es wurden auch alle Anhängsel gelöscht
 

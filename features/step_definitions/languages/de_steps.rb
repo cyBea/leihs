@@ -129,78 +129,8 @@ Dann(/^es erscheinen alle zutreffenden (.*)$/) do |arg1|
   step "they appear all matched %s" % s
 end
 
-Wenn(/^ich im Feld "(.*?)" den Wert "(.*?)" eingebe$/) do |field, value|
-  step %Q(I fill in the field "#{field}" with the value "#{value}")
-end
-
-Dann(/^ist der "(.*?)" als "(.*?)" gespeichert$/) do |arg1, arg2|
-  step %Q("#{arg1}" is saved as "#{arg2}")
-end
-
-Wenn(/^ich bei der Option eine Stückzahl von (\d+) eingebe$/) do |n|
-  step "I set a quantity of #{n} for the option line"
-end
-
-Wenn(/^ich setze "(.*?)" auf "(.*?)"$/) do |arg1, arg2|
-  step %Q(I set "#{arg1}" to "#{arg2}")
-end
-
-Wenn(/^ich die Anzahl "(.*?)" in das Mengenfeld schreibe$/) do |arg1|
-  step "I change the quantity to \"%s\"" % arg1
-end
-
-Dann(/^wird die Menge mit dem Wert "(.*?)" gespeichert$/) do |arg1|
-  step "the quantity will be stored to the value \"%s\"" % arg1
-end
-
-Angenommen /^ich erstelle eine? neues? (?:.+) oder ich ändere eine? bestehendes? (.+)$/ do |entity|
-  step "ich add a new #{entity} or I change an existing #{entity}"
-end
-
-Wenn(/^ich dieses? "(.+)" aus der Liste lösche$/) do |entity|
-  step %Q(I delete this #{entity} from the list)
-end
-
-Dann(/^(?:die|das) "(.+)" ist gelöscht$/) do |entity|
-  step %Q(the "#{entity}" is deleted)
-end
-
 Angenommen(/^man editiert das Feld "(.*?)" eines ausgeliehenen Gegenstandes, wo man Besitzer ist$/) do |arg1|
   step %Q(one edits the field "#{arg1}" of an owned item not in stock)
-end
-
-#Angenommen(/^ich editiere eine Gerätepark( bei dem die aut. Zuweisung aktiviert ist)?$/) do |arg1|
-#  step "I edit an inventory pool%s" % (arg1 ? " which has automatic access enabled" : nil)
-
-#Wenn(/^ich "(.*)" aktiviere$/) do |arg1|
-#  step %Q(I enable "%s") % arg1
-#end
-
-#Dann(/^ist "(.*)" aktiviert$/) do |arg1|
-#  step %Q("%s" is enabled) % arg1
-#end
-
-#Wenn(/^ich "(.*)" deaktiviere$/) do |arg1|
-#  step %Q(I disable "%s") % arg1
-#end
-
-#Dann(/^ist "(.*)" deaktiviert$/) do |arg1|
-#  step %Q("%s" is disabled) % arg1
-#end
-
-Angenommen(/^eine Software\-Produkt mit mehr als (\d+) Zeilen Text im Feld "(.*?)" existiert$/) do |arg1, arg2|
-  step %Q(a software product with more than %d text rows in field "%s" exists) % [arg1, arg2]
-end
-
-Wenn(/^man öffnet (eine|die) Rüstliste( für einen unterschriebenen Vertrag)?$/) do |arg1, arg2|
-  s1 = case arg1
-         when "eine"
-           "a"
-         when "die"
-           "the"
-       end
-  s2 = arg2 ? " for a signed contract" : ""
-  step "I open %s picking list%s" % [s1, s2]
 end
 
 Dann(/^Gegenständen kein Raum oder Gestell zugeteilt sind, wird (die verfügbare Anzahl für den Kunden und )?"(.*?)" angezeigt$/) do |arg1, arg2|

@@ -21,7 +21,7 @@ Feature: Software editieren
   #73278586
   @javascript @personas
   Scenario: Grösse des Software Informationen-Felds
-    Given eine Software-Produkt mit mehr als 6 Zeilen Text im Feld "Software Informationen" existiert
+    Given a software product with more than 6 text rows in field "Software Informationen" exists
     When I edit this software
     And I click in the field "Software Informationen"
     Then this field grows up till showing the complete text

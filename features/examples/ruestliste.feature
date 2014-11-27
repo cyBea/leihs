@@ -10,7 +10,7 @@ Feature: Rüstliste
 
   @personas
   Scenario: Was ich auf der Rüstliste sehen möchte
-    When man öffnet eine Rüstliste
+    When I open a picking list
     Then möchte ich die folgenden Bereiche in der Rüstliste sehen:
     | Bereich          |
     | Datum            |
@@ -27,7 +27,7 @@ Feature: Rüstliste
     And wird der Gegenstand der Zeile zugeteilt
     And a line has no item assigned yet and this line is marked
     And an option line is marked
-    When man öffnet die Rüstliste
+    When I open the picking list
     Then the lists are sorted by hand over date
     And each list contains following columns
     | Spaltenname                        |
@@ -46,7 +46,7 @@ Feature: Rüstliste
     Given there is a hand over with at least one problematic line
     And I open the hand over
     And a line has no item assigned yet and this line is marked
-    When man öffnet die Rüstliste
+    When I open the picking list
     Then the lists are sorted by hand over date
     And the not available items, are displayed with "Nicht verfügbar"
 
@@ -55,12 +55,12 @@ Feature: Rüstliste
     Given es gibt eine Aushändigung mit mindestens einem Gegenstand ohne zugeteilt Raum und Gestell
     And I open the hand over
     And a line with an assigned item which doesn't have a location is marked
-    When man öffnet die Rüstliste
+    When I open the picking list
     Then Gegenständen kein Raum oder Gestell zugeteilt sind, wird "Ort nicht definiert" angezeigt
 
   @personas @javascript
   Scenario: Inhalt der Rüstliste nach Aushändigung - Inventarcodes sind bekannt
-    When man öffnet die Rüstliste für einen unterschriebenen Vertrag
+    When I open the picking list for a signed contract
     Then the lists are sorted by take back date
     And each list contains following columns
     | Spaltenname    |

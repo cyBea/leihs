@@ -56,9 +56,9 @@ Feature: Rücknahme
   @javascript @browser @personas
   Scenario: Inspektion während einer Rücknahme
     Given I open a take back with at least one item and one option
-    When ich bei der Option eine Stückzahl von 1 eingebe
+    When I set a quantity of 1 for the option line
     And I inspect an item
-    And ich setze "Zustand" auf "Defekt"
+    And I set "Zustand" to "Defekt"
     And I save
     Then the option line has still the same quantity
 

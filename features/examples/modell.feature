@@ -121,13 +121,13 @@ Feature: Modell
 
   @javascript @personas
   Scenario Outline: Attachments erstellen
-    Given ich erstelle ein neues <Objekt> oder ich ändere ein bestehendes <Objekt>
+    Given ich add a new <objekt> or I change an existing <objekt>
     Then füge ich eine oder mehrere Datein den Attachments hinzu
     And kann Attachments auch wieder entfernen
     And ich speichere die Informationen
     Then sind die Attachments gespeichert
   Examples:
-    | Objekt   |
+    | objekt   |
     | Modell   |
     | Software |
 

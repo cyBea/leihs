@@ -129,6 +129,6 @@ Feature: Software erfassen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
     And I fill in all the required fields for the license
-    And ich im Feld "Anschaffungswert" den Wert "1200" eingebe
+    And I fill in the field "Anschaffungswert" with the value "1200"
     And I save
-    Then ist der "Anschaffungswert" als "1'200.00" gespeichert
+    Then "Anschaffungswert" is saved as "1'200.00"
