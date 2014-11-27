@@ -10,7 +10,7 @@ Feature: Basic information for inventory pools
   Scenario: Make basic settings
     Given I am Mike
     When I navigate to the inventory pool section in the admin area
-    Then I can enter the inventory pool's basic settings as follows:
+    Then I enter the inventory pool's basic settings as follows:
     | Name |
     | Short Name |
     | E-Mail |
@@ -54,7 +54,7 @@ Feature: Basic information for inventory pools
 
   #72676850
   @personas @javascript
-  Scenario: Aut. Zuweisen entfernen
+  Scenario: Remove automatic access
     Given I am Mike
     And multiple inventory pools are granting automatic access
     And I edit an inventory pool that is granting automatic access
@@ -101,40 +101,40 @@ Feature: Basic information for inventory pools
    And I can delete the holidays
 
   @personas
-  Scenario Outline: Pflichtfelder der Grundinformationen einzeln prüfen
+  Scenario Outline: Validate each field in inventory pool settings separately
     Given I am Mike
-    When ich die Grundinformationen des Geräteparks abfüllen möchte
-    And jedes Pflichtfeld des Geräteparks ist gesetzt
-    | Name        |
-    | Kurzname    |
-    | E-Mail      |
-    When ich das gekennzeichnete "<Pflichtfeld>" des Geräteparks leer lasse
-    Then kann das Gerätepark nicht gespeichert werden
-    And I see an error message
-    And die anderen Angaben wurde nicht gelöscht
-    Examples:
-      | Pflichtfeld |
-      | Name        |
-      | Kurzname    |
-      | E-Mail      |
-
-  @personas
-  Scenario: Automatische Benutzersperrung bei verspäteter Rückgabe
-    Given I am Mike
-    When ich die Grundinformationen des Geräteparks abfüllen möchte
-    When ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte
-    Then muss ich einen Sperrgrund angeben
-    When I save
-    Then ist diese Konfiguration gespeichert
-    When ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird
-    Then wird er für diesen Gerätepark gesperrt bis zum '1.1.2099'
-    And der Sperrgrund ist derjenige, der für diesen Park gespeichert ist
-    When ich "Automatische Sperrung" deaktiviere
+    When I edit the current inventory pool
+    And I fill in the following fields in the inventory pool settings:
+    | Name       |
+    | Short Name |
+    | E-Mail     |
+    When I leave the field "<field>" in the inventory pool settings empty
     And I save
-    Then ist "Automatische Sperrung" deaktiviert
+    Then I see an error message
+    And the other fields still contain their data
+    Examples:
+      | field      |
+      | Name       |
+      | Short Name |
+      | E-Mail     |
 
   @personas
-  Scenario: Automatische Benutzersperrung nur wenn Benutzer nicht schon gesperrt
+  Scenario: Automatically suspend users with late contracts
+    Given I am Mike
+    When I edit the current inventory pool
+    When I enable "Automatic suspension"
+    Then I have to supply a reason for suspension
+    When I save
+    Then this configuration is saved
+    When a user is suspended automatically due to late contracts
+    Then they are suspended for this inventory pool until '1/1/2099'
+    And the reason for suspension is the one specified for this inventory pool
+    When I disable "Automatic suspension"
+    And I save
+    Then "Automatic suspension" is disabled
+
+  @personas
+  Scenario: Suspend users automatically only if they aren't already suspended
     Given I am Mike
     When on the inventory pool I enable the automatic suspension for users with overdue take backs
     And a user is already suspended for this inventory pool

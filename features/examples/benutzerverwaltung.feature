@@ -154,12 +154,12 @@ Feature: Manage users
     Then the user has no access to the inventory pool
 
   # This feature has been removed, no point in translating
-  @personas
-  Scenario: Startseite setzen
-    Given I am Pius
-    And man befindet sich auf der Liste der Benutzer
-    When man die Startseite setzt
-    Then ist die Liste der Benutzer die Startseite
+  #@personas
+  #Scenario: Startseite setzen
+  #  Given I am Pius
+  #  And man befindet sich auf der Liste der Benutzer
+  #  When man die Startseite setzt
+  #  Then ist die Liste der Benutzer die Startseite
 
   @javascript @personas @browser
   Scenario: Elements of user administration
@@ -188,11 +188,12 @@ Feature: Manage users
   Scenario: Not displaying a user's role in lists if that user doesn't have a role
     Given I am inventory manager or lending manager
     And a user without assigned role appears in the user list
+    # This really seems broken. The user doesn't show up in the list.
     Then I see the following information about the user, in order:
       |attr |
-      |Vorname Name|
-      |Rolle|
-      |Telefonnummer|
+      |First name/last name|
+      |Phone number|
+      |Role|
 
   @javascript @personas
   Scenario: Displaying a user in a list with their assigned roles and suspension status

@@ -8,7 +8,7 @@ When(/^I navigate to the inventory pool section in the admin area$/) do
 end
 
 #Dann(/^kann ich die Gerätepark\-Grundinformationen eingeben$/) do |table|
-Then(/^I can enter the inventory pool's basic settings as follows:$/) do |table|
+Then(/^I enter the inventory pool's basic settings as follows:$/) do |table|
   @table_raw = table.raw
   @table_raw.flatten.each do |field_name|
     within(".row.padding-inset-s", match: :prefer_exact, text: field_name) do
@@ -123,21 +123,26 @@ Then(/^I can delete the holidays$/) do
   expect(@current_inventory_pool.holidays.where(:start_date => holiday[:start_date], :end_date => holiday[:end_date], :name => holiday[:name]).empty?).to be true
 end
 
-Wenn(/^jedes Pflichtfeld des Geräteparks ist gesetzt$/) do |table|
+# there is nothing in the test that relates to required fields
+#Wenn(/^jedes Pflichtfeld des Geräteparks ist gesetzt$/) do |table|
+When(/^I fill in the following fields in the inventory pool settings:$/) do |table|
   table.raw.flatten.each do |field_name|
     expect(find(".row.emboss", match: :prefer_exact, :text => field_name).find("input", match: :first).value.length).to be > 0
   end
 end
 
-Wenn(/^ich das gekennzeichnete "(.*?)" des Geräteparks leer lasse$/) do |field_name|
+#Wenn(/^ich das gekennzeichnete "(.*?)" des Geräteparks leer lasse$/) do |field_name|
+When(/^I leave the field "(.*?)" in the inventory pool settings empty$/) do |field_name|
   find(".row.emboss", match: :prefer_exact, :text => field_name).find("input", match: :first).set ""
 end
 
-Wenn(/^ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte$/) do
-  step %Q(ich "Automatische Sperrung" aktiviere)
-end
+#Wenn(/^ich für den Gerätepark die automatische Sperrung von Benutzern mit verspäteten Rückgaben einschalte$/) do
+#When(/^I enable automatically suspending users$/) do
+#  step %Q(ich "Automatische Sperrung" aktiviere)
+#end
 
-Dann(/^muss ich einen Sperrgrund angeben$/) do
+#Dann(/^muss ich einen Sperrgrund angeben$/) do
+Then(/^I have to supply a reason for suspension$/) do
   fill_in "inventory_pool[automatic_suspension_reason]", with: ""
   step 'I save'
   step 'I see an error message'
@@ -146,25 +151,29 @@ Dann(/^muss ich einen Sperrgrund angeben$/) do
   step 'I save'
 end
 
-Dann(/^ist diese Konfiguration gespeichert$/) do
+#Dann(/^ist diese Konfiguration gespeichert$/) do
+Then(/^this configuration is saved$/) do
   expect(has_selector?("#flash .notice")).to be true
   @current_inventory_pool.reload
-  step %Q(ist "Automatische Sperrung" aktiviert)
+  step %Q("Automatic suspension" is enabled)
   expect(@current_inventory_pool.automatic_suspension_reason).to eq @reason
 end
 
-Wenn(/^ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird$/) do
+#Wenn(/^ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird$/) do
+When(/^a user is suspended automatically due to late contracts$/) do
   user_id = ContractLine.by_inventory_pool(@current_inventory_pool).to_take_back.where("end_date < ?", Date.today).pluck(:user_id).uniq.sample
   @user = User.find user_id
   @user.suspend
 end
 
-Dann(/^wird er für diesen Gerätepark gesperrt bis zum '(\d+)\.(\d+)\.(\d+)'$/) do |day, month, year|
+#Dann(/^wird er für diesen Gerätepark gesperrt bis zum '(\d+)\.(\d+)\.(\d+)'$/) do |day, month, year|
+Then(/^they are suspended for this inventory pool until '(\d+)\/(\d+)\/(\d+)'$/) do |day, month, year|
   @access_right = @user.access_right_for(@current_inventory_pool)
   expect(@access_right.suspended_until).to eq Date.new(year.to_i, month.to_i, day.to_i)
 end
 
-Dann(/^der Sperrgrund ist derjenige, der für diesen Park gespeichert ist$/) do
+#Dann(/^der Sperrgrund ist derjenige, der für diesen Park gespeichert ist$/) do
+Then(/^the reason for suspension is the one specified for this inventory pool$/) do
   expect(@access_right.suspended_reason).to eq @reason
 end
 

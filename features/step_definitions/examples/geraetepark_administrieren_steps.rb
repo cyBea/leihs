@@ -23,10 +23,6 @@ When(/^I enter name, shortname and email address$/) do
   find("input[name='inventory_pool[email]']").set "test@test.ch"
 end
 
-Wenn(/^I save$/) do
-  find("button", :text => /#{_("Save")}/i).click
-end
-
 #Dann(/^ist der Gerätepark gespeichert$/) do
 Then(/^the inventory pool is saved$/) do
   expect(InventoryPool.find_by_name_and_shortname_and_email("test", "test", "test@test.ch")).not_to be_nil
