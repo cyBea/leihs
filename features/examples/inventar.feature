@@ -13,8 +13,8 @@ Feature: Inventar
     And there is a item with the following properties:
       | Inventarcode | suchbegriff2 |
     When ich im Inventarbereich nach einer dieser Eigenschaften suche
-    Then es erscheinen alle zutreffenden Modelle
-    And es erscheinen alle zutreffenden Gegenstände
+    Then they appear all matched models
+    And they appear all matched items
 
   @javascript @personas
   Scenario: Pakete anhand eines Suchbegriffs finden
@@ -30,9 +30,9 @@ Feature: Inventar
       | Inventarcode | AVZ40020 |
     And this item is part of this package item
     When ich im Inventarbereich nach einer dieser Eigenschaften suche
-    Then es erscheinen alle zutreffenden Paket-Modelle
-    And es erscheinen alle zutreffenden Paket-Gegenstände
-    And es erscheinen alle zutreffenden Gegenstände
+    Then they appear all matched package models
+    And they appear all matched package items
+    And they appear all matched items
 
   @personas @javascript
   Scenario: Modell und Gegenstand eines Pakets in Besitzergerätepark finden
@@ -81,9 +81,9 @@ Feature: Inventar
       | <Eigenschaft> |
     Then appears the corresponding model to the item
     And appears the item
-    Then es erscheinen alle zutreffenden Paket-Modelle
-    And es erscheinen alle zutreffenden Paket-Gegenstände
-    And es erscheinen alle zutreffenden Gegenstände
+    Then they appear all matched package models
+    And they appear all matched package items
+    And they appear all matched items
   Examples:
     | Eigenschaft  |
     | Normal Model |

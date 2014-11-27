@@ -16,12 +16,12 @@ Feature: Software suchen
       | Anzahl-Zuteilung     | 1 / Christina Meier |
     And this software license is handed over to somebody
     When ich nach einer dieser Software-Produkt Eigenschaften suche
-    Then es erscheinen alle zutreffenden Software-Produkte
-    And es erscheinen alle zutreffenden Software-Lizenzen
-    And es erscheinen alle zutreffenden Verträge, in denen diese Software-Produkt vorkommt
+    Then they appear all matched software products
+    And they appear all matched software licenses
+    And they appear all matched contracts, in which this software product is contained
     When ich nach einer dieser Software-Lizenz Eigenschaften suche
-    Then es erscheinen alle zutreffenden Software-Lizenzen
-    And es erscheinen alle zutreffenden Verträge, in denen diese Software-Produkt vorkommt
+    Then they appear all matched software licenses
+    And they appear all matched contracts, in which this software product is contained
 
   @javascript @personas
   Scenario: Verträge für Software-Lizenzen anhand des Ausleihenden finden

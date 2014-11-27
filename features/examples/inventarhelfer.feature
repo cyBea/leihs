@@ -24,7 +24,7 @@ Feature: Inventarhelfer
   @javascript @browser @personas
   Scenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
     Given man ist auf dem Helferschirm
-    And man editiert das Feld "Verantwortliche Abteilung" eines ausgeliehenen Gegenstandes, wo man Besitzer ist
+    And one edits the field "Verantwortliche Abteilung" of an owned item not in stock
     Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
 
   @javascript @personas
