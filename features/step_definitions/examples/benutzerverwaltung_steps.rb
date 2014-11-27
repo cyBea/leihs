@@ -579,7 +579,7 @@ When(/^I enter a badge ID$/) do
 end
 
 #Wenn(/^eine der folgenden Rollen auswählt$/) do |table|
-When(/^I choose one of the following roles$/) do |table|
+When(/^I choose the following roles$/) do |table|
   @role_hash = table.hashes[rand table.hashes.length]
   page.select @role_hash[:tab], from: "access_right[role]"
 end

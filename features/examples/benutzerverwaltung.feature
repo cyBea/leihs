@@ -81,7 +81,7 @@ Feature: Manage users
       | Customer  |
       | Group manager  |
       | Lending manager  |
-    When I choose one of the following roles
+    When I choose the following roles
       | tab                | role              |
       | Customer              | customer          |
       | Group manager | group_manager   |
@@ -294,7 +294,7 @@ Feature: Manage users
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    And I choose one of the following roles
+    And I choose the following roles
     | tab               | role                |
     | Customer          | customer            |
     | Group manager     | group_manager       |
@@ -404,7 +404,7 @@ Feature: Manage users
       | Group manager      |
       | Lending manager    |
       | Inventory manager  |
-    When I choose one of the following roles
+    When I choose the following roles
       | tab                | role                |
       | Customer              | customer            |
       | Group manager  | group_manager       |

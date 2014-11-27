@@ -199,7 +199,8 @@ Given(/^multiple inventory pools are granting automatic access$/) do
   expect(@inventory_pools_with_automatic_access.count).to be > 1
 end
 
-Angenommen(/^es ist bei meinem Gerätepark aut. Zuweisung aktiviert$/) do
+#Angenommen(/^es ist bei meinem Gerätepark aut. Zuweisung aktiviert$/) do
+Given(/^my inventory pool is granting automatic access$/) do
   @current_inventory_pool.update_attributes automatic_access: true
   @inventory_pools_with_automatic_access = InventoryPool.where(automatic_access: true)
   expect(@inventory_pools_with_automatic_access.count).to be > 1
@@ -212,31 +213,34 @@ Then(/^the newly created user has 'customer'-level access to all inventory pools
   expect(@user.access_rights.all? {|ar| ar.role == :customer}).to be true
 end
 
-Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
+#Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
+When(/^I create a new user with the 'inventory manager' role in my inventory pool$/) do
   steps %Q{
     When I am looking at the user list
     And I add a user
     And I enter the following information
-      | Nachname       |
-      | Vorname        |
+      | Last name       |
+      | First name        |
       | E-Mail         |
-    And I enter login details
+    And I enter the login data
     And I enter a badge ID
-    And I select the following roles
+    And I choose the following roles
       | tab                | role              |
-      | Inventar-Verwalter | inventory_manager   |
+      | Inventory manager | inventory_manager   |
     And I save
   }
   @user = User.find_by_lastname "test"
 end
 
-Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut\. Zuweisung ausser meinem die Rolle 'Kunde'$/) do
+#Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut\. Zuweisung ausser meinem die Rolle 'Kunde'$/) do
+Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access, but not to mine$/) do
   expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
   expect(@user.access_rights.pluck(:inventory_pool_id)).to eq @inventory_pools_with_automatic_access.pluck(:id)
   expect(@user.access_rights.where("inventory_pool_id != ?", @current_inventory_pool ).all? {|ar| ar.role == :customer}).to be true
 end
 
-Dann(/^in meinem Gerätepark hat er die Rolle 'Inventar\-Verwalter'$/) do
+#Dann(/^in meinem Gerätepark hat er die Rolle 'Inventar\-Verwalter'$/) do
+Then(/^in my inventory pool the user gets the role 'inventory manager'$/) do
   expect(@user.access_right_for(@current_inventory_pool).role).to eq :inventory_manager
 end
 

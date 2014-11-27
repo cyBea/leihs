@@ -44,13 +44,13 @@ Feature: Basic information for inventory pools
     Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access
 
   @personas
-  Scenario: Aut. zuweisen beim Benutzererstellen innerhalb des Geräteparks
+  Scenario: Automatically grant access to new users from within my own inventory pool's settings
     Given I am Mike
-    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    And es ist bei meinem Gerätepark aut. Zuweisung aktiviert
-    When ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar-Verwalter' erstelle
-    Then kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung ausser meinem die Rolle 'Kunde'
-    And in meinem Gerätepark hat er die Rolle 'Inventar-Verwalter'
+    And multiple inventory pools are granting automatic access
+    And my inventory pool is granting automatic access
+    When I create a new user with the 'inventory manager' role in my inventory pool
+    Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access, but not to mine
+    And in my inventory pool the user gets the role 'inventory manager'
 
   #72676850
   @personas @javascript
