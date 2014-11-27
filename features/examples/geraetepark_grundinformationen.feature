@@ -56,19 +56,19 @@ Feature: Basic information for inventory pools
   @personas @javascript
   Scenario: Aut. Zuweisen entfernen
     Given I am Mike
-    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    And ich editiere eine Gerätepark bei dem die aut. Zuweisung aktiviert ist
-    When ich die aut. Zuweisung deaktiviere
+    And multiple inventory pools are granting automatic access
+    And I edit an inventory pool that is granting automatic access
+    When I disable automatic access
     And I save
-    Then ist die aut. Zuweisung deaktiviert
+    Then automatic access is disabled
     Given I am Gino
-    And man befindet sich auf der Benutzerliste
-    When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
-    Then kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht
+    And I am listing users
+    When I have created a user with login "username" and password "password"
+    Then the newly created user does not have access to that inventory pool
 
   #72676850
   @personas
-  Scenario Outline: Checkboxen abwählen
+  Scenario Outline: Deselect checkboxes
     Given I am Mike
     And ich editiere eine Gerätepark
     When ich "<Checkbox>" aktiviere

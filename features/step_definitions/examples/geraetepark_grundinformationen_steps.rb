@@ -163,13 +163,15 @@ Dann(/^der Sperrgrund ist derjenige, der für diesen Park gespeichert ist$/) do
   expect(@access_right.suspended_reason).to eq @reason
 end
 
-Wenn(/^ich die aut\. Zuweisung deaktiviere$/) do
+#Wenn(/^ich die aut\. Zuweisung deaktiviere$/) do
+When(/^I disable automatic access$/) do
   within(".row.padding-inset-s", match: :prefer_exact, text: _("Automatic access")) do
     find("input", match: :first).set false
   end
 end
 
-Dann(/^ist die aut\. Zuweisung deaktiviert$/) do
+#Dann(/^ist die aut\. Zuweisung deaktiviert$/) do
+Then(/^automatic access is disabled$/) do
   expect(@current_inventory_pool.reload.automatic_access).to be false
 end
 
@@ -179,7 +181,7 @@ Angenommen(/^man ist ein Benutzer, der sich zum ersten Mal einloggt$/) do
   step %Q(ich einen Benutzer mit Login "#{@username}" und Passwort "#{@password}" erstellt habe)
 end
 
-Given(/^I edit an inventory pool( which has the automatic access enabled)?$/) do |arg1|
+Given(/^I edit an inventory pool( that is granting automatic access)?$/) do |arg1|
   if arg1
     @current_inventory_pool = @current_user.managed_inventory_pools.select{|ip| ip.automatic_access? }.sample
   end
@@ -244,7 +246,8 @@ Then(/^in my inventory pool the user gets the role 'inventory manager'$/) do
   expect(@user.access_right_for(@current_inventory_pool).role).to eq :inventory_manager
 end
 
-Dann(/^kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht$/) do
+#Dann(/^kriegt der neu erstellte Benutzer bei dem vorher editierten Gerätepark kein Zugriffsrecht$/) do
+Then(/^the newly created user does not have access to that inventory pool$/) do
   expect(@user.access_right_for(@last_edited_inventory_pool)).to eq nil
 end
 

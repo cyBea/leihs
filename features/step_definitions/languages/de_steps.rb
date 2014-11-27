@@ -169,9 +169,8 @@ Angenommen(/^man editiert das Feld "(.*?)" eines ausgeliehenen Gegenstandes, wo 
   step %Q(one edits the field "#{arg1}" of an owned item not in stock)
 end
 
-Angenommen(/^ich editiere eine Gerätepark( bei dem die aut. Zuweisung aktiviert ist)?$/) do |arg1|
-  step "I edit an inventory pool%s" % (arg1 ? " which has the automatic access enabled" : nil)
-end
+#Angenommen(/^ich editiere eine Gerätepark( bei dem die aut. Zuweisung aktiviert ist)?$/) do |arg1|
+#  step "I edit an inventory pool%s" % (arg1 ? " which has automatic access enabled" : nil)
 
 Wenn(/^ich "(.*)" aktiviere$/) do |arg1|
   step %Q(I enable "%s") % arg1
