@@ -1,18 +1,20 @@
 # encoding: utf-8
 
-Wenn(/^ich den Admin\-Bereich betrete$/) do
+
+#Wenn(/^ich den Admin\-Bereich betrete$/) do
+When(/^I navigate to the inventory pool section in the admin area$/) do
   click_link _("Admin")
   click_link _("Inventory Pool")
 end
 
-Dann(/^kann ich die Gerätepark\-Grundinformationen eingeben$/) do |table|
-  # table is a Cucumber::Ast::Table
+#Dann(/^kann ich die Gerätepark\-Grundinformationen eingeben$/) do |table|
+Then(/^I can enter the inventory pool's basic settings as follows:$/) do |table|
   @table_raw = table.raw
   @table_raw.flatten.each do |field_name|
     within(".row.padding-inset-s", match: :prefer_exact, text: field_name) do
-      if field_name == "Verträge drucken"
+      if field_name == "Print Contracts"
         find("input", match: :first).set false
-      elsif field_name == "Automatischer Zugriff"
+      elsif field_name == "Automatic access"
         find("input", match: :first).set true
       else
         find("input,textarea", match: :first).set (field_name == "E-Mail" ? "test@test.ch" : "test")
@@ -21,17 +23,23 @@ Dann(/^kann ich die Gerätepark\-Grundinformationen eingeben$/) do |table|
   end
 end
 
-Dann(/^ich kann die angegebenen Grundinformationen speichern$/) do
-  @path_before_save = current_path
-  click_button _("Save")
+When(/^I make a note of which page I'm on$/) do
+  @saved_path = current_path
 end
 
-Dann(/^sind die Informationen aktualisiert$/) do
+# Dann(/^ich kann die angegebenen Grundinformationen speichern$/) do
+#Then(/^ich kann die angegebenen Grundinformationen speichern$/) do
+#  @saved_path = current_path
+#  click_button _("Save")
+#end
+
+#Dann(/^sind die Informationen aktualisiert$/) do
+Then(/^the settings are updated$/) do
   @table_raw.flatten.each do |field_name|
     within(".row.padding-inset-s", match: :prefer_exact, text: field_name) do
-      if field_name == "Verträge drucken"
+      if field_name == "Print Contracts"
         expect(find("input", match: :first).selected?).to be false
-      elsif field_name == "Automatischer Zugriff"
+      elsif field_name == "Automatic access"
         expect(find("input", match: :first).selected?).to be true
       else
         expect(find("input,textarea", match: :first).value).to eq (field_name == "E-Mail" ? "test@test.ch" : "test")
@@ -40,11 +48,13 @@ Dann(/^sind die Informationen aktualisiert$/) do
   end
 end
 
-Dann(/^ich bleibe auf derselben Ansicht$/) do
-  expect(current_path).to eq @path_before_save
+#Dann(/^ich bleibe auf derselben Ansicht$/) do
+Then(/^I am still on the same page$/) do
+  expect(current_path).to eq @saved_path
 end
 
-Dann(/^sehe eine Bestätigung$/) do
+#Dann(/^sehe eine Bestätigung$/) do
+Then(/^I see a confirmation that the information was saved$/) do
   find("#flash .notice", text: _("Inventory pool successfully updated"))
 end
 

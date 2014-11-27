@@ -1,26 +1,28 @@
 
-Feature: Gerätepark-Grundinformationen
+Feature: Basic information for inventory pools
 
-  Um die Grundinformationen meines Gerätepark zu verwalten
-  möchte ich als Zuständiger
-  die Informationen/Einstellungen für einen Gerätepark bearbeiten können
+  As a person responsible for managing inventory pools
+  I want to be able to change their settings and supply basic information
+  So that each inventory pool has all the information and settings they
+  need to work efficiently (e.g. opening hours, proper addresses, etc.)
 
   @javascript @personas
-  Scenario: Grundinformationen erfassen
+  Scenario: Make basic settings
     Given I am Mike
-    When ich den Admin-Bereich betrete
-    Then kann ich die Gerätepark-Grundinformationen eingeben
+    When I navigate to the inventory pool section in the admin area
+    Then I can enter the inventory pool's basic settings as follows:
     | Name |
-    | Kurzname |
+    | Short Name |
     | E-Mail |
-    | Beschreibung |
-    | Standard-Vertragsnotiz |
-    | Verträge drucken |
-    | Automatischer Zugriff |
-    And ich kann die angegebenen Grundinformationen speichern
-    Then sehe eine Bestätigung
-    And sind die Informationen aktualisiert
-    And ich bleibe auf derselben Ansicht
+    | Description |
+    | Default Contract Note|
+    | Print Contracts |
+    | Automatic access |
+    And I make a note of which page I'm on
+    And I save
+    Then I see a confirmation that the information was saved
+    And the settings are updated
+    And I am still on the same page
 
   @personas
   Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
