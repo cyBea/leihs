@@ -27,13 +27,13 @@ Feature: Basic information for inventory pools
   @personas
   Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
     Given I am Mike
-    And ich die Grundinformationen des Geräteparks abfüllen möchte
-    And ich die folgenden Felder nicht befüllt habe
-      | Name     |
-      | Kurzname |
-      | E-Mail   |
-    Then kann das Gerätepark nicht gespeichert werden
-    And I see an error message
+    When I edit the current inventory pool
+    And I leave the following fields empty:
+      | Name       |
+      | Short Name |
+      | E-Mail     |
+    And I save
+    Then I see an error message
 
   @personas
   Scenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks

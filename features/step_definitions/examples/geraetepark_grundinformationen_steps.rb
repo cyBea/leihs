@@ -58,16 +58,13 @@ Then(/^I see a confirmation that the information was saved$/) do
   find("#flash .notice", text: _("Inventory pool successfully updated"))
 end
 
-Wenn(/^ich die Grundinformationen des Geräteparks abfüllen möchte$/) do
+#Wenn(/^ich die Grundinformationen des Geräteparks abfüllen möchte$/) do
+When(/^I edit the current inventory pool$/) do
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
 end
 
-Dann(/^kann das Gerätepark nicht gespeichert werden$/) do
-  click_button _("Save")
-  step "I see an error message"
-end
-
-Angenommen(/^ich die folgenden Felder nicht befüllt habe$/) do |table|
+#Angenommen(/^ich die folgenden Felder nicht befüllt habe$/) do |table|
+When(/^I leave the following fields empty:$/) do |table|
   table.raw.flatten.each do |must_field_name|
     find(".row.emboss", match: :prefer_exact, text: must_field_name).find("input,textarea", match: :first).set ""
   end
