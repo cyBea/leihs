@@ -36,12 +36,12 @@ Feature: Basic information for inventory pools
     Then I see an error message
 
   @personas
-  Scenario: Aut. zuweisen beim Benutzererstellen ausserhalb des Geräteparks
+  Scenario: Automatically grant access to new users
     Given I am Gino
-    And es ist bei mehreren Geräteparks aut. Zuweisung aktiviert
-    And man befindet sich auf der Benutzerliste
-    When ich einen Benutzer mit Login "username" und Passwort "password" erstellt habe
-    Then kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'
+    And multiple inventory pools are granting automatic access
+    And I am listing users
+    When I have created a user with login "username" and password "password"
+    Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access
 
   @personas
   Scenario: Aut. zuweisen beim Benutzererstellen innerhalb des Geräteparks

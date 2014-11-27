@@ -562,7 +562,7 @@ end
 
 
 #Wenn(/^man einen Benutzer hinzufügt$/) do
-When(/^I add a new user$/) do
+When(/^I add a user$/) do
   find_link(_("New User")).click
 end
 

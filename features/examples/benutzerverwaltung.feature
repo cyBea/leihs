@@ -69,7 +69,7 @@ Feature: Manage users
   Scenario: Add new user as inventory manager to an inventory pool
     Given I am Pius
     When I am looking at the user list
-    And I add a new user
+    And I add a user
     And I enter the following information
       | First name       |
       | Last name        |
@@ -276,7 +276,7 @@ Feature: Manage users
   Scenario: As an inventory manager, add a new user to the inventory pool
     Given I am Mike
     When I am looking at the user list
-    And I add a new user
+    And I add a user
     And I enter the following information
       | Last name    |
       | First name   |
@@ -391,7 +391,7 @@ Feature: Manage users
   Scenario: Add new user to the inventory pool as administrator
     Given I am Gino
     When I am looking at the user list
-    And I add a new user
+    And I add a user
     And I enter the following information
       | Last name      |
       | First name     |
@@ -418,7 +418,7 @@ Feature: Manage users
   Scenario Outline: Adding a new user without supplying require information
     Given I am Pius
     When I am looking at the user list
-    And I add a new user
+    And I add a user
     And all required fields are filled in
     When I did not enter <required_information>
     And I save

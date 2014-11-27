@@ -187,7 +187,8 @@ Given(/^I edit an inventory pool( which has the automatic access enabled)?$/) do
   @last_edited_inventory_pool = @current_inventory_pool
 end
 
-Angenommen(/^es ist bei mehreren Geräteparks aut. Zuweisung aktiviert$/) do
+#Angenommen(/^es ist bei mehreren Geräteparks aut. Zuweisung aktiviert$/) do
+Given(/^multiple inventory pools are granting automatic access$/) do
   InventoryPool.all.sample(rand(2..4)).each do |inventory_pool|
     inventory_pool.update_attributes automatic_access: true
   end
@@ -204,7 +205,8 @@ Angenommen(/^es ist bei meinem Gerätepark aut. Zuweisung aktiviert$/) do
   expect(@inventory_pools_with_automatic_access.count).to be > 1
 end
 
-Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'$/) do
+#Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'$/) do
+Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access$/) do
   expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
   expect(@user.access_rights.pluck(:inventory_pool_id)).to eq @inventory_pools_with_automatic_access.pluck(:id)
   expect(@user.access_rights.all? {|ar| ar.role == :customer}).to be true
@@ -213,7 +215,7 @@ end
 Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
   steps %Q{
     When I am looking at the user list
-    And I add a new user
+    And I add a user
     And I enter the following information
       | Nachname       |
       | Vorname        |

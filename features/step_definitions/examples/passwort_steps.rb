@@ -10,17 +10,19 @@ def fill_in_user_information(attrs)
   click_button _("Save")
 end
 
-Angenommen(/^man befindet sich auf der Benutzerliste$/) do
+#Angenommen(/^man befindet sich auf der Benutzerliste$/) do
+Given(/^I am listing users$/) do
   if @current_user == User.find_by_login("gino")
-    step "man befindet sich auf der Benutzerliste ausserhalb der Inventarpools"
+    step "I am looking at the user list outside an inventory pool"
   else
     @inventory_pool = @current_inventory_pool || @current_user.inventory_pools.sample
     visit manage_inventory_pool_users_path(@inventory_pool)
   end
 end
 
-Wenn(/^ich einen Benutzer mit Login "(.*?)" und Passwort "(.*?)" erstellt habe$/) do |login, password|
-  step "man einen Benutzer hinzufügt"
+#Wenn(/^ich einen Benutzer mit Login "(.*?)" und Passwort "(.*?)" erstellt habe$/) do |login, password|
+When(/^I have created a user with login "(.*?)" and password "(.*?)"$/) do |login, password|
+  step "I add a user"
   fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", login: login, password: password, password_confirmation: password)
   expect(has_content?(_("List of Users"))).to be true
   @user = User.find_by_login login
