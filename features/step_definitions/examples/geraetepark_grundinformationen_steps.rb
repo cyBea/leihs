@@ -74,7 +74,8 @@ Given(/^I edit my inventory pool settings$/) do
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
 end
 
-Wenn(/^ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere$/) do
+#Wenn(/^ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere$/) do
+When(/^I randomly set the workdays monday, tuesday, wednesday, thursday, friday, saturday and sunday to open or closed$/) do
   @workdays = {}
   [0,1,2,3,4,5,6].each do |day|
     select = find(".row.emboss", match: :prefer_exact, text: I18n.t('date.day_names')[day]).find("select", match: :first)
@@ -83,7 +84,8 @@ Wenn(/^ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Sams
   end
 end
 
-Dann(/^sind die Arbeitstage gespeichert$/) do
+#Dann(/^sind die Arbeitstage gespeichert$/) do
+Then(/^those randomly chosen workdays are saved$/) do
   @workdays.each_pair do |day, status|
     if status == "closed"
       expect(@current_inventory_pool.workday.closed_days.include?(day)).to be true

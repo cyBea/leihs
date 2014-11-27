@@ -84,12 +84,12 @@ Feature: Basic information for inventory pools
       | Automatic access   |
 
   @personas
-  Scenario: Arbeitstage verwalten
+  Scenario: Manage workdays
    Given I am Mike
    And I edit my inventory pool settings
-   When ich die Arbeitstage Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag ändere
+   When I randomly set the workdays monday, tuesday, wednesday, thursday, friday, saturday and sunday to open or closed
    And I save
-   Then sind die Arbeitstage gespeichert
+   Then those randomly chosen workdays are saved
 
   @javascript @personas
   Scenario: Tage der Ausleihschliessung verwalten
