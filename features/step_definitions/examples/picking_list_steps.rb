@@ -131,7 +131,7 @@ end
 
 Then(/^the missing location information for options, are displayed with "(.*?)"$/) do |arg1|
   (@selected_lines || @contract.lines).select { |line| line.is_a? OptionLine }.each do |line|
-    find("section.list .model_name", match: :prefer_exact, text: line.model.name).find(:xpath, "./..").find(".location", text: arg1)
+    find("section.list .model_name", match: :prefer_exact, text: line.model.name).find(:xpath, "./..").find(".location", text: _(arg1))
   end
 end
 

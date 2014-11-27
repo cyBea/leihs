@@ -28,7 +28,7 @@ Feature: Rüstliste
     And a line has no item assigned yet and this line is marked
     And an option line is marked
     When man öffnet die Rüstliste
-    Then sind die Listen zuerst nach Ausleihdatum sortiert
+    Then the lists are sorted by hand over date
     And each list contains following columns
     | Spaltenname                        |
     | Anzahl                             |
@@ -39,7 +39,7 @@ Feature: Rüstliste
     And in the list, the assigned items will displayed with inventory code, room and shelf
     And in the list, the not assigned items will displayed without inventory code
     And Gegenständen kein Raum oder Gestell zugeteilt sind, wird die verfügbare Anzahl für den Kunden und "x Ort nicht definiert" angezeigt
-    And fehlende Rauminformationen bei Optionen werden als "Ort nicht definiert" angezeigt
+    And the missing location information for options, are displayed with "Location not defined"
 
   @personas @javascript @browser
   Scenario: Inhalt der Rüstliste vor Aushändigung - nicht verfügbare Gegenstände
@@ -47,7 +47,7 @@ Feature: Rüstliste
     And I open the hand over
     And a line has no item assigned yet and this line is marked
     When man öffnet die Rüstliste
-    Then sind die Listen zuerst nach Ausleihdatum sortiert
+    Then the lists are sorted by hand over date
     And the not available items, are displayed with "Nicht verfügbar"
 
   @personas @javascript @browser
@@ -61,7 +61,7 @@ Feature: Rüstliste
   @personas @javascript
   Scenario: Inhalt der Rüstliste nach Aushändigung - Inventarcodes sind bekannt
     When man öffnet die Rüstliste für einen unterschriebenen Vertrag
-    Then sind die Listen zuerst nach Rückgabedatum sortiert
+    Then the lists are sorted by take back date
     And each list contains following columns
     | Spaltenname    |
     | Anzahl         |
@@ -70,19 +70,19 @@ Feature: Rüstliste
     | Raum / Gestell |
     And each list will sorted after room and shelf
     When Gegenständen kein Raum oder Gestell zugeteilt sind, wird "Ort nicht definiert" angezeigt
-    And fehlende Rauminformationen bei Optionen werden als "Ort nicht definiert" angezeigt
+    And the missing location information for options, are displayed with "Location not defined"
 
   @personas @javascript
   Scenario: Wo wird die Rüstliste aufgerufen
-  	When ich mich im Verleih im Reiter aller Verträge befinde
-    And ich sehe mindestens einen Vertrag
-    Then kann ich die Rüstliste auf den jeweiligen Vertrags-Zeilen öffnen
-    When ich mich im Verleih im Reiter der offenen Verträge befinde
-    And ich sehe mindestens einen Vertrag
-    Then kann ich die Rüstliste auf den jeweiligen Vertrags-Zeilen öffnen
-    When ich mich im Verleih im Reiter der geschlossenen Verträge befinde
-    And ich sehe mindestens einen Vertrag
-    Then kann ich die Rüstliste auf den jeweiligen Vertrags-Zeilen öffnen
+  	When I visit the lending section on the list of all contracts
+    And I see at least a contract
+    Then I can open the picking list of any contract line
+    When I visit the lending section on the list of open contracts
+    And I see at least a contract
+    Then I can open the picking list of any contract line
+    When I visit the lending section on the list of closed contracts
+    And I see at least a contract
+    Then I can open the picking list of any contract line
     When I open a hand over which has multiple lines
     And I select at least one line
     Then I can open the picking list
