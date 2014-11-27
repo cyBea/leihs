@@ -15,8 +15,8 @@ Feature: Navigation
     Given I am Andi
     And I visit the lending section
     Then seh ich die Navigation
-    And kann man auf ein der "Bestellungen" Tab klichen
-    And kann man auf ein der "Verträge" Tab klichen
+    And I open the tab "Orders"
+    And I open the tab "Contracts"
     And man sieht die Gerätepark-Auswahl im Verwalten-Bereich
 
   @personas

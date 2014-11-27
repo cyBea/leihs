@@ -6,10 +6,10 @@ Feature: Software suchen
 
   @javascript @personas
   Scenario: Software anhand eines Suchbegriffs finden
-    Given es existiert ein Software-Produkt mit folgenden Eigenschaften:
+    Given there is a software product with the following properties:
       | Produktname          | suchbegriff1 |
       | Hersteller           | suchbegriff4 |
-    And es existiert eine Software-Lizenz mit folgenden Eigenschaften:
+    And there is a software license with the following properties:
       | Inventarcode         | suchbegriff2 |
       | Seriennummer         | suchbegriff3 |
       | Dongle-ID            | suchbegriff5 |

@@ -43,30 +43,30 @@ Feature: Software erfassen
       | Ausleihbar |
       | OK |
       | Nicht ausleihbar |
-    Then kann man als "Betriebssystem" keine, eine oder mehrere der folgenden Möglichkeiten in Form einer Checkbox auswählen:
+    Then one is able to choose for "Betriebssystem" none, one or more of the following options if form of a checkbox:
       | Betriebssystem |
       | Windows |
       | Mac OS X |
       | Linux |
       | iOS |
-    Then kann man als "Installation" keine, eine oder mehrere der folgenden Möglichkeiten in Form einer Checkbox auswählen:
+    Then one is able to choose for "Installation" none, one or more of the following options if form of a checkbox:
       | Citrix |
       | Lokal |
       | Web |
-    Then kann man als "Bezug" einen der folgenden Möglichkeiten anhand eines Radio-Buttons wählen:
+    Then for "Bezug" one can select one of the following options with the help of radio button
       |laufende Rechnung|
       |Investition                 |
-    Then kann man als "Lizenzablaufdatum" ein Datum auswählen
+    Then for "Lizenzablaufdatum" one can select a date
     Then for maintenance contract the available options are in the following order:
       | Nein |
       | Ja   |
-    Then kann man als "Rechnungsdatum" ein Datum auswählen
-    Then kann man als "Anschaffungswert" eine Zahl eingeben
+    Then for "Rechnungsdatum" one can select a date
+    Then for "Anschaffungswert" one can enter a number
     Then kann man als "Beschafft durch" einen Benutzer wählen
-    Then kann man als "Lieferant" einen Lieferanten auswählen
-    Then kann man als "Verantwortliche Abteilung" einen Gerätepark auswählen
-    Then kann man als "Besitzer" einen Gerätepark auswählen
-    Then kann man als "Notiz" einen Text eingeben
+    Then for "Lieferant" one can select a supplier
+    Then for "Verantwortliche Abteilung" one can select an inventory pool
+    Then for "Besitzer" one can select an inventory pool
+    Then for "Notiz" one can enter some text
     And die Option "Ausleihbar" ist standardmässig auf "Nicht ausleihbar" gesetzt
 
   @javascript @personas @upcoming
@@ -87,13 +87,13 @@ Feature: Software erfassen
     And if I choose none, one or more of the available options for operating system
     And if I choose none, one or more of the available options for installation
     And I choose a date for license expiration
-    When ich als Maintenance-Vertrag "Nein" auswähle
+    When I choose "Nein" for maintenance contract
     Then I am not able to choose the maintenance expiration date
     And ich kann für den Maintenance-Vertrag kein Betrag eingeben
     And ich kann für den Maintenance-Vertrag keine Währung eingeben
-    When ich als Maintenance-Vertrag "Ja" auswähle
+    When I choose "Ja" for maintenance contract
     And I choose a date for the maintenance expiration
-    When ich als Bezug "Investition" wähle
+    When I choose "Investition" as reference
     Then I have to enter a project number
     And ich die den Wert "ausleihbar" setze
     And I save
@@ -129,6 +129,6 @@ Feature: Software erfassen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
     And I fill in all the required fields for the license
-    And ich im Feld "Anschaffungswert" den Wert "1200" eingebe
+    And I fill in the field "Anschaffungswert" with the value "1200"
     And I save
-    Then ist der "Anschaffungswert" als "1'200.00" gespeichert
+    Then "Anschaffungswert" is saved as "1'200.00"

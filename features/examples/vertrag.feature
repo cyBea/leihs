@@ -95,7 +95,10 @@ Feature: Vertrag
 
   @javascript @browser @personas
   Scenario: Rücknehmende Person
-    Given man öffnet einen Vertrag bei der Rücknahme
+    Given I open a take back
+    And I select all lines of an open contract
+    And I click take back
+    And I click take back inside the dialog
     Then sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"
 
   @javascript @browser @personas

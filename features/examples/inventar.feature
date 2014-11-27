@@ -7,10 +7,10 @@ Feature: Inventar
 
   @javascript @personas
   Scenario: Inventar anhand eines Suchbegriffs finden
-    Given es existiert ein Modell mit folgenden Eigenschaften:
+    Given there is a model with the following properties:
       | Name       | suchbegriff1 |
       | Hersteller | suchbegriff4 |
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode | suchbegriff2 |
     When ich im Inventarbereich nach einer dieser Eigenschaften suche
     Then es erscheinen alle zutreffenden Modelle
@@ -18,15 +18,15 @@ Feature: Inventar
 
   @javascript @personas
   Scenario: Pakete anhand eines Suchbegriffs finden
-    Given es existiert ein Modell mit folgenden Eigenschaften:
+    Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode | P-AVZ40001 |
     And this package item is part of this package model
-    And es existiert ein Modell mit folgenden Eigenschaften:
+    And there is a model with the following properties:
       | Name | Normal Model |
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode | AVZ40020 |
     And this item is part of this package item
     When ich im Inventarbereich nach einer dieser Eigenschaften suche
@@ -36,17 +36,17 @@ Feature: Inventar
 
   @personas @javascript
   Scenario: Modell und Gegenstand eines Pakets in Besitzergerätepark finden
-    Given es existiert ein Modell mit folgenden Eigenschaften:
+    Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode                | P-AVZ40001         |
       | Besitzergerätepark          | Anderer Gerätepark |
       | verantwortlicher Gerätepark | Anderer Gerätepark |
     And this package item is part of this package model
-    And es existiert ein Modell mit folgenden Eigenschaften:
+    And there is a model with the following properties:
       | Name | Normal Model |
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode                | AVZ40020           |
       | Besitzergerätepark          | Mein Gerätepark    |
       | verantwortlicher Gerätepark | Anderer Gerätepark |
@@ -62,17 +62,17 @@ Feature: Inventar
 
   @personas @javascript
   Scenario Outline: Modell und Gegenstand eines Pakets in Verantwortlichem Gerätepark finden
-    Given es existiert ein Modell mit folgenden Eigenschaften:
+    Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode                | P-AVZ40001      |
       | Besitzergerätepark          | Mein Gerätepark |
       | verantwortlicher Gerätepark | Mein Gerätepark |
     And this package item is part of this package model
-    And es existiert ein Modell mit folgenden Eigenschaften:
+    And there is a model with the following properties:
       | Name | Normal Model |
-    And es existiert ein Gegenstand mit folgenden Eigenschaften:
+    And there is a item with the following properties:
       | Inventarcode                | AVZ40020           |
       | Besitzergerätepark          | Anderer Gerätepark |
       | verantwortlicher Gerätepark | Mein Gerätepark    |

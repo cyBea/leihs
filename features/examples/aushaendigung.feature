@@ -77,7 +77,7 @@ Feature: Edit a hand over
     Then the quantity will be restored to the original value
     And I change the quantity to "-1"
     Then the quantity will be restored to the original value
-    When ich die Anzahl "abc" in das Mengenfeld schreibe
+    When I change the quantity to "abc"
     Then the quantity will be restored to the original value
     And I change the quantity to "2"
     Then the quantity will be stored to the value "2"

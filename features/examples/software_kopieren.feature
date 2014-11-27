@@ -9,8 +9,8 @@ Feature: Software kopieren
     Given a software license exists
     When I copy an existing software license
     Then it opens the edit view of the new software license
-    And der Titel heisst "Neue Software-Lizenz erstellen"
-    And der Speichern-Button heisst "Lizenz speichern"
+    And the title is labeled as "Neue Software-Lizenz erstellen"
+    And the save button is labeled as "Lizenz speichern"
     And ein neuer Inventarcode vergeben wird
     When I save
     Then the new software license is created
