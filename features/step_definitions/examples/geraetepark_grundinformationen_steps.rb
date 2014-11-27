@@ -286,11 +286,11 @@ When(/^I (enable|disable) "(.*)"$/) do |arg1, arg2|
           raise
       end
   case arg2
-    when "Verträge drucken"
+    when "Print contracts"
       find("input[type='checkbox'][name='inventory_pool[print_contracts]']").set b
-    when "Automatische Sperrung"
+    when "Automatic suspension"
       find("input[type='checkbox'][name='inventory_pool[automatic_suspension]']").set b
-    when "Automatischer Zugriff"
+    when "Automatic access"
       find("input[type='checkbox'][name='inventory_pool[automatic_access]']").set b
     else
       raise
@@ -307,11 +307,11 @@ Then(/^"(.*)" is (enabled|disabled)$/) do |arg1, arg2|
           raise
       end
   case arg1
-    when "Verträge drucken"
+    when "Print contracts"
       expect(@current_inventory_pool.reload.print_contracts).to eq b
-    when "Automatische Sperrung"
+    when "Automatic suspension"
       expect(@current_inventory_pool.reload.automatic_suspension).to eq b
-    when "Automatischer Zugriff"
+    when "Automatic access"
       expect(@current_inventory_pool.reload.automatic_access).to eq b
     else
       raise

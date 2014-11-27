@@ -70,18 +70,18 @@ Feature: Basic information for inventory pools
   @personas
   Scenario Outline: Deselect checkboxes
     Given I am Mike
-    And ich editiere eine Gerätepark
-    When ich "<Checkbox>" aktiviere
+    And I edit an inventory pool
+    When I enable "<checkbox>"
     And I save
-    Then ist "<Checkbox>" aktiviert
-    When ich "<Checkbox>" deaktiviere
+    Then "<checkbox>" is enabled
+    When I disable "<checkbox>"
     And I save
-    Then ist "<Checkbox>" deaktiviert
+    Then "<checkbox>" is disabled
     Examples:
-      | Checkbox                |
-      | Verträge drucken        |
-      | Automatische Sperrung   |
-      | Automatischer Zugriff   |
+      | checkbox                |
+      | Print contracts        |
+      | Automatic suspension   |
+      | Automatic access   |
 
   @personas
   Scenario: Arbeitstage verwalten

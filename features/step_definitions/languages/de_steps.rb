@@ -172,21 +172,21 @@ end
 #Angenommen(/^ich editiere eine Gerätepark( bei dem die aut. Zuweisung aktiviert ist)?$/) do |arg1|
 #  step "I edit an inventory pool%s" % (arg1 ? " which has automatic access enabled" : nil)
 
-Wenn(/^ich "(.*)" aktiviere$/) do |arg1|
-  step %Q(I enable "%s") % arg1
-end
+#Wenn(/^ich "(.*)" aktiviere$/) do |arg1|
+#  step %Q(I enable "%s") % arg1
+#end
 
-Dann(/^ist "(.*)" aktiviert$/) do |arg1|
-  step %Q("%s" is enabled) % arg1
-end
+#Dann(/^ist "(.*)" aktiviert$/) do |arg1|
+#  step %Q("%s" is enabled) % arg1
+#end
 
-Wenn(/^ich "(.*)" deaktiviere$/) do |arg1|
-  step %Q(I disable "%s") % arg1
-end
+#Wenn(/^ich "(.*)" deaktiviere$/) do |arg1|
+#  step %Q(I disable "%s") % arg1
+#end
 
-Dann(/^ist "(.*)" deaktiviert$/) do |arg1|
-  step %Q("%s" is disabled) % arg1
-end
+#Dann(/^ist "(.*)" deaktiviert$/) do |arg1|
+#  step %Q("%s" is disabled) % arg1
+#end
 
 Angenommen(/^eine Software\-Produkt mit mehr als (\d+) Zeilen Text im Feld "(.*?)" existiert$/) do |arg1, arg2|
   step %Q(a software product with more than %d text rows in field "%s" exists) % [arg1, arg2]
