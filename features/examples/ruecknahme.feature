@@ -1,4 +1,3 @@
-
 Feature: Rücknahme
 
   Um eine Gegenstände wieder dem Verleih zuzuführen
@@ -6,7 +5,7 @@ Feature: Rücknahme
   Gegenstände Zurücknehmen können
 
   Grundlage:
-    Given I am Pius
+  Given I am Pius
 
   @javascript @personas
   Scenario: Hinzufügen eines Gegenstandes in der Rücknahme
@@ -34,7 +33,12 @@ Feature: Rücknahme
 
   @javascript @browser @personas
   Scenario: Festhalten wer einen Gegenstand zurückgenommen hat
-    When ich einen Gegenstand zurücknehme
+    When I open a take back
+    And I select all lines of an open contract
+    And I click take back
+    And I see a summary of the things I selected for take back
+    And I click take back inside the dialog
+    And the contract is closed and all items are returned
     Then wird festgehalten, dass ich diesen Gegenstand zurückgenommen habe
 
   @personas
@@ -64,7 +68,12 @@ Feature: Rücknahme
 
   @javascript @browser @personas
   Scenario: Festhalten wer einen Gegenstand zurückgenommen hat
-    When ich einen Gegenstand zurücknehme
+    When I open a take back
+    And I select all lines of an open contract
+    And I click take back
+    And I see a summary of the things I selected for take back
+    And I click take back inside the dialog
+    And the contract is closed and all items are returned
     Then wird festgehalten, dass ich diesen Gegenstand zurückgenommen habe
 
   @personas

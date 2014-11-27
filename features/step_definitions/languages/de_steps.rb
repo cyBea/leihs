@@ -1,42 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-Wenn /^einem Gegenstand einen Inventarcode manuell zuweise$/ do
-  step 'I click an inventory code input field of an item line'
-  step 'I select one of those'
-end
-
-
-Wenn(/^ich einen Gegenstand zurücknehme$/) do
-  step 'I open a take back'
-  step 'I select all lines of an open contract'
-  step 'I click take back'
-  step 'I see a summary of the things I selected for take back'
-  step 'I click take back inside the dialog'
-  step 'the contract is closed and all items are returned'
-end
-
-Given /^I open a contract during take back$/ do
-  step 'I open a take back'
-  step 'I select all lines of an open contract'
-  step 'I click take back'
-  step 'I click take back inside the dialog'
-end
-
-
-Angenommen /^man öffnet einen Vertrag bei der Rücknahme/ do
-  step 'I open a take back'
-  step 'I select all lines of an open contract'
-  step 'I click take back'
-  step 'I click take back inside the dialog'
-end
-
-Wenn /^einige der ausgewählten Gegenstände hat keinen Zweck angegeben$/ do
-  step 'I click an inventory code input field of an item line'
-  step 'I select one of those'
-  step 'I add an item to the hand over by providing an inventory code'
-  step 'I add an option to the hand over by providing an inventory code and a date range'
-end
-
 Dann(/^kann man als "(.+)" keine, eine oder mehrere der folgenden Möglichkeiten in Form einer Checkbox auswählen:$/) do |arg, table|
   step %Q(one is able to choose for "#{arg}" none, one or more of the following options if form of a checkbox:), table
 end
@@ -55,22 +18,6 @@ end
 
 Dann(/^kann man als "(.*?)" einen Text eingeben$/) do |arg1|
   step %Q(for "#{arg1}" one can enter some text)
-end
-
-Dann(/^kann man als "(.*?)" einen Lieferanten auswählen$/) do |arg1|
-  step %Q(for "#{arg1}" one can select a supplier)
-end
-
-Dann(/^kann man als "(.*?)" einen Gerätepark auswählen$/) do |arg1|
-  step %Q(for "#{arg1}" one can select an inventory pool)
-end
-
-Wenn(/^ich als Maintenance\-Vertrag "(.*?)" auswähle$/) do |arg1|
-  step %Q(I choose "#{arg1}" for maintenance contract)
-end
-
-Wenn(/^ich als Bezug "(.*?)" wähle$/) do |arg1|
-  step %Q(I choose "#{arg1}" as reference)
 end
 
 Angenommen(/^es existiert ein(e)? (.*) mit folgenden Eigenschaften:$/) do |arg0, arg1, table|

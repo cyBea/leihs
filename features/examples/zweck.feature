@@ -29,8 +29,11 @@ Feature: Zweck
   @javascript @browser @personas
   Scenario: Aushändigung mit Gegenständen teilweise ohne Zweck übertragen einen angegebenen Zweck nur auf die Gegenstände ohne Zweck
     When I open a hand over
-     And einige der ausgewählten Gegenstände hat keinen Zweck angegeben
-     And ich einen Zweck angebe
+     And I click an inventory code input field of an item line
+     And I select one of those
+     And I add an item to the hand over by providing an inventory code
+     And I add an option to the hand over by providing an inventory code and a date range
+    And ich einen Zweck angebe
     Then wird nur den Gegenständen ohne Zweck der angegebene Zweck zugewiesen
 
   @javascript @browser @personas
@@ -50,5 +53,8 @@ Feature: Zweck
   @javascript @browser @personas
   Scenario: Aushändigung mit Gegenständen teilweise ohne Zweck können durchgeführt werden
     When I open a hand over
-    And einige der ausgewählten Gegenstände hat keinen Zweck angegeben
+    And I click an inventory code input field of an item line
+    And I select one of those
+    And I add an item to the hand over by providing an inventory code
+    And I add an option to the hand over by providing an inventory code and a date range
     Then muss ich keinen Zweck angeben um die Aushändigung durchzuführen

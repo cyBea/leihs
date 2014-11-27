@@ -63,9 +63,9 @@ Feature: Software erfassen
     Then kann man als "Rechnungsdatum" ein Datum auswählen
     Then kann man als "Anschaffungswert" eine Zahl eingeben
     Then kann man als "Beschafft durch" einen Benutzer wählen
-    Then kann man als "Lieferant" einen Lieferanten auswählen
-    Then kann man als "Verantwortliche Abteilung" einen Gerätepark auswählen
-    Then kann man als "Besitzer" einen Gerätepark auswählen
+    Then for "Lieferant" one can select a supplier
+    Then for "Verantwortliche Abteilung" one can select an inventory pool
+    Then for "Besitzer" one can select an inventory pool
     Then kann man als "Notiz" einen Text eingeben
     And die Option "Ausleihbar" ist standardmässig auf "Nicht ausleihbar" gesetzt
 
@@ -87,13 +87,13 @@ Feature: Software erfassen
     And if I choose none, one or more of the available options for operating system
     And if I choose none, one or more of the available options for installation
     And I choose a date for license expiration
-    When ich als Maintenance-Vertrag "Nein" auswähle
+    When I choose "Nein" for maintenance contract
     Then I am not able to choose the maintenance expiration date
     And ich kann für den Maintenance-Vertrag kein Betrag eingeben
     And ich kann für den Maintenance-Vertrag keine Währung eingeben
-    When ich als Maintenance-Vertrag "Ja" auswähle
+    When I choose "Ja" for maintenance contract
     And I choose a date for the maintenance expiration
-    When ich als Bezug "Investition" wähle
+    When I choose "Investition" as reference
     Then I have to enter a project number
     And ich die den Wert "ausleihbar" setze
     And I save
