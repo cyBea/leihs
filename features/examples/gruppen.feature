@@ -39,7 +39,7 @@ Feature: Groups
     Then the group is saved
     # Next step missing
     And die Gruppe ist visierungspflichtig
-    And users as well as models and their capacities are added to the group
+    And the group has users as well as models and their capacities
     Then I am listing groups
     And I receive a notification of success
 
@@ -55,7 +55,7 @@ Feature: Groups
     Then the group is saved
     # Next step missing
     And die Gruppe ist nicht mehr visierungspflichtig
-    And users as well as models and their capacities are added to the group
+    And the group has users as well as models and their capacities
     Then I am listing groups
     And I receive a notification of success
 
@@ -80,37 +80,30 @@ Feature: Groups
     Then the user is added to the top of the list
 
   @javascript @personas
-  Scenario: Modelle hinzufügen
-    And ich eine bestehende Gruppe editiere
-    When ich ein Modell hinzufüge
-    Then wird das Modell zuoberst in der Liste hinzugefügt
+  Scenario: Adding models
+    When I edit an existing group
+    And I add a model to the group
+    Then the model is added to the top of the list
 
   @personas
-  Scenario: Modelle sortieren
+  Scenario: Sorting models
     When I edit an existing group
     Then the already present models are sorted alphabetically
 
   @javascript @personas
-  Scenario: Modelle hinzufügen
-    And ich eine bestehende Gruppe editiere
-    When ich ein Modell hinzufüge
-    Then wird das Modell zuoberst in der Liste hinzugefügt
-
-
-  @javascript @personas
-  Scenario: bereits bestehende Modelle hinzufügen
-    And ich eine bestehende Gruppe editiere
-    When ich ein bereits hinzugefügtes Modell hinzufüge
-    Then wird das Modell nicht erneut hinzugefügt
-    And das vorhandene Modell ist nach oben gerutscht
-    And das vorhandene Modell behält die eingestellte Anzahl
+  Scenario: Adding already existing models
+    When I edit an existing group
+    And I add a model that is already present in the group
+    Then the model is not added again
+    And the already existing model slides to the top of the list
+    And the already existing model keeps whatever capacity was set for it
 
   @javascript @personas
-  Scenario: bereits bestehende Benutzer hinzufügen
-    And ich eine bestehende Gruppe editiere
-    When ich einen bereits hinzugefügten Benutzer hinzufüge
-    Then wird der Benutzer nicht hinzugefügt
-    And der vorhandene Benutzer ist nach oben gerutscht
+  Scenario: Adding already existing users
+    When I edit an existing group
+    And I add a user that is already present in the group
+    Then the already existing user is not added
+    Then the already existing user slides to the top of the list
 
   @personas
   Scenario: Sorting the group list

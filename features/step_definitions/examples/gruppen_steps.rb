@@ -166,12 +166,15 @@ Then(/^the user is added to the top of the list$/) do
   find("#users .list-of-lines .line [data-user-name]", text: @user_name)
 end
 
-Wenn(/^ich ein Modell hinzufüge$/) do
+
+#Wenn(/^ich ein Modell hinzufüge$/) do
+When(/^I add a model to the group$/) do
   @model = @current_inventory_pool.models.sample
   fill_in_autocomplete_field _("Models"), @model.name
 end
 
-Dann(/^wird das Modell zuoberst in der Liste hinzugefügt$/) do
+#Dann(/^wird das Modell zuoberst in der Liste hinzugefügt$/) do
+Then(/^the model is added to the top of the list$/) do
   expect(has_selector?("#models-allocations .list-of-lines .line", text: @model.name)).to be true
   find("#models-allocations .list-of-lines .line", match: :first, text: @model.name)
 end
@@ -185,35 +188,42 @@ Then(/^the already present models are sorted alphabetically$/) do
   end
 end
 
-Wenn(/^ich ein bereits hinzugefügtes Modell hinzufüge$/) do
+#Wenn(/^ich ein bereits hinzugefügtes Modell hinzufüge$/) do
+When(/^I add a model that is already present in the group$/) do
   @model = @group.models.sample
   @quantity = 2
   find("#models-allocations .list-of-lines .line", match: :prefer_exact, text: @model.name).fill_in "group[partitions_attributes][][quantity]", :with => @quantity
   fill_in_autocomplete_field _("Models"), @model.name
 end
 
-Dann(/^wird das Modell nicht erneut hinzugefügt$/) do
+#Dann(/^wird das Modell nicht erneut hinzugefügt$/) do
+Then(/^the model is not added again$/) do
   find ".row.emboss", match: :prefer_exact, text: _("Models")
   find("#models-allocations .list-of-lines .line", text: @model.name)
 end
 
-Wenn(/^ich einen bereits hinzugefügten Benutzer hinzufüge$/) do
+#Wenn(/^ich einen bereits hinzugefügten Benutzer hinzufüge$/) do
+When(/^I add a user that is already present in the group$/) do
   @user = @group.users.sample
   fill_in_autocomplete_field _("Users"), @user.name
 end
 
-Dann(/^wird der Benutzer nicht hinzugefügt$/) do
+#Dann(/^wird der Benutzer nicht hinzugefügt$/) do
+Then(/^the already existing user is not added$/) do
   find("#users .list-of-lines .line", text: @user.name)
 end
 
-Dann(/^das vorhandene Modell ist nach oben gerutscht$/) do
+#Dann(/^das vorhandene Modell ist nach oben gerutscht$/) do
+Then(/^the already existing model slides to the top of the list$/) do
   find("#models-allocations .list-of-lines .line", match: :first, text: @model.name)
 end
 
-Dann(/^der vorhandene Benutzer ist nach oben gerutscht$/) do
+#Dann(/^der vorhandene Benutzer ist nach oben gerutscht$/) do
+Then(/^the already existing user slides to the top of the list$/) do
   find("#users .list-of-lines .line", match: :first, text: @user.name)
 end
 
-Dann(/^das vorhandene Modell behält die eingestellte Anzahl$/) do
+#Dann(/^das vorhandene Modell behält die eingestellte Anzahl$/) do
+Then(/^the already existing model keeps whatever capacity was set for it$/) do
   expect(find("#models-allocations .list-of-lines .line", match: :prefer_exact, text: @model.name).find("input[name='group[partitions_attributes][][quantity]']").value.to_i).to eq @quantity
 end
