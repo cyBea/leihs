@@ -70,10 +70,11 @@ Feature: Groups
     Then I see any capacities that are still available for assignment
 
   @javascript @personas
-  Scenario: Gruppe löschen
-    When ich eine Gruppe lösche
-    And die Gruppe wurde aus der Liste gelöscht
-    And die Gruppe wurde aus der Datenbank gelöscht
+  Scenario: Deleting groups
+    When I delete a group
+    # Next step missing
+    #And die Gruppe wurde aus der Liste gelöscht
+    And the group has been deleted from the database
 
   @javascript @personas
   Scenario: Benutzer hinzufügen

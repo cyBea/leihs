@@ -137,7 +137,8 @@ Then(/^I see any capacities that are still available for assignment$/) do
   end
 end
 
-Wenn(/^ich eine Gruppe lösche$/) do
+#Wenn(/^ich eine Gruppe lösche$/) do
+When(/^I delete a group$/) do
   @group = @current_inventory_pool.groups.detect &:can_destroy?
   visit manage_inventory_pool_groups_path @current_inventory_pool
   within(".list-of-lines .line", text: @group.name) do
@@ -148,7 +149,8 @@ Wenn(/^ich eine Gruppe lösche$/) do
   end
 end
 
-Wenn(/^die Gruppe wurde aus der Datenbank gelöscht$/) do
+#Wenn(/^die Gruppe wurde aus der Datenbank gelöscht$/) do
+Then(/^the group has been deleted from the database$/) do
   expect(Group.find_by_name(@group.name)).to eq nil
 end
 
