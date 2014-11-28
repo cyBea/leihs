@@ -78,7 +78,7 @@ Then(/^the group is saved$/) do
 end
 
 #Dann(/^die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt$/) do
-Then(/^users as well as models and their capacities are added to the group$/) do
+Then(/^the group has users as well as models and their capacities$/) do
   expect(@group.users.reload.map(&:id).sort).to eq @users.map(&:id).sort
   expect(Set.new(@group.partitions.map{|p| {:model_id => p.model_id, :quantity => p.quantity}})).to eq Set.new(@partitions)
 end
@@ -93,7 +93,8 @@ Dann(/^ich sehe eine Bestätigung$/) do
   find("#flash .success")
 end
 
-Wenn(/^ich eine bestehende Gruppe editiere$/) do
+#Wenn(/^ich eine bestehende Gruppe editiere$/) do
+When(/^I edit an existing group$/) do
   @group = @current_inventory_pool.groups.find {|g| g.models.length >= 2 and g.users.length >= 2}
   visit manage_edit_inventory_pool_group_path @group.inventory_pool_id, @group
 end
@@ -172,15 +173,8 @@ Dann(/^wird das Modell zuoberst in der Liste hinzugefügt$/) do
   find("#models-allocations .list-of-lines .line", match: :first, text: @model.name)
 end
 
-Dann(/^sind die bereits hinzugefügten Benutzer alphabetisch sortiert$/) do
-  within("#users") do
-    find(".list-of-lines .line", match: :first)
-    entries = all(".list-of-lines .line")
-    expect(entries.map(&:text).sort).to eq entries.map(&:text)
-  end
-end
-
-Dann(/^sind die bereits hinzugefügten Modelle alphabetisch sortiert$/) do
+# Dann(/^sind die bereits hinzugefügten Modelle alphabetisch sortiert$/) do
+Then(/^the already present models are sorted alphabetically$/) do
   within("#models-allocations") do
     find(".list-of-lines .line", match: :first)
     entries = all(".list-of-lines .line")

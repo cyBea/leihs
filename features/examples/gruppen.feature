@@ -24,10 +24,7 @@ Feature: Groups
     # Next step missing
     And die Gruppe ist visierungspflichtig
 
-    And users as well as models and their capacities are added to the group
-    When I am listing groups
-    Then the list is sorted alphabetically
-    And I receive a notification
+    And the group has users as well as models and their capacities
 
   @personas
   Scenario: Mark a group as requiring verification
@@ -44,7 +41,7 @@ Feature: Groups
     And die Gruppe ist visierungspflichtig
     And users as well as models and their capacities are added to the group
     Then I am listing groups
-    And I receive a notification
+    And I receive a notification of success
 
   @personas
   Scenario: Group does not require verification
@@ -60,7 +57,7 @@ Feature: Groups
     And die Gruppe ist nicht mehr visierungspflichtig
     And users as well as models and their capacities are added to the group
     Then I am listing groups
-    And I receive a notification
+    And I receive a notification of success
 
   @javascript @personas
   Scenario: Capacities still available for assignment
@@ -82,11 +79,6 @@ Feature: Groups
     When ich einen Benutzer hinzufüge
     Then wird der Benutzer zuoberst in der Liste hinzugefügt
 
-  @personas
-  Scenario: Benutzer sortieren
-    And ich eine bestehende Gruppe editiere
-    Then sind die bereits hinzugefügten Benutzer alphabetisch sortiert
-
   @javascript @personas
   Scenario: Modelle hinzufügen
     And ich eine bestehende Gruppe editiere
@@ -95,8 +87,8 @@ Feature: Groups
 
   @personas
   Scenario: Modelle sortieren
-    And ich eine bestehende Gruppe editiere
-    Then sind die bereits hinzugefügten Modelle alphabetisch sortiert
+    When I edit an existing group
+    Then the already present models are sorted alphabetically
 
   @javascript @personas
   Scenario: Modelle hinzufügen
@@ -104,10 +96,6 @@ Feature: Groups
     When ich ein Modell hinzufüge
     Then wird das Modell zuoberst in der Liste hinzugefügt
 
-  @personas
-  Scenario: Modelle sortieren
-    And ich eine bestehende Gruppe editiere
-    Then sind die bereits hinzugefügten Modelle alphabetisch sortiert
 
   @javascript @personas
   Scenario: bereits bestehende Modelle hinzufügen
@@ -126,19 +114,17 @@ Feature: Groups
 
   @personas
   Scenario: Gruppenliste Sortierung
-    And I am listing groups
-    And die Liste ist alphabetisch sortiert
+    When I am listing groups
+    Then the list is sorted alphabetically
 
   @javascript @personas
-  Scenario: Gruppe erstellen
-    When ich eine Gruppe erstelle
-    And den Namen der Gruppe angebe
-    And die Benutzer hinzufüge
-    And die Modelle und deren Kapazität hinzufüge
+  Scenario: Creating a group
+    When I create a group
+    And I fill in the group's name
+    And I add users to the group
+    And I add models and capacities to the group
     And I save
-    Then ist die Gruppe gespeichert
-    # Next step missing
-    And die Gruppe ist nicht visierungspflichtig
-    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    And ich sehe die Gruppenliste alphabetisch sortiert
-    And ich sehe eine Bestätigung
+    Then the group is saved
+    And I receive a notification of success
+    And the group has users as well as models and their capacities
+    When I am listing groups
