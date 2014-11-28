@@ -74,10 +74,10 @@ Feature: Groups
     And the group has been deleted from the database
 
   @javascript @personas
-  Scenario: Benutzer hinzufügen
-    And ich eine bestehende Gruppe editiere
-    When ich einen Benutzer hinzufüge
-    Then wird der Benutzer zuoberst in der Liste hinzugefügt
+  Scenario: Adding users
+    When I edit an existing group
+    And I add one user to the group
+    Then the user is added to the top of the list
 
   @javascript @personas
   Scenario: Modelle hinzufügen
@@ -113,7 +113,7 @@ Feature: Groups
     And der vorhandene Benutzer ist nach oben gerutscht
 
   @personas
-  Scenario: Gruppenliste Sortierung
+  Scenario: Sorting the group list
     When I am listing groups
     Then the list is sorted alphabetically
 

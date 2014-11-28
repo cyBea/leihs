@@ -155,11 +155,14 @@ Then(/^the group has been deleted from the database$/) do
   expect(Group.find_by_name(@group.name)).to eq nil
 end
 
-Wenn(/^ich einen Benutzer hinzufüge$/) do
+
+#Wenn(/^ich einen Benutzer hinzufüge$/) do
+When(/^I add one user to the group$/) do
   fill_in_autocomplete_field _("Users"), @user_name = @current_inventory_pool.users.sample.name
 end
 
-Dann(/^wird der Benutzer zuoberst in der Liste hinzugefügt$/) do
+#Dann(/^wird der Benutzer zuoberst in der Liste hinzugefügt$/) do
+Then(/^the user is added to the top of the list$/) do
   find("#users .list-of-lines .line [data-user-name]", text: @user_name)
 end
 
