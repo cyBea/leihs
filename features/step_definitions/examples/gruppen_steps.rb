@@ -1,16 +1,20 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^ich befinde mich im Admin\-Bereich im Reiter Gruppen$/) do
+
+#Angenommen(/^ich befinde mich im Admin\-Bereich im Reiter Gruppen$/) do
+Given(/^I am in the admin area's groups section$/) do
   visit manage_inventory_pool_groups_path(@current_inventory_pool)
 end
 
-Dann(/^sehe ich die Liste der Gruppen$/) do
+
+Then(/^I am listing groups$/) do
   @current_inventory_pool.groups.reload.each do |group|
     find(".list-of-lines .line strong", :text => group.name)
   end
 end
 
-Dann(/^die Anzahl zugeteilter Benutzer$/) do
+#Dann(/^die Anzahl zugeteilter Benutzer$/) do
+Then(/^each group shows the number of users assigned to it$/) do
   @current_inventory_pool.groups.each do |group|
     within(".line", text: group.name) do
       find(".line-col", text: "%d %s" % [group.users.size, _("Users")])
@@ -18,7 +22,8 @@ Dann(/^die Anzahl zugeteilter Benutzer$/) do
   end
 end
 
-Dann(/^die Anzahl der zugeteilten Modell\-Kapazitäten$/) do
+#Dann(/^die Anzahl der zugeteilten Modell\-Kapazitäten$/) do
+Then(/^each group shows how many of each model are assigned to it$/) do
   @current_inventory_pool.groups.each do |group|
     within(".line", text: group.name) do
       find(".line-col", text: "%d %s" % [group.models.size, _("Models")])
