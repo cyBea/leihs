@@ -13,59 +13,61 @@ Feature: Groups
   # Not implemented
   @personas
   Scenario: Visierungspflichtige Gruppe erstellen
-    When ich eine Gruppe erstelle
+    When I create a group
     # Next step missing
     And ich die Eigenschaft 'Visierung erforderlich' anwähle
-    And den Namen der Gruppe angebe
-    And die Benutzer hinzufüge
-    And die Modelle und deren Kapazität hinzufüge
+    And I fill in the group's name
+    And I add users to the group
+    And I add models and capacities to the group
     And I save
-    Then ist die Gruppe gespeichert
+    Then the group is saved
     # Next step missing
     And die Gruppe ist visierungspflichtig
-    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    And ich sehe die Gruppenliste alphabetisch sortiert
-    And ich sehe eine Bestätigung
+
+    And users as well as models and their capacities are added to the group
+    When I am listing groups
+    Then the list is sorted alphabetically
+    And I receive a notification
 
   @personas
-  Scenario: Gruppe editieren und als visierungspflichtig kennzeichnen
+  Scenario: Mark a group as requiring verification
     # Next step missing
     When ich eine bestehende, nicht visierungspflichtige Gruppe editiere
     # Next step missing
     And ich die Eigenschaft 'Visierung erforderlich' anwähle
-    And ich den Namen der Gruppe ändere
-    And die Benutzer hinzufüge und entferne
-    And die Modelle und deren Kapazität hinzufüge und entferne
+    And I change the group's name
+    And I add and remove users from the group
+    And I add and remove models and their capacities from the group
     And I save
-    Then ist die Gruppe gespeichert
+    Then the group is saved
     # Next step missing
     And die Gruppe ist visierungspflichtig
-    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    And ich sehe die Gruppenliste
-    And ich sehe eine Bestätigung
+    And users as well as models and their capacities are added to the group
+    Then I am listing groups
+    And I receive a notification
 
   @personas
-  Scenario: Gruppe ist nicht visierungspflichtig
+  Scenario: Group does not require verification
     # Next step missing
     When ich eine bestehende visierungspflichtige Gruppe editiere
     # Next step missing
-    And ich die Eigenschaft 'Visierung erforderlich' abwähle
-    And ich den Namen der Gruppe ändere
-    And die Benutzer hinzufüge und entferne
-    And die Modelle und deren Kapazität hinzufüge und entferne
+    And I change the group's name
+    And I add and remove users from the group
+    And I add and remove models and their capacities from the group
     And I save
-    Then ist die Gruppe gespeichert
+    Then the group is saved
     # Next step missing
     And die Gruppe ist nicht mehr visierungspflichtig
-    And die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt
-    And ich sehe die Gruppenliste
-    And ich sehe eine Bestätigung
+    And users as well as models and their capacities are added to the group
+    Then I am listing groups
+    And I receive a notification
 
   @javascript @personas
-  Scenario: Noch nicht zugeteilten Kapazitäten
-    When ich eine Gruppe erstelle
-    And die Modelle und deren Kapazität hinzufüge
-    Then sehe ich die noch nicht zugeteilten Kapazitäten
+  Scenario: Capacities still available for assignment
+    When I create a group
+    And I add users to the group
+    And I add models and capacities to the group
+    Then I see any capacities that are still available for assignment
 
   @javascript @personas
   Scenario: Gruppe löschen

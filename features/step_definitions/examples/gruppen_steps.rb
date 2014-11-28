@@ -32,20 +32,24 @@ Then(/^each group shows how many of each model are assigned to it$/) do
   end
 end
 
-Dann(/^die Liste ist alphabetisch sortiert$/) do
+#Dann(/^die Liste ist alphabetisch sortiert$/) do
+Then(/^the list is sorted alphabetically$/) do
   expect((all(".list-of-lines .line strong").map(&:text).to_json == @current_inventory_pool.groups.map(&:name).sort.to_json)).to be true
 end
 
-Wenn(/^ich eine Gruppe erstelle$/) do
+#Wenn(/^ich eine Gruppe erstelle$/) do
+When(/^I create a group$/) do
   find(".button", :text => _("New Group")).click
 end
 
-Wenn(/^den Namen der Gruppe angebe$/) do
+#Wenn(/^den Namen der Gruppe angebe$/) do
+When(/^I fill in the group's name$/) do
   @name = Faker::Name.name
   fill_in "group[name]", :with => @name
 end
 
-Wenn(/^die Benutzer hinzufüge$/) do
+# Wenn(/^die Benutzer hinzufüge$/) do
+When(/^I add users to the group$/) do
   @users = @current_inventory_pool.users.customers
   @users.each do |user|
     find("input[data-search-users]").set user.name
@@ -53,7 +57,8 @@ Wenn(/^die Benutzer hinzufüge$/) do
   end
 end
 
-Wenn(/^die Modelle und deren Kapazität hinzufüge$/) do
+#Wenn(/^die Modelle und deren Kapazität hinzufüge$/) do
+When(/^I add models and capacities to the group$/) do
   @models = @current_inventory_pool.models[0..2]
   @partitions = []
   @models.each do |model|
@@ -66,17 +71,20 @@ Wenn(/^die Modelle und deren Kapazität hinzufüge$/) do
   end
 end
 
-Dann(/^ist die Gruppe gespeichert$/) do
+#Dann(/^ist die Gruppe gespeichert$/) do
+Then(/^the group is saved$/) do
   @group = Group.find_by_name @name
   expect(@group).not_to be_nil
 end
 
-Dann(/^die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt$/) do
+#Dann(/^die Benutzer und Modelle mit deren Kapazitäten sind zugeteilt$/) do
+Then(/^users as well as models and their capacities are added to the group$/) do
   expect(@group.users.reload.map(&:id).sort).to eq @users.map(&:id).sort
   expect(Set.new(@group.partitions.map{|p| {:model_id => p.model_id, :quantity => p.quantity}})).to eq Set.new(@partitions)
 end
 
-Dann(/^ich sehe die Gruppenliste alphabetisch sortiert$/) do
+#Dann(/^ich sehe die Gruppenliste alphabetisch sortiert$/) do
+Then(/^the group list is sorted alphabetically$/) do
   step 'sehe ich die Liste der Gruppen'
   step 'die Liste ist alphabetisch sortiert'
 end
@@ -90,12 +98,14 @@ Wenn(/^ich eine bestehende Gruppe editiere$/) do
   visit manage_edit_inventory_pool_group_path @group.inventory_pool_id, @group
 end
 
-Wenn(/^ich den Namen der Gruppe ändere$/) do
+#Wenn(/^ich den Namen der Gruppe ändere$/) do
+When(/^I change the group's name$/) do
   @name = Faker::Name.name
   fill_in "group[name]", :with => @name
 end
 
-Wenn(/^die Benutzer hinzufüge und entferne$/) do
+# Wenn(/^die Benutzer hinzufüge und entferne$/) do
+When(/^I add and remove users from the group$/) do
   all("[name*='users'][name*='id']", visible: false).each do |existing_user_line|
     existing_user_line.first(:xpath, "./..").find(".button[data-remove-user]", :text => _("Remove")).click
   end
@@ -105,7 +115,8 @@ Wenn(/^die Benutzer hinzufüge und entferne$/) do
   find(".ui-menu-item a", match: :prefer_exact, :text => user.name).click
 end
 
-Wenn(/^die Modelle und deren Kapazität hinzufüge und entferne$/) do
+#Wenn(/^die Modelle und deren Kapazität hinzufüge und entferne$/) do
+When(/^I add and remove models and their capacities from the group$/) do
   all("[name='group[partitions_attributes][][quantity]']").each do |existing_partition_line|
     existing_partition_line.first(:xpath, "./../../..").find(".button[data-remove-group]", :text => _("Remove")).click
   end
@@ -117,14 +128,12 @@ Wenn(/^die Modelle und deren Kapazität hinzufüge und entferne$/) do
   find(".list-of-lines .line", :text => model.name).fill_in "group[partitions_attributes][][quantity]", :with => partition[:quantity]
 end
 
-Dann(/^ich sehe die Gruppenliste$/) do
-  step 'sehe ich die Liste der Gruppen'
-end
 
-Dann(/^sehe ich die noch nicht zugeteilten Kapazitäten$/) do
+#Dann(/^sehe ich die noch nicht zugeteilten Kapazitäten$/) do
+Then(/^I see any capacities that are still available for assignment$/) do
   @partitions.each do |partition|
     model = Model.find partition[:model_id]
-    expect(find("input[value='#{model.id}']", visible: false).parent.has_content?("/ #{model.items.where(inventory_pool_id: @current_inventory_pool.id).borrowable.size}")).to be true
+    expect(all("input[value='#{model.id}']", visible: false).first.parent.has_content?("/ #{model.items.where(inventory_pool_id: @current_inventory_pool.id).borrowable.size}")).to be true
   end
 end
 
