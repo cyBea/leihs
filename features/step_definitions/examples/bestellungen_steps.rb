@@ -234,7 +234,11 @@ def hand_over_assign_or_add(s)
 end
 
 Then(/^I can add models$/) do
-  @model = @current_inventory_pool.models.sample
+  @model = if @current_user.access_right_for(@current_inventory_pool).role == :group_manager
+             @current_inventory_pool.models.select {|m| m.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(Date.today, Date.today) > 0 }
+           else
+             @current_inventory_pool.models
+           end.sample
   hand_over_assign_or_add @model.to_s
 end
 
