@@ -2937,7 +2937,7 @@ msgid "Who bought the most items?"
 msgstr "Wer hat die meisten Gegenstände gekauft?"
 
 msgid "Maintenance"
-msgstr "Wartung"
+msgstr "Maintenance"
 
 msgid "Automatic access"
 msgstr "Automatischer Zugriff"
@@ -3012,6 +3012,9 @@ msgstr "Maintenance-Ablaufdatum"
 
 msgid "Maintenance contract"
 msgstr "Maintenance-Vertrag"
+
+msgid "Currency"
+msgstr "Währung"
 
 msgid "Procured by"
 msgstr "Beschafft durch"
