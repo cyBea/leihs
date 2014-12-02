@@ -1,9 +1,11 @@
 # encoding: utf-8
 
-Angenommen /^ich editiere eine Bestellung( die nicht in der Vergangenheit liegt)?$/ do |arg1|
-  @event = "order"
-  step "I open a contract for acknowledgement%s" % (arg1 ? ", whose start date is not in the past" : "")
-end
+#Angenommen /^ich editiere eine Bestellung( die nicht in der Vergangenheit liegt)?$/ do |arg1|
+
+#Given /^I edit an order( that is not in the past)?$/ do |arg1|
+#  @event = "order"
+#  step "I open a contract for acknowledgement%s" % (arg1 ? ", whose start date is not in the past" : "")
+#end
 
 Angenommen /^ich mache eine Rücknahme(, die nicht überfällig ist)?$/ do |arg1|
   @event = "take_back"
