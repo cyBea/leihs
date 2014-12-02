@@ -39,121 +39,120 @@ Feature: Inventory
       | Name | Package Model |
     And this model is a package
     And there is a item with the following properties:
-      | Inventory Code                | P-AVZ40001         |
-      | Owner          | Anderer Gerätepark |
-      | Responsible inventory pool | Anderer Gerätepark |
+      | Inventory code             | P-AVZ40001             |
+      | Owner                      | Another inventory pool |
+      | Responsible inventory pool | Another inventory pool |
     And this package item is part of this package model
     And there is a model with the following properties:
       | Name | Normal Model |
     And there is a item with the following properties:
-      | Inventory Code                | AVZ40020           |
-      | Owner          | Mein Gerätepark    |
-      | Responsible inventory pool | Anderer Gerätepark |
+      | Inventory code             | AVZ40020               |
+      | Owner                      | Current inventory pool |
+      | Responsible inventory pool | Another inventory pool |
     And this item is part of this package item
-    When ich im Inventarbereich nach den folgenden Eigenschaften suche
-    When I search for the following properties:
+    When I search for the following properties in the inventory section:
       | Normal Model |
     Then the item corresponding to the model appears
     And the item appears
-    When I search for the following properties:
+    When I search for the following properties in the inventory section:
       | AVZ40020 |
     Then the item corresponding to the model appears
     And the item appears
 
   @personas @javascript
-  Scenario Outline: Modell und Gegenstand eines Pakets in Verantwortlichem Gerätepark finden
+  Scenario Outline: Finding a package's models and items in its responsible inventory pool
     Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
     And there is a item with the following properties:
-      | Inventarcode                | P-AVZ40001      |
-      | Besitzergerätepark          | Mein Gerätepark |
-      | verantwortlicher Gerätepark | Mein Gerätepark |
+      | Inventory code             | P-AVZ40001             |
+      | Owner                      | Current inventory pool |
+      | Responsible inventory pool | Current inventory pool |
     And this package item is part of this package model
     And there is a model with the following properties:
       | Name | Normal Model |
     And there is a item with the following properties:
-      | Inventarcode                | AVZ40020           |
-      | Besitzergerätepark          | Anderer Gerätepark |
-      | verantwortlicher Gerätepark | Mein Gerätepark    |
+      | Inventory code             | AVZ40020               |
+      | Owner                      | Another inventory pool |
+      | Responsible inventory pool | Current inventory pool |
     And this item is part of this package item
-    When ich im Inventarbereich nach den folgenden Eigenschaften suche
-      | <Eigenschaft> |
-    Then appears the corresponding model to the item
-    And appears the item
-    Then all matching package models appear
+    When I search for the following properties in the inventory section:
+      | <property> |
+    Then the item corresponding to the model appears
+    And the item appears
+    And all matching package models appear
     And all matching package items appear
     And all matching items appear
   Examples:
-    | Eigenschaft  |
+    | property     |
     | Normal Model |
     | AVZ40020     |
 
   @personas @javascript @browser
-  Scenario: Auswahlmöglichkeiten: Alle-Tab
-    Then kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:
-      | Auswahlmöglichkeit |
-      | Alle               |
+  Scenario: The tab 'All'
+    Then I can click one of the following tabs to filter inventory by:
+      | Choice |
+      | All               |
 
   @personas @javascript @browser
-  Scenario: Auswahlmöglichkeiten: Modell-Tab
-    Then kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:
-      | Auswahlmöglichkeit |
-      | Modelle            |
+  Scenario: The tab 'Models'
+    Then I can click one of the following tabs to filter inventory by:
+      | Choice |
+      | Models            |
 
   @personas @javascript @browser
-  Scenario: Auswahlmöglichkeiten: Optionen-Tab
-    Then kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:
-      | Auswahlmöglichkeit |
-      | Optionen           |
+  Scenario: The tab 'Options'
+    Then I can click one of the following tabs to filter inventory by:
+      | Choice |
+      | Options           |
 
   @personas @javascript @browser
-  Scenario: Auswahlmöglichkeiten: Software-Tab
-    Then kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:
-      | Auswahlmöglichkeit |
+  Scenario: The tab 'Software'
+    Then I can click one of the following tabs to filter inventory by:
+      | Choice |
       | Software           |
 
   @personas @javascript @browser
-  Scenario Outline: Auswahlmöglichkeiten: genutzt & ungenutzt
+  Scenario Outline: Filtering used and unused inventory
     Given I see retired and not retired inventory
-    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
-    Then only the "<Eigenschaft>" inventory is shown
+    When I choose inside all inventory as "<dropdown>" the option "<property>"
+    Then only the "<property>" inventory is shown
   Examples:
-    | Select-Feld         | Eigenschaft   |
-    | genutzt & ungenutzt | genutzt       |
-    | genutzt & ungenutzt | nicht genutzt |
+    | dropdown        | property |
+    | used & not used | used     |
+    | used & not used | not used |
 
   @personas @javascript @browser
-  Scenario Outline: Auswahlmöglichkeiten: ausleihbar & nicht ausleihbar
+  Scenario Outline: Filtering borrowable and not borrowable inventory
     Given I see retired and not retired inventory
-    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
-    Then only the "<Eigenschaft>" inventory is shown
+    When I choose inside all inventory as "<dropdown>" the option "<property>"
+    Then only the "<property>" inventory is shown
   Examples:
-    | Select-Feld                   | Eigenschaft      |
-    | ausleihbar & nicht ausleihbar | ausleihbar       |
-    | ausleihbar & nicht ausleihbar | nicht ausleihbar |
+    | dropdown                    | property       |
+    | borrowable & not borrowable | borrowable     |
+    | borrowable & not borrowable | not borrowable |
 
   @personas @javascript @browser
-  Scenario Outline: Auswahlmöglichkeiten: ausgemustert & nicht ausgemustert
+  Scenario Outline: Filtering retired and not retired inventory
     Given I see retired and not retired inventory
-    When I choose inside all inventory as "<Select-Feld>" the option "<Eigenschaft>"
-    Then only the "<Eigenschaft>" inventory is shown
+    When I choose inside all inventory as "<dropdown>" the option "<property>"
+    Then only the "<property>" inventory is shown
   Examples:
-    | Select-Feld                       | Eigenschaft        |
-    | ausgemustert & nicht ausgemustert | ausgemustert       |
-    | ausgemustert & nicht ausgemustert | nicht ausgemustert |
+    | dropdown              | property    |
+    | retired & not retired | retired     |
+    | retired & not retired | not retired |
 
   @personas @javascript @browser
-  Scenario Outline: Auswahlmöglichkeiten: Checkboxen
+  Scenario Outline: Filter inventory by owner, stock, completeness and defective status
     Given I see retired and not retired inventory
-    When I set the option "<Filterwahl>" inside of the full inventory
-    Then only the "<Filterwahl>" inventory is shown
+    When I set the option "<filter>" inside of the full inventory
+    Then only the "<filter>" inventory is shown
   Examples:
-    | Filterwahl    |
-    | Im Besitz     |
-    | An Lager      |
-    | Unvollständig |
-    | Defekt        |
+    | filter     |
+    | Owned      |
+    | In stock   |
+    | Incomplete |
+    | Broken     |
 
   @personas @javascript @browser
   Scenario: Auswahlmöglichkeiten: verantwortliche Abteilung

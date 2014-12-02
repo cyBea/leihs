@@ -16,11 +16,6 @@ When(/^I search for one of these (.*)?properties (in the inventory section)?$/) 
   step "I search #{s1}after one of those #{s2}properties"
 end
 
-Wenn(/^ich (im Inventarbereich )?nach den folgenden Eigenschaften suche$/) do |arg1, table|
-  s1 = "in inventory "
-  step "I search #{s1}for the following properties:", table
-end
-
 Dann(/^Gegenständen kein Raum oder Gestell zugeteilt sind, wird (die verfügbare Anzahl für den Kunden und )?"(.*?)" angezeigt$/) do |arg1, arg2|
   s1 = arg1 ? "the available quantity for this customer and " : nil
   s2 = case arg2

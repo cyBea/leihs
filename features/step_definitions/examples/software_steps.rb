@@ -396,12 +396,13 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
                          :inventory_pool
                      end
             item_attrs[ip_key] = case v
-                                   when "Mein Gerätepark"
+                                   when "Current inventory pool"
                                      @current_inventory_pool
-                                   when "Anderer Gerätepark"
+                                   when "Another inventory pool"
                                      @other_inventory_pool ||= InventoryPool.where.not(id: @current_inventory_pool).sample
                                  end
           else
+            puts "Don't know how to handle the field named #{k}"
             raise
         end
       end
@@ -434,6 +435,17 @@ When(/^I search (in the inventory section )?for one of those (.*)?properties$/) 
         when "software license ", ""
           @item_properties.sample
       end
+  search_field.set s
+  search_field.native.send_key :return
+end
+
+When(/^I search for the following properties( in the inventory section)?:$/) do |arg1, table|
+  search_field = if arg1
+                   find("#inventory-index-view input#list-search")
+                 else
+                   find("#topbar-search input#search_term")
+                 end
+  s = table.raw.flatten.sample
   search_field.set s
   search_field.native.send_key :return
 end

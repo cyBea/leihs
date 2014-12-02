@@ -7,11 +7,11 @@ Feature: Software suchen
   @javascript @personas
   Scenario: Software anhand eines Suchbegriffs finden
     Given there is a software product with the following properties:
-      | Produktname          | suchbegriff1 |
-      | Hersteller           | suchbegriff4 |
+      | Product name          | suchbegriff1 |
+      | Manufacturer           | suchbegriff4 |
     And there is a software license with the following properties:
-      | Inventory Code         | suchbegriff2 |
-      | Serial Number         | suchbegriff3 |
+      | Inventory code         | suchbegriff2 |
+      | Serial number         | suchbegriff3 |
       | Dongle ID            | suchbegriff5 |
       | Quantity allocations     | 1 / Christina Meier |
     And this software license is handed over to somebody

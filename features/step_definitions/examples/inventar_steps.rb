@@ -45,7 +45,8 @@ def check_amount_of_lines(amount)
   end
 end
 
-Dann /^kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:$/ do |table|
+#Dann /^kann man auf ein der folgenden Tabs klicken und dabei die entsprechende Inventargruppe sehen:$/ do |table|
+Then(/^I can click one of the following tabs to filter inventory by:$/) do |table|
   items = Item.by_owner_or_responsible(@current_inventory_pool)
   options = @current_inventory_pool.options
   section_tabs = find("#list-tabs")
@@ -54,21 +55,21 @@ Dann /^kann man auf ein der folgenden Tabs klicken und dabei die entsprechende I
 
   table.hashes.each do |row|
     tab = nil
-    case row["Auswahlmöglichkeit"]
-      when "Alle"
+    case row["Choice"]
+      when "All"
         tab = section_tabs.find("a", match: :first)
         expect(tab.text).to eq _("All")
         inventory = items + options
         amount = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + Model.unused_for_inventory_pool(@current_inventory_pool).count + options.count
         retired_unretired_option.select_option
-      when "Modelle"
+      when "Models"
         tab = section_tabs.find("a[data-type='item']", match: :first)
         expect(tab.text).to eq _("Models")
         inventory = items.items
         models = Model.where(type: :Model)
         amount = models.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + models.unused_for_inventory_pool(@current_inventory_pool).count
         retired_unretired_option.select_option
-      when "Optionen"
+      when "Options"
         tab = section_tabs.find("a[data-type='option']", match: :first)
         expect(tab.text).to eq _("Options")
         inventory = options
@@ -737,11 +738,11 @@ end
 
 When(/^I choose inside all inventory as "(.*?)" the option "(.*?)"$/) do |arg1, arg2|
   case arg1
-  when "genutzt & ungenutzt"
+  when "used & not used"
     filter = find(:select, "used")
-  when "ausleihbar & nicht ausleihbar"
+  when "borrowable & not borrowable"
     filter = find(:select, "is_borrowable")
-  when "ausgemustert & nicht ausgemustert"
+  when "retired & not retired"
     filter = find(:select, "retired")
   end
 
@@ -750,12 +751,12 @@ When(/^I choose inside all inventory as "(.*?)" the option "(.*?)"$/) do |arg1, 
 end
 
 Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
-  if arg1 == "nicht genutzt"
+  if arg1 == "unused"
     models = Model.unused_for_inventory_pool(@current_inventory_pool)
-  elsif arg1 == "An Lager"
+  elsif arg1 == "In stock"
     items = Item.by_owner_or_responsible(@current_inventory_pool).in_stock
     models = items.map(&:model).uniq
-  elsif arg1 == "Im Besitz"
+  elsif arg1 == "Owner"
     models = Model.joins(:items).where(items: {owner_id: @current_inventory_pool.id}).uniq
   else
     models = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool)
@@ -785,13 +786,13 @@ end
 
 When(/^I set the option "(.*?)" inside of the full inventory$/) do |arg1|
   case arg1
-  when "Im Besitz"
+  when "Owned"
     filter = find(:checkbox, "owned")
-  when "An Lager"
+  when "In stock"
     filter = find(:checkbox, "in_stock")
-  when "Unvollständig"
+  when "Incomplete"
     filter = find(:checkbox, "incomplete")
-  when "Defekt"
+  when "Broken"
     filter = find(:checkbox, "broken")
   end
 
