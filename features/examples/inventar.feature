@@ -51,13 +51,14 @@ Feature: Inventory
       | Responsible inventory pool | Anderer Gerätepark |
     And this item is part of this package item
     When ich im Inventarbereich nach den folgenden Eigenschaften suche
+    When I search for the following properties:
       | Normal Model |
-    Then appears the corresponding model to the item
-    And appears the item
-    When ich im Inventarbereich nach den folgenden Eigenschaften suche
+    Then the item corresponding to the model appears
+    And the item appears
+    When I search for the following properties:
       | AVZ40020 |
-    Then appears the corresponding model to the item
-    And appears the item
+    Then the item corresponding to the model appears
+    And the item appears
 
   @personas @javascript
   Scenario Outline: Modell und Gegenstand eines Pakets in Verantwortlichem Gerätepark finden

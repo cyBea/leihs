@@ -822,13 +822,13 @@ Then(/^only the inventory is shown, for which this pool is responsible$/) do
   check_existing_inventory_codes(inventory)
 end
 
-Then(/^appears the corresponding model to the item$/) do
+Then(/^the item corresponding to the model appears$/) do
   within "#inventory" do
     find(".line[data-type='model']", match: :prefer_exact, text: @item.model.name)
   end
 end
 
-Then(/^appears the item$/) do
+Then(/^the item appears$/) do
   within "#inventory" do
     step "expand the corresponding model"
     find(".line[data-type='item'][data-id='#{@item.id}']", text: @item.inventory_code)
