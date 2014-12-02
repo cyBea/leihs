@@ -161,10 +161,10 @@ Feature: Inventory
     Then only the inventory is shown for which this pool is responsible
 
   @personas @javascript
-  Scenario: Default-Filter "nicht ausgemustert"
-    Then for the following inventory groups the filter "nicht ausgemustert" is set
-      | Alle     |
-      | Modelle  |
+  Scenario: The default filter is "not retired"
+    Then for the following inventory groups the filter "not retired" is set
+      | All     |
+      | Models  |
       | Software |
 
   @personas @javascript
