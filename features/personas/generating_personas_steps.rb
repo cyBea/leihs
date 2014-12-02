@@ -261,7 +261,7 @@ Given(/^the following categories have the following models:$/) do |table|
   end
 end
 
-Given(/^the following items exists:$/) do |table|
+Given(/^the following items exist:$/) do |table|
   hashes_with_evaled_and_nilified_values(table).each do |hash_row|
     building = Building.find_by_code hash_row["building code"]
 
@@ -437,7 +437,7 @@ Given(/^the following licenses exist:$/) do |table|
   end
 end
 
-Given(/^the following software exist:$/) do |table|
+Given(/^the following software exists:$/) do |table|
   hashes_with_evaled_and_nilified_values(table).each do |hash_row|
     FactoryGirl.create(:software, product: hash_row["product"], technical_detail: hash_row["technical detail"])
   end
@@ -469,7 +469,7 @@ Given(/^each of the models has from (\d+) to (\d+) accessories possibly activate
   end
 end
 
-Given(/^an? (submitted|approved|rejected) contract with following properties exist:$/) do |status, table|
+Given(/^an? (submitted|approved|rejected) contract with following properties exists:$/) do |status, table|
   attrs = {status: status.to_sym}
   table.rows_hash.each_pair do |key, value|
     case key
