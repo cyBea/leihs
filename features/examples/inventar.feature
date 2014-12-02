@@ -155,10 +155,10 @@ Feature: Inventory
     | Broken     |
 
   @personas @javascript @browser
-  Scenario: Auswahlmöglichkeiten: verantwortliche Abteilung
+  Scenario: Filtering by responsible department
     Given I see retired and not retired inventory
     When I choose a certain responsible pool inside the whole inventory
-    Then only the inventory is shown, for which this pool is responsible
+    Then only the inventory is shown for which this pool is responsible
 
   @personas @javascript
   Scenario: Default-Filter "nicht ausgemustert"

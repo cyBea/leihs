@@ -816,7 +816,7 @@ When(/^I choose a certain responsible pool inside the whole inventory$/) do
   find(:select, "responsible_inventory_pool_id").find(:option, @responsible_pool.name).select_option
 end
 
-Then(/^only the inventory is shown, for which this pool is responsible$/) do
+Then(/^only the inventory is shown for which this pool is responsible$/) do
   inventory = @responsible_pool.items.where(items: {owner_id: @current_inventory_pool.id})
   step "I fetch all pages of the list"
   check_amount_of_lines inventory.joins(:model).select(:model_id).uniq.count
