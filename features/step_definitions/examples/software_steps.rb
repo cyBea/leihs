@@ -422,7 +422,7 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
 
 end
 
-When(/^I search (in inventory )?after one of those (.*)?properties$/) do |arg1, arg2|
+When(/^I search (in the inventory section )?for one of those (.*)?properties$/) do |arg1, arg2|
   search_field = if arg1
                    find("#inventory-index-view input#list-search")
                  else
@@ -438,18 +438,7 @@ When(/^I search (in inventory )?after one of those (.*)?properties$/) do |arg1, 
   search_field.native.send_key :return
 end
 
-When(/^I search (in inventory )?after following properties$/) do |arg1, table|
-  search_field = if arg1
-                   find("#inventory-index-view input#list-search")
-                 else
-                   find("#topbar-search input#search_term")
-                 end
-  s = table.raw.flatten.sample
-  search_field.set s
-  search_field.native.send_key :return
-end
-
-Then(/^they appear all matched (.*)$/) do |arg1|
+Then(/^all matching (.*) appear$/) do |arg1|
   if page.has_selector? "#search-overview"
     x,y = case arg1
             when "models"

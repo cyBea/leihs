@@ -1,23 +1,22 @@
+Feature: Inventory
 
-Feature: Inventar
-
-  Grundlage:
+  Background:
     Given I am Mike
     And I open the inventory
 
   @javascript @personas
-  Scenario: Inventar anhand eines Suchbegriffs finden
+  Scenario: Finding inventory using a search term
     Given there is a model with the following properties:
       | Name       | suchbegriff1 |
       | Hersteller | suchbegriff4 |
     And there is a item with the following properties:
       | Inventarcode | suchbegriff2 |
-    When ich im Inventarbereich nach einer dieser Eigenschaften suche
-    Then they appear all matched models
-    And they appear all matched items
+    When I search in the inventory section for one of those properties
+    Then all matching models appear
+    And all matching items appear
 
   @javascript @personas
-  Scenario: Pakete anhand eines Suchbegriffs finden
+  Scenario: Finding packages using search term
     Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
@@ -29,10 +28,10 @@ Feature: Inventar
     And there is a item with the following properties:
       | Inventarcode | AVZ40020 |
     And this item is part of this package item
-    When ich im Inventarbereich nach einer dieser Eigenschaften suche
-    Then they appear all matched package models
-    And they appear all matched package items
-    And they appear all matched items
+    When I search in the inventory section for one of those properties
+    Then all matching package models appear
+    And all matching package items appear
+    And all matching items appear
 
   @personas @javascript
   Scenario: Modell und Gegenstand eines Pakets in Besitzergerätepark finden
@@ -81,9 +80,9 @@ Feature: Inventar
       | <Eigenschaft> |
     Then appears the corresponding model to the item
     And appears the item
-    Then they appear all matched package models
-    And they appear all matched package items
-    And they appear all matched items
+    Then all matching package models appear
+    And all matching package items appear
+    And all matching items appear
   Examples:
     | Eigenschaft  |
     | Normal Model |

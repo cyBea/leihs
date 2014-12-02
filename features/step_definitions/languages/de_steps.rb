@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 
-Wenn(/^ich (im Inventarbereich )?nach einer dieser (.*)?Eigenschaften suche$/) do |arg1, arg2|
+#Wenn(/^ich (im Inventarbereich )?nach einer dieser (.*)?Eigenschaften suche$/) do |arg1, arg2|
+
+# Don't translate -- use step below
+When(/^I search for one of these (.*)?properties (in the inventory section)?$/) do |arg1, arg2|
   s1 = "in inventory "
   s2 = case arg2
          when "Software-Produkt "
