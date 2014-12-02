@@ -134,10 +134,13 @@ end
 
 ########################################################################
 
-Dann /^ist die Auswahl "(.*?)" aktiviert$/ do |arg1|
+#Dann /^ist die Auswahl "(.*?)" aktiviert$/ do |arg1|
+Then(/^the tab "(.*?)" is active$/) do |arg1|
   case arg1
-    when "Aktives Inventar"
+    when "Active Inventory"
       find("#list-tabs a.active", text: _("Active Inventory"))
+    when "All"
+      find("#list-tabs a.active", text: _("All"))
   end
 end
 
@@ -294,7 +297,8 @@ Wenn /^meine Abteilung Besitzer des Gegenstands ist die Verantwortung aber auf e
   @item = Item.find_by_inventory_code(find(@item_line, match: :first).find(".col2of5.text-align-left:nth-child(2) .row:nth-child(1)").text)
 end
 
-Dann /^enthält die Options\-Zeile folgende Informationen$/ do |table|
+#Dann /^enthält die Options\-Zeile folgende Informationen$/ do |table|
+Then(/^the option line contains the following information:$/) do |table|
   @option_line = find(".line[data-type='option']", match: :first)
   @option = Option.find_by_inventory_code @option_line.find(".col1of5:nth-child(1)").text
   table.hashes.each do |row|
@@ -303,10 +307,10 @@ Dann /^enthält die Options\-Zeile folgende Informationen$/ do |table|
         expect(@option_line.has_content? @option.inventory_code).to be true
       when "Name"
         expect(@option_line.has_content? @option.name).to be true
-      when "Preis"
+      when "Price"
         expect((@option.price * 100).to_i.to_s).to eq @option_line.find(".col1of5:nth-child(3)").text.gsub(/\D/, "")
       else
-        raise 'step not found'
+        raise "Can't find information called '#{row['information']}'"
     end
   end
 end

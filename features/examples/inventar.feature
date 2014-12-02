@@ -168,39 +168,23 @@ Feature: Inventory
       | Software |
 
   @personas @javascript
-  Scenario: Grundeinstellung der Listenansicht
-    Then ist die Auswahl "Alle" aktiviert
-
-  @personas @javascript
-  Scenario: Grundeinstellung der Listenansicht
-    Then ist die Auswahl "Alle" aktiviert
+  Scenario: Default setting for the list view
+    Then the tab "All" is active
 
   @personas
-  Scenario: Inhalt der Auswahl "Software"
+  Scenario: Default setting for the "Software" view
+    # Undefined
     Then enthält die Auswahl "Software" Software und Software-Lizenzen
     And der Filter "Nicht Ausgemustert" ist aktiviert
-
-  @personas @javascript
-  Scenario: Grundeinstellung der Listenansicht
-    Then ist die Auswahl "Alle" aktiviert
-
-  @personas
-  Scenario: Inhalt der Auswahl "Software"
-    Then enthält die Auswahl "Software" Software und Software-Lizenzen
-    And der Filter "Nicht Ausgemustert" ist aktiviert
-
-  @personas @javascript
-  Scenario: Grundeinstellung der Listenansicht
-    Then ist die Auswahl "Alle" aktiviert
 
   @javascript @personas
-  Scenario: Aussehen einer Options-Zeile
+  Scenario: What an option line contains
     Given one is on the list of the options
-    Then enthält die Options-Zeile folgende Informationen
+    Then the option line contains the following information:
       | information |
       | Barcode     |
       | Name        |
-      | Preis       |
+      | Price       |
 
   @javascript @personas
   Scenario: Paket-Modelle aufklappen
