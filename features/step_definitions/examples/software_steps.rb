@@ -375,24 +375,24 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
       item_attrs = {owner: @current_inventory_pool}
       item_properties = table.raw.map do |k, v|
         case k
-          when "Inventarcode"
+          when "Inventory code"
             item_attrs[:inventory_code] = v
-          when "Seriennummer"
+          when "Serial number"
             item_attrs[:serial_number] = v
-          when "Dongle-ID"
+          when "Dongle ID"
             item_attrs[:properties] ||= {}
             item_attrs[:properties][:activation_type] = "dongle"
             item_attrs[:properties][:dongle_id] = v
-          when "Anzahl-Zuteilung"
+          when "Quantity allocations"
             x,y = v.split(" / ")
             item_attrs[:properties][:quantity_allocations] ||= []
             item_attrs[:properties][:quantity_allocations] << [x, y]
             y
-          when "Besitzergerätepark", "verantwortlicher Gerätepark"
+          when "Owner", "Responsible inventory pool"
             ip_key = case k
-                       when "Besitzergerätepark"
+                       when "Owner"
                          :owner
-                       when "verantwortlicher Gerätepark"
+                       when "Responsible inventory pool"
                          :inventory_pool
                      end
             item_attrs[ip_key] = case v

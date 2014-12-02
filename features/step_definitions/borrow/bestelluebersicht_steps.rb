@@ -35,22 +35,22 @@ Dann(/^für jeden Eintrag sehe ich die folgenden Informationen$/) do |table|
     contract_lines = ContractLine.find JSON.parse line["data-ids"]
     table.raw.map{|e| e.first}.each do |row|
       case row
-        when "Bild"
+        when "Image"
           expect(line.find("img", match: :first)[:src][contract_lines.first.model.id.to_s]).to be
-        when "Anzahl"
+        when "Quantity"
           expect(line.has_content?(contract_lines.sum(&:quantity))).to be true
-        when "Modellname"
+        when "Model name"
           expect(line.has_content?(contract_lines.first.model.name)).to be true
-        when "Hersteller"
+        when "Manufacturer"
           expect(line.has_content?(contract_lines.first.model.manufacturer)).to be true
-        when "Anzahl der Tage"
+        when "Number of days"
           expect(line.has_content?(((contract_lines.first.end_date - contract_lines.first.start_date).to_i+1).to_s)).to be true
-        when "Enddatum"
+        when "End date"
           expect(line.has_content?(I18n.l contract_lines.first.end_date)).to be true
-        when "die versch. Aktionen"
+        when "the various actions"
           line.find(".line-actions", match: :first)
         else
-          raise "Unbekannt"
+          raise "Unknown"
       end
     end
   end

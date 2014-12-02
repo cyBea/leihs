@@ -21,12 +21,12 @@ Feature: Inventory
       | Name | Package Model |
     And this model is a package
     And there is a item with the following properties:
-      | Inventarcode | P-AVZ40001 |
+      | Inventory code | P-AVZ40001 |
     And this package item is part of this package model
     And there is a model with the following properties:
       | Name | Normal Model |
     And there is a item with the following properties:
-      | Inventarcode | AVZ40020 |
+      | Inventory code | AVZ40020 |
     And this item is part of this package item
     When I search in the inventory section for one of those properties
     Then all matching package models appear
@@ -34,21 +34,21 @@ Feature: Inventory
     And all matching items appear
 
   @personas @javascript
-  Scenario: Modell und Gegenstand eines Pakets in Besitzergerätepark finden
+  Scenario: Finding model and item in the inventory pool that owns them
     Given there is a model with the following properties:
       | Name | Package Model |
     And this model is a package
     And there is a item with the following properties:
-      | Inventarcode                | P-AVZ40001         |
-      | Besitzergerätepark          | Anderer Gerätepark |
-      | verantwortlicher Gerätepark | Anderer Gerätepark |
+      | Inventory Code                | P-AVZ40001         |
+      | Owner          | Anderer Gerätepark |
+      | Responsible inventory pool | Anderer Gerätepark |
     And this package item is part of this package model
     And there is a model with the following properties:
       | Name | Normal Model |
     And there is a item with the following properties:
-      | Inventarcode                | AVZ40020           |
-      | Besitzergerätepark          | Mein Gerätepark    |
-      | verantwortlicher Gerätepark | Anderer Gerätepark |
+      | Inventory Code                | AVZ40020           |
+      | Owner          | Mein Gerätepark    |
+      | Responsible inventory pool | Anderer Gerätepark |
     And this item is part of this package item
     When ich im Inventarbereich nach den folgenden Eigenschaften suche
       | Normal Model |

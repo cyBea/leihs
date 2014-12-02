@@ -10,10 +10,10 @@ Feature: Software suchen
       | Produktname          | suchbegriff1 |
       | Hersteller           | suchbegriff4 |
     And there is a software license with the following properties:
-      | Inventarcode         | suchbegriff2 |
-      | Seriennummer         | suchbegriff3 |
-      | Dongle-ID            | suchbegriff5 |
-      | Anzahl-Zuteilung     | 1 / Christina Meier |
+      | Inventory Code         | suchbegriff2 |
+      | Serial Number         | suchbegriff3 |
+      | Dongle ID            | suchbegriff5 |
+      | Quantity allocations     | 1 / Christina Meier |
     And this software license is handed over to somebody
     When ich nach einer dieser Software-Produkt Eigenschaften suche
     Then they appear all matched software products
