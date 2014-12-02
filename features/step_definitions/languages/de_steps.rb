@@ -18,7 +18,7 @@ end
 
 Wenn(/^ich (im Inventarbereich )?nach den folgenden Eigenschaften suche$/) do |arg1, table|
   s1 = "in inventory "
-  step "I search #{s1}after following properties", table
+  step "I search #{s1}for the following properties:", table
 end
 
 Dann(/^Gegenständen kein Raum oder Gestell zugeteilt sind, wird (die verfügbare Anzahl für den Kunden und )?"(.*?)" angezeigt$/) do |arg1, arg2|
