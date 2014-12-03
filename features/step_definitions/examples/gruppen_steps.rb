@@ -49,7 +49,7 @@ Wenn(/^die Benutzer hinzufüge$/) do
 end
 
 Wenn(/^die Modelle und deren Kapazität hinzufüge$/) do
-  @models = @current_inventory_pool.models[0..-2]
+  @models = @current_inventory_pool.models[0..2]
   @partitions = []
   @models.each do |model|
     find("input[data-search-models]").set model.name
