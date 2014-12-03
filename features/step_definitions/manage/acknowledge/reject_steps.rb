@@ -6,8 +6,7 @@ end
 When /^I reject a contract$/ do
   @contract = @current_inventory_pool.contracts.submitted.sample
 
-  cb = find("#list-filters input[name='no_verification_required']")
-  cb.click if cb.checked?
+  step %Q(I uncheck the "No verification required" button)
 
   @daily_view_line = find(".line[data-id='#{@contract.id}']")
   within @daily_view_line do

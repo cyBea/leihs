@@ -292,10 +292,7 @@ When(/^I search for (an order|a contract|a visit)$/) do |arg1|
   el = arg1 == "a visit" ? "#visits-index-view" : "#contracts-index-view"
   within el do
     if arg1 != "a visit"
-      cb = find("#list-filters input[name='no_verification_required']")
-      if cb.checked?
-        cb.click
-      end
+      step %Q(I uncheck the "No verification required" button)
     end
     step %Q(ich nach "%s" suche) % @search_term
   end
@@ -311,4 +308,9 @@ Then(/^all listed (orders|contracts|visits), are matched by the search term$/) d
       expect(contract_ids).to eq matching_contracts_ids
     end
   end
+end
+
+When /^I uncheck the "No verification required" button$/ do
+  cb = find("#list-filters input[name='no_verification_required']")
+  cb.click if cb.checked?
 end

@@ -12,6 +12,8 @@ Wenn /^ich kehre zur Tagesansicht zurück$/ do
 end
 
 Wenn /^ich öffne eine Bestellung( von "(.*?)")?$/ do |arg0, arg1|
+  step %Q(I uncheck the "No verification required" button)
+
   if arg0
     @contract = @current_inventory_pool.contracts.find find(".line", match: :prefer_exact, :text => arg1)["data-id"]
     within(".line", match: :prefer_exact, :text => arg1) do
@@ -404,12 +406,6 @@ def check_printed_contract(window_handles, ip = nil, contract = nil)
     expect(current_path).to eq manage_contract_path(ip, contract) if ip and contract
     expect(page.evaluate_script("window.printed")).to eq 1
   end
-end
-
-Wenn(/^ich eine Bestellung editieren$/) do
-  @contract = @current_inventory_pool.contracts.submitted.sample
-  @user = @contract.user
-  step "ich die Bestellung editiere"
 end
 
 Dann(/^erscheint der Benutzer unter den letzten Besuchern$/) do

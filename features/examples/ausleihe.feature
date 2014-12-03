@@ -20,7 +20,7 @@ Funktionalität: Ausleihe
 
   @javascript @personas
   Szenario: Wann letzter Besucher erscheint
-    Wenn ich eine Bestellung editieren
+    Wenn ich eine Bestellung editiere
     Dann erscheint der Benutzer unter den letzten Besuchern
     Wenn ich eine Aushändigung mache
     Dann erscheint der Benutzer unter den letzten Besuchern

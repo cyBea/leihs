@@ -2,7 +2,9 @@ When /^I pick a closed day for beeing the "(.*?)"$/ do |date_target|
   next_closed_day = nil
   date = Date.today
   expect(has_selector?("td[data-date]")).to be true
-  if all("td[data-date='#{date}']").empty? then date = Date.new(date.year, date.month + 1) end
+  if all("td[data-date='#{date}']").empty? then
+    date = Date.new(date.year, date.month + 1)
+  end
 
   while next_closed_day.nil?
     next_date = @current_inventory_pool.next_open_date date+1.day
@@ -15,7 +17,15 @@ When /^I pick a closed day for beeing the "(.*?)"$/ do |date_target|
   find("#set-end-date", :text => _("End Date")).click if date_target == "end date"
 end
 
-Then /^this date becomes red and I see a closed day warning$/ do
+Then /^the "(.*)" date becomes red and I see a closed day warning$/ do |arg1|
   expect(@date_el[:class][/closed/]).not_to be_nil
-  find(".red", text: _("This inventory pool is closed on that day."))
+  s = case arg1
+        when "start date"
+          _("Inventory pool is closed on start date")
+        when "end date"
+          _("Inventory pool is closed on end date")
+        else
+          raise
+      end
+  find(".red", text: s)
 end

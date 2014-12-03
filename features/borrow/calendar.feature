@@ -25,7 +25,7 @@ Feature: calendar
     And I select that inventory pool
     Then no availability number is shown for today
     And no availability number is shown for tomorrow
-    And the availability number is shown for day after tomorrow
+    And the availability number is shown for the next open day after tomorrow
     When I specify today as start or end date
     Then today is marked red
     And I receive an error message within the modal
