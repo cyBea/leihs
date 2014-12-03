@@ -397,6 +397,8 @@ Then /^each line shows the sum of items of the respective model$/ do
 end
 
 Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
+  step %Q(I uncheck the "No verification required" button)
+  
   if arg0
     @contract = @current_inventory_pool.contracts.find find(".line", match: :prefer_exact, :text => arg1)["data-id"]
     within(".line", match: :prefer_exact, :text => arg1) do
