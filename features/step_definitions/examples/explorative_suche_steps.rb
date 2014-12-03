@@ -79,7 +79,7 @@ end
 #Wenn(/^ich nach dem Namen einer Kategorie suche$/) do
 When(/^I search for a category name$/) do
   @category = Category.first
-  @search_term = @category.name[0..2]
+  @search_term = @category.name[0..-2]
   find("#category-search").set @search_term
   find("#category-root", :text => @search_term)
   find(".line", match: :first)
