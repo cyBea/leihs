@@ -1,7 +1,7 @@
 
 Feature: Software erfassen
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @personas

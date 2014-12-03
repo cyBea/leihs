@@ -1,7 +1,7 @@
 
 Feature: Software suchen
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @personas

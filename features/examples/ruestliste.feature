@@ -5,7 +5,7 @@ Feature: Rüstliste
   möchte ich als Verleiher
   dass mir das System eine Rüstliste mit Auflistung der jeweiligen Gestellen gibt
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @personas

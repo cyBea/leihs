@@ -3,7 +3,7 @@ Feature: Benutzeransicht
 
   Als Benutzer möchte ich die Möglichkeit haben meine Benutzerdaten zu sehen
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

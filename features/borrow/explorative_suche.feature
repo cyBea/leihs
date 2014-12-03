@@ -5,7 +5,7 @@ Feature: Explorative Suche
   möchte ich als Ausleihender
   eine entsprehende Interaktionsmöglichkeit haben
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

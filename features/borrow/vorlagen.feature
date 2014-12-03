@@ -1,7 +1,7 @@
 
 Feature: Vorlagen
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

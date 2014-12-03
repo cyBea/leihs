@@ -1,7 +1,7 @@
 
 Feature: Reservierenden wechseln
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @personas

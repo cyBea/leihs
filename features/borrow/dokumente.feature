@@ -3,7 +3,7 @@ Feature: Benutzerdokumente
 
   Als Benutzer möchte ich meine Dokumente einsehen koennen
 
-  Grundlage:
+  Background:
     Given man ist ein Kunde mit Verträge
 
   @javascript @personas

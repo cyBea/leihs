@@ -5,7 +5,7 @@ Feature: Werteliste
   möchte ich als Verleiher
   das mir das System für eine Auswahl eine Werteliste zur verfügung stellen kann
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @browser @personas

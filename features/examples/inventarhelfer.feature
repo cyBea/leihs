@@ -1,7 +1,7 @@
 
 Feature: Inventarhelfer
 
-  Grundlage:
+  Background:
     Given I am Matti
 
   @personas

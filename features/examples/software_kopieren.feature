@@ -1,7 +1,7 @@
 
 Feature: Software kopieren
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @personas @javascript @browser

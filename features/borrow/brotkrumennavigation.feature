@@ -5,7 +5,7 @@ Feature: Brotkrumennavigation
   möchte ich als Ausleiher
   die möglichkeit haben schnell von A nach Z zu kommen
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

@@ -1,7 +1,7 @@
 
 Feature: Verfügbarkeit
 
-  Grundlage:
+  Background:
     Given I am Normin
     And ich habe eine offene Bestellung mit Modellen
     And die Bestellung Timeout ist 30 Minuten

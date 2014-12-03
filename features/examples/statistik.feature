@@ -1,7 +1,7 @@
 
 Feature: Statistiken von Ausleihe und Inventar
 
-  Grundlage:
+  Background:
     Given I am Ramon
 
   @personas

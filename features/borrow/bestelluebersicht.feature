@@ -5,7 +5,7 @@ Feature: Bestellübersicht
   möchte ich als Ausleiher
   die Möglichkeit haben meine bestellten Gegenstände in der Übersicht zu sehen
 
-  Grundlage:
+  Background:
     Given I am Normin
     And ich habe Gegenstände der Bestellung hinzugefügt
     When ich die Bestellübersicht öffne

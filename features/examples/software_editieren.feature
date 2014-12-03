@@ -1,7 +1,7 @@
 
 Feature: Software editieren
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @personas

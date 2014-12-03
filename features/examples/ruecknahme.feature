@@ -4,7 +4,7 @@ Feature: Rücknahme
   möchte ich als Ausleih-Verwalter
   Gegenstände Zurücknehmen können
 
-  Grundlage:
+  Background:
   Given I am Pius
 
   @javascript @personas

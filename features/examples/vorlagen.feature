@@ -4,7 +4,7 @@ Feature: Vorlagen verwalten
   Als Ausleihe-Verwalter / Inventar-Verwalter möchte ich 
   die Möglichkeit haben, Vorlagen zu verwalten
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @personas

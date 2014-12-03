@@ -1,7 +1,7 @@
 
 Feature: Ausleihe
 
-  Grundlage:
+  Background:
     Given I am Pius
     And I open the daily view
 

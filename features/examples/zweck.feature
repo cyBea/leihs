@@ -5,7 +5,7 @@ Feature: Zweck
   möchte ich als Verleiher
   den vom Benutzer angegebenen Zweck sehen
   
-  Grundlage:
+  Background:
     Given I am Pius
 
   @personas

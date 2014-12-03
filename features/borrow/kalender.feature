@@ -5,7 +5,7 @@ Feature: Kalender
   möchte ich als Ausleihender
   den Gegenstand der Bestellung hinzufügen können
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @javascript @browser @personas

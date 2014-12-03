@@ -1,7 +1,7 @@
 
 Feature: Bestellungen
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

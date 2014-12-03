@@ -1,7 +1,7 @@
 
 Feature: Modell mit Paketen erstellen
 
-  Grundlage:
+  Background:
     Given I am Mike
     And I open the inventory
 

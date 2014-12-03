@@ -1,7 +1,7 @@
 
 Feature: Option
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @browser @personas

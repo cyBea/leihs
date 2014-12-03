@@ -5,7 +5,7 @@ Feature: Vertrag
   möchte ich als Verleiher
   das mir das System einen Vertrag bereitstellen kann
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @browser @personas

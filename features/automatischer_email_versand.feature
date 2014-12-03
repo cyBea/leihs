@@ -1,6 +1,6 @@
 
 Feature: Automatischer E-Mail versand
-  Grundlage:
+  Background:
     Given Das System ist für den Mailversand im Testmodus konfiguriert
     And I am Normin
 

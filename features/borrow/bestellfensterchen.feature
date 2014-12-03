@@ -5,7 +5,7 @@ Feature: Bestellfensterchen
   möchte ich als Ausleiher
   die möglichkeit haben Modelle zu bestellen
 
-  Grundlage:
+  Background:
     Given I am Normin
 
   @personas

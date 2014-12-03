@@ -4,7 +4,7 @@ Feature: Wartungsmodus
 Als Administrator möchte ich die Möglichkeit haben,
 für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu sperren und dem Benutzer eine Meldung anzuzeigen
 
-  Grundlage:
+  Background:
     Given I am Gino
 
   @javascript @personas

@@ -1,7 +1,7 @@
 
 Feature: Kalender-Ansicht im Backend
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @personas

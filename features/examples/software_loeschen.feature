@@ -1,7 +1,7 @@
 
 Feature: Software löschen
 
-  Grundlage:
+  Background:
     Given I am Mike
 
   @javascript @browser @personas

@@ -1,7 +1,7 @@
 
 Feature: Anzeige von Problemen
 
-  Grundlage:
+  Background:
     Given I am Pius
 
   @javascript @browser @personas
