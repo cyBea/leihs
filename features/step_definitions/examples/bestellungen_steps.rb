@@ -311,6 +311,9 @@ Then(/^all listed (orders|contracts|visits), are matched by the search term$/) d
 end
 
 When /^I uncheck the "No verification required" button$/ do
-  cb = find("#list-filters input[name='no_verification_required']")
-  cb.click if cb.checked?
+  selector = "#list-filters input[name='no_verification_required']"
+  if has_selector?(selector)
+    cb = find(selector)
+    cb.click if cb.checked?
+  end
 end
