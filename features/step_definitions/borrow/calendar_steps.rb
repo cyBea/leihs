@@ -49,16 +49,16 @@ Then(/^(the|no) availability number is shown (.*)$/) do |arg1, arg2|
             when "on this specific date"
               (@current_inventory_pool || @inventory_pool).workday.reached_max_visits
             when "for today"
-              [Date.today]
+              Date.today
             when "for tomorrow"
-              [Date.tomorrow]
-            when "for day after tomorrow"
-              [Date.tomorrow + 1.day]
+              Date.tomorrow
+            when "for the next open day after tomorrow"
+              (@current_inventory_pool || @inventory_pool).next_open_date(Date.tomorrow + 1.day)
             else
               raise
           end
   within ".modal" do
-    dates.each do |date|
+    Array(dates).each do |date|
       while has_no_selector?(".fc-widget-content[data-date='#{date}']") do
         find(".fc-button-next").click
       end

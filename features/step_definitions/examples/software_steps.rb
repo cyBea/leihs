@@ -922,6 +922,10 @@ Dann(/^the following fields were copied from the original software license$/) do
         expect(@target_item.properties[:maintenance_contract]).to eq @item.properties[:maintenance_contract]
       when "Maintenance-Ablaufdatum"
         expect(@target_item.properties[:maintenance_expiration]).to eq @item.properties[:maintenance_expiration]
+      when "Währung"
+        expect(@target_item.properties[:maintenance_currency]).to eq @item.properties[:maintenance_currency]
+      when "Preis"
+        expect(@target_item.properties[:maintenance_price]).to eq @item.properties[:maintenance_price]
       else
         raise
     end

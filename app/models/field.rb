@@ -454,7 +454,7 @@ class Field < ActiveHash::Base
       group: "Maintenance"
     },{
       id: 47,
-      label: "Maintenance currency",
+      label: "Currency",
       attribute: ["properties", "maintenance_currency"],
       type: "select",
       values: [{label: "CHF", value: "CHF"}, {label: "EUR", value: "EUR"}, {label: "USD", value: "USD"}],
@@ -465,8 +465,8 @@ class Field < ActiveHash::Base
       group: "Maintenance"
     },{
       id: 48,
-      label: "Maintenance amount",
-      attribute: ["properties", "maintenance_amount"],
+      label: "Price",
+      attribute: ["properties", "maintenance_price"],
       type: "text",
       currency: true,
       target_type: "license",

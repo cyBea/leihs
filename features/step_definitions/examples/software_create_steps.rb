@@ -19,7 +19,7 @@ end
 When(/^I type the amount "(.*?)" into the field "(.*?)"$/) do |arg1, arg2|
   case arg2
     when "maintenance amount"
-      find("input[name='item[properties][maintenance_amount]']").set arg1
+      find("input[name='item[properties][maintenance_price]']").set arg1
     else
       raise
   end
@@ -36,7 +36,7 @@ Then(/^the "(.*?)" is saved as "(.*?)"$/) do |arg1, arg2|
     when "maintenance currency"
       expect(find("select[name='item[properties][maintenance_currency]']").value).to eq arg2
     when "maintenance amount"
-      expect(find("input[name='item[properties][maintenance_amount]']").value).to eq arg2
+      expect(find("input[name='item[properties][maintenance_price]']").value).to eq arg2
     else
       raise
   end

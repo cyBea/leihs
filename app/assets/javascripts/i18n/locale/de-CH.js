@@ -1115,6 +1115,10 @@ window.i18n.locale_data = {
          null,
          "Passende Vorlagen"
       ],
+      "Max. visits": [
+         null,
+         "Max. Besuche"
+      ],
       "Mobile": [
          null,
          "Mobil"
@@ -3740,7 +3744,7 @@ window.i18n.locale_data = {
       ],
       "Maintenance": [
          null,
-         "Wartung"
+         "Maintenance"
       ],
       "Automatic access": [
          null,
@@ -3838,6 +3842,10 @@ window.i18n.locale_data = {
       "Maintenance contract": [
          null,
          "Maintenance-Vertrag"
+      ],
+      "Currency": [
+         null,
+         "Währung"
       ],
       "Procured by": [
          null,

@@ -85,8 +85,6 @@ Feature: Inventar
     | Betriebssystem                    |
     | Installation                      |
     | Lizenzablaufdatum                 |
-    | Maintenance-Vertrag               |
-    | Maintenance-Ablaufdatum           |
     | Ausmusterung                      |
     | Grund der Ausmusterung            |
     | Ausleihbar                        |
@@ -98,3 +96,7 @@ Feature: Inventar
     | Anschaffungswert                  |
     | Lieferant                         |
     | Beschafft durch                   |
+    | Maintenance-Vertrag               |
+    | Maintenance-Ablaufdatum           |
+    | Währung                           |
+    | Preis                             |
