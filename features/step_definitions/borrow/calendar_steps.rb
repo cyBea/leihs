@@ -77,7 +77,7 @@ Then(/^(the|no) availability number is shown (.*)$/) do |arg1, arg2|
   end
 end
 
-When(/^I specify (.*) as start or end date$/) do |arg1|
+When(/^I specify (.*) as (start|end) date$/) do |arg1, arg2|
   @date = case arg1
             when "today"
               Date.today
@@ -88,14 +88,7 @@ When(/^I specify (.*) as start or end date$/) do |arg1|
             else
               raise
           end
-  step "ich setze das %s im Kalendar auf '#{I18n::l(@date)}'" % [_("Start Date"), _("End Date")].sample
-end
-
-Then(/^(the day|today|tomorrow) is marked red$/) do |arg1|
-  within ".modal" do
-    # NOTE our red definition is #FF4C4D == rgba(255, 76, 77, 1)
-    expect(find(".fc-widget-content.closed[data-date='#{@date}']").native.style('background-color')).to eq "rgba(255, 76, 77, 1)"
-  end
+  step "ich setze das %s im Kalendar auf '#{I18n::l(@date)}'" % (arg2 == "start" ? _("Start Date") : _("End Date"))
 end
 
 Then(/^I receive an error message within the modal$/) do
