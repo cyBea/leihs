@@ -152,7 +152,8 @@ end
 
 ########################################################################
 
-Wenn /^man eine Modell\-Zeile eines Modells, das weder ein Paket-Modell oder ein Bestandteil eines Paket-Modells ist, sieht$/ do
+#Wenn /^man eine Modell\-Zeile eines Modells, das weder ein Paket-Modell oder ein Bestandteil eines Paket-Modells ist, sieht$/ do
+When(/^I see a model line for a model that is neither a package model nor part of a package model$/) do
   expect(has_selector?("#inventory > .line[data-type='model']")).to be true
   within "#inventory" do
     all(".line[data-type='model']").each do |model_line|
@@ -190,30 +191,31 @@ Wenn /^man eine Gegenstands\-Zeile sieht$/ do
   find(".filter input#in_stock").click unless find(".filter input#in_stock").checked?
 end
 
-Dann /^enthält die (?:Gegenstands|Software\-Lizenz)\-Zeile folgende Informationen:$/ do |table|
+#Dann /^enthält die (?:Gegenstands|Software\-Lizenz)\-Zeile folgende Informationen:$/ do |table|
+Then /^the (?:item|software license) line contains the following information:$/ do |table|
   table.hashes.each do |row|
     case row["information"]
-      when "Inventarcode"
-        step 'enthält die Gegenstands-Zeile den Inventarcode'
-      when "Ort des Gegenstands"
-        step 'enthält die Gegenstands-Zeile den Ort des Gegenstands'
-      when "Gebäudeabkürzung"
-        step 'enthält die Gegenstands-Zeile die Gebäudeabkürzung'
-      when "Raum"
-        step 'enthält die Gegenstands-Zeile den Raum'
-      when "Gestell"
-        step 'enthält die Gegenstands-Zeile das Gestell'
-      when "Aktueller Ausleihender"
-        step 'enthält die Gegenstands-Zeile den aktuell Ausleihenden'
-      when "Enddatum der Ausleihe"
-        step 'enthält die Gegenstands-Zeile das Enddatum der Ausleihe'
-      when "Verantwortliche Abteilung"
-        step 'enthält die Gegenstands-Zeile die Verantwortliche Abteilung'
-      when "Betriebssystem"
+      when "inventory code"
+        step 'the item line contains the inventory code'
+      when "location"
+        step 'the item line contains the location'
+      when "code of the building"
+        step 'the item line contains the code of the building'
+      when "room"
+        step 'the item line contains the room'
+      when "shelf"
+        step 'the item line contains the shelf'
+      when "current borrower"
+        step 'the item line contains the name of the current borrower'
+      when "end date of contract"
+        step 'the item line contains the end date of the current contract'
+      when "responsible department"
+        step 'the item line contains the responsible department'
+      when "operating system"
         step %Q(the license line contains the 'operating system' information)
-      when "Lizenztyp"
+      when "license type"
         step %Q(the license line contains the 'license type' information)
-      when "Anzahl"
+      when "quantity"
         step %Q(the license line contains the 'quantity' information)
       else
         raise 'step not found'
@@ -229,29 +231,35 @@ Dann /^enthält die Gegenstands\-Zeile den Ort des Gegenstands$/ do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.to_s)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile die Gebäudeabkürzung$/ do
+#Dann /^enthält die Gegenstands\-Zeile die Gebäudeabkürzung$/ do
+Then(/^the item line contains the code of the building$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.building.code)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile den Raum$/ do
+#Dann /^enthält die Gegenstands\-Zeile den Raum$/ do
+Then(/^the item line contains the room$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.room)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile das Gestell$/ do
+#Dann /^enthält die Gegenstands\-Zeile das Gestell$/ do
+Then(/^the item line contains the shelf$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.shelf)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile den aktuell Ausleihenden$/ do
+#Dann /^enthält die Gegenstands\-Zeile den aktuell Ausleihenden$/ do
+Then(/^the item line contains the name of the current borrower$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_borrower.to_s)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile das Enddatum der Ausleihe$/ do
+#Dann /^enthält die Gegenstands\-Zeile das Enddatum der Ausleihe$/ do
+Then(/^the item line contains the end date of the current contract$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.year)).to be true
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.month)).to be true
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.day)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile die Verantwortliche Abteilung$/ do
+#Dann /^enthält die Gegenstands\-Zeile die Verantwortliche Abteilung$/ do
+Then(/^the item line contains the responsible department$/) do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.inventory_pool.to_s)).to be true
   #step 'ich nach "%s" suche' % " "
 end
@@ -270,14 +278,16 @@ def fetch_item_line_and_item
   [r1, r2]
 end
 
-Wenn /^der Gegenstand an Lager ist und meine Abteilung für den Gegenstand verantwortlich ist$/ do
+#Wenn /^der Gegenstand an Lager ist und meine Abteilung für den Gegenstand verantwortlich ist$/ do
+When /^the item is in stock and my department is responsible for it$/ do
   find("select[name='responsible_inventory_pool_id'] option[value='#{@current_inventory_pool.id}']").select_option
   find("input[name='in_stock']").click unless find("input[name='in_stock']").checked?
   find(".button[data-type='inventory-expander'] i.arrow.right", match: :first).click
   @item_line, @item = fetch_item_line_and_item
 end
 
-Wenn /^der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gegenstand verantwortlich ist$/ do
+#Wenn /^der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gegenstand verantwortlich ist$/ do
+When /^the item is not in stock and another department is responsible for it$/ do
   all("select[name='responsible_inventory_pool_id'] option:not([selected])").detect{|o| o.value != @current_inventory_pool.id.to_s and o.value != ""}.select_option
   find("input[name='in_stock']").click if find("input[name='in_stock']").checked?
   item = @current_inventory_pool.own_items.items.detect{|i| not i.inventory_pool_id.nil? and i.inventory_pool != @current_inventory_pool and not i.in_stock?}
@@ -290,7 +300,8 @@ Wenn /^der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gege
   @item_line, @item = fetch_item_line_and_item
 end
 
-Wenn /^meine Abteilung Besitzer des Gegenstands ist die Verantwortung aber auf eine andere Abteilung abgetreten hat$/ do
+#Wenn /^meine Abteilung Besitzer des Gegenstands ist die Verantwortung aber auf eine andere Abteilung abgetreten hat$/ do
+When /^my department is the owner but has given responsibility for the item to another department$/ do
   all("select[name='responsible_inventory_pool_id'] option:not([selected])").detect{|o| o.value != @current_inventory_pool.id.to_s and o.value != ""}.select_option
   find(".line[data-type='model'] .button[data-type='inventory-expander'] i.arrow.right", match: :first).click
   @item_line = ".group-of-lines .line[data-type='item']"
@@ -315,15 +326,18 @@ Then(/^the option line contains the following information:$/) do |table|
   end
 end
 
-Dann /^kann man jedes Modell aufklappen$/ do
-  step "man eine Modell-Zeile eines Modells, das weder ein Paket-Modell oder ein Bestandteil eines Paket-Modells ist, sieht"
+#Dann /^kann man jedes Modell aufklappen$/ do
+Then(/^I can expand each model line$/) do
+  #step "man eine Modell-Zeile eines Modells, das weder ein Paket-Modell oder ein Bestandteil eines Paket-Modells ist, sieht"
+  step "I see a model line for a model that is neither a package model nor part of a package model"
   within @model_line.find(".button[data-type='inventory-expander']") do
     find("i.arrow.right").click
     find("i.arrow.down")
   end
 end
 
-Dann /^man sieht die Gegenstände, die zum Modell gehören$/ do
+#Dann /^man sieht die Gegenstände, die zum Modell gehören$/ do
+Then /^I see the items belonging to the model$/ do
   @items_element = @model_line.find(:xpath, "following-sibling::div[@class='group-of-lines']")
   items = @model.items.by_owner_or_responsible(@current_inventory_pool)
   expect(items).to exist
@@ -332,34 +346,36 @@ Dann /^man sieht die Gegenstände, die zum Modell gehören$/ do
   end
 end
 
-Dann /^so eine Zeile sieht aus wie eine Gegenstands\-Zeile$/ do
+#Dann /^so eine Zeile sieht aus wie eine Gegenstands\-Zeile$/ do
+Then(/^such a line looks like an item line$/) do
   @item_line ||= @items_element.find(".line", match: :first)
   @item ||= Item.find_by_inventory_code(@item_line.find(".col2of5.text-align-left:nth-child(2) .row:nth-child(1)").text)
 
   # this check is to cover the case where there is item assigned but the user has not signed yet
   if @item.in_stock? and @item.current_borrower and @item.inventory_pool == @current_inventory_pool
-    step 'enthält die Gegenstands-Zeile den aktuell Ausleihenden'
-    step 'enthält die Gegenstandsand-Zeile das Enddatum der Ausleihe'
+    step 'the item line contains the name of the current borrower'
+    step 'the item line contains the end date of the contract'
   elsif @item.in_stock? and @item.inventory_pool == @current_inventory_pool
-    step 'enthält die Gegenstands-Zeile die Gebäudeabkürzung'
-    step 'enthält die Gegenstands-Zeile den Raum'
-    step 'enthält die Gegenstandsand-Zeile das Gestell'
+    step 'the item line contains the code of the building'
+    step 'the item line contains the room'
+    step 'the item line contains the shelf'
   elsif not @item.in_stock? and @item.inventory_pool == @current_inventory_pool
-    step 'enthält die Gegenstands-Zeile den aktuell Ausleihenden'
-    step 'enthält die Gegenstands-Zeile das Enddatum der Ausleihe'
+    step 'the item line contains the name of the current borrower'
+    step 'the item line contains the end date of the contract'
   elsif @item.owner == @current_inventory_pool and @item.inventory_pool != @current_inventory_pool
-    step 'enthält die Gegenstands-Zeile die Verantwortliche Abteilung'
-    step 'enthält die Gegenstands-Zeile die Gebäudeabkürzung'
-    step 'enthält die Gegenstands-Zeile den Raum'
+    step 'the item line contains the responsible department '
+    step 'the item line contains the code of the building'
+    step 'the item line contains the room'
   else
-    step 'enthält die Gegenstands-Zeile die Gebäudeabkürzung'
-    step 'enthält die Gegenstands-Zeile den Raum'
-    step 'enthält die Gegenstands-Zeile das Gestell'
+    step 'the item line contains the code of the building'
+    step 'the item line contains the room'
+    step 'the item line contains the shelf'
   end
 
 end
 
-Dann /^kann man jedes Paket\-Modell aufklappen$/ do
+#Dann /^kann man jedes Paket\-Modell aufklappen$/ do
+Then(/^I can expand each package model line$/) do
   @package = @current_inventory_pool.items.packages.last.model
   step 'I search for "%s"' % @package.name
   @package_line = find(".line[data-is_package='true']")
@@ -369,7 +385,8 @@ Dann /^kann man jedes Paket\-Modell aufklappen$/ do
   end
 end
 
-Dann /^man sieht die Pakete dieses Paket\-Modells$/ do
+#Dann /^man sieht die Pakete dieses Paket\-Modells$/ do
+Then(/^I see the packages contained in this package model$/) do
   @packages_element = @package_line.find(:xpath, "following-sibling::div[@class='group-of-lines']")
   @package.items.each do |package|
     expect(@packages_element.has_content? package.inventory_code).to be true
@@ -378,7 +395,8 @@ Dann /^man sieht die Pakete dieses Paket\-Modells$/ do
   @item = Item.find_by_inventory_code(@item_line.find(".col2of5.text-align-left:nth-child(2) .row:nth-child(1)").text)
 end
 
-Dann /^man kann diese Paket\-Zeile aufklappen$/ do
+#Dann /^man kann diese Paket\-Zeile aufklappen$/ do
+Then(/^I can expand this package line$/) do
   within @item_line do
     find(".button[data-type='inventory-expander'] i.arrow.right").click
     find(".button[data-type='inventory-expander'] i.arrow.down")
@@ -386,20 +404,23 @@ Dann /^man kann diese Paket\-Zeile aufklappen$/ do
   @package_parts_element = @item_line.find(:xpath, "following-sibling::div[@class='group-of-lines']")
 end
 
-Dann /^man sieht die Bestandteile, die zum Paket gehören$/ do
+#Dann /^man sieht die Bestandteile, die zum Paket gehören$/ do
+Then(/^I see the components of this package$/) do
   @item.children.each do |part|
     expect(@package_parts_element.has_content? part.inventory_code).to be true
   end
 end
 
-Dann /^so eine Zeile zeigt nur noch Inventarcode und Modellname des Bestandteils$/ do
+#Dann /^so eine Zeile zeigt nur noch Inventarcode und Modellname des Bestandteils$/ do
+Then(/^such a line shows only inventory code and model name of the component$/) do
   @item.children.each do |part|
     expect(@package_parts_element.has_content? part.inventory_code).to be true
     expect(@package_parts_element.has_content? part.name).to be true
   end
 end
 
-Dann /^kann man diese Daten als CSV\-Datei exportieren$/ do
+#Dann /^kann man diese Daten als CSV\-Datei exportieren$/ do
+Then /^I can export this data as a CSV file$/ do
   def parsed_query
     href = find("#csv-export")[:href]
     uri = URI.parse href
@@ -415,7 +436,8 @@ Dann /^kann man diese Daten als CSV\-Datei exportieren$/ do
   @params = ActionController::Parameters.new(parsed_query)
 end
 
-Dann /^die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden \(inkl\. Filter\)$/ do
+#Dann /^die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden \(inkl\. Filter\)$/ do
+Then /^the file contains the same lines as are shown right now, including any filtering$/ do
   # not really downloading the file, but invoking directly the model class method
   @csv = CSV.parse InventoryPool.csv_export(@current_inventory_pool, @params),
                    {col_sep: ";", quote_char: "\"", force_quotes: true, headers: :first_row}
@@ -433,7 +455,8 @@ Dann /^die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden \(ink
   end
 end
 
-Dann(/^die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge$/) do |table|
+#Dann(/^die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge$/) do |table|
+Then(/^the lines contain the following fields in order:$/) do |table|
   csv_headers = @csv.headers
   table.hashes.each do |row|
     expect(csv_headers).to include row["Felder"]
@@ -447,7 +470,8 @@ When(/^I add a new (.+)$/) do |entity|
   click_link entity
 end
 
-Und /^ich (?:erfasse|ändere)? ?die folgenden Details ?(?:erfasse|ändere)?$/ do |table|
+#Und /^ich (?:erfasse|ändere)? ?die folgenden Details ?(?:erfasse|ändere)?$/ do |table|
+When /^I (?:enter|edit)? ?the following details$/ do |table|
   # table is a Cucumber::Ast::Table
   find(".button.green", text: _("Save %s") % _("#{get_rails_model_name_from_url.capitalize}"))
   @table_hashes = table.hashes
@@ -456,13 +480,8 @@ Und /^ich (?:erfasse|ändere)? ?die folgenden Details ?(?:erfasse|ändere)?$/ do
   end
 end
 
-Und /^ich speichere die Informationen/ do
-  @model_name_from_url = get_rails_model_name_from_url
-  @model_id = (Rails.application.routes.recognize_path current_path)[:id].to_i
-  step 'I press "%s"' % (_("Save %s") % _("#{@model_name_from_url.capitalize}"))
-end
-
-Dann /^die Informationen sind gespeichert$/ do
+#Dann /^die Informationen sind gespeichert$/ do
+Then /^the information is saved$/ do
   search_string = @table_hashes.detect {|h| h["Feld"] == "Produkt"}["Wert"]
   find(:select, "retired").first("option").select_option
   step 'I search for "%s"' % search_string
@@ -470,7 +489,8 @@ Dann /^die Informationen sind gespeichert$/ do
   step 'I should see "%s"' % search_string
 end
 
-Dann /^die Daten wurden entsprechend aktualisiert$/ do
+#Dann /^die Daten wurden entsprechend aktualisiert$/ do
+Then /^the data has been updated$/ do
   search_string = @table_hashes.detect { |h| h["Feld"] == "Produkt" }["Wert"]
   step 'I search for "%s"' % search_string
   find(".line", :text => search_string).find("a", :text => Regexp.new(_("Edit"), "i")).click
@@ -504,22 +524,24 @@ When(/^I search for "(.+)"$/) do |search_term|
   sleep(0.55) # NOTE this sleep is required waiting the search result
 end
 
-Wenn /^ich eine?n? bestehende[s|n]? (.+) bearbeite$/ do |entity|
+#Wenn /^ich eine?n? bestehende[s|n]? (.+) bearbeite$/ do |entity|
+When /^I edit an existing (.+)$/ do |entity|
   @page_to_return = current_path
   object_name = case entity
-                  when "Modell"
+                  when "model"
                     @model = @current_inventory_pool.models.where(type: "Model").sample
                     @model.name
-                  when "Option"
+                  when "option"
                     find(:select, "retired").first("option").select_option
                     @option = @current_inventory_pool.options.sample
                     @option.name
                 end
   step 'I search for "%s"' % object_name
-  find(".line", match: :prefer_exact, :text => object_name).find(".button", :text => "#{entity} editieren").click
+  find(".line", match: :prefer_exact, :text => object_name).find(".button", :text => "Edit #{entity}").click
 end
 
-Wenn /^ich ein bestehendes, genutztes Modell bearbeite welches bereits( ein aktiviertes)? Zubehör hat$/ do |arg1|
+#Wenn /^ich ein bestehendes, genutztes Modell bearbeite welches bereits( ein aktiviertes)? Zubehör hat$/ do |arg1|
+When /^I edit an existing model that is in use and already has ( activated)? accessories$/ do |arg1|
   @model = @current_inventory_pool.models.to_a.detect do |m|
     if arg1
       m.accessories.count > 0 and m.accessories.any? { |a| a.inventory_pools.include? @current_inventory_pool }
@@ -534,7 +556,8 @@ Dann /^(?:die|das|der) neue[sr]? (?:.+) ist erstellt$/ do
   step "die Informationen sind gespeichert"
 end
 
-Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do
+#Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do
+When /^I enter the name of an existing model$/ do
   model = Model.all.first
   step %{ich ändere die folgenden Details}, table(%{
     | Feld    | Wert                   |
@@ -542,17 +565,20 @@ Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do
     | Version | #{model.version}       |})
 end
 
-Dann /^wird das Modell nicht gespeichert, da es keinen (?:eindeutigen\s)?Namen hat$/ do
+#Dann /^wird das Modell nicht gespeichert, da es keinen (?:eindeutigen\s)?Namen hat$/ do
+Then /^the model is not saved because it does not have a (?:unique\s)? name$/ do
   step 'I should see "%s"' % (_("Save %s") % _("#{@model_name_from_url.capitalize}"))
 end
 
-Dann /^habe ich die Möglichkeit, folgende Informationen zu erfassen:$/ do |table|
+#Dann /^habe ich die Möglichkeit, folgende Informationen zu erfassen:$/ do |table|
+Then /^I can enter the following information:$/ do |table|
   table.raw.flatten.all? do |field_name|
     find(".field", text: field_name)
   end
 end
 
-Dann /^ich sehe das gesamte Zubehöre für dieses Modell$/ do
+#Dann /^ich sehe das gesamte Zubehöre für dieses Modell$/ do
+Then /^I see all the accessories for this model$/ do
   within(".row.emboss", match: :prefer_exact, :text => _("Accessories")) do
     @model.accessories.each do |accessory|
       find(".list-of-lines .line", text: accessory.name)

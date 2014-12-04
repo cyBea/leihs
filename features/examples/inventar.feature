@@ -188,12 +188,12 @@ Feature: Inventory
 
   @javascript @personas
   Scenario: Paket-Modelle aufklappen
-    Then kann man jedes Paket-Modell aufklappen
-    And man sieht die Pakete dieses Paket-Modells
-    And so eine Zeile sieht aus wie eine Gegenstands-Zeile
-    And man kann diese Paket-Zeile aufklappen
-    And man sieht die Bestandteile, die zum Paket gehören
-    And so eine Zeile zeigt nur noch Inventarcode und Modellname des Bestandteils
+    Then I can expand each package model line
+    And I see the packages contained in this package model
+    And such a line looks like an item line
+    And I can expand this package line
+    And I see the components of this package
+    And such a line shows only inventory code and model name of the component
 
   @javascript @personas
   Scenario: Aussehen einer Modell-Zeile
