@@ -196,14 +196,14 @@ Feature: Inventory
     And such a line shows only inventory code and model name of the component
 
   @javascript @personas
-  Scenario: Aussehen einer Modell-Zeile
-    When man eine Modell-Zeile sieht
-    Then enthält die Modell-Zeile folgende Informationen:
+  Scenario: Look of a model line
+    When I see a model line
+    Then the model line contains the following information:
       | information              |
-      | Bild                     |
-      | Name des Modells         |
-      | Anzahl verfügbar (jetzt) |
-      | Anzahl verfügbar (Total) |
+      | Image                     |
+      | Model name         |
+      | Number available (now) |
+      | Number available (total) |
 
   @javascript @personas @browser
   Scenario: Aussehen einer Gegenstands-Zeile

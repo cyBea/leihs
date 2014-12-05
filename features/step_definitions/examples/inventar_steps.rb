@@ -164,12 +164,14 @@ When(/^I see a model line for a model that is neither a package model nor part o
   end
 end
 
-Wenn /^man eine Modell\-Zeile sieht$/ do
+#Wenn /^man eine Modell\-Zeile sieht$/ do
+When /^I see a model line$/ do
   @model_line = find("#inventory .line[data-type='model']", match: :first)
   @model = Model.find_by_name(@model_line.find(".col2of5 strong").text)
 end
 
-Dann /^enthält die Modell\-Zeile folgende Informationen:$/ do |table|
+#Dann /^enthält die Modell\-Zeile folgende Informationen:$/ do |table|
+Then /^the model line contains the following information:$/ do |table|
   table.hashes.each do |row|
     case row["information"]
       when "Bild"
