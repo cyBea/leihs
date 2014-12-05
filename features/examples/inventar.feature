@@ -271,10 +271,10 @@ Feature: Inventory
     Then I see 'No entries found'
 
   @javascript @personas @browser
-  Scenario: Modell aufklappen
-    Then kann man jedes Modell aufklappen
-    And man sieht die Gegenstände, die zum Modell gehören
-    And so eine Zeile sieht aus wie eine Gegenstands-Zeile
+  Scenario: Expand model
+    Then I can expand each model line
+    And I see the items belonging to the model
+    And such a line looks like an item line
 
   #73278620
    @personas
