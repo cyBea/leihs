@@ -200,9 +200,9 @@ Feature: Inventory
     When I see a model line
     Then the model line contains the following information:
       | information              |
-      | Image                     |
-      | Model name         |
-      | Number available (now) |
+      | Image                    |
+      | Model name               |
+      | Number available (now)   |
       | Number available (total) |
 
   @javascript @personas @browser
@@ -229,41 +229,41 @@ Feature: Inventory
       | End date of contract   |
 
   @javascript @personas @browser
-  Scenario: Aussehen einer Software-Lizenz-Zeile
+  Scenario: Look of a software license line
     Given there exists a software license
     And I see retired and not retired inventory
     When I look at this license in the software list
-    Then enthält die Software-Lizenz-Zeile folgende Informationen:
+    Then the software license line contains the following information:
       | information    |
-      | Betriebssystem |
-      | Lizenztyp      |
+      | Operating system |
+      | License type      |
     Given there exists a software license of one of the following types
-      | Typ         | technical          |
-      | Konkurrent  | concurrent         |
-      | Site-Lizenz | site_license       |
-      | Mehrplatz   | multiple_workplace |
+      | Typ                | technical          |
+      | Concurrent         | concurrent         |
+      | Site license       | site_license       |
+      | Multiple workplace | multiple_workplace |
     When I look at this license in the software list
-    Then enthält die Software-Lizenz-Zeile folgende Informationen:
-      | information    |
-      | Betriebssystem |
-      | Lizenztyp      |
-      | Anzahl         |
+    Then the software license line contains the following information:
+      | information      |
+      | Operating system |
+      | License type     |
+      | Quantity         |
     Given there exists a software license, owned by my inventory pool, but given responsibility to another inventory pool
     When I look at this license in the software list
-    Then enthält die Software-Lizenz-Zeile folgende Informationen:
-      | information               |
-      | Verantwortliche Abteilung |
-      | Betriebssystem            |
-      | Lizenztyp                 |
+    Then the software license line contains the following information:
+      | information            |
+      | Responsible department |
+      | Operating system       |
+      | License type           |
     Given there exists a software license, which is not in stock and another inventory pool is responsible for it
     When I look at this license in the software list
-    Then enthält die Software-Lizenz-Zeile folgende Informationen:
-      | information               |
-      | Verantwortliche Abteilung |
-      | Aktueller Ausleihender    |
-      | Enddatum der Ausleihe     |
-      | Betriebssystem            |
-      | Lizenztyp                 |
+    Then the software license line contains the following information:
+      | information            |
+      | Responsible department |
+      | Current borrower       |
+      | End date of contract   |
+      | Operating system       |
+      | License type           |
 
   @javascript @personas
   Scenario: Keine Resultate auf der Liste des Inventars
