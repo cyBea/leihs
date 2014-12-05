@@ -123,12 +123,16 @@ Then(/^I should still see the model in the resultlist$/) do
 end
 
 Then(/^only models related to my current pool are suggested$/) do
-  within ".ui-autocomplete" do
-    all("li a").each do |x|
-      next unless x.find("span.grey-text").text == _("Model")
-      name = x.find("strong").text
-      expect(@current_inventory_pool.models.include? Model.find_by_name(name)).to be true
+  if has_selector?(".ui-autocomplete")
+    within ".ui-autocomplete" do
+      all("li a").each do |x|
+        next unless x.find("span.grey-text").text == _("Model")
+        name = x.find("strong").text
+        expect(@current_inventory_pool.models.include? Model.find_by_name(name)).to be true
+      end
     end
+  else
+    # when selector not present, then no matched results
   end
 end
 
