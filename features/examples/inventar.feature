@@ -266,9 +266,9 @@ Feature: Inventory
       | License type           |
 
   @javascript @personas
-  Scenario: Keine Resultate auf der Liste des Inventars
-    When ich eine resultatlose Suche mache
-    Then sehe ich "Kein Eintrag gefunden"
+  Scenario: How to display no results after a search
+    When I make a search without any results
+    Then I see 'No entries found'
 
   @javascript @personas @browser
   Scenario: Modell aufklappen

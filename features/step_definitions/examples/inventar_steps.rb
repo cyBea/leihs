@@ -697,14 +697,16 @@ Dann /^sieht man keine Modelle, denen keine Gegenstänge zugewiesen unter keinem
   end
 end
 
-Wenn(/^ich eine resultatlose Suche mache$/) do
+#Wenn(/^ich eine resultatlose Suche mache$/) do
+When(/^I make a search without any results$/) do
   begin
     search_term = Faker::Lorem.words.join
   end while not @current_inventory_pool.inventory({search_term: search_term}).empty?
   step %Q(I search for "%s") % search_term
 end
 
-Dann(/^sehe ich "(.*?)"$/) do |arg1|
+#Dann(/^sehe ich 'No entries found'$/) do |arg1|
+Then(/^I see 'No entries found'$/) do
   find("#inventory", text: _("No entries found"))
 end
 
