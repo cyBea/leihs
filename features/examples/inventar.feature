@@ -186,8 +186,8 @@ Feature: Inventory
       | Name        |
       | Price       |
 
-  @javascript @personas
-  Scenario: Paket-Modelle aufklappen
+  @javascript @personas @browser
+  Scenario: Expand package models
     Then I can expand each package model line
     And I see the packages contained in this package model
     And such a line looks like an item line
