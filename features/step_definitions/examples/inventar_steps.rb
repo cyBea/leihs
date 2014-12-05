@@ -174,13 +174,13 @@ end
 Then /^the model line contains the following information:$/ do |table|
   table.hashes.each do |row|
     case row["information"]
-      when "Bild"
+      when "Image"
         @model_line.find "img[src*='image_thumb']"
-      when "Name des Modells"
+      when "Model name"
         @model_line.find ".col2of5 strong"
-      when "Anzahl verfügbar (jetzt)"
+      when "Number available (now)"
         @model_line.find ".col1of5:nth-child(3)", :text => /#{@model.borrowable_items.in_stock.where(inventory_pool_id: @current_inventory_pool).count}.*?\//
-      when "Anzahl verfügbar (Total)"
+      when "Number available (total)"
         @model_line.find ".col1of5:nth-child(3)", :text => /\/.*?#{@model.borrowable_items.where(inventory_pool_id: @current_inventory_pool).count}/
     end
   end
@@ -197,27 +197,27 @@ end
 Then /^the (?:item|software license) line contains the following information:$/ do |table|
   table.hashes.each do |row|
     case row["information"]
-      when "inventory code"
+      when "Inventory code"
         step 'the item line contains the inventory code'
-      when "location"
+      when "Location"
         step 'the item line contains the location'
-      when "code of the building"
+      when "Code of the building"
         step 'the item line contains the code of the building'
-      when "room"
+      when "Room"
         step 'the item line contains the room'
-      when "shelf"
+      when "Shelf"
         step 'the item line contains the shelf'
-      when "current borrower"
+      when "Current borrower"
         step 'the item line contains the name of the current borrower'
-      when "end date of contract"
+      when "End date of contract"
         step 'the item line contains the end date of the current contract'
-      when "responsible department"
+      when "Responsible department"
         step 'the item line contains the responsible department'
-      when "operating system"
+      when "Operating system"
         step %Q(the license line contains the 'operating system' information)
-      when "license type"
+      when "License type"
         step %Q(the license line contains the 'license type' information)
-      when "quantity"
+      when "Quantity"
         step %Q(the license line contains the 'quantity' information)
       else
         raise 'step not found'
@@ -225,11 +225,13 @@ Then /^the (?:item|software license) line contains the following information:$/ 
   end
 end
 
-Dann /^enthält die Gegenstands\-Zeile den Inventarcode$/ do
+#Dann /^enthält die Gegenstands\-Zeile den Inventarcode$/ do
+Then /^the item line contains the inventory code$/ do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.inventory_code)).to be true
 end
 
-Dann /^enthält die Gegenstands\-Zeile den Ort des Gegenstands$/ do
+#Dann /^enthält die Gegenstands\-Zeile den Ort des Gegenstands$/ do
+Then /^the item line contains the location of the item$/ do
   expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.to_s)).to be true
 end
 

@@ -206,27 +206,27 @@ Feature: Inventory
       | Number available (total) |
 
   @javascript @personas @browser
-  Scenario: Aussehen einer Gegenstands-Zeile
+  Scenario: Look of an item line
     When I view the tab "Models"
-    And der Gegenstand an Lager ist und meine Abteilung für den Gegenstand verantwortlich ist
-    Then enthält die Gegenstands-Zeile folgende Informationen:
-      | information      |
-      | Gebäudeabkürzung |
-      | Raum             |
-      | Gestell          |
-    When meine Abteilung Besitzer des Gegenstands ist die Verantwortung aber auf eine andere Abteilung abgetreten hat
-    Then enthält die Gegenstands-Zeile folgende Informationen:
-      | information               |
-      | Verantwortliche Abteilung |
-      | Gebäudeabkürzung          |
-      | Raum                      |
+    And the item is in stock and my department is responsible for it
+    Then the item line contains the following information:
+      | information          |
+      | Code of the building |
+      | Room                 |
+      | Shelf                |
+    When my department is the owner but has given responsibility for the item to another department
+    Then the item line contains the following information:
+      | information            |
+      | Responsible department |
+      | Code of the building   |
+      | Room                   |
     When I view the tab "Models"
-    And der Gegenstand nicht an Lager ist und eine andere Abteilung für den Gegenstand verantwortlich ist
-    Then enthält die Gegenstands-Zeile folgende Informationen:
-      | information               |
-      | Verantwortliche Abteilung |
-      | Aktueller Ausleihender    |
-      | Enddatum der Ausleihe     |
+    And the item is not in stock and another department is responsible for it
+    Then the item line contains the following information:
+      | information            |
+      | Responsible department |
+      | Current borrower       |
+      | End date of contract   |
 
   @javascript @personas @browser
   Scenario: Aussehen einer Software-Lizenz-Zeile
