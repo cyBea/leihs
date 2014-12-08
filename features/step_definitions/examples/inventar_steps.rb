@@ -454,7 +454,7 @@ Then /^the file contains the same lines as are shown right now, including any fi
       end
     end
       line_codes = (all(".line[data-type='item']").to_a + all(".line[data-type='license']").to_a).map { |l| l.find(".col2of5 .row", match: :first).text }
-    csv_codes = @csv.map {|csv_row| csv_row["Inventarcode"] }
+    csv_codes = @csv.map {|csv_row| csv_row["Inventory Code"] }
     expect(csv_codes.sort).to eq line_codes.sort
   end
 end
@@ -463,7 +463,7 @@ end
 Then(/^the lines contain the following fields in order:$/) do |table|
   csv_headers = @csv.headers
   table.hashes.each do |row|
-    expect(csv_headers).to include row["Felder"]
+    expect(csv_headers).to include row["Fields"]
   end
   expect(csv_headers).to eq table.raw.flatten[1..-1]
 end
@@ -710,7 +710,8 @@ Then(/^I see 'No entries found'$/) do
   find("#inventory", text: _("No entries found"))
 end
 
-Angenommen(/^man öffnet die Liste der Geräteparks$/) do
+#Angenommen(/^man öffnet die Liste der Geräteparks$/) do
+Given(/^I open the list of inventory pools$/) do
   visit manage_inventory_pools_path if current_path != manage_inventory_pools_path
 end
 

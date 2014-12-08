@@ -1,102 +1,102 @@
 
-Feature: Inventar
+Feature: Inventory (CSV export)
 
   @personas
-  Scenario: Globaler Export des Inventars aller Geräteparks
+  Scenario: Export of the entire inventory to a CSV file
     Given I am Gino
-    And man öffnet die Liste der Geräteparks
-    Then I can export to a csv-file
+    And I open the list of inventory pools
+    Then I can export to a CSV file
 
   @javascript @personas @browser
   Scenario: Export der aktuellen Ansicht als CSV
     Given I am Mike
     And I open the inventory
     When I view the tab "Models"
-    Then kann man diese Daten als CSV-Datei exportieren
-    And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
-    And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
-    | Felder                            |
-    | Erstellt am                       |
-    | Aktualisiert am                   |
-    | Produkt                           |
-    | Version                           |
-    | Hersteller                        |
-    | Beschreibung                      |
-    | Technische Details                |
-    | Interne Beschreibung              |
-    | Wichtige Notizen zur Aushändigung |
-    | Kategorien                        |
-    | Zubehör                           |
-    | Ergänzende Modelle                |
-    | Eigenschaften                     |
-    | Inventarcode                      |
-    | Seriennummer                      |
-    | MAC-Adresse                       |
-    | IMEI-Nummer                       |
-    | Name                              |
-    | Notiz                             |
-    | Ausmusterung                      |
-    | Grund der Ausmusterung            |
-    | Zustand                           |
-    | Vollständigkeit                   |
-    | Ausleihbar                        |
-    | Gebäude                           |
-    | Raum                              |
-    | Gestell                           |
-    | Inventarrelevant                  |
-    | Besitzer                          |
-    | Letzte Inventur                   |
-    | Verantwortliche Abteilung         |
-    | Verantwortliche Person            |
-    | Benutzer/Verwendung               |
-    | Anschaffungskategorie             |
-    | Bezug                             |
-    | Projektnummer                     |
-    | Rechnungsnummer                   |
-    | Rechnungsdatum                    |
-    | Anschaffungswert                  |
-    | Lieferant                         |
-    | Garantieablaufdatum               |
-    | Vertragsablaufdatum               |
-    | Umzug                             |
-    | Zielraum                          |
-    | Ankunftsdatum                     |
-    | Ankunftszustand                   |
-    | Ankunftsnotiz                     |
+    Then I can export this data as a CSV file
+    And the file contains the same lines as are shown right now, including any filtering
+    And the lines contain the following fields in order:
+      | Fields                        |
+      | Created at                    |
+      | Updated at                    |
+      | Product |
+      | Version               |
+      | Manufacturer                  |
+      | Description                   |
+      | Technical Details             |
+      | Internal Description          |
+      | Important notes for hand over |
+      | Categories                    |
+      | Accessories                   |
+      | Compatibles                   |
+      | Properties                    |
+      | Inventory Code                |
+      | Serial Number                 |
+      | MAC-Address                   |
+      | IMEI-Number                   |
+      | Name                          |
+      | Note                          |
+      | Retirement                    |
+      | Reason for Retirement         |
+      | Working order                 |
+      | Completeness                  |
+      | Borrowable                    |
+      | Building                      |
+      | Room                          |
+      | Shelf                         |
+      | Relevant for inventory        |
+      | Owner                         |
+      | Last Checked                  |
+      | Responsible department        |
+      | Responsible person            |
+      | User/Typical usage            |
+      | Supply Category               |
+      | Reference                     |
+      | Project Number                |
+      | Invoice Number                |
+      | Invoice Date                  |
+      | Initial Price                 |
+      | Supplier                      |
+      | Warranty expiration           |
+      | Contract expiration           |
+      | Move                          |
+      | Target area                   |
+      | Check-In Date                 |
+      | Check-In State                |
+      | Check-In Note                 |
     When I view the tab "Software"
-    Then kann man diese Daten als CSV-Datei exportieren
-    And die Datei enthält die gleichen Zeilen, wie gerade angezeigt werden (inkl. Filter)
-    And die Zeilen enthalten die folgenden Felder in aufgeführter Reihenfolge
-    | Felder                            |
-    | Erstellt am                       |
-    | Aktualisiert am                   |
-    | Produkt                           |
-    | Version                           |
-    | Hersteller                        |
-    | Software Informationen            |
-    | Inventarcode                      |
-    | Seriennummer                      |
-    | Notiz                             |
-    | Aktivierungstyp                   |
-    | Dongle ID                         |
-    | Lizenztyp                         |
-    | Gesamtanzahl                      |
-    | Anzahl-Zuteilungen                |
-    | Betriebssystem                    |
-    | Installation                      |
-    | Lizenzablaufdatum                 |
-    | Ausmusterung                      |
-    | Grund der Ausmusterung            |
-    | Ausleihbar                        |
-    | Besitzer                          |
-    | Verantwortliche Abteilung         |
-    | Bezug                             |
-    | Projektnummer                     |
-    | Rechnungsdatum                    |
-    | Anschaffungswert                  |
-    | Lieferant                         |
-    | Beschafft durch                   |
-    | Maintenance-Vertrag               |
-    | Maintenance-Ablaufdatum           |
-    | Währung                           |
-    | Preis                             |
+    Then I can export this data as a CSV file
+    And the file contains the same lines as are shown right now, including any filtering
+    And the lines contain the following fields in order:
+      | Fields                 |
+      | Created at             |
+      | Updated at             |
+      | Product                |
+      | Version                |
+      | Manufacturer           |
+      | Software Information   |
+      | Inventory Code         |
+      | Serial Number          |
+      | Note                   |
+      | Activation Type        |
+      | Dongle ID              |
+      | License Type           |
+      | Total quantity         |
+      | Quantity allocations   |
+      | Operating System       |
+      | Installation           |
+      | License expiration     |
+      | Retirement             |
+      | Reason for Retirement  |
+      | Borrowable             |
+      | Owner                  |
+      | Responsible department |
+      | Reference              |
+      | Project Number         |
+      | Invoice Date           |
+      | Initial Price          |
+      | Supplier               |
+      | Procured by            |
+      | Maintenance contract   |
+      | Maintenance expiration |
+      | Currency               |
+      | Price                  |
