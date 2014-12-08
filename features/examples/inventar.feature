@@ -277,6 +277,7 @@ Feature: Inventory
     And such a line looks like an item line
 
   #73278620
+  # No steps for this seem to be defined?
    @personas
   Scenario: Verhalten nach Speichern
     When ich einen Reiter auswähle
@@ -286,16 +287,16 @@ Feature: Inventory
     Then werde ich zur Liste des eben gewählten Reiters mit den eben ausgewählten Filtern zurueckgefuehrt
 
   @personas @javascript
-  Scenario Outline: Auszeichnung von defekten, ausgemusterten, unvollständigen oder nicht ausleihbaren Gegenstandszeilen
-    Given I see the list of "<Zustand>" inventory
+  Scenario Outline: Labeling of broken, retired, incomplete and unborrowable items
+    Given I see the list of "<condition>" inventory
     When I open a model line
-    Then the item line ist marked as "<Zustand>" in red
+    Then the item line ist marked as "<condition>" in red
     Examples:
-      | Zustand          |
-      | Defekt           |
-      | Ausgemustert     |
-      | Unvollständig    |
-      | Nicht ausleihbar |
+      | condition          |
+      | Broken           |
+      | Retired|
+      | Incomplete|
+      | Unborrowable |
 
   @personas @javascript @browser
   Scenario: Auszeichnung von mehreren Zuständen auf der Gegenstandszeile

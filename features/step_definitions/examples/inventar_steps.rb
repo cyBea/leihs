@@ -880,14 +880,14 @@ end
 
 Given(/^I see the list of "(.*?)" inventory$/) do |arg1|
   case arg1
-  when "Defekt"
+  when "Broken"
     find("input#broken[type='checkbox']").click
-  when "Ausgemustert"
+  when "Retired"
     find(:select, "retired").find(:option, _("retired")).select_option
-  when "Unvollständig"
+  when "Incomplete"
     find("input#incomplete[type='checkbox']").click
-  when "Nicht ausleihbar"
-    find(:select, "is_borrowable").find(:option, _("not borrowable")).select_option
+  when "Unborrowable"
+    find(:select, "is_borrowable").find(:option, _("unborrowable")).select_option
   end
 end
 
