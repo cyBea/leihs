@@ -292,14 +292,14 @@ Feature: Inventory
     When I open a model line
     Then the item line ist marked as "<condition>" in red
     Examples:
-      | condition          |
-      | Broken           |
-      | Retired|
-      | Incomplete|
+      | condition    |
+      | Broken       |
+      | Retired      |
+      | Incomplete   |
       | Unborrowable |
 
   @personas @javascript @browser
-  Scenario: Auszeichnung von mehreren Zuständen auf der Gegenstandszeile
+  Scenario: Displaying multiple problems on an item line
     Given I see retired and not retired inventory
     And there exists an item with many problems
     When I search after this item in the inventory list
