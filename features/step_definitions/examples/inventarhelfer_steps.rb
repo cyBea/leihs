@@ -345,8 +345,9 @@ Angenommen(/^man editiert das Feld "(.*?)" eines Gegenstandes, der im irgendeine
   step %Q{I scan or enter the inventory code}
 end
 
-Angenommen(/^man mustert einen ausgeliehenen Gegenstand aus$/) do
-  step %Q{wähle ich das Feld "Ausmusterung" aus der Liste aus}
+#Angenommen(/^man mustert einen ausgeliehenen Gegenstand aus$/) do
+Given(/^I retire an item that is not in stock$/) do
+  step %Q{I select the field "Retiremen"}
   find(".row.emboss", match: :prefer_exact, text: _("Retirement")).find("select").select _("Yes")
   find(".row.emboss", match: :prefer_exact, text: _("Reason for Retirement")).find("input, textarea").set "Retirement reason"
   @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.sample

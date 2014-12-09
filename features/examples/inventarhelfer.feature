@@ -28,10 +28,10 @@ Feature: Inventory helper
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
   @javascript @personas
-  Scenario: Die ausgeliehenen Gegenständen kann man nicht ausmustern
+  Scenario: You can't retire something that is not in stock
     Given I am on the inventory helper screen
-    And man mustert einen ausgeliehenen Gegenstand aus
-    Then erhält man eine Fehlermeldung, dass man den Gegenstand nicht ausmustern kann, da das Gerät bereits ausgeliehen oder einer Vertragslinie zugewiesen ist
+    And I retire an item that is not in stock
+    Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
   @javascript @personas
   Scenario: Geräte über den Helferschirm editieren, mittels vollständigem Inventarcode (Scanner)
