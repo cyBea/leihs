@@ -34,13 +34,13 @@ Feature: Inventory helper
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
   @javascript @personas
-  Scenario: Geräte über den Helferschirm editieren, mittels vollständigem Inventarcode (Scanner)
+  Scenario: Editing items on the helper screen using a complete inventory code (barcode scanner)
     Given I am on the inventory helper screen
-    Then wähle ich all die Felder über eine List oder per Namen aus
-    And ich setze all ihre Initalisierungswerte
-    Then scanne oder gebe ich den Inventarcode von einem Gegenstand ein, der am Lager und in keinem Vertrag vorhanden ist
-    Then sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
-    And die geänderten Werte sind hervorgehoben
+    When I choose all fields through a list or by name
+    And I set all their initial values
+    Then I scan or enter the inventory code of an item that is in stock and not in any contract
+    Then I see all the values of the item in an overview with model name and the modified values are already saved
+    And the changed values are highlighted
 
   @javascript @personas
   Scenario: Pflichtfelder
