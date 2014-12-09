@@ -298,15 +298,17 @@ Then(/^the location of the other item has remained the same$/) do
   expect(@item_2.reload.location).to eq @item_2_location
 end
 
-Wenn(/^"(.*?)" ausgewählt und auf "(.*?)" gesetzt wird, dann muss auch "(.*?)" angegeben werden$/) do |field, value, dependent_field|
+#Wenn(/^"(.*?)" ausgewählt und auf "(.*?)" gesetzt wird, dann muss auch "(.*?)" angegeben werden$/) do |field, value, dependent_field|
+Wenn(/^"(.*?)" is selected and set to "(.*?)", then "(.*?)" must also be filled in$/) do |field, value, dependent_field|
   find("#field-input").click
   find("#field-input").set field
   find(".ui-menu-item a", match: :prefer_exact, text: field).click
-  step 'ich setze das Feld "%s" auf "%s"' % [field, value]
+  step 'I set the field "%s" to "%s"' % [field, value]
   find(".row.emboss", match: :prefer_exact, text: dependent_field)
 end
 
-Wenn(/^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen$/) do
+#Wenn(/^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen$/) do
+When(/^a required field is blank, the inventory helper cannot be used$/) do
   step %Q{I scan or enter the inventory code}
 end
 

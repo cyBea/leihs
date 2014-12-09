@@ -45,13 +45,13 @@ Feature: Inventory helper
   @javascript @personas
   Scenario: Pflichtfelder
     Given I am on the inventory helper screen
-    When "Bezug" ausgewählt und auf "Investition" gesetzt wird, dann muss auch "Projektnummer" angegeben werden
-    When "Inventarrelevant" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Anschaffungskategorie" angegeben werden
-    When "Ausmusterung" ausgewählt und auf "Ja" gesetzt wird, dann muss auch "Grund der Ausmusterung" angegeben werden
-    Then sind alle Pflichtfelder mit einem Stern gekenzeichnet
-    When ein Pflichtfeld nicht ausgefüllt/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen
+    When "Reference" is selected and set to "Investment", then "Project Number" must also be filled in
+    When "Relevant for inventory" is selected and set to "Yes", then "Supply Category" must also be filled in
+    When "Retirement" is selected and set to "Yes", then "Reason for Retirement" must also be filled in
+    Then all required fields are marked with an asterisk
+    When a required field is blank, the inventory helper cannot be used
     And I see an error message
-    And die nicht ausgefüllten/ausgewählten Pflichtfelder sind rot markiert
+    And the required fields are highlighted in red
 
   @javascript @personas
   Scenario: Geräte über den Helferschirm editieren, mittels Inventarcode konnte nicht gefunden wurde
