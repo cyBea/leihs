@@ -22,10 +22,10 @@ Feature: Inventory helper
     And the location of the other item has remained the same
 
   @javascript @browser @personas
-  Scenario: Bei ausgeliehenen Gegenständen kann man die verantwortliche Abteilung nicht editieren
+  Scenario: You can't change the responsible department while something is not in stock
     Given I am on the inventory helper screen
-    And one edits the field "Verantwortliche Abteilung" of an owned item not in stock
-    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist
+    And I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool
+    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
   @javascript @personas
   Scenario: Die ausgeliehenen Gegenständen kann man nicht ausmustern

@@ -112,7 +112,7 @@ end
 
 
 #Dann /^scanne oder gebe ich den Inventarcode ein(, wo man Besitzer ist)$/ do |arg1|
-Then /^I scan or enter the inventory code( of an item belonging to the current inventory pool)$/ do |arg1|
+Then /^I scan or enter the inventory code( of an item belonging to the current inventory pool)?$/ do |arg1|
   @item ||= if arg1
               @current_inventory_pool.items.in_stock.where(owner_id: @current_inventory_pool).sample
             else
@@ -307,7 +307,7 @@ Wenn(/^"(.*?)" ausgewählt und auf "(.*?)" gesetzt wird, dann muss auch "(.*?)" 
 end
 
 Wenn(/^ein Pflichtfeld nicht ausgefüllt\/ausgewählt ist, dann lässt sich der Inventarhelfer nicht nutzen$/) do
-  step %Q{scanne oder gebe ich den Inventarcode ein}
+  step %Q{I scan or enter the inventory code}
 end
 
 #Angenommen(/^man editiert das Feld "(.*?)" eines ausgeliehenen Gegenstandes$/) do |name|
@@ -315,13 +315,13 @@ Given(/^I edit the field "(.*?)" of an item that is not in stock$/) do |name|
   step %Q{I select the field "#{name}" from the list}
   @item = @current_inventory_pool.items.not_in_stock.sample
   @item_before = @item.to_json
-  step %Q{scanne oder gebe ich den Inventarcode ein}
+  step %Q{I scan or enter the inventory code}
 end
 
 #Dann(/^erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät ausgeliehen ist$/) do
 Then(/^I see an error message that I can't change the responsible inventory pool for items that are not in stock$/) do
   expect(page.has_content?(
-    _("The model cannot be changed because the item is used in contracts already."))
+      _("The responsible inventory pool cannot be changed because it's not returned yet or has already been assigned to a contract line."))
   ).to be true
   expect(@item_before).to eq @item.reload.to_json
 end
@@ -342,7 +342,7 @@ Angenommen(/^man editiert das Feld "(.*?)" eines Gegenstandes, der im irgendeine
   @item = @current_inventory_pool.items.not_in_stock.sample
   @item_before = @item.to_json
   fill_in_autocomplete_field name, @current_inventory_pool.models.select{|m| m != @item.model}.sample.name
-  step %Q{scanne oder gebe ich den Inventarcode ein}
+  step %Q{I scan or enter the inventory code}
 end
 
 Angenommen(/^man mustert einen ausgeliehenen Gegenstand aus$/) do
@@ -351,13 +351,13 @@ Angenommen(/^man mustert einen ausgeliehenen Gegenstand aus$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Reason for Retirement")).find("input, textarea").set "Retirement reason"
   @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.sample
   @item_before = @item.to_json
-  step %Q{scanne oder gebe ich den Inventarcode ein}
+  step %Q{I scan or enter the inventory code}
 end
 
-Given(/^one edits the field "Verantwortliche Abteilung" of an owned item not in stock$/) do
-  step %Q{wähle ich das Feld "Verantwortliche Abteilung" aus der Liste aus}
+Given(/^I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool$/) do
+  step %Q{I select the field "Responsible department"}
   @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.sample
   @item_before = @item.to_json
-  fill_in_autocomplete_field "Verantwortliche Abteilung", InventoryPool.where.not(id: @current_inventory_pool).sample.name
-  step %Q{scanne oder gebe ich den Inventarcode ein}
+  fill_in_autocomplete_field "Responsible department", InventoryPool.where.not(id: @current_inventory_pool).sample.name
+  step %Q{I scan or enter the inventory code}
 end
