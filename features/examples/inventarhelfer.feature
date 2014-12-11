@@ -43,7 +43,7 @@ Feature: Inventory helper
     And the changed values are highlighted
 
   @javascript @personas
-  Scenario: Pflichtfelder
+  Scenario: Required fields
     Given I am on the inventory helper screen
     When "Reference" is selected and set to "Investment", then "Project Number" must also be filled in
     When "Relevant for inventory" is selected and set to "Yes", then "Supply Category" must also be filled in
@@ -54,42 +54,42 @@ Feature: Inventory helper
     And the required fields are highlighted in red
 
   @javascript @personas
-  Scenario: Geräte über den Helferschirm editieren, mittels Inventarcode konnte nicht gefunden wurde
+  Scenario: Trying to edit an inexistant item through the inventory helper
     Given I am on the inventory helper screen
-    Then wähle ich die Felder über eine List oder per Namen aus
-    And ich setze ihre Initalisierungswerte
-    Then scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht gefunden wird
-    Then erhählt man eine Fehlermeldung
+    And I choose the fields from a list or by name
+    And I set their initial values
+    Then I scan or enter the inventory code of an item that can't be found
+    Then I see an error message
 
   @javascript @personas
-  Scenario: Geräte über den Helferschirm editieren mittels Inventarcode über Autovervollständigung
+  Scenario: Using autocomplete to edit items on the inventory helper
     Given I am on the inventory helper screen
-    Then wähle ich die Felder über eine List oder per Namen aus
-    And ich setze ihre Initalisierungswerte
-    Then gebe ich den Anfang des Inventarcodes eines Gegenstand ein
-    And wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer
-    Then sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert
-    And die geänderten Werte sind hervorgehoben
+    And I choose the fields from a list or by name
+    And I set their initial values
+    Then I start entering an item's inventory code
+    And I choose the item from the list of results
+    Then I see all the values of the item in an overview with model name and the modified values are already saved
+    And the changed values are highlighted
 
   @javascript @browser @personas
-  Scenario: Editeren nach automatischen speichern
-    Given man editiert ein Gerät über den Helferschirm mittels Inventarcode
-    When man die Editierfunktion nutzt
-    Then kann man an Ort und Stelle alle Werte des Gegenstandes editieren
-    When man die Änderungen speichert
-    Then sind sie gespeichert
+  Scenario: Editing after automatic save
+    Given I edit an item through the inventory helper using an inventory code
+    When I use the edit feature
+    Then I can edit all of this item's values right then and there
+    When I save
+    Then my changes are saved
 
   @javascript @personas
-  Scenario: Editeren nach automatischen speichern abbrechen
-    Given man editiert ein Gerät über den Helferschirm mittels Inventarcode
-    When man die Editierfunktion nutzt
-    Then kann man an Ort und Stelle alle Werte des Gegenstandes editieren
-    When man seine Änderungen widerruft
-    Then sind die Änderungen widerrufen
-    And man sieht alle ursprünglichen Werte des Gegenstandes in der Übersicht
+  Scenario: Canceling an edit after automatic save
+    Given I edit an item through the inventory helper using an inventory code
+    When I use the edit feature
+    Then I can edit all of this item's values right then and there
+    When I cancel
+    Then the changes are reverted
+    And I see all the values of the item in an overview with model name and the modified values are already saved
 
   @javascript @personas
-  Scenario: Bei Gegenständen, die in Verträgen vorhanden sind, können gewisse Felder nicht editiert werden
+  Scenario: You can't edit certain fields for items that are in contracts
     Given I am on the inventory helper screen
-    And man editiert das Feld "Modell" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist
-    Then erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist
+    And I edit the field "Model" of an item that is not in stock
+    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock

@@ -185,7 +185,7 @@ Then /^the changed values are highlighted$/ do
 end
 
 #Dann /^wähle ich die Felder über eine List oder per Namen aus$/ do
-Then /^I choose the fields through a list of by name$/ do
+Then /^I choose the fields from a list or by name$/ do
   field = Field.all.select{|f| f[:readonly] == nil and f[:type] != "autocomplete-search" and f[:target_type] != "license" and not f[:visibility_dependency_field_id]}.last
   find("#field-input").click
   find("#field-input").set field.label
@@ -195,7 +195,8 @@ Then /^I choose the fields through a list of by name$/ do
   end
 end
 
-Dann /^ich setze ihre Initalisierungswerte$/ do
+#Dann /^ich setze ihre Initalisierungswerte$/ do
+Then /^I set their initial values$/ do
   within "#field-selection" do
     fields = all(".field input, #field-selection .field textarea", :visible => true)
     expect(fields.count).to be > 0
@@ -205,7 +206,8 @@ Dann /^ich setze ihre Initalisierungswerte$/ do
   end
 end
 
-Dann /^scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht gefunden wird$/ do
+#Dann /^scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht gefunden wird$/ do
+Then /^I scan or enter the inventory code of an item that can't be found$/ do
   @not_existing_inventory_code = "THIS FOR SURE NO INVENTORY CODE"
   within("#item-selection") do
     find("[data-barcode-scanner-target]").set @not_existing_inventory_code
@@ -213,11 +215,8 @@ Dann /^scanne oder gebe ich den Inventarcode eines Gegenstandes ein der nicht ge
   end
 end
 
-Dann /^erhählt man eine Fehlermeldung$/ do
-  find("#flash .error", text: _("The Inventory Code %s was not found.") % @not_existing_inventory_code)
-end
-
-Dann /^gebe ich den Anfang des Inventarcodes eines Gegenstand ein$/ do
+#Dann /^gebe ich den Anfang des Inventarcodes eines Gegenstand ein$/ do
+Then /^I start entering an item's inventory code$/ do
   @item= @current_inventory_pool.items.first
   find("#item-selection [data-barcode-scanner-target]").set @item.inventory_code[0..1]
 end
@@ -229,44 +228,46 @@ Then /^I choose the item from the list of results$/ do
   find(".ui-menu-item a", :text => @item.inventory_code).click
 end
 
-Angenommen /^man editiert ein Gerät über den Helferschirm mittels Inventarcode$/ do
+#Angenommen /^man editiert ein Gerät über den Helferschirm mittels Inventarcode$/ do
+Given /^I edit an item through the inventory helper using an inventory code$/ do
   step 'I am on the inventory helper screen'
-  step 'I choose the fields through a list or by name'
-  step 'ich setze ihre Initalisierungswerte'
+  step 'I choose the fields from a list or by name'
+  step 'I set their initial values'
   step 'scanne oder gebe ich den Inventarcode ein, wo man Besitzer ist'
-  step 'sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert'
-  step 'die geänderten Werte sind hervorgehoben'
+  step 'I see all the values of the item in an overview with model name and the modified values are already saved'
+  step 'the changed values are highlighted'
 end
 
-Wenn /^man die Editierfunktion nutzt$/ do
+#Wenn /^man die Editierfunktion nutzt$/ do
+When /^I use the edit feature$/ do
   find("#item-section button#item-edit", :text => _("Edit Item")).click
 end
 
-Dann /^kann man an Ort und Stelle alle Werte des Gegenstandes editieren$/ do
+#Dann /^kann man an Ort und Stelle alle Werte des Gegenstandes editieren$/ do
+Then /^I can edit all of this item's values right then and there$/ do
   @parent_el = find("#item-section")
-  step 'ich setze all ihre Initalisierungswerte'
+  step 'I set their initial values'
 end
 
-Dann /^man die Änderungen speichert$/ do
-  find("#item-section button#save-edit").click
-  find("#notifications .green")
+#Dann /^sind sie gespeichert$/ do
+Then /^my changes are saved$/ do
+  step %Q{I see all the values of the item in an overview with model name and the modified values are already saved}
 end
 
-Dann /^sind sie gespeichert$/ do
-  step %Q{sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert}
-end
-
-Wenn /^man seine Änderungen widerruft$/ do
+#Wenn /^man seine Änderungen widerruft$/ do
+When /^I cancel$/ do
   find("#item-section a", :text => _("Cancel")).click
 end
 
-Dann /^sind die Änderungen widerrufen$/ do
+#Dann /^sind die Änderungen widerrufen$/ do
+Then /^the changes are reverted$/ do
   expect(@item.to_json).to eq @item.reload.to_json
 end
 
-Dann /^man sieht alle ursprünglichen Werte des Gegenstandes in der Übersicht$/ do
-  step %Q{sehe ich alle Werte des Gegenstandes in der Übersicht mit Modellname, die geänderten Werte sind bereits gespeichert}
-end
+# Use the step inside directly, not this one
+#Dann /^man sieht alle ursprünglichen Werte des Gegenstandes in der Übersicht$/ do
+#  step %Q{I see all the values of the item in an overview with model name and the modified values are already saved}
+#end
 
 Then(/^I select the field "(.*?)"$/) do |field|
   find("#field-input").click
