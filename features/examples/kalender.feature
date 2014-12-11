@@ -5,9 +5,9 @@ Feature: Kalender-Ansicht im Backend
     Given I am Pius
 
   @javascript @personas
-  Scenario: Verfügbare Anzahl immer anzeigen
-    When man den Kalender sieht
-    Then sehe ich die Verfügbarkeit von Modellen auch an Feier- und Ferientagen sowie Wochenenden
+  Scenario: Always show available quantity
+    When I see the calendar
+    Then I see the availability of models on weekdays as well as holidays and weekends
 
   @javascript @browser @personas
   Scenario: Anzahl im Buchungskalender während einer Bestellung überbuchen

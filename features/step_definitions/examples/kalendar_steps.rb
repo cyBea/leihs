@@ -1,12 +1,14 @@
 # encoding: utf-8
 
-Wenn /^man den Kalender sieht$/ do
+#Wenn /^man den Kalender sieht$/ do
+When /^I see the calendar$/ do
   step 'I open a contract for acknowledgement'
   @line_element = find(".line", match: :first)
   step 'I open the booking calendar for this line'
 end
 
-Dann /^sehe ich die Verfügbarkeit von Modellen auch an Feier\- und Ferientagen sowie Wochenenden$/ do
+#Dann /^sehe ich die Verfügbarkeit von Modellen auch an Feier\- und Ferientagen sowie Wochenenden$/ do
+Then /^I see the availability of models on weekdays as well as holidays and weekends$/ do
   while all(".fc-widget-content.holiday").empty? do
     find(".fc-button-next", match: :first).click
   end
