@@ -10,22 +10,22 @@ Feature: Kalender-Ansicht im Backend
     Then I see the availability of models on weekdays as well as holidays and weekends
 
   @javascript @browser @personas
-  Scenario: Anzahl im Buchungskalender während einer Bestellung überbuchen
-    Given ich editiere eine Bestellung
+  Scenario: Overbooking in the booking calendar while editing an order
+    Given I edit an order
      And I open the booking calendar
-     Then kann ich die Anzahl unbegrenzt erhöhen / überbuchen
-     And die Bestellung kann gespeichert werden
+     Then there is no limit on augmenting the quantity, thus I can overbook
+     And the order can be saved
 
   @javascript @browser @personas
-  Scenario: Anzahl im Buchungskalender während einer Aushändigung überbuchen
+  Scenario: Overbooking in the booking calendar during a hand over
     Given I am doing a hand over
      And I open the booking calendar
-     Then kann ich die Anzahl unbegrenzt erhöhen / überbuchen
-     And die Aushändigung kann gespeichert werden
+     Then there is no limit on augmenting the quantity, thus I can overbook
+     And the hand over can be saved
 
-  @personas @javascript
-  Scenario: Nicht verfügbare Zeitspannen
+  @personas @javascript @browser
+  Scenario: Unavailable time spans
     Given I am doing a hand over
-     And eine Model ist nichtmehr verfügbar
-     And ich editiere alle Linien
-    Then wird in der Liste unter dem Kalender die entsprechende Linie als nicht verfügbar (rot) ausgezeichnet
+     And a model is no longer available
+     And I edit all lines
+    Then the list underneath the calendar shows the respective line as not available (red)

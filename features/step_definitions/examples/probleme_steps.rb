@@ -16,7 +16,8 @@ Angenommen /^ich mache eine Rücknahme(, die nicht überfällig ist)?$/ do |arg1
   end
 end
 
-Angenommen /^ein Modell ist nichtmehr verfügbar$/ do
+#Angenommen /^ein Modell ist nichtmehr verfügbar$/ do
+Given /^a model is no longer available$/ do
   if @event=="order" or @event=="hand_over"
     @entity = if @contract
                 @contract

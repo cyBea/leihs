@@ -24,7 +24,7 @@ end
 
 When /^I edit the timerange of the selection$/ do
   if page.has_selector?(".button.green[data-hand-over-selection]") or page.has_selector?(".button.green[data-take-back-selection]")
-    step 'ich editiere alle Linien'
+    step 'I edit all lines'
   else
     find(".multibutton [data-selection-enabled][data-edit-lines='selected-lines']", :text => _("Edit Selection")).click
   end
