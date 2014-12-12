@@ -1,25 +1,25 @@
 
-Feature: Kategorien
+Feature: Categories
 
   Background:
     Given I am Mike
     And I open the inventory
 
   @javascript @personas
-  Scenario: Top-Level-Kategorien erstellen
-    When man das Register Kategorien wählt
-    And man eine neue Kategorie erstellt
-    And man gibt den Namen der Kategorie ein
+  Scenario: Creating top-level categories
+    When I open the category list
+    And I create a new category
+    And I give the category a name
     And I save
-    Then ist die Kategorie mit dem angegegebenen Namen erstellt
+    Then the category has been created with the specified name
 
   @javascript @personas
-  Scenario: Kategorien anzeigen
-    When man das Register Kategorien wählt
-    Then sieht man die Liste der Kategorien
-    And die Kategorien sind alphabetisch sortiert
-    And die erste Ebene steht zuoberst
-    And man kann die Unterkategorien anzeigen und verstecken
+  Scenario: Displaying categories
+    When I open the category list
+    Then I see the list of categories
+    And the categories are ordered alphabetically
+    And the first level is displayed on top
+    And I can expand and collapse subcategories
 
   @javascript @personas
   Scenario: Kategorien editieren

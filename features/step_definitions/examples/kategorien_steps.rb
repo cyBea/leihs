@@ -1,19 +1,23 @@
 # encoding: utf-8
 
-Dann /^man sieht das Register Kategorien$/ do
+#Dann /^man sieht das Register Kategorien$/ do
+Then /^I see the categories$/ do
   find("nav a[href*='categories']", text: _("Categories"))
 end
 
-Wenn /^man das Register Kategorien wählt$/ do
+#Wenn /^man das Register Kategorien wählt$/ do
+When /^I open the category list$/ do
   find("nav a[href*='categories']").click
   find("#categories-index-view h1", text: _("List of Categories"))
 end
 
-Und /^man eine neue Kategorie erstellt$/ do
+#Und /^man eine neue Kategorie erstellt$/ do
+And /^I create a new category$/ do
   find("a", text: _("New Category")).click
 end
 
-Und /^man gibt den Namen der Kategorie ein$/ do
+#Und /^man gibt den Namen der Kategorie ein$/ do
+And /^I give the category a name$/ do
   @new_category_name = "Neue Kategorie"
   find("input[name='category[name]']").set @new_category_name
 end
@@ -26,7 +30,8 @@ Und /^man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein$/ do
   find("#categories .list-of-lines .line", text: @parent_category.name).find("input[type='text']").set @label_1
 end
 
-Dann /^ist die Kategorie mit dem angegegebenen Namen erstellt$/ do
+#Dann /^ist die Kategorie mit dem angegegebenen Namen erstellt$/ do
+Then /^the category has been created with the specified name$/ do
   find("#categories-index-view h1", text: _("List of Categories"))
   expect(current_path).to eq manage_categories_path(@current_inventory_pool)
   expect(ModelGroup.where(name: "#{@new_category_name}").count).to eq 1
@@ -43,7 +48,8 @@ Dann /^ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Eltern
   end
 end
 
-Dann /^sieht man die Liste der Kategorien$/ do
+#Dann /^sieht man die Liste der Kategorien$/ do
+Then /^I see the list of categories$/ do
   within("#categories-index-view") do
     find("h1", text: _("List of Categories"))
     expect(current_path).to eq manage_categories_path(@current_inventory_pool)
@@ -88,7 +94,8 @@ Dann /^werden die Werte gespeichert$/ do
   expect(@category.links_as_child.map(&:label).to_set).to eq @parent_category_labels.to_set
 end
 
-Und /^die Kategorien sind alphabetisch sortiert$/ do
+#Und /^die Kategorien sind alphabetisch sortiert$/ do
+And /^the categories are ordered alphabetically$/ do
   sorted_parent_categories = @parent_categories.sort
   @first_category = sorted_parent_categories.first
   @last_category = sorted_parent_categories.last
@@ -99,11 +106,13 @@ Und /^die Kategorien sind alphabetisch sortiert$/ do
   end
 end
 
-Und /^die erste Ebene steht zuoberst$/ do
+#Und /^die erste Ebene steht zuoberst$/ do
+And /^the first level is displayed on top$/ do
   expect(@visible_categories.count).to eq @parent_categories.count
 end
 
-Und /^man kann die Unterkategorien anzeigen und verstecken$/ do
+#Und /^man kann die Unterkategorien anzeigen und verstecken$/ do
+And /^I can expand and collapse subcategories$/ do
   child_name = @first_category.children.first.name
   within @visible_categories.first do
     find(".button[data-type='expander'] i.arrow.right").click
