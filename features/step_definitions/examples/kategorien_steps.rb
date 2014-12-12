@@ -22,7 +22,8 @@ And /^I give the category a name$/ do
   find("input[name='category[name]']").set @new_category_name
 end
 
-Und /^man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein$/ do
+#Und /^man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein$/ do
+And /^I define parent categories and their names$/ do
   @parent_category = ModelGroup.where(name: "Portabel").first
   @label_1 = "Label 1"
   find("#categories input[data-type='autocomplete']").set @parent_category.name
@@ -37,7 +38,8 @@ Then /^the category has been created with the specified name$/ do
   expect(ModelGroup.where(name: "#{@new_category_name}").count).to eq 1
 end
 
-Dann /^ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Elternelementen( und dem Bild)? erstellt$/ do |image|
+#Dann /^ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Elternelementen( und dem Bild)? erstellt$/ do |image|
+Then /^the category is created with the assigned name and parent categories( and the image)?$/ do |image|
   find("#categories-index-view h1", text: _("List of Categories"))
   expect(current_path).to eq manage_categories_path(@current_inventory_pool)
   @category = Category.find_by_name "#{@new_category_name}"
@@ -60,7 +62,8 @@ Then /^I see the list of categories$/ do
   end
 end
 
-Wenn /^man eine Kategorie editiert$/ do
+#Wenn /^man eine Kategorie editiert$/ do
+When /^I edit a category$/ do
   visit manage_categories_path @current_inventory_pool
   @category = ModelGroup.where(name: "Portabel").first
   within("#categories-index-view #list") do
@@ -70,7 +73,8 @@ Wenn /^man eine Kategorie editiert$/ do
   end
 end
 
-Wenn /^man den Namen und die Elternelemente anpasst$/ do
+#Wenn /^man den Namen und die Elternelemente anpasst$/ do
+When /^I change the name and the parents$/ do
   @new_category_name = "Neue Kategorie"
   find("input[name='category[name]']").set @new_category_name
 
@@ -85,7 +89,8 @@ Wenn /^man den Namen und die Elternelemente anpasst$/ do
   end
 end
 
-Dann /^werden die Werte gespeichert$/ do
+#Dann /^werden die Werte gespeichert$/ do
+Then /^the values are saved$/ do
   find("#categories-index-view h1", text: _("List of Categories"))
   expect(current_path).to eq manage_categories_path(@current_inventory_pool)
   @category.reload
@@ -126,30 +131,35 @@ And /^I can expand and collapse subcategories$/ do
   expect(has_no_selector?(".group-of-lines .line .col3of9:nth-child(2) strong", visible: true, text: child_name)).to be true
 end
 
-Wenn /^man das Modell editiert$/ do
+#Wenn /^man das Modell editiert$/ do
+When /^I edit the model$/ do
   @model = Model.find {|m| [m.name, m.product].include? "Sharp Beamer" }
   step 'I search for "%s"' % @model.name
   find(".line", text: @model.name, match: :prefer_exact).find(".button", :text => _("Edit %s" % "Model")).click
 end
 
-Wenn /^ich die Kategorien zuteile$/ do
+#Wenn /^ich die Kategorien zuteile$/ do
+When /^I assign categories$/ do
   @category = ModelGroup.where(name: "Standard").first
   find("#categories input[data-type='autocomplete']").set @category.name
   find(".ui-menu-item a", match: :first, text: @category.name).click
   find("#categories .list-of-lines .line", text: @category.name)
 end
 
-Wenn /^ich das Modell speichere$/ do
+#Wenn /^ich das Modell speichere$/ do
+When /^ich das Modell speichere$/ do
   click_button _("Save %s") % _("Model")
   find("h1", text: _("List of Inventory"))
   find("#flash .success")
 end
 
-Dann /^sind die Kategorien zugeteilt$/ do
+#Dann /^sind die Kategorien zugeteilt$/ do
+Then /^the categories are assigned$/ do
   expect(@model.model_groups.where(id: @category.id).count).to eq 1
 end
 
-Wenn /^ich eine oder mehrere Kategorien entferne$/ do
+#Wenn /^ich eine oder mehrere Kategorien entferne$/ do
+When /^I remove one or more categories$/ do
   within("#categories .list-of-lines") do
     @model.categories.each do |category|
       find(".line", text: category.name).find(".button[data-remove]", text: _("Remove")).click
@@ -157,16 +167,19 @@ Wenn /^ich eine oder mehrere Kategorien entferne$/ do
   end
 end
 
-Dann /^sind die Kategorien entfernt und das Modell gespeichert$/ do
+#Dann /^sind die Kategorien entfernt und das Modell gespeichert$/ do
+Then /^the categories are removed and the model is saved$/ do
   expect(has_content?(_("List of Inventory"))).to be true
   expect(@model.categories.reload.empty?).to be true
 end
 
-Wenn /^eine Kategorie nicht genutzt ist$/ do
+#Wenn /^eine Kategorie nicht genutzt ist$/ do
+When /^a category has no models$/ do
   @unused_category = Category.all.detect{|c| c.children.empty? and c.models.empty?}
 end
 
-Wenn /^man die Kategorie löscht$/ do
+#Wenn /^man die Kategorie löscht$/ do
+When /^I delete the category$/ do
   visit manage_categories_path @current_inventory_pool
   within("#categories-index-view #list") do
     find(".line", match: :first)
@@ -180,23 +193,26 @@ Wenn /^man die Kategorie löscht$/ do
   end
 end
 
-Dann /^ist die Kategorie gelöscht und alle Duplikate sind aus dem Baum entfernt$/ do
+#Dann /^ist die Kategorie gelöscht und alle Duplikate sind aus dem Baum entfernt$/ do
+Then /^the category and all its aliases are removed from the tree$/ do
   within "#categories-index-view" do
     expect(all(".line[data-id='#{@unused_category.id}']").empty?).to be true
     expect { @unused_category.reload }.to raise_error
   end
 end
 
-Dann /^man bleibt in der Liste der Kategorien$/ do
-  find("#categories-index-view h1", text: _("List of Categories"))
-  expect(current_path).to eq manage_categories_path(@current_inventory_pool)
+#Dann /^man bleibt in der Liste der Kategorien$/ do
+Then /^I remain on the category list$/ do
+  step 'I see the list of categories'
 end
 
-Wenn /^eine Kategorie genutzt ist$/ do
+#Wenn /^eine Kategorie genutzt ist$/ do
+When /^a category has models$/ do
   @used_category = Category.all.detect{|c| not c.children.empty? or not c.models.empty?}
 end
 
-Dann /^ist es nicht möglich die Kategorie zu löschen$/ do
+#Dann /^ist es nicht möglich die Kategorie zu löschen$/ do
+Then /^it's not possible to delete the category$/ do
   visit manage_categories_path @current_inventory_pool
   within("#categories-index-view #list") do
     within(".line[data-id='#{@used_category.id}']") do
@@ -206,12 +222,8 @@ Dann /^ist es nicht möglich die Kategorie zu löschen$/ do
   end
 end
 
-Wenn /^ich eine ungenutzte Kategorie lösche die im Baum mehrmals vorhanden ist$/ do
-  @unused_category = Category.all.detect{|x| x.models.count == 0 and x.children.count == 0 and x.parents.count > 1}
-  step 'man die Kategorie löscht'
-end
-
-Wenn /^man nach einer Kategorie anhand des Namens sucht$/ do
+#Wenn /^man nach einer Kategorie anhand des Namens sucht$/ do
+When /^I search for a category by name$/ do
   visit manage_categories_path @current_inventory_pool
   @searchTerm ||= Category.first.name[0]
   countBefore = all(".line").size
@@ -221,7 +233,8 @@ Wenn /^man nach einer Kategorie anhand des Namens sucht$/ do
   expect(countBefore).not_to eq all(".line").size
 end
 
-Dann /^sieht man nur die Kategorien, die den Suchbegriff im Namen enthalten$/ do
+#Dann /^sieht man nur die Kategorien, die den Suchbegriff im Namen enthalten$/ do
+Then /^I find categories whose names contain the search term$/ do
   within "#categories-index-view" do
     all(".line", :visible => true).each do |line|
       expect(line.text).to match(Regexp.new(@searchTerm, "i"))
@@ -229,12 +242,14 @@ Dann /^sieht man nur die Kategorien, die den Suchbegriff im Namen enthalten$/ do
   end
 end
 
-Dann /^sieht die Ergebnisse in alphabetischer Reihenfolge$/ do
+#Dann /^sieht die Ergebnisse in alphabetischer Reihenfolge$/ do
+Then /^the search results are ordered alphabetically$/ do
   names = all(".category_name", :visible => true).map{|name| name.text}
   expect(names.sort == names).to be true
 end
 
-Dann /^man kann diese Kategorien editieren$/ do
+#Dann /^man kann diese Kategorien editieren$/ do
+Then /^I can edit these categories$/ do
   within "#categories-index-view" do
     all(".line", :visible => true).each do |line|
       line.find("a[href*='categories'][href*='edit']")
@@ -242,13 +257,15 @@ Dann /^man kann diese Kategorien editieren$/ do
   end
 end
 
-Wenn /^man nach einer ungenutzten Kategorie anhand des Namens sucht$/ do
+#Wenn /^man nach einer ungenutzten Kategorie anhand des Namens sucht$/ do
+When /^I search for a category without models by name$/ do
   @unused_category = Category.all.detect{|c| c.children.empty? and c.models.empty?}
   @searchTerm = @unused_category.name
-  step 'man nach einer Kategorie anhand des Namens sucht'
+  step 'I search for a category by name'
 end
 
-Dann /^man kann diese Kategorien löschen$/ do
+#Dann /^man kann diese Kategorien löschen$/ do
+Then /^I can delete these categories$/ do
   within(".line[data-id='#{@unused_category.id}']", match: :first) do
     within(".multibutton") do
       find(".dropdown-holder .dropdown-toggle").click
@@ -288,13 +305,14 @@ def upload_images(images)
 end
 
 When(/^I add an image$/) do
-  upload_images(["image1.jpg"])
-end
-
-When(/^I add a new image$/) do
   @filename = "image2.jpg"
   upload_images([@filename])
 end
+
+#When(/^I add a new image$/) do
+#  @filename = "image2.jpg"
+#  upload_images([@filename])
+#end
 
 Then(/^the category was saved with the new image$/) do
   find("#categories-index-view h1", text: _("List of Categories"))

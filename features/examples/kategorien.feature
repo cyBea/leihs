@@ -22,76 +22,71 @@ Feature: Categories
     And I can expand and collapse subcategories
 
   @javascript @personas
-  Scenario: Kategorien editieren
-    When man eine Kategorie editiert
-    And man den Namen und die Elternelemente anpasst
+  Scenario: Edit categories
+    When I edit a category
+    And I change the name and the parents
     And I save
-    Then werden die Werte gespeichert
+    Then the values are saved
 
   @javascript @personas
-  Scenario: Kategorien löschen
-    When eine Kategorie nicht genutzt ist
-    And man die Kategorie löscht
-    Then ist die Kategorie gelöscht und alle Duplikate sind aus dem Baum entfernt
-    And man bleibt in der Liste der Kategorien
+  Scenario: Deleting categories
+    When a category has no models
+    When I delete the category
+    Then the category and all its aliases are removed from the tree
+    And I see the list of categories
 
   @javascript @personas
-  Scenario: Kategorie löschen löscht auch alle Duplikate im Baum
-    When ich eine ungenutzte Kategorie lösche die im Baum mehrmals vorhanden ist
-    Then ist die Kategorie gelöscht und alle Duplikate sind aus dem Baum entfernt
-
-  @javascript @personas
-  Scenario: Kategorien nicht löschbar wenn genutzt
-    When eine Kategorie genutzt ist
-    Then ist es nicht möglich die Kategorie zu löschen
+  Scenario: Can't delete a category if it contains models
+    When a category has models
+    Then it's not possible to delete the category
 
   @javascript @browser @personas
-  Scenario: Modell der Kategorie zuteilen
-    When man das Modell editiert
-    And ich die Kategorien zuteile
-    And ich das Modell speichere
-    Then sind die Kategorien zugeteilt
+  Scenario: Assigning models to a category
+    When I edit the model
+    And I assign categories
+    And I save
+    Then the categories are assigned
 
   @javascript @browser @personas
-  Scenario: Kategorien entfernen
-    When man das Modell editiert
-    And ich eine oder mehrere Kategorien entferne
-    And ich das Modell speichere
-    Then sind die Kategorien entfernt und das Modell gespeichert
+  Scenario: Removing categories
+    When I edit the model
+    And I remove one or more categories
+    And I save
+    Then the categories are removed and the model is saved
 
   @javascript @browser @personas
-  Scenario: Kategorie suchen
-    When man nach einer Kategorie anhand des Namens sucht
-    Then sieht man nur die Kategorien, die den Suchbegriff im Namen enthalten
-    And sieht die Ergebnisse in alphabetischer Reihenfolge
-    And man kann diese Kategorien editieren
+  Scenario: Category search
+    When I search for a category by name
+    Then I find categories whose names contain the search term
+    And the search results are ordered alphabetically
+    And I can edit these categories
 
   @javascript @browser @personas
-  Scenario: nicht genutzte Kategorie suchen und löschen 
-    When man nach einer ungenutzten Kategorie anhand des Namens sucht
-    Then sieht man nur die Kategorien, die den Suchbegriff im Namen enthalten
-    And man kann diese Kategorien löschen
+  Scenario: Finding and deleting categories without models
+    When I search for a category without models by name
+    Then I find categories whose names contain the search term
+    And I can delete these categories
 
   @personas
-  Scenario: Kategorien
-    Then man sieht das Register Kategorien
+  Scenario: Categories
+    When I see the categories
 
   @javascript @personas @browser
-  Scenario: Kategorien erstellen
-    When man das Register Kategorien wählt
-    And man eine neue Kategorie erstellt
-    And man gibt den Namen der Kategorie ein
-    And man gibt die Elternelemente und die dazugehörigen Bezeichnungen ein
+  Scenario: Creating categories
+    When I open the category list
+    And I create a new category
+    And I give the category a name
+    And I define parent categories and their names
     And I add an image
     Then I can not add a second image
     When I save
-    Then ist die Kategorie mit dem angegegebenen Namen und den zugewiesenen Elternelementen und dem Bild erstellt
+    Then the category is created with the assigned name and parent categories
 
   @personas @javascript
-  Scenario: Kategorien bearbeiten
+  Scenario: Editing categories with an image
     Given there exists a category with an image
     And one edits this category
     When I remove the image
-    And I add a new image
+    And I add an image
     And I save
     Then the category was saved with the new image
