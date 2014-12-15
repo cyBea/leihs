@@ -15,7 +15,7 @@ Feature: Software editieren
       | Software Informationen | Installationslink beachten: http://wwww.dokuwiki.ch/neue_seite |
     When I save
     And ich mich auf der Softwareliste befinde
-    Then die Informationen sind gespeichert
+    Then the information is saved
     And die Daten wurden entsprechend aktualisiert
 
   #73278586

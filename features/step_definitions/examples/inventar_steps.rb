@@ -480,13 +480,13 @@ When /^I (?:enter|edit)? ?the following details$/ do |table|
   find(".button.green", text: _("Save %s") % _("#{get_rails_model_name_from_url.capitalize}"))
   @table_hashes = table.hashes
   @table_hashes.each do |row|
-    find(".field .row", match: :prefer_exact, text: row["Feld"]).find(:xpath, ".//input | .//textarea").set row["Wert"]
+    find(".field .row", match: :prefer_exact, text: row["Field"]).find(:xpath, ".//input | .//textarea").set row["Value"]
   end
 end
 
 #Dann /^die Informationen sind gespeichert$/ do
 Then /^the information is saved$/ do
-  search_string = @table_hashes.detect {|h| h["Feld"] == "Produkt"}["Wert"]
+  search_string = @table_hashes.detect {|h| h["Field"] == "Product"}["Value"]
   find(:select, "retired").first("option").select_option
   step 'I search for "%s"' % search_string
   find(".line", match: :prefer_exact, text: search_string)
@@ -557,7 +557,7 @@ When /^I edit an existing model that is in use and already has ( activated)? acc
 end
 
 Dann /^(?:die|das|der) neue[sr]? (?:.+) ist erstellt$/ do
-  step "die Informationen sind gespeichert"
+  step "the information is saved"
 end
 
 #Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do

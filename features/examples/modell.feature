@@ -1,32 +1,32 @@
 
-Feature: Modell
+Feature: Model
 
   Background:
     Given I am Mike
     And I open the inventory
 
   @javascript @personas
-  Scenario: Übersicht neues Modell hinzufügen
-    When ich ein neues Modell hinzufüge
-    Then habe ich die Möglichkeit, folgende Informationen zu erfassen:
+  Scenario: Overview when adding a new model
+    When I add a new Model
+    Then I can enter the following information:
       | Details |
-      | Bilder  |
-      | Anhänge |
-      | Zubehör |
+      | Images  |
+      | Attachments |
+      | Accessories |
 
   @javascript @browser @personas
-  Scenario: Modelldetails abfüllen
-    When ich ein neues Modell hinzufüge
-    And ich erfasse die folgenden Details
-      | Feld                              | Wert                      |
-      | Produkt                           | Test Modell               |
-      | Hersteller                        | Test Hersteller           |
-      | Beschreibung                      | Test Beschreibung         |
-      | Technische Details                | Test Technische Details   |
-      | Interne Beschreibung              | Test Interne Beschreibung |
-      | Wichtige Notizen zur Aushändigung | Test Notizen              |
-    And ich speichere die Informationen
-    Then ist das neue Modell erstellt und unter ungenutzen Modellen auffindbar
+  Scenario: Filling in model details
+    When I add a new Model
+    And I enter the following details
+      | Field                              | Value                      |
+      | Product                           | Test model               |
+      | Manufacturer                        | Test manufacturer          |
+      | Description | Test description         |
+      | Technical Details                | Test technical details   |
+      | Internal Description             | Test internal description |
+      | Important notes for hand over | Test notes             |
+    And I save
+    Then the new model is created and can be found in the list of unused models
 
   @javascript @personas
   Scenario: Modellzubehör bearbeiten
@@ -116,7 +116,7 @@ Feature: Modell
       | Interne Beschreibung              | Test Interne Beschreibung x |
       | Wichtige Notizen zur Aushändigung | Test Notizen x              |
     And ich speichere die Informationen
-    And die Informationen sind gespeichert
+    And the information is saved
     And die Daten wurden entsprechend aktualisiert
 
   @javascript @personas

@@ -1,5 +1,5 @@
 
-Feature: Kalender-Ansicht im Backend
+Feature: Calendar view in the manage section
 
   Background:
     Given I am Pius

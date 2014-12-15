@@ -2,7 +2,7 @@
 
 Dann(/^ist die neue Software erstellt und unter Software auffindbar$/) do
   find("[data-type='license']").click
-  step "die Informationen sind gespeichert"
+  step "the information is saved"
 end
 
 Angenommen(/^ich befinde mich auf der Software\-Erstellungsseite$/) do

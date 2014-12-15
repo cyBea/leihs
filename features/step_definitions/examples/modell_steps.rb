@@ -151,10 +151,11 @@ Dann(/^sind die geänderten Gruppenzuteilungen gespeichert$/) do
   expect(model_group_ids.sort).to eq @groups.map(&:id)
 end
 
-Dann /^ist das neue Modell erstellt und unter ungenutzen Modellen auffindbar$/ do
+#Dann /^ist das neue Modell erstellt und unter ungenutzen Modellen auffindbar$/ do
+Then /^the new model is created and can be found in the list of unused models$/ do
   find(:select, "retired").first("option").select_option
   select _("not used"), from: "used"
-  step "die Informationen sind gespeichert"
+  step "the information is saved"
 end
 
 Wenn(/^ich ein bestehendes, genutztes Modell bearbeite$/) do

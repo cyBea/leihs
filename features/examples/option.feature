@@ -26,6 +26,6 @@ Feature: Option
     | Preis            | 51             |
     | Inventarcode     | Test Barcode x |
     And ich speichere die Informationen
-    Then die Informationen sind gespeichert
+    Then the information is saved
     And die Daten wurden entsprechend aktualisiert
 
