@@ -630,12 +630,13 @@ Then /^I can delete a single accessory if it is not active in any other pool$/ d
   expect { accessory_to_delete.reload }.to raise_error(ActiveRecord::RecordNotFound)
 end
 
-Dann /^kann ich ein einzelnes Zubehör für meinen Pool deaktivieren$/ do
+#Dann /^kann ich ein einzelnes Zubehör für meinen Pool deaktivieren$/ do
+Then /^I can deactivate an accessory for my pool$/ do
   accessory_to_deactivate = @model.accessories.detect { |x| x.inventory_pools.where(id: @current_inventory_pool.id).first }
   within(".row.emboss", match: :prefer_exact, :text => _("Accessories")) do
     find(".list-of-lines .line", text: accessory_to_deactivate.name).find("input").click
   end
-  step 'ich speichere die Informationen'
+  step 'I save'
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
   expect { @current_inventory_pool.accessories.reload.find(accessory_to_deactivate) }.to raise_error(ActiveRecord::RecordNotFound)
 end

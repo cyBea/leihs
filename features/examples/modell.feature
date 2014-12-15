@@ -43,9 +43,9 @@ Feature: Model
     Then I can delete a single accessory if it is not active in any other pool
 
   @javascript @personas
-  Scenario: Modellzubehör deaktivieren
-    When ich ein bestehendes, genutztes Modell bearbeite welches bereits ein aktiviertes Zubehör hat
-    Then kann ich ein einzelnes Zubehör für meinen Pool deaktivieren
+  Scenario: Deactivating model accessories
+    When I edit a model that exists, is in use and already has activated accessories
+    Then I can deactivate an accessory for my pool
 
   @javascript @browser @personas
   Scenario: sich ergänzende Modelle entfernen (kompatibel)
