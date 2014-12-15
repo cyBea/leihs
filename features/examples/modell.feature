@@ -38,9 +38,9 @@ Feature: Model
     Then accessories are added to the model
 
   @javascript @personas
-  Scenario: Modellzubehör löschen
-    When ich ein bestehendes, genutztes Modell bearbeite welches bereits Zubehör hat
-    Then kann ich ein einzelnes Zubehör löschen, wenn es für keinen anderen Pool aktiviert ist
+  Scenario: Deleting model accessories
+    When I edit a model that exists, is in use and already has accessories
+    Then I can delete a single accessory if it is not active in any other pool
 
   @javascript @personas
   Scenario: Modellzubehör deaktivieren

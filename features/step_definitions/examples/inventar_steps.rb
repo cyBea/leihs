@@ -619,12 +619,13 @@ Then /^accessories are added to the model$/ do
   expect(@model.accessories.reload.where(:name => @new_accessory_name)).not_to be_nil
 end
 
-Dann /^kann ich ein einzelnes Zubehör löschen, wenn es für keinen anderen Pool aktiviert ist$/ do
+#Dann /^kann ich ein einzelnes Zubehör löschen, wenn es für keinen anderen Pool aktiviert ist$/ do
+Then /^I can delete a single accessory if it is not active in any other pool$/ do
   accessory_to_delete = @model.accessories.detect { |x| x.inventory_pools.count <= 1 }
   within(".row.emboss", match: :prefer_exact, :text => _("Accessories")) do
     find(".list-of-lines .line", text: accessory_to_delete.name).find("button", text: _("Remove")).click
   end
-  step 'ich speichere die Informationen'
+  step 'I save'
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
   expect { accessory_to_delete.reload }.to raise_error(ActiveRecord::RecordNotFound)
 end
