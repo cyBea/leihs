@@ -18,24 +18,24 @@ Feature: Model
   Scenario: Filling in model details
     When I add a new Model
     And I enter the following details
-      | Field                              | Value                      |
-      | Product                           | Test model               |
-      | Manufacturer                        | Test manufacturer          |
-      | Description | Test description         |
-      | Technical Details                | Test technical details   |
-      | Internal Description             | Test internal description |
-      | Important notes for hand over | Test notes             |
+      | Field                         | Value                     |
+      | Product                       | Test model                |
+      | Manufacturer                  | Test manufacturer         |
+      | Description                   | Test description          |
+      | Technical Details             | Test technical details    |
+      | Internal Description          | Test internal description |
+      | Important notes for hand over | Test notes                |
     And I save
     Then the new model is created and can be found in the list of unused models
 
   @javascript @personas
-  Scenario: Modellzubehör bearbeiten
-    When ich ein bestehendes, genutztes Modell bearbeite welches bereits Zubehör hat
-    Then ich sehe das gesamte Zubehöre für dieses Modell
-    And ich sehe, welches Zubehör für meinen Pool aktiviert ist
-    When ich Zubehör hinzufüge und falls notwendig die Anzahl des Zubehör ins Textfeld schreibe
-    And ich speichere die Informationen
-    Then ist das Zubehör dem Modell hinzugefügt worden
+  Scenario: Editing model accessories
+    When I edit a model that exists, is in use and already has activated accessories
+    Then I see all the accessories for this model
+    And I see which accessories are active for my pool
+    When I add accessories and, if necessary, fill in the quantity in the text field
+    And I save
+    Then accessories are added to the model
 
   @javascript @personas
   Scenario: Modellzubehör löschen

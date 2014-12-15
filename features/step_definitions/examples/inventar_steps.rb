@@ -545,7 +545,7 @@ When /^I edit an existing (.+)$/ do |entity|
 end
 
 #Wenn /^ich ein bestehendes, genutztes Modell bearbeite welches bereits( ein aktiviertes)? Zubehör hat$/ do |arg1|
-When /^I edit an existing model that is in use and already has ( activated)? accessories$/ do |arg1|
+When /^I edit a model that exists, is in use and already has( activated)? accessories$/ do |arg1|
   @model = @current_inventory_pool.models.to_a.detect do |m|
     if arg1
       m.accessories.count > 0 and m.accessories.any? { |a| a.inventory_pools.include? @current_inventory_pool }
@@ -590,7 +590,8 @@ Then /^I see all the accessories for this model$/ do
   end
 end
 
-Dann /^ich sehe, welches Zubehör für meinen Pool aktiviert ist$/ do
+#Dann /^ich sehe, welches Zubehör für meinen Pool aktiviert ist$/ do
+Then /^I see which accessories are active for my pool$/ do
   within(".row.emboss", match: :prefer_exact, :text => _("Accessories")) do
     @model.accessories.each do |accessory|
       input = find(".list-of-lines .line", text: accessory.name).find("input")
@@ -603,7 +604,8 @@ Dann /^ich sehe, welches Zubehör für meinen Pool aktiviert ist$/ do
   end
 end
 
-Wenn /^ich Zubehör hinzufüge und falls notwendig die Anzahl des Zubehör ins Textfeld schreibe$/ do
+#Wenn /^ich Zubehör hinzufüge und falls notwendig die Anzahl des Zubehör ins Textfeld schreibe$/ do
+When /^I add accessories and, if necessary, fill in the quantity in the text field$/ do
   within(".row.emboss", match: :prefer_exact, :text => _("Accessories")) do
     @new_accessory_name = "2x #{Faker::Name.name}"
     find("#accessory-name").set @new_accessory_name
@@ -611,7 +613,8 @@ Wenn /^ich Zubehör hinzufüge und falls notwendig die Anzahl des Zubehör ins T
   end
 end
 
-Dann /^ist das Zubehör dem Modell hinzugefügt worden$/ do
+#Dann /^ist das Zubehör dem Modell hinzugefügt worden$/ do
+Then /^accessories are added to the model$/ do
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
   expect(@model.accessories.reload.where(:name => @new_accessory_name)).not_to be_nil
 end
