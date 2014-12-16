@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+
+
 Wenn(/^ich ein ergänzendes Modell mittel Autocomplete Feld hinzufüge$/) do
   @comp1 = Model.find_by_name("Sharp Beamer 123")
   @comp2 = Model.find_by_name("Kamera Stativ 123")
@@ -14,7 +16,8 @@ Dann(/^ist dem Modell das ergänzende Modell hinzugefügt worden$/) do
   expect(@model.compatibles.any? {|m| m.name == @comp2.name}).to be true
 end
 
-Wenn(/^ich ein Modell öffne, das bereits ergänzende Modelle hat$/) do
+#Wenn(/^ich ein Modell öffne, das bereits ergänzende Modelle hat$/) do
+When(/^I open a model that already has compatible models$/) do
   @model = @current_inventory_pool.models.select {|m| m.compatibles.exists? }.sample
 
   @model ||= begin
@@ -27,11 +30,13 @@ Wenn(/^ich ein Modell öffne, das bereits ergänzende Modelle hat$/) do
   find(".line", match: :first, text: @model.name).find(".button", text: _("Edit Model")).click
 end
 
-Wenn(/^ich ein ergänzendes Modell entferne$/) do
+#Wenn(/^ich ein ergänzendes Modell entferne$/) do
+When(/^I remove a compatible model$/) do
   find(".field", match: :first, text: _("Compatibles")).all("[data-remove]").each {|comp| comp.click}
 end
 
-Dann(/^ist das Modell ohne das gelöschte ergänzende Modell gespeichert$/) do
+#Dann(/^ist das Modell ohne das gelöschte ergänzende Modell gespeichert$/) do
+Then(/^the model is saved without the compatible model that I removed$/) do
   find("#flash")
   expect(@model.reload.compatibles.empty?).to be true
 end

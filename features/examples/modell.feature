@@ -48,11 +48,11 @@ Feature: Model
     Then I can deactivate an accessory for my pool
 
   @javascript @browser @personas
-  Scenario: sich ergänzende Modelle entfernen (kompatibel)
-    When ich ein Modell öffne, das bereits ergänzende Modelle hat
-    And ich ein ergänzendes Modell entferne
-    And ich speichere die Informationen
-    Then ist das Modell ohne das gelöschte ergänzende Modell gespeichert
+  Scenario: Remove compatible models
+    When I open a model that already has compatible models
+    And I remove a compatible model
+    And I save
+    Then the model is saved without the compatible model that I removed
 
   @javascript @browser @personas
   Scenario: Gruppenverteilung editieren
