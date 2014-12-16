@@ -133,16 +133,19 @@ Dann(/^(?:die|das) (?:.+) wurde aus der Liste gelöscht$/) do
   }
 end
 
-Angenommen(/^ich editieren ein bestehndes Modell mit bereits zugeteilten Kapazitäten$/) do
+#Angenommen(/^ich editieren ein bestehndes Modell mit bereits zugeteilten Kapazitäten$/) do
+Given(/^I edit a model that exists and has group capacities allocated to it$/) do
   @model = @current_inventory_pool.models.find{|m| m.partitions.count > 0}
   visit manage_edit_model_path(@current_inventory_pool, @model)
 end
 
-Wenn(/^ich bestehende Zuteilungen entfernen$/) do
+#Wenn(/^ich bestehende Zuteilungen entfernen$/) do
+When(/^I remove existing allocations$/) do
   find(".field", match: :first, text: _("Allocations")).all("[data-remove]").each {|comp| comp.click}
 end
 
-Wenn(/^neue Zuteilungen hinzufügen$/) do
+#Wenn(/^neue Zuteilungen hinzufügen$/) do
+When(/^I add new allocations$/) do
   @groups = @current_inventory_pool.groups - @model.partitions.map(&:group)
 
   @groups.each do |group|
@@ -150,7 +153,8 @@ Wenn(/^neue Zuteilungen hinzufügen$/) do
   end
 end
 
-Dann(/^sind die geänderten Gruppenzuteilungen gespeichert$/) do
+#Dann(/^sind die geänderten Gruppenzuteilungen gespeichert$/) do
+Then(/^the changed allocations are saved$/) do
   find("#flash")
   model_group_ids = @model.reload.partitions.map(&:group_id)
   expect(model_group_ids.sort).to eq @groups.map(&:id)

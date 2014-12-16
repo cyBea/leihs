@@ -55,12 +55,12 @@ Feature: Model
     Then the model is saved without the compatible model that I removed
 
   @javascript @browser @personas
-  Scenario: Gruppenverteilung editieren
-    Given ich editieren ein bestehndes Modell mit bereits zugeteilten Kapazitäten
-    When ich bestehende Zuteilungen entfernen
-    And neue Zuteilungen hinzufügen
-    And ich speichere die Informationen
-    Then sind die geänderten Gruppenzuteilungen gespeichert
+  Scenario: Editing group capacities
+    Given I edit a model that exists and has group capacities allocated to it
+    When I remove existing allocations
+    And I add new allocations
+    And I save
+    Then the changed allocations are saved
 
   @javascript @personas
   Scenario: Modell löschen
