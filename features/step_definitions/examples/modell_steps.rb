@@ -58,12 +58,13 @@ Dann(/^wurde das redundante ergänzende Modell nicht gespeichert$/) do
   expect(comp_before.count).to eq @model.reload.compatibles.count
 end
 
-Angenommen(/^es existiert eine? (.+) mit folgenden Konditionen:$/) do |entity, table|
+#Angenommen(/^es existiert eine? (.+) mit folgenden Konditionen:$/) do |entity, table|
+Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
   conditions = table.raw.flatten.map do |condition|
     case condition
-      when "in keinem Vertrag aufgeführt", "keiner Bestellung zugewiesen"
+      when "not in any contract", "not in any order"
         lambda {|m| m.contract_lines.empty?}
-      when "keine Gegenstände zugefügt"
+      when "no items assigned"
         lambda {|m| m.items.items.empty?}
       when "keine Lizenzen zugefügt"
         lambda {|m| m.items.licenses.empty?}
@@ -86,7 +87,7 @@ Angenommen(/^es existiert eine? (.+) mit folgenden Konditionen:$/) do |entity, t
     end
   end
   klass = case _(entity)
-          when "Modell" then Model
+          when "Model" then Model
           when "Software" then Software
           end
   @model = klass.find {|m| conditions.map{|c| c.class == Proc ? c.call(m) : c}.all?}
@@ -127,7 +128,8 @@ Dann(/^es wurden auch alle Anhängsel gelöscht$/) do
   expect(Model.all {|n| n.compatibles.include? Model.find_by_name("Windows Laptop")}.include?(@model)).to be false
 end
 
-Dann(/^(?:die|das) (?:.+) wurde aus der Liste gelöscht$/) do
+#Dann(/^(?:die|das) (?:.+) wurde aus der Liste gelöscht$/) do
+Then(/^the (?:.+) was deleted from the list$/) do
   [@model, @group, @template].compact.each {|entity|
     expect(has_no_content?(entity.name)).to be true
   }

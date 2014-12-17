@@ -63,13 +63,13 @@ Feature: Model
     Then the changed allocations are saved
 
   @javascript @personas
-  Scenario: Modell löschen
-    Given es existiert ein Modell mit folgenden Konditionen:
-      | in keinem Vertrag aufgeführt |
-      | keiner Bestellung zugewiesen |
-      | keine Gegenstände zugefügt   |
+  Scenario: Delete model
+    Given there is a Model with the following conditions:
+      | not in any contract |
+      | not in any order|
+      | no items assigned|
     When ich dieses Modell aus der Liste lösche
-    And das Modell wurde aus der Liste gelöscht
+    And the model was deleted from the list
     And das Modell ist gelöscht
 
   @javascript @browser @personas
