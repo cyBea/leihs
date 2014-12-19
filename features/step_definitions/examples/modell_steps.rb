@@ -43,18 +43,21 @@ Then(/^the model is saved without the compatible model that I removed$/) do
   expect(@model.reload.compatibles.empty?).to be true
 end
 
-Wenn(/^ich ein bereits bestehendes ergänzende Modell mittel Autocomplete Feld hinzufüge$/) do
+#Wenn(/^ich ein bereits bestehendes ergänzende Modell mittel Autocomplete Feld hinzufüge$/) do
+When(/^I add an already existing compatible model using the autocomplete field$/) do
   @comp = @model.compatibles.first
   fill_in_autocomplete_field _("Compatibles"), @comp.name
 end
 
-Dann(/^wurde das redundante Modell nicht hizugefügt$/) do
+#Dann(/^wurde das redundante Modell nicht hizugefügt$/) do
+Then(/^the redundant model was not added$/) do
   within(".row.emboss", match: :first, text: _("Compatibles")) do
     find("[data-type='inline-entry']", text: @comp.name)
   end
 end
 
-Dann(/^wurde das redundante ergänzende Modell nicht gespeichert$/) do
+#Dann(/^wurde das redundante ergänzende Modell nicht gespeichert$/) do
+Then(/^the redundant compatible model was not added to this one$/) do
   find("#flash")
   comp_before = @model.compatibles
   expect(comp_before.count).to eq @model.reload.compatibles.count

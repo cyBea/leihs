@@ -80,12 +80,12 @@ Feature: Model
     Then a compatible model has been added to the model I am editing
 
   @javascript @browser @personas
-  Scenario: 2 Mal gleiches ergänzende Modelle hinzufügen (kompatibel)
-    When ich ein Modell öffne, das bereits ergänzende Modelle hat
-    And ich ein bereits bestehendes ergänzende Modell mittel Autocomplete Feld hinzufüge
-    Then wurde das redundante Modell nicht hizugefügt
-    And ich speichere die Informationen
-    Then wurde das redundante ergänzende Modell nicht gespeichert
+  Scenario: Adding a compatible model twice in a row
+    When I open a model that already has compatible models
+    And I add an already existing compatible model using the autocomplete field
+    Then the redundant model was not added
+    When I save
+    Then the redundant compatible model was not added to this one
 
   @javascript @personas
   Scenario: Modelanhängsel löschen
