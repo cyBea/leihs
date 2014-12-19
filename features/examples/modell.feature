@@ -73,11 +73,11 @@ Feature: Model
     And das Modell ist gelöscht
 
   @javascript @browser @personas
-  Scenario: sich ergänzende Modelle hinzufügen (kompatibel)
-    When ich ein bestehendes, genutztes Modell bearbeite
-    And ich ein ergänzendes Modell mittel Autocomplete Feld hinzufüge
-    And ich speichere die Informationen
-    Then ist dem Modell das ergänzende Modell hinzugefügt worden
+  Scenario: Add compatible models
+    When I edit a model that exists and is in use
+    And I use the autocomplete field to add a compatible model
+    And I save
+    Then a compatible model has been added to the model I am editing
 
   @javascript @browser @personas
   Scenario: 2 Mal gleiches ergänzende Modelle hinzufügen (kompatibel)

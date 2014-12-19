@@ -2,14 +2,16 @@
 
 
 
-Wenn(/^ich ein ergänzendes Modell mittel Autocomplete Feld hinzufüge$/) do
+#Wenn(/^ich ein ergänzendes Modell mittel Autocomplete Feld hinzufüge$/) do
+When(/^I use the autocomplete field to add a compatible model$/) do
   @comp1 = Model.find_by_name("Sharp Beamer 123")
   @comp2 = Model.find_by_name("Kamera Stativ 123")
   fill_in_autocomplete_field _("Compatibles"), @comp1.name
   fill_in_autocomplete_field _("Compatibles"), @comp2.name
 end
 
-Dann(/^ist dem Modell das ergänzende Modell hinzugefügt worden$/) do
+#Dann(/^ist dem Modell das ergänzende Modell hinzugefügt worden$/) do
+Then(/^a compatible model has been added to the model I am editing$/) do
   find("#flash")
   expect(@model.compatibles.size).to be 2
   expect(@model.compatibles.any? {|m| m.name == @comp1.name}).to be true
@@ -169,7 +171,8 @@ Then /^the new model is created and can be found in the list of unused models$/ 
   step "the information is saved"
 end
 
-Wenn(/^ich ein bestehendes, genutztes Modell bearbeite$/) do
+#Wenn(/^ich ein bestehendes, genutztes Modell bearbeite$/) do
+When(/^I edit a model that exists and is in use$/) do
   @page_to_return = current_path
   @model = @current_inventory_pool.items.items.unretired.where(parent_id: nil).sample.model
   visit manage_edit_model_path @current_inventory_pool, @model
