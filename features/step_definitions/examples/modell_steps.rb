@@ -99,18 +99,20 @@ Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
   expect(@model).not_to be_nil
 end
 
-Und /^das Modell hat (.+) zugewiesen$/ do |assoc|
+#Und /^das Modell hat (.+) zugewiesen$/ do |assoc|
+Given /^the model has an assigned (.+)$/ do |assoc|
   @model = @current_inventory_pool.models.find do |m|
     case assoc
-      when "Vertrag", "Bestellung"
+      when "contract", "order"
         not m.contract_lines.empty?
-      when "Gegenstand"
+      when "item"
         not m.items.empty?
     end
   end
 end
 
-Dann(/^kann ich das Modell aus der Liste nicht löschen$/) do
+#Dann(/^kann ich das Modell aus der Liste nicht löschen$/) do
+Then(/^I cannot delete the model from the list$/) do
   fill_in 'list-search', with: @model.name
   within(".line[data-id='#{@model.id}']") do
     find(".dropdown-holder").click

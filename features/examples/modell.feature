@@ -132,14 +132,14 @@ Feature: Model
     | software |
 
   @javascript @personas
-  Scenario Outline: Modelllöschversuch verhindern
-    Given das Modell hat <Zuweisung> zugewiesen
-    Then kann ich das Modell aus der Liste nicht löschen
+  Scenario Outline: Preventing deletion of a model
+    Given the model has an assigned <assignment>
+    Then I cannot delete the model from the list
   Examples:
-    | Zuweisung  |
-    | Vertrag    |
-    | Bestellung |
-    | Gegenstand |
+    | assignment |
+    | contract   |
+    | order      |
+    | item       |
 
   @javascript @personas
   Scenario: Modelanhängsel löschen
