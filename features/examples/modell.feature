@@ -64,13 +64,13 @@ Feature: Model
 
   @javascript @personas
   Scenario: Delete model
-    Given there is a Model with the following conditions:
+    Given there is a model with the following conditions:
       | not in any contract |
       | not in any order|
       | no items assigned|
-    When ich dieses Modell aus der Liste lösche
-    And the model was deleted from the list
-    And das Modell ist gelöscht
+    When I delete this model from the list
+    Then the model was deleted from the list
+    And the model is deleted
 
   @javascript @browser @personas
   Scenario: Add compatible models
@@ -88,36 +88,36 @@ Feature: Model
     Then the redundant compatible model was not added to this one
 
   @javascript @personas
-  Scenario: Modelanhängsel löschen
-    Given es existiert ein Modell mit folgenden Konditionen:
-      | in keinem Vertrag aufgeführt     |
-      | keiner Bestellung zugewiesen     |
-      | keine Gegenstände zugefügt       |
-      | hat Gruppenkapazitäten zugeteilt |
-      | hat Eigenschaften                |
-      | hat Zubehör                      |
-      | hat Bilder                       |
-      | hat Anhänge                      |
-      | hat Kategoriezuweisungen         |
-      | hat sich ergänzende Modelle      |
-    When ich dieses Modell aus der Liste lösche
-    And das Modell ist gelöscht
-    And es wurden auch alle Anhängsel gelöscht
+  Scenario: Delete model associations
+    Given there is a model with the following conditions:
+      | not in any contract       |
+      | not in any order          |
+      | no items assigned         |
+      | has group capacities      |
+      | has properties            |
+      | has accessories           |
+      | has images                |
+      | has attachments           |
+      | is assigned to categories |
+      | has compatible models     |
+    When I delete this model from the list
+    Then the model is deleted
+    And all associations have been deleted as well
 
   @javascript @personas @browser
-  Scenario: Modelldetails bearbeiten
-    When ich ein bestehendes, genutztes Modell bearbeite
-    And ich ändere die folgenden Details
-      | Feld                              | Wert                        |
-      | Produkt                           | Test Modell x               |
-      | Hersteller                        | Test Hersteller x           |
-      | Beschreibung                      | Test Beschreibung x         |
-      | Technische Details                | Test Technische Details x   |
-      | Interne Beschreibung              | Test Interne Beschreibung x |
-      | Wichtige Notizen zur Aushändigung | Test Notizen x              |
-    And ich speichere die Informationen
-    And the information is saved
-    And die Daten wurden entsprechend aktualisiert
+  Scenario: Editing model details
+    When I edit a model that exists and is in use
+    And I edit the following details
+      | Field                              | Value                        |
+      | Product                           | Test Modell x               |
+      | Manufacturer | Test Hersteller x           |
+      | Description                      | Test Beschreibung x         |
+      | Technical Details                | Test Technische Details x   |
+      | Internal Description              | Test Interne Beschreibung x |
+      | Important notes for hand over | Test Notizen x              |
+    And I save
+    Then the information is saved
+    And the data has been updated
 
   @javascript @personas
   Scenario Outline: Attachments erstellen

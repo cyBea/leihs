@@ -73,27 +73,27 @@ Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
         lambda {|m| m.items.items.empty?}
       when "keine Lizenzen zugefügt"
         lambda {|m| m.items.licenses.empty?}
-      when "hat Gruppenkapazitäten zugeteilt"
+      when "has group capacities"
         lambda {|m| Partition.find_by_model_id(m.id)}
-      when "hat Eigenschaften"
+      when "has properties"
         lambda {|m| not m.properties.empty?}
-      when "hat Zubehör"
+      when "has accessories"
         lambda {|m| not m.accessories.empty?}
-      when "hat Bilder"
+      when "has images"
         lambda {|m| not m.images.empty?}
-      when "hat Anhänge"
+      when "has attachments"
         lambda {|m| not m.attachments.empty?}
-      when "hat Kategoriezuweisungen"
+      when "is assigned to categories"
         lambda {|m| not m.categories.empty?}
-      when "hat sich ergänzende Modelle"
+      when "has compatible models"
         lambda {|m| not m.compatibles.empty?}
       else
         false
     end
   end
   klass = case _(entity)
-          when "Model" then Model
-          when "Software" then Software
+          when "model" then Model
+          when "software" then Software
           end
   @model = klass.find {|m| conditions.map{|c| c.class == Proc ? c.call(m) : c}.all?}
   expect(@model).not_to be_nil
@@ -123,7 +123,8 @@ Und /^ich sehe eine Dialog-Fehlermeldung$/ do
   expect(find(".flash_message").text.empty?).to be false
 end
 
-Dann(/^es wurden auch alle Anhängsel gelöscht$/) do
+#Dann(/^es wurden auch alle Anhängsel gelöscht$/) do
+Then(/^all associations have been deleted as well$/) do
   expect(Partition.find_by_model_id(@model.id)).to eq nil
   expect(Property.where(model_id: @model.id).empty?).to be true
   expect(Accessory.where(model_id: @model.id).empty?).to be true
@@ -181,13 +182,13 @@ When(/^I edit a model that exists and is in use$/) do
   visit manage_edit_model_path @current_inventory_pool, @model
 end
 
-Wenn(/^I delete this (.+) from the list$/) do |entity|
+When(/^I delete this (.+) from the list$/) do |entity|
   step "I open the inventory"
 
   case _(entity)
-  when "Modell"
+  when "model"
     find("[data-type='item']").click
-  when "Software"
+  when "software"
     find("[data-type='license']").click
     find(:select, "retired").first("option").select_option
   end
@@ -197,11 +198,11 @@ Wenn(/^I delete this (.+) from the list$/) do |entity|
   find(".line[data-id='#{@model.id}'] [data-method='delete']").click
 end
 
-Dann(/^the "(.+)" is deleted$/) do |entity|
+Then(/^the (.+) is deleted$/) do |entity|
   find("#flash")
   klass = case _(entity)
-          when "Modell" then Model
-          when "Software" then Software
+          when "model" then Model
+          when "software" then Software
           end
   expect(klass.find_by_id(@model.id)).to eq nil
 end

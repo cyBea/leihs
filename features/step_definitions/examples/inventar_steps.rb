@@ -495,21 +495,26 @@ end
 
 #Dann /^die Daten wurden entsprechend aktualisiert$/ do
 Then /^the data has been updated$/ do
-  search_string = @table_hashes.detect { |h| h["Feld"] == "Produkt" }["Wert"]
+  search_string = @table_hashes.detect { |h| h["Field"] == "Product" }["Value"]
   step 'I search for "%s"' % search_string
   find(".line", :text => search_string).find("a", :text => Regexp.new(_("Edit"), "i")).click
 
   # check that the same model was modified
+  # This step seems to be used starting from steps that define @model and
+  # steps that don't, so we need to handle both here I guess.
+  if @model && !@model_id
+    @model_id = @model.id
+  end
   expect((Rails.application.routes.recognize_path current_path)[:id].to_i).to eq @model_id
 
   @table_hashes.each do |row|
-    field_name = row["Feld"]
-    field_value = row["Wert"]
+    field_name = row["Field"]
+    field_value = row["Value"]
 
     f = find(".field .row", match: :prefer_exact, text: field_name)
     value_in_field = f.find(:xpath, ".//input | .//textarea").value
 
-    if field_name == "Preis"
+    if field_name == "Price"
       field_value = field_value.to_i
       value_in_field = value_in_field.to_i
     end
