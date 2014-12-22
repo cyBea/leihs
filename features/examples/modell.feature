@@ -108,28 +108,28 @@ Feature: Model
   Scenario: Editing model details
     When I edit a model that exists and is in use
     And I edit the following details
-      | Field                              | Value                        |
-      | Product                           | Test Modell x               |
-      | Manufacturer | Test Hersteller x           |
-      | Description                      | Test Beschreibung x         |
-      | Technical Details                | Test Technische Details x   |
-      | Internal Description              | Test Interne Beschreibung x |
+      | Field                         | Value                       |
+      | Product                       | Test Modell x               |
+      | Manufacturer                  | Test Hersteller x           |
+      | Description                   | Test Beschreibung x         |
+      | Technical Details             | Test Technische Details x   |
+      | Internal Description          | Test Interne Beschreibung x |
       | Important notes for hand over | Test Notizen x              |
     And I save
     Then the information is saved
     And the data has been updated
 
   @javascript @personas
-  Scenario Outline: Attachments erstellen
-    Given ich add a new <objekt> or I change an existing <objekt>
-    Then füge ich eine oder mehrere Datein den Attachments hinzu
-    And kann Attachments auch wieder entfernen
-    And ich speichere die Informationen
-    Then sind die Attachments gespeichert
+  Scenario Outline: Create attachments
+    Given I add or edit a <object>
+    Then I add one or more attachments
+    And I can also remove attachments again
+    And I save
+    Then the attachments are saved
   Examples:
-    | objekt   |
-    | Modell   |
-    | Software |
+    | object   |
+    | model    |
+    | software |
 
   @javascript @personas
   Scenario: Modelanhängsel löschen

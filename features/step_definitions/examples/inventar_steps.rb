@@ -469,9 +469,20 @@ Then(/^the lines contain the following fields in order:$/) do |table|
 end
 
 #Wenn /^ich ein[en]* neue[srn]? (.+) hinzufüge$/ do |entity|
-When(/^I add a new (.+)$/) do |entity|
+When(/^I add a new (.+)/) do |entity|
+
   find(".dropdown-holder", text: _("Add inventory")).click
   click_link entity
+end
+
+#Given(/^ich add a new (?:.+) or I change an existing (.+)$/) do |entity|
+When(/^I add or edit a (.+)/) do |entity|
+  klass = case _(entity)
+          when "model" then Model
+          when "software" then Software
+          end
+  @model = klass.all.first
+  visit manage_edit_model_path(@current_inventory_pool, @model)
 end
 
 #Und /^ich (?:erfasse|ändere)? ?die folgenden Details ?(?:erfasse|ändere)?$/ do |table|
@@ -676,19 +687,22 @@ Und /^ich speichere das Modell mit Bilder$/ do
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
 end
 
-Dann /^füge ich eine oder mehrere Datein den Attachments hinzu$/ do
+#Dann /^füge ich eine oder mehrere Datein den Attachments hinzu$/ do
+Then /^I add one or more attachments$/ do
   @attachment_filenames = ["image1.jpg", "image2.jpg"]
   within "#attachments" do
     upload_images(@attachment_filenames)
   end
 end
 
-Dann /^kann Attachments auch wieder entfernen$/ do
+#Dann /^kann Attachments auch wieder entfernen$/ do
+Then /^I can also remove attachments again$/ do
   attachment_to_remove = @attachment_filenames.delete(@attachment_filenames.sample)
   find(".row.emboss", match: :prefer_exact, :text => _('Attachments')).find("[data-type='inline-entry']", text: attachment_to_remove).find("button[data-remove]", match: :first).click
 end
 
-Dann /^sind die Attachments gespeichert$/ do
+#Dann /^sind die Attachments gespeichert$/ do
+Then /^the attachments are saved$/ do
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
   expect(@model.attachments.reload.where(filename: @attachment_filenames.sample).empty?).to be false
 end

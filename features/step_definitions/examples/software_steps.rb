@@ -635,62 +635,63 @@ Then(/^outside the the text field, they will additionally displayed lines with l
   end
 end
 
-Given(/^ich add a new (?:.+) or I change an existing (.+)$/) do |entity|
-  klass = case _(entity)
-            when "Modell" then Model
-            when "Software" then Software
-          end
-  @model = klass.all.first
-  visit manage_edit_model_path(@current_inventory_pool, @model)
-end
-
-Then(/^I see the "Software Information"$/) do
-  f = find(".field", text: _("Software Information"))
-  i = f.find("textarea")
-  expect(i.value).to eq @license.model.technical_detail.delete("\r")
-  expect(f.has_selector? "a").to be true
-end
-
-When(/^I edit an existing software license with software information, quantity allocations and attachments$/) do
-  @license = @current_inventory_pool.items.licenses.find {|i| i.model.technical_detail =~ /http/ and not i.model.attachments.empty? and i.properties[:quantity_allocations].size >= 2 }
-  expect(@license).not_to be_nil
-  visit manage_edit_item_path(@current_inventory_pool, @license)
-end
-
-Then(/^the software information is not editable$/) do
-  f = find(".field", text: _("Software Information"))
-  expect(f.find("textarea").disabled?).to be true
-end
-
-Then(/^the links of software information open in a new tab upon clicking$/) do
-  f = find(".field", text: _("Software Information"))
-  f.all("a").each do |link|
-    expect(link.native.attribute("target")).to eq "_blank"
+#Given(/^ich add a new (?:.+) or I change an existing (.+)$/) do |entity|
+Given(/^I add a new or I change an existing (.+)$/) do |entity|
+    klass = case _(entity)
+              when "model" then Model
+              when "software" then Software
+            end
+    @model = klass.all.first
+    visit manage_edit_model_path(@current_inventory_pool, @model)
   end
-end
 
-Then(/^I see the attachments of the software$/) do
-  within(".field", text: _("Attachments")) do
-    expect(@license.model.attachments.all?{|a| has_selector?("a", text: a.filename)}).to be true
+  Then(/^I see the "Software Information"$/) do
+    f = find(".field", text: _("Software Information"))
+    i = f.find("textarea")
+    expect(i.value).to eq @license.model.technical_detail.delete("\r")
+    expect(f.has_selector? "a").to be true
   end
-end
 
-Then(/^I can open the attachments in a new tab$/) do
-  f = find(".field", text: _("Attachments"))
-  f.all("a").each do |link|
-    expect(link.native.attribute("target")).to eq "_blank"
+  When(/^I edit an existing software license with software information, quantity allocations and attachments$/) do
+    @license = @current_inventory_pool.items.licenses.find {|i| i.model.technical_detail =~ /http/ and not i.model.attachments.empty? and i.properties[:quantity_allocations].size >= 2 }
+    expect(@license).not_to be_nil
+    visit manage_edit_item_path(@current_inventory_pool, @license)
   end
-end
 
-When(/^there exists already a manufacturer$/) do
-  @manufacturer = Software.manufacturers.sample
-end
+  Then(/^the software information is not editable$/) do
+    f = find(".field", text: _("Software Information"))
+    expect(f.find("textarea").disabled?).to be true
+  end
 
-Then(/^the manufacturer can be selected from the list$/) do
-  input_field = find(".field", text: _("Manufacturer")).find("input")
-  input_field.click
-  find(".ui-menu-item", text: @manufacturer).click
-  expect(input_field.value).to eq @manufacturer
+  Then(/^the links of software information open in a new tab upon clicking$/) do
+    f = find(".field", text: _("Software Information"))
+    f.all("a").each do |link|
+      expect(link.native.attribute("target")).to eq "_blank"
+    end
+  end
+
+  Then(/^I see the attachments of the software$/) do
+    within(".field", text: _("Attachments")) do
+      expect(@license.model.attachments.all?{|a| has_selector?("a", text: a.filename)}).to be true
+    end
+  end
+
+  Then(/^I can open the attachments in a new tab$/) do
+    f = find(".field", text: _("Attachments"))
+    f.all("a").each do |link|
+      expect(link.native.attribute("target")).to eq "_blank"
+    end
+  end
+
+  When(/^there exists already a manufacturer$/) do
+    @manufacturer = Software.manufacturers.sample
+  end
+
+  Then(/^the manufacturer can be selected from the list$/) do
+    input_field = find(".field", text: _("Manufacturer")).find("input")
+    input_field.click
+    find(".ui-menu-item", text: @manufacturer).click
+    expect(input_field.value).to eq @manufacturer
 end
 
 Wenn(/^I set a non existing manufacturer$/) do
