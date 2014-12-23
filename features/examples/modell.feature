@@ -141,22 +141,6 @@ Feature: Model
     | order      |
     | item       |
 
-  @javascript @personas
-  Scenario: Modelanhängsel löschen
-    Given es existiert ein Modell mit folgenden Konditionen:
-      | in keinem Vertrag aufgeführt     |
-      | keiner Bestellung zugewiesen     |
-      | keine Gegenstände zugefügt       |
-      | hat Gruppenkapazitäten zugeteilt |
-      | hat Eigenschaften                |
-      | hat Zubehör                      |
-      | hat Bilder                       |
-      | hat Anhänge                      |
-      | hat Kategoriezuweisungen         |
-      | hat sich ergänzende Modelle      |
-    When ich dieses Modell aus der Liste lösche
-    And das Modell ist gelöscht
-    And es wurden auch alle Anhängsel gelöscht
 
   @javascript @browser @personas
   Scenario: Modell erstellen nur mit Name
