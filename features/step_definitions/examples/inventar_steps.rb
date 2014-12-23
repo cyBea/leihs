@@ -579,14 +579,15 @@ end
 #Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do
 When /^I enter the name of an existing model$/ do
   model = Model.all.first
-  step %{ich ändere die folgenden Details}, table(%{
-    | Feld    | Wert                   |
-    | Produkt | #{model.product}       |
+  step %{I edit the following details}, table(%{
+    | Field    | Value                   |
+    | Product | #{model.product}       |
     | Version | #{model.version}       |})
 end
 
 #Dann /^wird das Modell nicht gespeichert, da es keinen (?:eindeutigen\s)?Namen hat$/ do
-Then /^the model is not saved because it does not have a (?:unique\s)? name$/ do
+Then /^the model is not saved because it does not have a (?:unique )?name$/ do
+  @model_name_from_url = get_rails_model_name_from_url
   step 'I should see "%s"' % (_("Save %s") % _("#{@model_name_from_url.capitalize}"))
 end
 

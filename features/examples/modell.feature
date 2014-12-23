@@ -143,20 +143,20 @@ Feature: Model
 
 
   @javascript @browser @personas
-  Scenario: Modell erstellen nur mit Name
-    When ich ein neues Modell hinzufüge
-    And ich speichere die Informationen
-    Then wird das Modell nicht gespeichert, da es keinen Namen hat
+  Scenario: Create a model with only a name
+    When I add a new Model
+    And I save
+    Then the model is not saved because it does not have a name
     And I see an error message
-    When ich einen Namen eines existierenden Modelles eingebe
-    And ich speichere die Informationen
-    Then wird das Modell nicht gespeichert, da es keinen eindeutigen Namen hat
+    When I enter the name of an existing model
+    And I save
+    Then the model is not saved because it does not have a unique name
     And I see an error message
-    When ich die folgenden Details ändere
-      | Feld    | Wert          |
-      | Produkt | Test Modell y |
-    And ich speichere die Informationen
-    Then ist das neue Modell erstellt und unter ungenutzen Modellen auffindbar
+    When I edit the following details
+      | Field    | Value          |
+      | Product | Test Modell y |
+    And I save
+    Then the new model is created and can be found in the list of unused models
 
   @javascript @personas
   Scenario: Bilder
