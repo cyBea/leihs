@@ -166,12 +166,3 @@ Feature: Model
     When I save the model and its images
     Then the remaining images are saved for that model
     And the images are resized to their thumbnail size when I see them in lists
-
-  @javascript @personas @browser
-  Scenario: Bilder
-    When ich ein bestehendes, genutztes Modell bearbeite
-    Then kann ich mehrere Bilder hinzufügen
-    And ich kann Bilder auch wieder entfernen
-    And ich speichere das Modell mit Bilder
-    Then wurden die ausgewählten Bilder für dieses Modell gespeichert
-    And zu grosse Bilder werden den erlaubten Grössen entsprechend verkleinert
