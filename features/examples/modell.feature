@@ -153,19 +153,19 @@ Feature: Model
     Then the model is not saved because it does not have a unique name
     And I see an error message
     When I edit the following details
-      | Field    | Value          |
+      | Field   | Value         |
       | Product | Test Modell y |
     And I save
     Then the new model is created and can be found in the list of unused models
 
   @javascript @personas
-  Scenario: Bilder
-    When ich ein bestehendes, genutztes Modell bearbeite
-    Then kann ich mehrere Bilder hinzufügen
-    And ich kann Bilder auch wieder entfernen
-    And ich speichere das Modell mit Bilder
-    Then wurden die ausgewählten Bilder für dieses Modell gespeichert
-    And zu grosse Bilder werden den erlaubten Grössen entsprechend verkleinert
+  Scenario: Images
+    When I edit a model that exists and is in use
+    And I add multiple images
+    Then I can also remove those images
+    When I save the model and its images
+    Then the remaining images are saved for that model
+    And the images are resized to their thumbnail size when I see them in lists
 
   @javascript @personas @browser
   Scenario: Bilder

@@ -658,11 +658,13 @@ Then /^I can deactivate an accessory for my pool$/ do
   expect { @current_inventory_pool.accessories.reload.find(accessory_to_deactivate) }.to raise_error(ActiveRecord::RecordNotFound)
 end
 
-Dann /^kann ich mehrere Bilder hinzufügen$/ do
+#Dann /^kann ich mehrere Bilder hinzufügen$/ do
+When /^I add multiple images$/ do
   upload_images(["image1.jpg", "image2.jpg", "image3.png"])
 end
 
-Dann /^ich kann Bilder auch wieder entfernen$/ do
+#Dann /^ich kann Bilder auch wieder entfernen$/ do
+Then /^I can also remove those images$/ do
   find(".row.emboss", match: :prefer_exact, :text => _('Images')).find("[data-type='inline-entry']", :text => "image1.jpg").find("button[data-remove]", match: :first).click
   @images_to_save = []
   find(".row.emboss", match: :prefer_exact, :text => _('Images')).all("[data-type='inline-entry']").each do |entry|
@@ -670,19 +672,22 @@ Dann /^ich kann Bilder auch wieder entfernen$/ do
   end
 end
 
-Dann /^zu grosse Bilder werden den erlaubten Grössen entsprechend verkleinert$/ do
+#Dann /^zu grosse Bilder werden den erlaubten Grössen entsprechend verkleinert$/ do
+Then /^the images are resized to their thumbnail size when I see them in lists$/ do
   step 'I search for "%s"' % @model.name
-  find(".line[data-id='#{@model.id}']").find(".button", :text => "Modell editieren").click
+  find(".line[data-id='#{@model.id}']").find(".button", :text => "Edit Model").click
   @images_to_save.each do |image_name|
     find("a[href*='#{image_name}'] img[src*='#{image_name.split(".").first}_thumb.#{image_name.split(".").last}']")
   end
 end
 
-Dann /^wurden die ausgewählten Bilder für dieses Modell gespeichert$/ do
+#Dann /^wurden die ausgewählten Bilder für dieses Modell gespeichert$/ do
+Then /^the remaining images are saved for that model$/ do
   expect(@model.images.map(&:filename).sort).to eq @images_to_save.sort
 end
 
-Und /^ich speichere das Modell mit Bilder$/ do
+#Und /^ich speichere das Modell mit Bilder$/ do
+When /^I save the model and its images$/ do
   @model_name_from_url = get_rails_model_name_from_url
   step 'I press "%s"' % (_("Save %s") % _("#{@model_name_from_url.capitalize}"))
   find("#inventory-index-view h1", match: :prefer_exact, text: _("List of Inventory"))
