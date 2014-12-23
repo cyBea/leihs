@@ -21,4 +21,4 @@ Feature: create a software license
     And I type the amount "1200" into the field "maintenance amount"
     And I save
     Then the "maintenance currency" is saved as "CHF"
-    Then the "maintenance amount" is saved as "1'200.00"
+    Then the "maintenance amount" is saved as "1,200.00"
