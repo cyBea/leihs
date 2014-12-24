@@ -548,10 +548,10 @@ end
 When /^I edit an existing (.+)$/ do |entity|
   @page_to_return = current_path
   object_name = case entity
-                  when "model"
+                  when "Model"
                     @model = @current_inventory_pool.models.where(type: "Model").sample
                     @model.name
-                  when "option"
+                  when "Option"
                     find(:select, "retired").first("option").select_option
                     @option = @current_inventory_pool.options.sample
                     @option.name
