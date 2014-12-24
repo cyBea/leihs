@@ -5,16 +5,16 @@ Feature: Option
     Given I am Mike
 
   @javascript @browser @personas
-  Scenario: Option hinzufügen
+  Scenario: Adding options
     Given I open the inventory
-    When ich eine neue Option hinzufüge
-    And ich ändere die folgenden Details
-    | Feld             | Wert         |
-    | Produkt          | Test Option  |
-    | Preis            | 50           |
-    | Inventarcode     | Test Barcode |
-    And ich speichere die Informationen
-    Then die neue Option ist erstellt
+    When I add a new Option
+    And I edit the following details
+    | Field             | Value         |
+    | Product          | Test Option  |
+    | Price            | 50           |
+    | Inventory code     | Test Barcode |
+    And I save
+    Then the information is saved
 
   @javascript @browser @personas
   Scenario: Option bearbeiten

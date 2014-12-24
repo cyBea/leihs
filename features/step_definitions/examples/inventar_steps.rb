@@ -572,9 +572,8 @@ When /^I edit a model that exists, is in use and already has( activated)? access
   visit manage_edit_model_path(@current_inventory_pool, @model)
 end
 
-Dann /^(?:die|das|der) neue[sr]? (?:.+) ist erstellt$/ do
-  step "the information is saved"
-end
+#Dann /^(?:die|das|der) neue[sr]? (?:.+) ist erstellt$/ do
+# use ->  step "the information is saved"
 
 #Wenn /^ich einen Namen eines existierenden Modelles eingebe$/ do
 When /^I enter the name of an existing model$/ do
