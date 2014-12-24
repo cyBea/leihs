@@ -147,7 +147,7 @@ When /^I assign categories$/ do
 end
 
 #Wenn /^ich das Modell speichere$/ do
-When /^ich das Modell speichere$/ do
+When /^I save the model$/ do
   click_button _("Save %s") % _("Model")
   find("h1", text: _("List of Inventory"))
   find("#flash .success")

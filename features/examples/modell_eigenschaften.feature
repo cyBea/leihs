@@ -1,25 +1,25 @@
 
-Feature: Modell Eigenschaften
+Feature: Model properties
 
   Background:
     Given I am Mike
 
   @javascript @personas
-  Scenario: Eigenschaften erstellen
-  Given ich erstelle ein Modell und gebe die Pflichtfelder an
-  When ich Eigenschaften hinzufügen und die Felder mit den Platzhaltern Schlüssel und Wert angebe
-  And ich die Eigenschaften sortiere
-  And ich das Modell speichere
-  Then sind die Eigenschaften gemäss Sortierreihenfolge für dieses Modell gespeichert
+  Scenario: Creating properties
+  Given I create a model and fill in all required fields
+  When I add some properties and fill in their keys and values
+  And I sort the properties
+  And I save the model
+  Then this model's properties are saved in the order they were given
 
   @javascript @browser @personas
-  Scenario: Eigenschaften editieren
-  Given ich editiere ein Modell
-  When ich Eigenschaften hinzufügen und die Felder mit den Platzhaltern Schlüssel und Wert angebe
-  And ich bestehende Eigenschaften ändere
-  And ich die Eigenschaften sortiere
-  And ich das Modell speichere
-  Then sind die Eigenschaften gemäss Sortierreihenfolge für das geänderte Modell gespeichert
+  Scenario: Editing properties
+  Given I am editing a model
+  When I add some properties and fill in their keys and values
+  And I change existing properties
+  And I sort the properties
+  And I save the model
+  Then this model's properties are saved in the order they were given
 
   @javascript @personas
   Scenario: Eigenschaften löschen
