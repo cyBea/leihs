@@ -1,15 +1,18 @@
 # encoding: utf-8
 
-Wenn /^ich mindestens die Pflichtfelder ausfülle$/ do
-  @model_name = "Test Modell-Paket"
+#Wenn /^ich mindestens die Pflichtfelder ausfülle$/ do
+When /^I fill in at least the required fields$/ do
+  @model_name = "Test Model Package"
   find(".row.emboss", match: :prefer_exact, :text => _("Product")).fill_in 'model[product]', :with => @model_name
 end
 
-Wenn /^ich eines oder mehrere Pakete hinzufüge$/ do
+#Wenn /^ich eines oder mehrere Pakete hinzufüge$/ do
+When /^I add one or more packages$/ do
   find("button", match: :prefer_exact, text: _("Add %s") % _("Package")).click
 end
 
-Wenn /^ich(?: kann | )diesem Paket eines oder mehrere Gegenstände hinzufügen$/ do
+#Wenn /^ich(?: kann | )diesem Paket eines oder mehrere Gegenstände hinzufügen$/ do
+When /^I add one or more items to this package$/ do
   find(".modal #search-item").set "beam123"
   find("a", match: :prefer_exact, text: "beam123").click
   find(".modal #search-item").set "beam345"
@@ -20,7 +23,8 @@ Wenn /^ich(?: kann | )diesem Paket eines oder mehrere Gegenstände hinzufügen$/
   find("a", match: :prefer_exact, text: "Bose").click
 end
 
-Dann /^ist das Modell erstellt und die Pakete und dessen zugeteilten Gegenstände gespeichert$/ do
+#Dann /^ist das Modell erstellt und die Pakete und dessen zugeteilten Gegenstände gespeichert$/ do
+Then /^the model is created and the packages and their assigned items are saved$/ do
   expect(has_selector?(".success")).to be true
   @model = Model.find {|m| [m.name, m.product].include? @model_name}
   expect(@model.nil?).to be false
@@ -31,7 +35,8 @@ Dann /^ist das Modell erstellt und die Pakete und dessen zugeteilten Gegenständ
   expect(@packages.first.children.second.inventory_code).to eq "beam345"
 end
 
-Dann /^den Paketen wird ein Inventarcode zugewiesen$/ do
+#Dann /^den Paketen wird ein Inventarcode zugewiesen$/ do
+Then /^the packages have their own inventory codes$/ do
   expect(@packages.first.inventory_code).not_to be_nil
 end
 
@@ -103,7 +108,8 @@ Wenn /^ich ein Modell editiere, welches bereits Pakete( in meine und andere Ger�
   find(".line", match: :prefer_exact, :text => @model.name).find(".button", match: :first, :text => _("Edit Model")).click
 end
 
-Wenn /^ich ein Modell editiere, welches bereits Gegenstände hat$/ do
+#Wenn /^ich ein Modell editiere, welches bereits Gegenstände hat$/ do
+When /^I edit a model that already has items$/ do
   step "I open the inventory"
   @model = @current_inventory_pool.models.detect {|m| not (m.items.empty? and m.is_package?)}
   @model_name = @model.name
@@ -112,17 +118,20 @@ Wenn /^ich ein Modell editiere, welches bereits Gegenstände hat$/ do
   find(".line", match: :prefer_exact, :text => @model.name).find(".button", match: :first, :text => _("Edit Model")).click
 end
 
-Dann /^kann ich diesem Modell keine Pakete mehr zuweisen$/ do
+#Dann /^kann ich diesem Modell keine Pakete mehr zuweisen$/ do
+Then /^I cannot assign packages to that model$/ do
   expect(has_no_selector?("a", text: _("Add %s") % _("Package"))).to be true
 end
 
-Wenn /^ich einem Modell ein Paket hinzufüge$/ do
-  step "ich ein neues Modell hinzufüge"
-  step 'ich mindestens die Pflichtfelder ausfülle'
-  step "ich eines oder mehrere Pakete hinzufüge"
+#Wenn /^ich einem Modell ein Paket hinzufüge$/ do
+When /^I add a package to a model$/ do
+  step "I add a new Model"
+  step 'I fill in at least the required fields'
+  step "I add one or more packages"
 end
 
-Dann /^kann ich dieses Paket nur speichern, wenn dem Paket auch Gegenstände zugeteilt sind$/ do
+#Dann /^kann ich dieses Paket nur speichern, wenn dem Paket auch Gegenstände zugeteilt sind$/ do
+Then /^I can only save this package if I also assign items$/ do
   find("#save-package").click
   expect(has_content?(_("You can not create a package without any item"))).to be true
   expect(has_content?(_("New Package"))).to be true
@@ -130,14 +139,16 @@ Dann /^kann ich dieses Paket nur speichern, wenn dem Paket auch Gegenstände zug
   expect(has_no_selector?("[data-type='field-inline-entry']")).to be true
 end
 
-Wenn /^ich ein Paket editiere$/ do
+#Wenn /^ich ein Paket editiere$/ do
+When /^I edit a package$/ do
   @model = Model.find {|m| [m.name, m.product].include?"Kamera Set" }
   visit manage_edit_model_path(@current_inventory_pool, @model)
   @package_to_edit = @model.items.detect &:in_stock?
   find(".line[data-id='#{@package_to_edit.id}']").find("button[data-edit-package]").click
 end
 
-Dann /^kann ich einen Gegenstand aus dem Paket entfernen$/ do
+#Dann /^kann ich einen Gegenstand aus dem Paket entfernen$/ do
+Then /^I can remove items from the package$/ do
   within ".modal" do
     within "#items" do
       find("[data-type='inline-entry']", match: :first)
@@ -148,10 +159,11 @@ Dann /^kann ich einen Gegenstand aus dem Paket entfernen$/ do
     end
     find("#save-package").click
   end
-  step 'ich speichere die Informationen'
+  step 'I save'
 end
 
-Dann /^dieser Gegenstand ist nicht mehr dem Paket zugeteilt$/ do
+#Dann /^dieser Gegenstand ist nicht mehr dem Paket zugeteilt$/ do
+Then /^those items are no longer assigned to the package$/ do
   expect(has_content?(_("List of Inventory"))).to be true
   @package_to_edit.reload
   expect(@package_to_edit.children.count).to eq (@number_of_items_before - 1)
@@ -165,12 +177,13 @@ Dann /^werden die folgenden Felder angezeigt$/ do |table|
   expect(page.text).to match Regexp.new(values.join('.*'), Regexp::MULTILINE)
 end
 
-Wenn /^ich das Paket speichere$/ do
+Wenn /^I save the package$/ do
   find(".modal #save-package", match: :first).click
 end
 
-Wenn /^ich das Paket und das Modell speichere$/ do
-  step 'ich das Paket speichere'
+#Wenn /^ich das Paket und das Modell speichere$/ do
+When /^I save both package and model$/ do
+  step 'I save the package'
   find("button#save", match: :first).click
 end
 

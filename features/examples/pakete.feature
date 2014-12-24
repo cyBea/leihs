@@ -1,35 +1,36 @@
 
-Feature: Modell mit Paketen erstellen
+Feature: Create model with packages
 
   Background:
     Given I am Mike
     And I open the inventory
 
   @javascript @browser @personas
-  Scenario: Modell mit Paketzuteilung erstellen
-    When ich ein neues Modell hinzufüge
-    And ich mindestens die Pflichtfelder ausfülle
-    And ich eines oder mehrere Pakete hinzufüge
-    And ich diesem Paket eines oder mehrere Gegenstände hinzufügen
-    And ich das Paket und das Modell speichere
-    Then ist das Modell erstellt und die Pakete und dessen zugeteilten Gegenstände gespeichert
-    And den Paketen wird ein Inventarcode zugewiesen
+  Scenario: Create model with package assignments
+    When I add a new Model
+    And I fill in at least the required fields
+    And I add one or more packages
+    And I add one or more items to this package
+    And I save both package and model
+    Then the model is created and the packages and their assigned items are saved
+    And the packages have their own inventory codes
 
   @javascript @browser @personas
-  Scenario: Modell mit bereits vorhandenen Gegenständen kann kein Paket zugewiesen werden
-    When ich ein Modell editiere, welches bereits Gegenstände hat
-    Then kann ich diesem Modell keine Pakete mehr zuweisen
+  Scenario: A model that already has items cannot be turned into a package
+    When I edit a model that already has items
+
+    Then I cannot assign packages to that model
 
   @javascript @browser @personas
-  Scenario: Pakete nicht ohne Gegenstände erstellen
-    When ich einem Modell ein Paket hinzufüge
-    Then kann ich dieses Paket nur speichern, wenn dem Paket auch Gegenstände zugeteilt sind
+  Scenario: Can't create package without items
+    When I add a package to a model
+    Then I can only save this package if I also assign items
 
   @javascript @browser @personas
-  Scenario: Einzelnen Gegenstand aus Paket entfernen
-    When ich ein Paket editiere
-    Then kann ich einen Gegenstand aus dem Paket entfernen
-    And dieser Gegenstand ist nicht mehr dem Paket zugeteilt
+  Scenario: Remove single item from a package
+    When I edit a package
+    Then I can remove items from the package
+    And those items are no longer assigned to the package
 
   @javascript @browser @personas
   Scenario: Paketeigenschaften abfüllen bei existierendem Modell
@@ -64,7 +65,7 @@ Feature: Modell mit Paketen erstellen
     And ich dieses Paket speichere
     And ich dieses Paket wieder editiere
     Then kann ich die Paketeigenschaften erneut bearbeiten
-    And ich kann diesem Paket eines oder mehrere Gegenstände hinzufügen
+    And ich diesem Paket eines oder mehrere Gegenstände hinzufügen
 
   #74210792
   @javascript @browser @personas
