@@ -22,8 +22,8 @@ Feature: Model properties
   Then this model's properties are saved in the order they were given
 
   @javascript @personas
-  Scenario: Eigenschaften löschen
-  Given ich editiere ein Modell welches bereits Eigenschaften hat
-  When ich eine oder mehrere bestehende Eigenschaften lösche
-  And ich das Modell speichere
-  Then sind die Eigenschaften gemäss Sortierreihenfolge für das geänderte Modell gespeichert
+  Scenario: Deleting properties
+  Given I edit a model that already has properties
+  When I delete one or more existing properties
+  And I save the model
+  Then the properties for the changed model are saved in the order they were given

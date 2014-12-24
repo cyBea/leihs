@@ -52,7 +52,8 @@ Then /^this model's properties are saved in the order they were given$/ do
   end
 end
 
-Dann /^sind die Eigenschaften gemäss Sortierreihenfolge für das geänderte Modell gespeichert$/ do
+#Dann /^sind die Eigenschaften gemäss Sortierreihenfolge für das geänderte Modell gespeichert$/ do
+Then /^the properties for the changed model are saved in the order they were given$/ do
   find(".line", match: :first)
   @model = @model.reload
   expect(@model.properties.size).to eq @properties.size
@@ -69,7 +70,8 @@ Given /^I am editing a model$/ do
   find("h1", match: :prefer_exact, text: _("Edit Model"))
 end
 
-Angenommen /^ich editiere ein Modell welches bereits Eigenschaften hat$/ do
+#Angenommen /^ich editiere ein Modell welches bereits Eigenschaften hat$/ do
+Given /^I edit a model that already has properties$/ do
   @model = @current_inventory_pool.models.joins(:properties).first
   visit manage_edit_model_path(@current_inventory_pool, @model)
 end
@@ -80,7 +82,8 @@ When /^I change existing properties$/ do
   find("input[name='model[properties_attributes][][value]']", match: :first).set "USB"
 end
 
-Wenn /^ich eine oder mehrere bestehende Eigenschaften lösche$/ do
+#Wenn /^ich eine oder mehrere bestehende Eigenschaften lösche$/ do
+When /^I delete one or more existing properties$/ do
   within "#properties" do
     find(".list-of-lines .line:not(.striked) .button[data-remove]", match: :first).click
     @properties = all(".list-of-lines .line:not(.striked)").map{|line| {:key => line.find("input[name='model[properties_attributes][][key]']").value, :value => line.find("input[name='model[properties_attributes][][value]']").value}}
