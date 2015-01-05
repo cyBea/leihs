@@ -33,27 +33,27 @@ Feature: Create model with packages
     And those items are no longer assigned to the package
 
   @javascript @browser @personas
-  Scenario: Paketeigenschaften abfüllen bei existierendem Modell
-    When ich ein Modell editiere, welches bereits Pakete hat
-    And ich ein bestehendes Paket editiere
-    And ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-    | Zustand                      | radio        | OK                            |
-    | Vollständigkeit              | radio        | OK                            |
-    | Ausleihbar                   | radio        | OK                            |
-    | Inventarrelevant             | select       | Ja                            |
-    | Verantwortliche Abteilung    | autocomplete | A-Ausleihe                    |
-    | Verantwortliche Person       |              | Matus Kmit                    |
-    | Benutzer/Verwendung          |              | Test Verwendung               |
-    | Name                         |              | Test Name                     |
-    | Notiz                        |              | Test Notiz                    |
-    | Gebäude                      | autocomplete | Keine/r                       |
-    | Raum                         |              | Test Raum                     |
-    | Gestell                      |              | Test Gestell                  |
-    | Anschaffungswert             |              | 50.00                         |
-    | Letzte Inventur              |              | 01.01.2013                    |
-    And ich das Paket und das Modell speichere
-    Then besitzt das Paket alle angegebenen Informationen
+  Scenario: Entering package information for an existing model
+    When I edit a model that already has packages
+    And I edit an existing Package
+    And I enter the following item information
+    | field                  | type         | value           |
+    | Working order              | radio        | OK              |
+    | Completeness           | radio        | OK              |
+    | Borrowable             | radio        | OK              |
+    | Relevant for inventory | select       | Yes             |
+    | Responsible department | autocomplete | A-Ausleihe      |
+    | Responsible person     |              | Matus Kmit      |
+    | User/Typical usage       |              | Test Verwendung |
+    | Name                   |              | Test Name       |
+    | Note                   |              | Test Notiz      |
+    | Building               | autocomplete | None         |
+    | Room                   |              | Test Raum       |
+    | Shelf                  |              | Test Gestell    |
+    | Initial Price          |              | 50.00           |
+    | Last Checked             |              | 01/01/2013      |
+    And I save both package and model
+    Then the package has all the entered information
 
   @javascript @browser @personas
   Scenario: Modell mit Paketzuteilung erstellen und wieder editieren

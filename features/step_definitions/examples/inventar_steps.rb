@@ -546,18 +546,33 @@ end
 
 #Wenn /^ich eine?n? bestehende[s|n]? (.+) bearbeite$/ do |entity|
 When /^I edit an existing (.+)$/ do |entity|
-  @page_to_return = current_path
-  object_name = case entity
-                  when "Model"
-                    @model = @current_inventory_pool.models.where(type: "Model").sample
-                    @model.name
-                  when "Option"
-                    find(:select, "retired").first("option").select_option
-                    @option = @current_inventory_pool.options.sample
-                    @option.name
-                end
-  step 'I search for "%s"' % object_name
-  find(".line", match: :prefer_exact, :text => object_name).find(".button", :text => "Edit #{entity}").click
+
+  if entity == 'Package'
+
+    if @model
+      @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).sample
+      find("#packages .line[data-id='#{@package.id}'] [data-edit-package]").click
+    else
+      find("#packages .line[data-new] [data-edit-package]", match: :first).click
+    end
+    within ".modal" do
+      find("[data-type='field']", match: :first)
+    end
+  else
+
+    @page_to_return = current_path
+    object_name = case entity
+                    when "Model"
+                      @model = @current_inventory_pool.models.where(type: "Model").sample
+                      @model.name
+                    when "Option"
+                      find(:select, "retired").first("option").select_option
+                      @option = @current_inventory_pool.options.sample
+                      @option.name
+                  end
+    step 'I search for "%s"' % object_name
+    find(".line", match: :prefer_exact, :text => object_name).find(".button", :text => "Edit #{entity}").click
+  end
 end
 
 #Wenn /^ich ein bestehendes, genutztes Modell bearbeite welches bereits( ein aktiviertes)? Zubehör hat$/ do |arg1|

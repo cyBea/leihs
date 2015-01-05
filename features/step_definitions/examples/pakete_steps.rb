@@ -92,7 +92,8 @@ Dann /^kann ich das Paket nicht löschen$/ do
   expect(has_no_selector?("[data-type='inline-entry'][data-id='#{@package_not_in_stock.id}'] [data-remove]")).to be true
 end
 
-Wenn /^ich ein Modell editiere, welches bereits Pakete( in meine und andere Gerätepark)? hat$/ do |arg1|
+#Wenn /^ich ein Modell editiere, welches bereits Pakete( in meine und andere Gerätepark)? hat$/ do |arg1|
+When /^I edit a model that already has packages( in mine and other inventory pools)?$/ do |arg1|
   step "I open the inventory"
   @model = @current_inventory_pool.models.shuffle.detect do |m|
     b = (not m.items.empty? and m.is_package?)
@@ -187,7 +188,8 @@ When /^I save both package and model$/ do
   find("button#save", match: :first).click
 end
 
-Dann /^besitzt das Paket alle angegebenen Informationen$/ do
+#Dann /^besitzt das Paket alle angegebenen Informationen$/ do
+Then /^the package has all the entered information$/ do
   model = Model.find {|m| [m.name, m.product].include? @model_name}
   visit manage_edit_model_path(@current_inventory_pool, model)
   model.items.where(inventory_pool: @current_inventory_pool).each do |item|
@@ -197,20 +199,13 @@ Dann /^besitzt das Paket alle angegebenen Informationen$/ do
   @package ||= model.items.packages.first
   find(".line[data-id='#{@package.id}']").find("button[data-edit-package]").click
   expect(has_selector?(".modal .row.emboss")).to be true
-  step 'hat das Paket alle zuvor eingetragenen Werte'
+  #step 'hat das Paket alle zuvor eingetragenen Werte'
+  step 'the package has all the previously entered values'
 end
 
-Wenn /^ich ein bestehendes Paket editiere$/ do
-  if @model
-    @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).sample
-    find("#packages .line[data-id='#{@package.id}'] [data-edit-package]").click
-  else
-    find("#packages .line[data-new] [data-edit-package]", match: :first).click
-  end
-  within ".modal" do
-    find("[data-type='field']", match: :first)
-  end
-end
+#Wenn /^ich ein bestehendes Paket editiere$/ do
+#When /^I edit an existing package$/ do
+# Superseded by: When I edit an existing .*
 
 Wenn(/^ich eine Paket hinzufüge$/) do
   find("#add-package").click
@@ -254,12 +249,13 @@ Dann(/^sehe ich die Meldung "(.*?)"$/) do |text|
   find("#flash", match: :prefer_exact, :text => text)
 end
 
-Dann /^hat das Paket alle zuvor eingetragenen Werte$/ do
+#Dann /^hat das Paket alle zuvor eingetragenen Werte$/ do
+Then /^the package has all the previously entered values$/ do
   expect(has_selector?(".modal .row.emboss")).to be true
   @table_hashes.each do |hash_row|
-    field_name = hash_row["Feldname"]
-    field_value = hash_row["Wert"]
-    field_type = hash_row["Type"]
+    field_name = hash_row["field"]
+    field_value = hash_row["value"]
+    field_type = hash_row["type"]
     field = Field.all.detect{|f| _(f.label) == field_name}
     within ".modal" do
       find("[data-type='field'][data-id='#{field.id}']", match: :first)
@@ -267,7 +263,7 @@ Dann /^hat das Paket alle zuvor eingetragenen Werte$/ do
       expect(matched_field).not_to be_blank
       case field_type
         when "autocomplete"
-          expect(matched_field.find("input,textarea").value).to eq (field_value != "Keine/r" ? field_value : "")
+          expect(matched_field.find("input,textarea").value).to eq (field_value != "None" ? field_value : "")
         when "select"
           expect(matched_field.all("option").detect(&:selected?).text).to eq field_value
         when "radio must"
