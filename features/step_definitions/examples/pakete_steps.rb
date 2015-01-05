@@ -207,42 +207,41 @@ end
 #When /^I edit an existing package$/ do
 # Superseded by: When I edit an existing .*
 
-Wenn(/^ich eine Paket hinzufüge$/) do
+#Wenn(/^ich eine Paket hinzufüge$/) do
+When(/^I add a package$/) do
   find("#add-package").click
   within ".modal" do
     find("[data-type='field']", match: :first)
   end
 end
 
-Wenn(/^ich die Paketeigenschaften eintrage$/) do
-  steps %Q{Und ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-    | Zustand                      | radio        | OK                            |
-    | Vollständigkeit              | radio        | OK                            |
-    | Ausleihbar                   | radio        | OK                            |
-    | Inventarrelevant             | select       | Ja                            |
-    | Letzte Inventur              |              | 01.01.2013                    |
-    | Verantwortliche Abteilung    | autocomplete | A-Ausleihe                    |
-    | Verantwortliche Person       |              | Matus Kmit                    |
-    | Benutzer/Verwendung          |              | Test Verwendung               |
-    | Name                         |              | Test Name                     |
-    | Notiz                        |              | Test Notiz                    |
-    | Gebäude                      | autocomplete | Keine/r                       |
-    | Raum                         |              | Test Raum                     |
-    | Gestell                      |              | Test Gestell                  |
-    | Anschaffungswert             |              | 50.00                         |}
+#Wenn(/^ich die Paketeigenschaften eintrage$/) do
+When(/^I enter the package properties$/) do
+  steps %Q{And I enter the following item information
+    | field                  | type         | value           |
+    | Working order          | radio        | OK              |
+    | Completeness           | radio        | OK              |
+    | Borrowable             | radio        | OK              |
+    | Relevant for inventory | select       | Yes             |
+    | Last Checked           |              | 01/01/2013      |
+    | Responsible department | autocomplete | A-Ausleihe      |
+    | Responsible person     |              | Matus Kmit      |
+    | User/Typical usage     |              | Test Verwendung |
+    | Name                   |              | Test Name       |
+    | Note                   |              | Test Notiz      |
+    | Building               | autocomplete | None            |
+    | Room                   |              | Test Raum       |
+    | Shelf                  |              | Test Gestell    |
+    | Initial Price          |              | 50.00           | }
 end
 
-Wenn(/^ich dieses Paket speichere$/) do
+#Wenn(/^ich dieses Paket speichere$/) do
+When(/^I save this package$/) do
   find("#save-package").click
 end
 
 Wenn(/^ich dieses Paket wieder editiere$/) do
   step 'ich ein bestehendes Paket editiere'
-end
-
-Dann(/^kann ich die Paketeigenschaften erneut bearbeiten$/) do
-  step 'ich die Paketeigenschaften eintrage'
 end
 
 Dann(/^sehe ich die Meldung "(.*?)"$/) do |text|

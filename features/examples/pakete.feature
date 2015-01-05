@@ -38,34 +38,34 @@ Feature: Create model with packages
     And I edit an existing Package
     And I enter the following item information
     | field                  | type         | value           |
-    | Working order              | radio        | OK              |
+    | Working order          | radio        | OK              |
     | Completeness           | radio        | OK              |
     | Borrowable             | radio        | OK              |
     | Relevant for inventory | select       | Yes             |
     | Responsible department | autocomplete | A-Ausleihe      |
     | Responsible person     |              | Matus Kmit      |
-    | User/Typical usage       |              | Test Verwendung |
+    | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
-    | Building               | autocomplete | None         |
+    | Building               | autocomplete | None            |
     | Room                   |              | Test Raum       |
     | Shelf                  |              | Test Gestell    |
     | Initial Price          |              | 50.00           |
-    | Last Checked             |              | 01/01/2013      |
+    | Last Checked           |              | 01/01/2013      |
     And I save both package and model
     Then the package has all the entered information
 
   @javascript @browser @personas
-  Scenario: Modell mit Paketzuteilung erstellen und wieder editieren
-    When ich ein neues Modell hinzufüge
-    And ich mindestens die Pflichtfelder ausfülle
-    And ich eine Paket hinzufüge
-    And ich die Paketeigenschaften eintrage
-    And ich diesem Paket eines oder mehrere Gegenstände hinzufügen
-    And ich dieses Paket speichere
-    And ich dieses Paket wieder editiere
-    Then kann ich die Paketeigenschaften erneut bearbeiten
-    And ich diesem Paket eines oder mehrere Gegenstände hinzufügen
+  Scenario: Creating a model with package assignment and then editing it
+    When I add a new Model
+    And I fill in at least the required fields
+    And I add a package
+    And I enter the package properties
+    And I add one or more items to this package
+    And I save this package
+    And I edit an existing Package
+    Then I enter the package properties
+    And I add one or more items to this package
 
   #74210792
   @javascript @browser @personas

@@ -58,6 +58,7 @@ gem 'rgl', '~> 0.4.0', require: 'rgl/adjacency' # use ruby-graphviz instead ?? (
 gem 'rspec', '~> 3.0', group: [:test, :development], require: false
 gem 'rspec-rails', '~> 3.0', group: [:test, :development], require: false
 gem 'ruby_parser', '~> 3.1' # gettext dependency that Bundler seems unable to resolve
+gem 'rubocop', require: false
 gem 'sass', '~> 3.2'
 gem 'sass-rails', '~> 4.0'
 gem 'selenium-webdriver', group: [:test, :development]
