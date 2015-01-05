@@ -244,7 +244,8 @@ Wenn(/^ich dieses Paket wieder editiere$/) do
   step 'ich ein bestehendes Paket editiere'
 end
 
-Dann(/^sehe ich die Meldung "(.*?)"$/) do |text|
+#Dann(/^sehe ich die Meldung "(.*?)"$/) do |text|
+Then(/^I see the notice "(.*?)"$/) do |text|
   find("#flash", match: :prefer_exact, :text => text)
 end
 
@@ -277,16 +278,16 @@ end
 Then(/^all the packaged items receive these same values store to this package$/) do |table|
   table.hashes.each do |t|
     b = @package.children.all? {|c|
-      case t[:Feldname]
-        when "Verantwortliche Abteilung"
+      case t[:field]
+        when "Responsible department"
           c.inventory_pool_id == @package.inventory_pool_id
-        when "Verantwortliche Person"
+        when "Responsible person"
           c.responsible == @package.responsible
-        when "Gebäude", "Raum", "Gestell"
+        when "Building", "Room", "Shelf"
           c.location_id == @package.location_id
-        when "Toni-Ankunftsdatum"
+        when "Check-in Date"
           c.properties[:ankunftsdatum] == @package.properties[:ankunftsdatum]
-        when "Letzte Inventur"
+        when "Last Checked"
           c.last_check == @package.last_check
         else
           "not found"

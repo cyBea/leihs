@@ -69,37 +69,38 @@ Feature: Create model with packages
 
   #74210792
   @javascript @browser @personas
-  Scenario: Paketeigenschaften abfüllen bei neu erstelltem Modell
-    When ich einem Modell ein Paket hinzufüge
-    And ich diesem Paket eines oder mehrere Gegenstände hinzufügen
-    And ich die folgenden Informationen erfasse
-    | Feldname                     | Type         | Wert                          |
-    | Zustand                      | radio        | OK                            |
-    | Vollständigkeit              | radio        | OK                            |
-    | Ausleihbar                   | radio        | OK                            |
-    | Inventarrelevant             | select       | Ja                            |
-    | Letzte Inventur              |              | 01.01.2013                    |
-    | Verantwortliche Abteilung    | autocomplete | A-Ausleihe                    |
-    | Verantwortliche Person       |              | Matus Kmit                    |
-    | Benutzer/Verwendung          |              | Test Verwendung               |
-    | Name                         |              | Test Name                     |
-    | Notiz                        |              | Test Notiz                    |
-    | Gebäude                      | autocomplete | Keine/r                       |
-    | Raum                         |              | Test Raum                     |
-    | Gestell                      |              | Test Gestell                  |
-    | Anschaffungswert             |              | 50.00                         |
-    And ich das Paket und das Modell speichere
-    Then sehe ich die Meldung "Modell gespeichert / Pakete erstellt"
-    And besitzt das Paket alle angegebenen Informationen
+  Scenario: Entering package properties for newly created models
+    When I add a package to a model
+    And I add one or more items to this package
+    And I enter the following item information
+    | field                  | type         | value           |
+    | Working order          | radio        | OK              |
+    | Completeness           | radio        | OK              |
+    | Borrowable             | radio        | OK              |
+    | Relevant for inventory | select       | Yes             |
+    | Responsible department | autocomplete | A-Ausleihe      |
+    | Responsible person     |              | Matus Kmit      |
+    | User/Typical usage     |              | Test Verwendung |
+    | Name                   |              | Test Name       |
+    | Note                   |              | Test Notiz      |
+    | Building               | autocomplete | None            |
+    | Room                   |              | Test Raum       |
+    | Shelf                  |              | Test Gestell    |
+    | Initial Price          |              | 50.00           |
+    | Last Checked           |              | 01/01/2013      |
+    And I save both package and model
+
+    Then I see the notice "Model saved / Packages created"
+    And the package has all the entered information
     And all the packaged items receive these same values store to this package
-    | Feldname                   |
-    | Verantwortliche Abteilung  |
-    | Verantwortliche Person     |
-    | Gebäude                    |
-    | Raum                       |
-    | Gestell                    |
-    | Toni-Ankunftsdatum         |
-    | Letzte Inventur            |
+    | field                  |
+    | Responsible department |
+    | Responsible person     |
+    | Building               |
+    | Room                   |
+    | Shelf                  |
+    | Check-in Date          |
+    | Last Checked           |
 
 
   @javascript @personas
