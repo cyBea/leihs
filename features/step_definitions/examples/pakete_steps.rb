@@ -83,12 +83,14 @@ Dann(/^that item package is not listed$/) do
   expect(has_no_selector? "[data-type='inline-entry'][data-id='#{@package.id}']").to be true
 end
 
-Wenn /^das Paket zurzeit ausgeliehen ist$/ do
+#Wenn /^das Paket zurzeit ausgeliehen ist$/ do
+When /^the package is currently not in stock$/ do
   @package_not_in_stock = @current_inventory_pool.items.packages.not_in_stock.sample
   visit manage_edit_model_path(@current_inventory_pool, @package_not_in_stock.model)
 end
 
-Dann /^kann ich das Paket nicht löschen$/ do
+#Dann /^kann ich das Paket nicht löschen$/ do
+Then /^I can't delete the package$/ do
   expect(has_no_selector?("[data-type='inline-entry'][data-id='#{@package_not_in_stock.id}'] [data-remove]")).to be true
 end
 

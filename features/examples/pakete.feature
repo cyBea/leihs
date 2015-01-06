@@ -124,9 +124,9 @@ Feature: Create model with packages
     Then that item package is not listed
 
   @personas
-  Scenario: Paket löschen schlägt fehl wenn das Paket gerade ausgeliehen ist
-    When das Paket zurzeit ausgeliehen ist 
-    Then kann ich das Paket nicht löschen
+  Scenario: Can't delete a package if it's currently not in stock
+    When the package is currently not in stock
+    Then I can't delete the package
 
   @personas @javascript @browser
   Scenario: Nur meine Pakete werden im Modell angezeigt
