@@ -129,6 +129,6 @@ Feature: Create model with packages
     Then I can't delete the package
 
   @personas @javascript @browser
-  Scenario: Nur meine Pakete werden im Modell angezeigt
-    When ich ein Modell editiere, welches bereits Pakete in meine und andere Gerätepark hat
+  Scenario: A model shows only packages owned by me
+    When I edit a model that already has packages in mine and other inventory pools
     Then I only see packages which I am responsible for
