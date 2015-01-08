@@ -1,10 +1,10 @@
 
-Feature: Reservierenden wechseln
+Feature: Changing the borrower
 
   Background:
     Given I am Pius
 
   @javascript @personas
-  Scenario: Reservierende Person für ausgewählte Linien wechseln
+  Scenario: Changing the borrower of a reservation
     Given I am doing a hand over
-    Then kann ich die reservierende Person für eine Auswahl an Linien wechseln
+    Then I can change the borrower for all the lines I've selected
