@@ -14,10 +14,11 @@ Then(/^I don't see this order in the list of orders$/) do
   expect(has_no_selector?("[data-id='#{@contract.id}']")).to be true
 end
 
-When(/^ich öffne eine Bestellung von ein gesperrter Benutzer$/) do
+#When(/^ich öffne eine Bestellung von ein gesperrter Benutzer$/) do
+When(/^I open a suspended user's order$/) do
   user = @current_inventory_pool.contracts.submitted.sample.user
   ensure_suspended_user(user, @current_inventory_pool)
-  step 'ich öffne eine Bestellung von "%s"' % user
+  step 'I open an order placed by "%s"' % user
 end
 
 When(/^I see the note 'Suspended!' next to their name$/) do

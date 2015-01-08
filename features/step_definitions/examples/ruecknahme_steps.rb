@@ -1,19 +1,23 @@
 # encoding: utf-8
 
-Dann(/^wird festgehalten, dass ich diesen Gegenstand zurückgenommen habe$/) do
+#Dann(/^wird festgehalten, dass ich diesen Gegenstand zurückgenommen habe$/) do
+Then(/^a note is made that it was me who took back the item$/) do
   expect(@contract_lines_to_take_back.map(&:returned_to_user_id).uniq.first).to eq @current_user.id
   step 'sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"'
 end
 
-Angenommen(/^es existiert ein Benutzer mit mindestens 2 Rückgaben an 2 verschiedenen Tagen$/) do
+#Angenommen(/^es existiert ein Benutzer mit mindestens 2 Rückgaben an 2 verschiedenen Tagen$/) do
+Given(/^there is a user with at least 2 take back s on 2 different days$/) do
   @user = User.find {|u| u.visits.take_back.select{|v| v.inventory_pool == @current_inventory_pool}.count >= 2}
 end
 
-Wenn(/^man die Rücknahmenansicht für den Benutzer öffnet|ich öffne die Rücknahmeansicht für diesen Benutzer$/) do
+#Wenn(/^man die Rücknahmenansicht für den Benutzer öffnet|ich öffne die Rücknahmeansicht für diesen Benutzer$/) do
+When(/^I open a take back for this user$/) do
   visit manage_take_back_path(@current_inventory_pool, @user)
 end
 
-Dann(/^sind die Rücknahmen aufsteigend nach Datum sortiert$/) do
+#Dann(/^sind die Rücknahmen aufsteigend nach Datum sortiert$/) do
+Then(/^the take backs are ordered by date in ascending order$/) do
   expect(has_selector?(".line[data-line-type]")).to be true
 
   take_backs = @user.visits.take_back.select{|v| v.inventory_pool == @current_inventory_pool}.sort {|d1, d2| d1.date <=> d2.date }
@@ -41,7 +45,8 @@ When(/^I open a take back for a suspended user$/) do
   visit manage_take_back_path(@current_inventory_pool, @customer)
 end
 
-Angenommen(/^ich befinde mich in einer Rücknahme$/) do
+#Angenommen(/^ich befinde mich in einer Rücknahme$/) do
+Given(/^I am taking something back$/) do
   @take_back = @current_inventory_pool.visits.take_back.select{|v| v.lines.any? {|l| l.is_a? ItemLine}}.sample
   @user = @take_back.user
   step "man die Rücknahmenansicht für den Benutzer öffnet"
@@ -59,7 +64,8 @@ Then(/^I receive a notification of success$/) do
   find("#flash .success")
 end
 
-Wenn(/^ich einen Gegenstand über das Zuweisenfeld zurücknehme$/) do
+#Wenn(/^ich einen Gegenstand über das Zuweisenfeld zurücknehme$/) do
+When(/^I take back an item using the assignment field$/) do
   @contract_line = @take_back.lines.select{|l| l.is_a? ItemLine}.sample
   within "form#assign" do
     find("input#assign-input").set @contract_line.item.inventory_code
@@ -68,13 +74,15 @@ Wenn(/^ich einen Gegenstand über das Zuweisenfeld zurücknehme$/) do
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
-Angenommen(/^ich befinde mich in einer Rücknahme mit mindestens einem verspäteten Gegenstand$/) do
+#Angenommen(/^ich befinde mich in einer Rücknahme mit mindestens einem verspäteten Gegenstand$/) do
+Given(/^I am taking back at least one overdue item$/) do
   @take_back = @current_inventory_pool.visits.take_back.find {|v| v.lines.any? {|l| l.end_date.past? }}
   @user = @take_back.user
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
 
-Wenn(/^ich einen verspäteten Gegenstand über das Zuweisenfeld zurücknehme$/) do
+#Wenn(/^ich einen verspäteten Gegenstand über das Zuweisenfeld zurücknehme$/) do
+When(/^I take back an overdue item using the assignment field$/) do
   @contract_line = @take_back.lines.find{|l| l.end_date.past?}
   within "form#assign" do
     find("input#assign-input").set @contract_line.item.inventory_code
@@ -83,18 +91,21 @@ Wenn(/^ich einen verspäteten Gegenstand über das Zuweisenfeld zurücknehme$/) 
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
-Dann(/^das Problemfeld für die Linie wird angezeigt$/) do
+#Dann(/^das Problemfeld für die Linie wird angezeigt$/) do
+Then(/^the problem indicator for the line is displayed$/) do
   expect(has_selector?("#{@line_css} .line-info.red")).to be true
   expect(has_selector?("#{@line_css} .red.tooltip")).to be true
 end
 
-Angenommen(/^ich befinde mich in einer Rücknahme mit mindestens zwei gleichen Optionen$/) do
+#Angenommen(/^ich befinde mich in einer Rücknahme mit mindestens zwei gleichen Optionen$/) do
+Given(/^I am on a take back with at least two of the same options$/) do
   @take_back = @current_inventory_pool.visits.take_back.find {|v| v.lines.any? {|l| l.quantity >= 2 }}
   @user = @take_back.user
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
 
-Wenn(/^ich eine Option über das Zuweisenfeld zurücknehme$/) do
+#Wenn(/^ich eine Option über das Zuweisenfeld zurücknehme$/) do
+When(/^I take back an option using the assignment field$/) do
   @contract_line = @take_back.lines.find {|l| l.quantity >= 2 }
   within "form#assign" do
     find("input#assign-input").set @contract_line.item.inventory_code
@@ -103,11 +114,13 @@ Wenn(/^ich eine Option über das Zuweisenfeld zurücknehme$/) do
   @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
-Dann(/^die Zeile ist nicht grün markiert$/) do
+#Dann(/^die Zeile ist nicht grün markiert$/) do
+Then(/^the line is not highlighted in green$/) do
   expect(find(@line_css).native.attribute("class")).not_to include "green"
 end
 
-Wenn(/^ich alle Optionen der gleichen Zeile zurücknehme$/) do
+#Wenn(/^ich alle Optionen der gleichen Zeile zurücknehme$/) do
+When(/^I take back all options of the same line$/) do
   (@contract_line.quantity - find(@line_css).find("input[data-quantity-returned]").value.to_i).times do
     within "form#assign" do
       find("input#assign-input").set @contract_line.item.inventory_code
