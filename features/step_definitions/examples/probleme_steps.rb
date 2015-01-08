@@ -43,7 +43,8 @@ Given /^a model is no longer available$/ do
   @max_before = [@max_before, 0].max
 end
 
-Dann /^sehe ich auf den beteiligten Linien die Auszeichnung von Problemen$/ do
+#Dann /^sehe ich auf den beteiligten Linien die Auszeichnung von Problemen$/ do
+Then /^I see any problems displayed on the relevant lines$/ do
   @problems = []
   @lines.each do |line|
       hover_for_tooltip line.find("[data-tooltip-template='manage/views/lines/problems_tooltip']")
@@ -59,7 +60,8 @@ Dann /^sehe ich auf den beteiligten Linien die Auszeichnung von Problemen$/ do
   @av = @line.model.availability_in(@line.inventory_pool)
 end
 
-Dann /^das Problem wird wie folgt dargestellt: "(.*?)"$/ do |format|
+#Dann /^das Problem wird wie folgt dargestellt: "(.*?)"$/ do |format|
+Then /^the problem is displayed as: "(.*?)"$/ do |format|
   regexp = if format == "Nicht verfügbar 2(3)/7"
              /#{_("Not available")} -*\d\(-*\d\)\/\d/
            elsif format == "Gegenstand nicht ausleihbar"
@@ -76,7 +78,8 @@ Dann /^das Problem wird wie folgt dargestellt: "(.*?)"$/ do |format|
   end
 end
 
-Dann /^"(.*?)" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen$/ do |arg1|
+#Dann /^"(.*?)" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen$/ do |arg1|
+Then /^"(.*?)" are available for the user, also counting availability from groups the user is member of$/ do |arg1|
   max = if [:unsubmitted, :submitted].include? @line.contract.status
           @initial_quantity + @max_before
         elsif [:approved, :signed].include? @line.contract.status
@@ -87,7 +90,8 @@ Dann /^"(.*?)" sind verfügbar für den Kunden inklusive seinen Gruppenzugehöri
   expect(@reference_problem).to match /#{max}\(/
 end
 
-Dann /^"(.*?)" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört$/ do |arg1|
+#Dann /^"(.*?)" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört$/ do |arg1|
+Then /^"(.*?)" are available in total, also counting availability from groups the user is not member of$/ do |arg1|
   max = @av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @av.inventory_pool_and_model_group_ids)
   if [:unsubmitted, :submitted].include? @line.contract.status
     max += @line.contract.lines.where(:start_date => @line.start_date, :end_date => @line.end_date, :model_id => @line.model).size
@@ -97,7 +101,8 @@ Dann /^"(.*?)" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen d
   expect(@reference_problem).to match(/\(#{max}/)
 end
 
-Dann /^"(.*?)" sind total im Pool bekannt \(ausleihbar\)$/ do |arg1|
+#Dann /^"(.*?)" sind total im Pool bekannt \(ausleihbar\)$/ do |arg1|
+Then /^"(.*?)" are in this inventory pool \(and borrowable\)$/ do |arg1|
   expect(@reference_problem).to match("/#{@line.model.items.where(inventory_pool_id: @line.inventory_pool).borrowable.size}")
 end
 

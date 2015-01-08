@@ -53,6 +53,7 @@ When /^I return to the daily view$/ do
 end
 
 When(/^I edit an order$/) do
+  @event = "order"
   @contract = @current_inventory_pool.contracts.submitted.sample
   @user = @contract.user
   step "I edit the order"

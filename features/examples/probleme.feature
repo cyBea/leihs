@@ -1,18 +1,19 @@
 
-Feature: Anzeige von Problemen
+Feature: Displaying problems
 
   Background:
     Given I am Pius
 
   @javascript @browser @personas
-  Scenario: Problemanzeige wenn Modell nicht verfügbar bei Bestellungen
-    Given ich editiere eine Bestellung die nicht in der Vergangenheit liegt
-     And ein Modell ist nichtmehr verfügbar
-     Then sehe ich auf den beteiligten Linien die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Nicht verfügbar 2(3)/7"
-     And "2" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen
-     And "3" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört
-     And "7" sind total im Pool bekannt (ausleihbar)
+  Scenario: Showing problems in an order when a model is not avaiable
+    #Given ich editiere eine Bestellung die nicht in der Vergangenheit liegt
+    Given I edit an order
+    And a model is no longer available
+    Then I see any problems displayed on the relevant lines
+     And the problem is displayed as: "Nicht verfügbar 2(3)/7"
+     And "2" are available for the user, also counting availability from groups the user is member of
+     And "3" are available in total, also counting availability from groups the user is not member of
+     And "7" are in this inventory pool (and borrowable)
 
   @javascript @browser @personas
   Scenario: Problemanzeige bei Rücknahme wenn Gegenstand defekt
