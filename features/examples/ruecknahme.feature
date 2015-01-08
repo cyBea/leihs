@@ -63,11 +63,11 @@ Feature: Take back
     Then the take backs are ordered by date in ascending order
 
   @javascript @personas
-  Scenario: Optionen in mehreren Zeitfenstern vorhanden
-    Given es existiert ein Benutzer mit einer zurückzugebender Option in zwei verschiedenen Zeitfenstern
-    And ich öffne die Rücknahmeansicht für diesen Benutzer
-    When ich diese Option zurücknehme
-    Then wird die Option dem ersten Zeitfenster hinzugefügt
-    When im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht ist
-    And ich dieselbe Option nochmals hinzufüge
-    Then wird die Option dem zweiten Zeitfenster hinzugefügt
+  Scenario: Treating options with multiple time windows
+    Given there is a user with an option to return in two different time windows
+    And I open a take back for this user
+    When I take back this option
+    Then the option is added to the first time window
+    When the first time window has already reached the maximum quantity of this option
+    And I add the same option again
+    Then the option is added to the second time window

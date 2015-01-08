@@ -129,7 +129,8 @@ When(/^I take back all options of the same line$/) do
   end
 end
 
-Angenommen(/^es existiert ein Benutzer mit einer zurückzugebender Option in zwei verschiedenen Zeitfenstern$/) do
+#Angenommen(/^es existiert ein Benutzer mit einer zurückzugebender Option in zwei verschiedenen Zeitfenstern$/) do
+Given(/^there is a user with an option to return in two different time windows$/) do
   @user = User.find do |u|
     option_lines = u.visits.take_back.select{|v| v.inventory_pool == @current_inventory_pool}.flat_map(&:lines).select {|l| l.is_a? OptionLine}
     option_lines.uniq(&:option).size < option_lines.size
@@ -137,7 +138,8 @@ Angenommen(/^es existiert ein Benutzer mit einer zurückzugebender Option in zwe
   expect(@user).not_to be_nil
 end
 
-Wenn(/^ich diese Option zurücknehme$/) do
+#Wenn(/^ich diese Option zurücknehme$/) do
+When(/^I take back this option$/) do
   @option = Option.find {|o| o.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}.count >= 2}
   within "form#assign" do
     find("input#assign-input").set @option.inventory_code
@@ -145,20 +147,23 @@ Wenn(/^ich diese Option zurücknehme$/) do
   end
 end
 
-Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
+#Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
+Then(/^the option is added to the first time window$/) do
   @option_lines = @option.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}
   @option_line = @option_lines.sort{|a, b| a.end_date <=> b.end_date}.first
   expect(find("[data-selected-lines-container]", match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i).to be > 0
 end
 
-Wenn(/^ich dieselbe Option nochmals hinzufüge$/) do
+#Wenn(/^ich dieselbe Option nochmals hinzufüge$/) do
+When(/^I add the same option again$/) do
   within "form#assign" do
     find("input#assign-input").set @option.inventory_code
     find("button .icon-ok-sign").click
   end
 end
 
-Wenn(/^im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht ist$/) do
+#Wenn(/^im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht ist$/) do
+When(/^the first time window has already reached the maximum quantity of this option$/) do
   until find("[data-selected-lines-container]", match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i == @option_line.quantity
     within "form#assign" do
       find("input#assign-input").set @option.inventory_code
@@ -167,7 +172,8 @@ Wenn(/^im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht 
   end
 end
 
-Dann(/^wird die Option dem zweiten Zeitfenster hinzugefügt$/) do
+#Dann(/^wird die Option dem zweiten Zeitfenster hinzugefügt$/) do
+Then(/^the option is added to the second time window$/) do
   @option_line = @option_lines.sort{|a, b| a.end_date <=> b.end_date}.second
   expect(all("[data-selected-lines-container]", text: @option.inventory_code).to_a.second.find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i).to be > 0
 end
