@@ -23,62 +23,62 @@ Feature: Displaying problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
   @javascript @personas @browser
-  Scenario: Problemanzeige bei Aushändigung wenn Gegenstand defekt
+  Scenario: Showing problems when handing over a defective item
     Given I am doing a hand over
-     And eine Gegenstand ist defekt
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Gegenstand ist defekt"
+    And one item is defective
+     Then the affected item's line shows the item's problems
+     And the problem is displayed as: "Gegenstand ist defekt"
 
   @javascript @browser @personas
-  Scenario: Problemanzeige bei Rücknahme wenn Gegenstand unvollständig
+  Scenario: Displaying problems with incomplete items during take back
     Given I take back an item
-     And eine Gegenstand ist unvollständig
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Gegenstand ist unvollständig"
+     And one item is incomplete
+     Then the affected item's line shows the item's problems
+     And the problem is displayed as: "Gegenstand ist unvollständig"
 
   @javascript @personas
-  Scenario: Problemanzeige bei Aushändigung wenn Gegenstand nicht ausleihbar
+  Scenario: Showing problems when handing over an item that is not borrowable
     Given I am doing a hand over
-     And eine Gegenstand ist nicht ausleihbar
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Gegenstand nicht ausleihbar"
+    And one item is not borrowable
+     Then the affected item's line shows the item's problems
+     And the problem is displayed as: "Gegenstand nicht ausleihbar"
 
   @javascript @browser @personas
-  Scenario: Problemanzeige bei Rücknahme wenn Gegenstand nicht ausleihbar
+  Scenario: Showing problems when taking back an item that is not borrowable
     Given I take back an item
-    And eine Gegenstand ist nicht ausleihbar
-    Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-    And das Problem wird wie folgt dargestellt: "Gegenstand nicht ausleihbar"
+    And one item is not borrowable
+    Then the affected item's line shows the item's problems
+    And the problem is displayed as: "Gegenstand nicht ausleihbar"
 
   @personas @javascript
-  Scenario: Problemanzeige wenn Modell nicht verfügbar bei Aushändigung
+  Scenario: Showing problems when item is not available while handing over
     Given I am doing a hand over
-     And eine Model ist nichtmehr verfügbar
-     Then sehe ich auf den beteiligten Linien die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Nicht verfügbar 2(3)/7"
-     And "2" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen
-     And "3" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört
-     And "7" sind total im Pool bekannt (ausleihbar)
+      And a model is no longer available
+     Then I see any problems displayed on the relevant lines
+      And the problem is displayed as: "Nicht verfügbar 2(3)/7"
+      And "2" are available for the user, also counting availability from groups the user is member of
+      And "3" are available in total, also counting availability from groups the user is not member of
+      And "7" are in this inventory pool (and borrowable)
 
   @personas
-  Scenario: Problemanzeige wenn Modell nicht verfügbar bei Rücknahmen
-    Given ich mache eine Rücknahme, die nicht überfällig ist
-     And eine Model ist nichtmehr verfügbar
-     Then sehe ich auf den beteiligten Linien die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Nicht verfügbar 2(3)/7"
-     And "2" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen
-     And "3" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört
-     And "7" sind total im Pool bekannt (ausleihbar)
+  Scenario: Showing problems when item is not available while taking back
+    Given I open a take back, not overdue
+     And a model is no longer available
+     Then I see any problems displayed on the relevant lines
+      And the problem is displayed as: "Nicht verfügbar 2(3)/7"
+      And "2" are available for the user, also counting availability from groups the user is member of
+      And "3" are available in total, also counting availability from groups the user is not member of
+      And "7" are in this inventory pool (and borrowable)
 
   @javascript @personas @browser
   Scenario: Problemanzeige bei Aushändigung wenn Gegenstand unvollständig
     Given I am doing a hand over
-     And eine Gegenstand ist unvollständig
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Gegenstand ist unvollständig"
+    And one item is incomplete
+    Then the affected item's line shows the item's problems
+    And the problem is displayed as: "Gegenstand ist unvollständig"
 
   @javascript @personas
-  Scenario: Problemanzeige bei Rücknahme wenn verspätet
+  Scenario: Showing problems during take back if overdue
     Given I take back a late item
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Überfällig seit 6 Tagen"
+    Then the affected item's line shows the item's problems
+    And the problem is displayed as: "Überfällig seit 6 Tagen"

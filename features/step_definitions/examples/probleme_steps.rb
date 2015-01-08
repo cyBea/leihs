@@ -7,7 +7,8 @@
 #  step "I open a contract for acknowledgement%s" % (arg1 ? ", whose start date is not in the past" : "")
 #end
 
-Angenommen /^ich mache eine Rücknahme(, die nicht überfällig ist)?$/ do |arg1|
+#Angenommen /^ich mache eine Rücknahme(, die nicht überfällig ist)?$/ do |arg1|
+Given /^I am doing a take back( that is not overdue)?$/ do |arg1|
   @event = "take_back"
   if arg1
     step 'I open a take back, not overdue'
@@ -106,7 +107,8 @@ Then /^"(.*?)" are in this inventory pool \(and borrowable\)$/ do |arg1|
   expect(@reference_problem).to match("/#{@line.model.items.where(inventory_pool_id: @line.inventory_pool).borrowable.size}")
 end
 
-Angenommen /^eine Gegenstand ist nicht ausleihbar$/ do
+#Angenommen /^eine Gegenstand ist nicht ausleihbar$/ do
+Given /^one item is not borrowable$/ do
   case @event
     when "hand_over"
       @item = @current_inventory_pool.items.in_stock.unborrowable.sample
@@ -115,7 +117,7 @@ Angenommen /^eine Gegenstand ist nicht ausleihbar$/ do
       find(".line[data-id='#{@line_id}']", text: @item.model.name).find("[data-assign-item][disabled]")
     when "take_back"
       @line_id = find(".line[data-line-type='item_line']", match: :first)[:"data-id"]
-      step 'markiere ich den Gegenstand als nicht ausleihbar'
+      step 'I mark the item as not borrowable'
     else
       raise
   end
@@ -139,9 +141,10 @@ def open_inspection_for_line(line_id)
   find(".modal")
 end
 
-Dann /^markiere ich den Gegenstand als nicht ausleihbar$/ do
+#Dann /^markiere ich den Gegenstand als nicht ausleihbar$/ do
+Then /^I mark the item as not borrowable$/ do
   open_inspection_for_line(@line_id)
-  find("select[name='is_borrowable']").select "Nicht ausleihbar"
+  find("select[name='is_borrowable']").select "Unborrowable"
   find(".modal button[type='submit']").click
 end
 
@@ -152,9 +155,10 @@ Then /^I mark the item as defective$/ do
   find(".modal button[type='submit']").click
 end
 
-Dann /^markiere ich den Gegenstand als unvollständig$/ do
+#Dann /^markiere ich den Gegenstand als unvollständig$/ do
+Then /^I mark the item as incomplete$/ do
   open_inspection_for_line(@line_id)
-  find("select[name='is_incomplete']").select "Unvollständig"
+  find("select[name='is_incomplete']").select "Incomplete"
   find(".modal button[type='submit']").click
 end
 
@@ -173,7 +177,8 @@ When /^one item is defective$/ do
   end
 end
 
-Angenommen /^eine Gegenstand ist unvollständig$/ do
+#Angenommen /^eine Gegenstand ist unvollständig$/ do
+Given /^one item is incomplete$/ do
   case @event
     when "hand_over"
       @item = @current_inventory_pool.items.in_stock.incomplete.sample
@@ -181,7 +186,7 @@ Angenommen /^eine Gegenstand ist unvollständig$/ do
       @line_id = find("input[value='#{@item.inventory_code}']").find(:xpath, "ancestor::div[@data-id]")["data-id"]
     when "take_back"
       @line_id = find(".line[data-line-type='item_line']", match: :first)[:"data-id"]
-      step 'markiere ich den Gegenstand als unvollständig'
+      step 'I mark the item as incomplete'
     else
       raise
   end
