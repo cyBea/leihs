@@ -16,11 +16,11 @@ Feature: Displaying problems
      And "7" are in this inventory pool (and borrowable)
 
   @javascript @browser @personas
-  Scenario: Problemanzeige bei Rücknahme wenn Gegenstand defekt
+  Scenario: Showing problems in an order when taking back a defective item
     Given I take back an item
-     And eine Gegenstand ist defekt
-     Then sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen
-     And das Problem wird wie folgt dargestellt: "Gegenstand ist defekt"
+    And one item is defective
+     Then the affected item's line shows the item's problems
+     And the problem is displayed as: "Gegenstand ist defekt"
 
   @javascript @personas @browser
   Scenario: Problemanzeige bei Aushändigung wenn Gegenstand defekt

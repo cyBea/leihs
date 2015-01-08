@@ -145,9 +145,10 @@ Dann /^markiere ich den Gegenstand als nicht ausleihbar$/ do
   find(".modal button[type='submit']").click
 end
 
-Dann /^markiere ich den Gegenstand als defekt$/ do
+#Dann /^markiere ich den Gegenstand als defekt$/ do
+Then /^I mark the item as defective$/ do
   open_inspection_for_line(@line_id)
-  find("select[name='is_broken']").select "Defekt"
+  find("select[name='is_broken']").select "Defective"
   find(".modal button[type='submit']").click
 end
 
@@ -157,7 +158,8 @@ Dann /^markiere ich den Gegenstand als unvollständig$/ do
   find(".modal button[type='submit']").click
 end
 
-Angenommen /^eine Gegenstand ist defekt$/ do
+#Angenommen /^eine Gegenstand ist defekt$/ do
+When /^one item is defective$/ do
   case @event
     when "hand_over"
       @item = @current_inventory_pool.items.in_stock.broken.sample
@@ -165,7 +167,7 @@ Angenommen /^eine Gegenstand ist defekt$/ do
       @line_id = find("input[value='#{@item.inventory_code}']").find(:xpath, "ancestor::div[@data-id]")["data-id"]
     when "take_back"
       @line_id = find(".line[data-line-type='item_line']", match: :first)[:"data-id"]
-      step 'markiere ich den Gegenstand als defekt'
+      step 'I mark the item as defective'
     else
       raise
   end
@@ -185,7 +187,8 @@ Angenommen /^eine Gegenstand ist unvollständig$/ do
   end
 end
 
-Dann /^sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen$/ do
+#Dann /^sehe ich auf der Linie des betroffenen Gegenstandes die Auszeichnung von Problemen$/ do
+Then /^the affected item's line shows the item's problems$/ do
   target = find(".line[data-id='#{@line_id}'] .emboss.red")
   hover_for_tooltip target
   @problems = []
