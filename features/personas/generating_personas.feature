@@ -26,7 +26,7 @@ Feature: Generating Personas
       | Matti                     | #{Faker::Name.last_name} | matti@zhdk.ch            | en-GB    |                                         |
       | Mike                      | #{Faker::Name.last_name} | mike@zhdk.ch             | en-GB    |                                         |
       | Pius                      | #{Faker::Name.last_name} | pius@zhdk.ch             | en-GB    |                                         |
-      | Normin                    | #{Faker::Name.last_name} | normin@zhdk.ch           | en-GB    |                                         |
+      | Normin                    | Normalo                  | normin@zhdk.ch           | en-GB    |                                         |
       | #{Faker::Name.first_name} | #{Faker::Name.last_name} | lending_manager1@zhdk.ch | en-GB    |                                         |
       | Peter                     | Silie                    | peter@silie.com          | en-GB    |                                         |
       | Andi                      | #{Faker::Name.last_name} | andi@zhdk.ch             | en-GB    |                                         |
