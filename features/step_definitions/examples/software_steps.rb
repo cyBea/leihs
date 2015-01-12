@@ -89,11 +89,12 @@ Dann(/^sind die Informationen dieser Software\-Lizenz gespeichert$/) do
   license.properties[:quantity_allocations] == @quantity_allocations
 end
 
-Wenn(/^ich eine Software editiere$/) do
+#Wenn(/^ich eine Software editiere$/) do
+When(/^I edit software$/) do
   @software ||= Software.all.sample
   step "I open the inventory"
   @page_to_return = current_path
-  find("a", text: _("Software")).click
+  all("a", text: _("Software")).first.click
   find(:select, "retired").first("option").select_option
   @model_id = @software.id
   find(".line[data-type='software'][data-id='#{@software.id}']").find("a", text: _("Edit Software")).click
@@ -197,7 +198,8 @@ Dann(/^sind die Informationen dieser Software\-Lizenz erfolgreich aktualisiert w
   license.properties[:quantity_allocations] == @new_quantity_allocations
 end
 
-Wenn(/^ich mich auf der Softwareliste befinde$/) do
+#Wenn(/^ich mich auf der Softwareliste befinde$/) do
+When(/^I am listing software$/) do
   expect(has_content?(_("List of Inventory"))).to be true
   find("a", text: _("Software")).click
 end

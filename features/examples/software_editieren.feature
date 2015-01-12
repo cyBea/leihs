@@ -1,22 +1,22 @@
 
-Feature: Software editieren
+Feature: Editing software
 
   Background:
     Given I am Mike
 
   @javascript @personas
-  Scenario: Software-Produkt editieren
-    When ich eine Software editiere
-    And ich ändere die folgenden Details
-      | Feld                   | Wert                                                           |
-      | Produkt                | Test Software I                                                |
+  Scenario: Editing a software product
+    When I edit software
+    And I edit the following details
+      | Field                   | Value                                                           |
+      | Product                | Test Software I                                                |
       | Version                | Test Version I                                                 |
-      | Hersteller             | Neuer Hersteller                                               |
-      | Software Informationen | Installationslink beachten: http://wwww.dokuwiki.ch/neue_seite |
+      | Manufacturer | Neuer Hersteller                                               |
+      | Software Information | Installationslink beachten: http://wwww.dokuwiki.ch/neue_seite |
     When I save
-    And ich mich auf der Softwareliste befinde
+    And I am listing software
     Then the information is saved
-    And die Daten wurden entsprechend aktualisiert
+    And the data has been updated
 
   #73278586
   @javascript @personas
