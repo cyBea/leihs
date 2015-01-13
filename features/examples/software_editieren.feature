@@ -20,7 +20,7 @@ Feature: Editing software
 
   #73278586
   @javascript @personas
-  Scenario: Grösse des Software Informationen-Felds
+  Scenario: Size of the software information field
     Given a software product with more than 6 text rows in field "Software Informationen" exists
     When I edit this software
     And I click in the field "Software Informationen"
@@ -29,17 +29,17 @@ Feature: Editing software
     Then this field shrinks back to the original size
 
   @javascript @personas
-  Scenario: Software-Lizenz editieren
-    When I edit an existing software license with software information, quantity allocations and attachments
+  Scenario: Editing a software license
+    When I edit a software license with software information, quantity allocations and attachments
     Then I see the "Software Information"
     And the software information is not editable
     And the links of software information open in a new tab upon clicking
     Then I see the attachments of the software
     And I can open the attachments in a new tab
-    When ich eine andere Software auswähle
-    And ich eine andere Seriennummer eingebe
-    And ich einen anderen Aktivierungstyp wähle
-    And ich den Wert "Ausleihbar" ändere
+    When I select some different software
+    And I enter a different serial number
+    And I select a different activation type
+    And I change the value of "Borrowable"
     And I change the options for operating system
     And I change the options for installation
     And I change the license expiration date
@@ -48,26 +48,26 @@ Feature: Editing software
     And I change the value of the note
     And I change the value of dongle id
     And I choose one of the following license types
-      | Mehrplatz   |
-      | Konkurrent  |
-      | Site-Lizenz |
+      | Single Workplace |
+      | Concurrent       |
+      | Site License     |
     And I change the value of total quantity
     And I change the quantity allocations
     #But ich kann den Inventarcode nicht ändern # really? inventory manager can change the inventory number of an item right now...
     When I save
-    Then sind die Informationen dieser Software-Lizenz erfolgreich aktualisiert worden
+    Then this software license's information has been updated successfully
 
   @javascript @personas
-  Scenario: Software-Lizenz editieren - Werte der Datenfelder löschen
+  Scenario: Edit software license, deleting values from the fields
     When I edit a license with set dates for maintenance expiration, license expiration and invoice date
     And I delete the data for the following fields:
-      | Maintenance-Ablaufdatum |
-      | Lizenzablaufdatum       |
-      | Rechnungsdatum          |
+      | Maintenance expiration |
+      | License expiration     |
+      | Invoice Date           |
     And I save
     Then I receive a notification of success
     When I edit the same license
     Then the following fields of the license are empty:
-      | Maintenance-Ablaufdatum |
-      | Lizenzablaufdatum       |
-      | Rechnungsdatum          |
+      | Maintenance expiration |
+      | License expiration     |
+      | Invoice Date           |

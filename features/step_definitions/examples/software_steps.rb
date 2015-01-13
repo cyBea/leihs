@@ -128,17 +128,20 @@ Then(/^I can save and copy the existing software license$/) do
   find("a[id='item-save-and-copy']", text: _("Save and copy"))
 end
 
-Wenn(/^ich eine andere Software auswähle$/) do
+#Wenn(/^ich eine andere Software auswähle$/) do
+When(/^I select some different software$/) do
   @new_software = Software.all.select{|s| s != @software}.sample
   fill_in_autocomplete_field _("Software"), @new_software.name
 end
 
-Wenn(/^ich eine andere Seriennummer eingebe$/) do
+#Wenn(/^ich eine andere Seriennummer eingebe$/) do
+When(/^I enter a different serial number$/) do
   @new_serial_number = Faker::Lorem.characters(8)
   find(".field[data-type='field']", match: :first, text: _("Serial Number")).find("input").set @new_serial_number
 end
 
-Wenn(/^ich einen anderen Aktivierungstyp wähle$/) do
+#Wenn(/^ich einen anderen Aktivierungstyp wähle$/) do
+When(/^I select a different activation type$/) do
   @new_activation_type = find(".field", text: _("Activation Type")).all("option").map(&:value).select{|v| v != @license.properties[:activation_type]}.sample
   find(".field", text: _("Activation Type")).find("option[value='#{@new_activation_type}']").click
 end
@@ -148,7 +151,8 @@ Wenn(/^ich einen anderen Lizenztyp wähle$/) do
   find(".field", text: _("License Type")).find("option[value='#{@new_license_type}']").click
 end
 
-Wenn(/^ich den Wert "Ausleihbar" ändere$/) do
+#Wenn(/^ich den Wert "Ausleihbar" ändere$/) do
+When(/^I change the value of "Borrowable"$/) do
   find(".field", text: _("Borrowable")).find("label", text: "OK").find("input").click
 end
 
@@ -176,7 +180,8 @@ When(/^I change the options for installation$/) do
   end
 end
 
-Dann(/^sind die Informationen dieser Software\-Lizenz erfolgreich aktualisiert worden$/) do
+#Dann(/^sind die Informationen dieser Software\-Lizenz erfolgreich aktualisiert worden$/) do
+Then(/^this software license's information has been updated successfully$/) do
   expect(has_selector?("#flash .success")).to be true
   license = Item.find_by_serial_number(@new_serial_number)
   expect(license.type).to eq "License"
@@ -654,7 +659,7 @@ Given(/^I add a new or I change an existing (.+)$/) do |entity|
     expect(f.has_selector? "a").to be true
   end
 
-  When(/^I edit an existing software license with software information, quantity allocations and attachments$/) do
+  When(/^I edit a software license with software information, quantity allocations and attachments$/) do
     @license = @current_inventory_pool.items.licenses.find {|i| i.model.technical_detail =~ /http/ and not i.model.attachments.empty? and i.properties[:quantity_allocations].size >= 2 }
     expect(@license).not_to be_nil
     visit manage_edit_item_path(@current_inventory_pool, @license)
