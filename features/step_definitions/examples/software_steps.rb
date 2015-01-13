@@ -42,7 +42,8 @@ end
 #  expect(Software.all.empty?).to be false
 #end
 
-Wenn(/^ein neuer Inventarcode vergeben wird$/) do
+#Wenn(/^ein neuer Inventarcode vergeben wird$/) do
+When(/^a new inventory code is assigned$/) do
   @target_inventory_code = find("input[name='item[inventory_code]']").value
   expect(@target_inventory_code.blank?).to be false
   expect(Item.find_by_inventory_code(@target_inventory_code)).to eq nil
@@ -902,41 +903,41 @@ Dann(/^the following fields were copied from the original software license$/) do
     case field
       when "Software"
         expect(@target_item.model_id).to eq @item.model_id
-      when "Bezug"
+      when "Reference"
         expect(@target_item.properties[:reference]).to eq @item.properties[:reference]
-      when "Besitzer"
+      when "Owner"
         expect(@target_item.owner_id).to eq @item.owner_id
-      when "Verantwortliche Abteilung"
+      when "Responsible department"
         expect(@target_item.inventory_pool_id).to eq @item.inventory_pool_id
-      when "Rechnungsdatum"
+      when "Invoice Date"
         expect(@target_item.invoice_date).to eq @item.invoice_date
-      when "Anschaffungswert"
+      when "Initial Price"
         expect(@target_item.price).to eq @item.price
-      when "Lieferant"
+      when "Supplier"
         expect(@target_item.supplier_id).to eq @item.supplier_id
-      when "Beschafft durch"
+      when "Procured by"
         expect(@target_item.properties[:procured_by]).to eq @item.properties[:procured_by]
-      when "Notiz"
+      when "Note"
         expect(@target_item.note).to eq @item.note
-      when "Aktivierungstyp"
+      when "Activation type"
         expect(@target_item.properties[:activation_type]).to eq @item.properties[:activation_type]
-      when "Lizenztyp"
+      when "License Type"
         expect(@target_item.properties[:license_type]).to eq @item.properties[:license_type]
-      when "Gesamtanzahl"
+      when "Total quantity"
         expect(@target_item.properties[:quantity]).to eq @item.properties[:quantity]
-      when "Betriebssystem"
+      when "Operating System"
         expect(@target_item.properties[:operating_system]).to eq @item.properties[:operating_system]
       when "Installation"
         expect(@target_item.properties[:installation]).to eq @item.properties[:installation]
-      when "Lizenzablaufdatum"
+      when "License expiration"
         expect(@target_item.properties[:license_expiration]).to eq @item.properties[:license_expiration]
-      when "Maintenance-Vertrag"
+      when "Maintenance contract"
         expect(@target_item.properties[:maintenance_contract]).to eq @item.properties[:maintenance_contract]
-      when "Maintenance-Ablaufdatum"
+      when "Maintenance expiration"
         expect(@target_item.properties[:maintenance_expiration]).to eq @item.properties[:maintenance_expiration]
-      when "Währung"
+      when "Currency"
         expect(@target_item.properties[:maintenance_currency]).to eq @item.properties[:maintenance_currency]
-      when "Preis"
+      when "Price"
         expect(@target_item.properties[:maintenance_price]).to eq @item.properties[:maintenance_price]
       else
         raise
