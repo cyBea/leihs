@@ -1,6 +1,7 @@
 # encoding: utf-8
 
-Dann(/^ist die neue Software erstellt und unter Software auffindbar$/) do
+#Dann(/^ist die neue Software erstellt und unter Software auffindbar$/) do
+Then(/^the new software product is created and can be found in the software section$/) do
   find("[data-type='license']").click
   step "the information is saved"
 end
@@ -35,9 +36,11 @@ Dann(/^die Option "Ausleihbar" ist standardmässig auf "Nicht ausleihbar" gesetz
   expect(find("label", text: _("Not Borrowable")).find("input[name='item[is_borrowable]']").selected?).to be true
 end
 
-Angenommen(/^es existiert ein Software\-Produkt$/) do
-  expect(Software.all.empty?).to be false
-end
+#Angenommen(/^es existiert ein Software\-Produkt$/) do
+# Duplicate! See above
+#Given(/^a software product exists$/) do
+#  expect(Software.all.empty?).to be false
+#end
 
 Wenn(/^ein neuer Inventarcode vergeben wird$/) do
   @target_inventory_code = find("input[name='item[inventory_code]']").value
@@ -627,14 +630,15 @@ When(/^I edit the same license$/) do
 end
 
 When(/^I edit again this software product$/) do
-  string = @table_hashes.select {|x| ["Produkt", "Version", "Hersteller"].include? x["Feld"]}.map {|x| x["Wert"]}.join(' ')
+  string = @table_hashes.select {|x| ["Product", "Version", "Manufacturer"].include? x["Field"]}.map {|x| x["Value"]}.join(' ')
   results = Software.search(string)
   expect(results.size).to eq 1
   @software = results.first
-  step "ich eine Software editiere"
+  step "I edit software"
 end
 
-Then(/^outside the the text field, they will additionally displayed lines with link only$/) do
+#Then(/^outside the the text field, they will additionally displayed lines with link only$/) do
+Then(/^outside the the text field, all the URLs extracted from the software information field are displayed as links$/) do
   within "#form .field", text: _("Software Information") do
     find(".list-of-lines").all(".line").each do |line|
       line.find("a[target='_blank']")

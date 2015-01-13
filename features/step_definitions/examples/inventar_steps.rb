@@ -470,7 +470,6 @@ end
 
 #Wenn /^ich ein[en]* neue[srn]? (.+) hinzufüge$/ do |entity|
 When(/^I add a new (.+)/) do |entity|
-
   find(".dropdown-holder", text: _("Add inventory")).click
   click_link entity
 end
