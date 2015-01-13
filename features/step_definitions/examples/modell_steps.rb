@@ -71,7 +71,7 @@ Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
         lambda {|m| m.contract_lines.empty?}
       when "no items assigned"
         lambda {|m| m.items.items.empty?}
-      when "keine Lizenzen zugefügt"
+      when "has no licenses"
         lambda {|m| m.items.licenses.empty?}
       when "has group capacities"
         lambda {|m| Partition.find_by_model_id(m.id)}

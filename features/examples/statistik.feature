@@ -1,16 +1,17 @@
 
-Feature: Statistiken von Ausleihe und Inventar
+Feature: Statistics on lending and inventory
 
   Background:
     Given I am Ramon
 
   @personas
-  Scenario: Wo die Statistik-Ansicht erscheint
-    When ich im Verwalten-Bereich bin
-    Then habe ich die Möglichkeit zur Statistik-Ansicht zu wechseln
+  Scenario: Where the statistics are visible
+    When I am in the manage section
+    Then I can choose to switch to the statistics section
 
+  # AYAYAY! All the scenarios below are undefined
   @personas
-  Scenario: Zeitliche Eingrenzung der Statistik-Ansicht
+  Scenario: Filtering statistics by time window
     Given ich befinde mich in der Statistik-Ansicht
     Then sehe ich normalerweise die Statistik der letzten 30 Tage
     When ich den Zeitraum eingrenze auf 1.1. - 31.12. des laufenden Jahres

@@ -1,13 +1,13 @@
 
-Feature: Sprachauswahl
+Feature: Changing interface language 
 
-  Um die Interfacesprache auf meine Bedürfnisse anzupassen
-  möchte ich Benutzer
-  die Möglichkeit haben meine Sprache einzustellen
+  In order to understand what the software is telling me
+  As any user
+  I want to switch the interface language to a language I know
 
   @personas
-  Scenario: Navigation für Ausleihenden
+  Scenario: Changing my interface language
     Given I am Mike
-    And ich sehe die Sprachauswahl
-    When ich die Sprache ändere
-    Then ist die Sprache für mich geändert  
+    And I see the language list
+    When I change the language
+    Then the interface language has been changed
