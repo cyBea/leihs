@@ -1,20 +1,20 @@
 
-Feature: Suche
+Feature: Search
 
   @personas
-  Scenario: Suche nach Verträgen mittels Inventarcode eines Gegenstandes der dem Vertrag zugewisen ist
+  Scenario: Searching for contracts by inventory code of an item that is assigned to a contract
     Given I am Mike
-    And ich gebe den Inventarcode eines Gegenstandes der einem Vertrag zugewisen ist in die Suche ein
-    Then sehe ich den Vertrag dem der Gegenstand zugewisen ist in der Ergebnisanzeige
+    And I search for the inventory code of an item that is in a contract
+    Then I see the contract this item is assigned to in the list of results
 
   @javascript @personas
-  Scenario: Such nach einem Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
+  Scenario: Searching for a user that has contracts but no longer has access to the current inventory pool
     Given I am Mike
-    And es existiert ein Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat
-    When man nach dem Benutzer sucht
-    Then sieht man alle Veträge des Benutzers
-    And der Name des Benutzers ist in jeder Vertragslinie angezeigt
-    And die Personalien des Benutzers werden im Tooltip angezeigt
+    And there is a user with contracts who no longer has access to the current inventory pool
+    When I search for that user
+    Then I see all that user's contracts
+    And the name of that user is shown on each contract line
+    And that user's personal details are shown in the tooltip
 
   @javascript @personas
   Scenario: Keine Aushändigung ohne vorherige Genehmigung

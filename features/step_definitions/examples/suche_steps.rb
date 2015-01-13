@@ -1,26 +1,31 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^ich gebe den Inventarcode eines Gegenstandes der einem Vertrag zugewisen ist in die Suche ein$/ do
+#Angenommen /^ich gebe den Inventarcode eines Gegenstandes der einem Vertrag zugewisen ist in die Suche ein$/ do
+Given /^I search for the inventory code of an item that is in a contract$/ do
   @contract = @current_user.inventory_pools.first.contracts.signed.first
   @item = @contract.items.first
 end
 
-Dann /^sehe ich den Vertrag dem der Gegenstand zugewisen ist in der Ergebnisanzeige$/ do
+#Dann /^sehe ich den Vertrag dem der Gegenstand zugewisen ist in der Ergebnisanzeige$/ do
+Then /^I see the contract this item is assigned to in the list of results$/ do
   expect(@current_user.inventory_pools.first.contracts.search(@item.inventory_code)).to include @contract
 end
 
-Angenommen(/^es existiert ein Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat$/) do
+#Angenommen(/^es existiert ein Benutzer mit Verträgen, der kein Zugriff mehr auf das Gerätepark hat$/) do
+Given(/^there is a user with contracts who no longer has access to the current inventory pool$/) do
   @user = User.find {|u| u.access_rights.find {|ar| ar.inventory_pool == @current_inventory_pool and ar.deleted_at} and !u.contracts.blank?}
   expect(@user).not_to be_nil
 end
 
-Wenn(/^man nach dem Benutzer sucht$/) do
+#Wenn(/^man nach dem Benutzer sucht$/) do
+When(/^I search for that user$/) do
   search_field = find("#topbar-search input#search_term")
   search_field.set @user.name
   search_field.native.send_key :return
 end
 
-Dann(/^sieht man alle Veträge des Benutzers$/) do
+#Dann(/^sieht man alle Veträge des Benutzers$/) do
+Then(/^I see all that user's contracts$/) do
   @user.contracts.each {|c| find("#contracts .line[data-id='#{c.id}']") }
 end
 
@@ -28,13 +33,15 @@ Dann(/^sieht man alle unterschriebenen und geschlossenen Veträge des Benutzers$
   @user.contracts.signed_or_closed.where(inventory_pool: @current_inventory_pool).each {|c| find("#contracts .line[data-id='#{c.id}']") }
 end
 
-Dann(/^der Name des Benutzers ist in jeder Vertragslinie angezeigt$/) do
+#Dann(/^der Name des Benutzers ist in jeder Vertragslinie angezeigt$/) do
+Then(/^the name of that user is shown on each contract line$/) do
   within "#contracts" do
     all(".line").each {|el| el.text.include? @user.name }
   end
 end
 
-Dann(/^die Personalien des Benutzers werden im Tooltip angezeigt$/) do
+#Dann(/^die Personalien des Benutzers werden im Tooltip angezeigt$/) do
+Then(/^that user's personal details are shown in the tooltip$/) do
   hover_for_tooltip find("#contracts [data-type='user-cell']", match: :first)
   within ".tooltipster-base" do
     [@user.name, @user.email, @user.address, @user.phone, @user.badge_id].each {|info| has_content? info}
