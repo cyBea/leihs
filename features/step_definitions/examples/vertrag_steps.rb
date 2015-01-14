@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^man öffnet einen Vertrag bei der Aushändigung( mit Software)?$/ do |arg1|
+#Angenommen /^man öffnet einen Vertrag bei der Aushändigung( mit Software)?$/ do |arg1|
+Given /^I open a contract during hand over( that contains software)?$/ do |arg1|
   step "I open a hand over which has multiple unassigned lines and models in stock%s" % (arg1 ? " with software" : nil)
 
 
@@ -23,34 +24,35 @@ Angenommen /^man öffnet einen Vertrag bei der Aushändigung( mit Software)?$/ d
   @contract_lines_to_take_back = @customer.contract_lines.to_take_back.joins(:contract).where(contracts: {inventory_pool_id: @current_inventory_pool})
 end
 
-Dann /^möchte ich die folgenden Bereiche sehen:$/ do |table|
+#Dann /^möchte ich die folgenden Bereiche sehen:$/ do |table|
+Then /^I want to see the following areas:$/ do |table|
   table.hashes.each do |area|
-    case area["Bereich"]
-       when "Datum"
+    case area["Area"]
+       when "Date"
          within @contract_element.find(".date") do
            expect(has_content?(Date.today.year)).to be true
            expect(has_content?(Date.today.month)).to be true
            expect(has_content?(Date.today.day)).to be true
          end
-      when "Titel", "Vertragsnummer"
+      when "Title", "Contract number"
          expect(@contract_element.find("h1").has_content?(@contract.id)).to be true
-       when "Ausleihender"
+       when "Borrower"
          @contract_element.find(".customer")
-       when "Verleier"
+       when "Lender"
          @contract_element.find(".inventory_pool")
-       when "Liste 1"
+       when "List 1"
          # this list is not always there
-       when "Liste 2"
+       when "List 2"
          # this list is not always there
-       when "Liste der Zwecke"
+       when "List of purposes"
          expect(@contract_element.find("section.purposes").has_content?(@contract.purpose)).to be true
-       when "Zusätzliche Notiz"
+       when "Additional notes"
          @contract_element.find("section.note")
-       when "Hinweis auf AGB"
+       when "Terms"
          @contract_element.find(".terms")
-       when "Unterschrift des Ausleihenden"
+       when "Borrower's signature"
          @contract_element.find(".terms_and_signature")
-       when "Seitennummer"
+       when "Page number"
          # depends on browser settings
        when "Barcode"
          @contract_element.find(".barcode")
@@ -58,21 +60,23 @@ Dann /^möchte ich die folgenden Bereiche sehen:$/ do |table|
    end
 end
 
-Dann /^seh ich den Hinweis auf AGB "(.*?)"$/ do |note|
+#Dann /^seh ich den Hinweis auf AGB "(.*?)"$/ do |note|
+Then /^I see a note mentioning the terms and conditions$/ do
   expect(@contract_element.find(".terms")).not_to be_nil
 end
 
-Dann /^beinhalten Liste (\d+) und Liste (\d+) folgende Spalten:$/ do |arg1, arg2, table|
+#Dann /^beinhalten Liste (\d+) und Liste (\d+) folgende Spalten:$/ do |arg1, arg2, table|
+Then /^list (\d+) and list (\d+) contain the following columns:$/ do |arg1, arg2, table|
   within @contract_element do
     table.hashes.each do |area|
-      case area["Spaltenname"]
-        when "Anzahl"
+      case area["Column name"]
+        when "Quantity"
           @contract.lines.each {|line| find("section.list tr", :text=> line.item.inventory_code).find(".quantity", :text=> line.quantity.to_s) }
-        when "Inventarcode"
+        when "Inventory code"
           @contract.lines.each {|line| find("section.list tr", :text=> line.item.inventory_code) }
-        when "Modellname"
+        when "Model name"
           @contract.lines.each {|line| find("section.list tr", :text=> line.item.inventory_code).find(".model_name", :text=> line.item.model.name) }
-        when "Startdatum"
+        when "Start date"
           @contract.lines.each {|line|
             line_element = find("section.list tr", :text=> line.item.inventory_code)
             within line_element.find(".start_date") do
@@ -81,7 +85,7 @@ Dann /^beinhalten Liste (\d+) und Liste (\d+) folgende Spalten:$/ do |arg1, arg2
               expect(has_content? line.start_date.day).to be true
             end
           }
-        when "Enddatum"
+        when "End date"
           @contract.lines.each {|line|
             line_element = find("section.list tr", :text=> line.item.inventory_code)
             within line_element.find(".end_date") do
@@ -90,7 +94,7 @@ Dann /^beinhalten Liste (\d+) und Liste (\d+) folgende Spalten:$/ do |arg1, arg2
               expect(has_content? line.end_date.day).to be true
             end
           }
-        when "Rückgabedatum"
+        when "Return date"
           @contract.lines.each {|line|
             unless line.returned_date.blank?
               line_element = find("section.list tr", :text=> line.item.inventory_code)
@@ -106,16 +110,19 @@ Dann /^beinhalten Liste (\d+) und Liste (\d+) folgende Spalten:$/ do |arg1, arg2
   end
 end
 
-Dann /^sehe ich eine Liste Zwecken, getrennt durch Kommas$/ do
+#Dann /^sehe ich eine Liste Zwecken, getrennt durch Kommas$/ do
+Then /^I see a comma-separated list of purposes$/ do
   @contract.lines.each {|line| expect(@contract_element.find(".purposes").has_content? line.purpose.to_s).to be true }
 end
 
-Dann /^jeder identische Zweck ist maximal einmal aufgelistet$/ do
+#Dann /^jeder identische Zweck ist maximal einmal aufgelistet$/ do
+Then /^each unique purpose is listed only once$/ do
   purposes = @contract.lines.sort.map{|l| l.purpose.to_s }.uniq.join('; ')
   @contract_element.find(".purposes > p", text: purposes)
 end
 
-Dann /^sehe ich das heutige Datum oben rechts$/ do
+#Dann /^sehe ich das heutige Datum oben rechts$/ do
+Then /^I see today's date in the top right corner$/ do
   within @contract_element.find(".date") do
     expect(has_content? Date.today.month).to be true
     expect(has_content? Date.today.day).to be true
@@ -123,15 +130,18 @@ Dann /^sehe ich das heutige Datum oben rechts$/ do
   end
 end
 
-Dann /^sehe ich den Titel im Format "(.*?)"$/ do |format|
+#Dann /^sehe ich den Titel im Format "(.*?)"$/ do |format|
+Then /^I see a title in the format "(.*?)"$/ do |format|
   @contract_element.find("h1").text.match Regexp.new(format.gsub("#", "\\d"))
 end
 
-Dann /^sehe ich den Barcode oben links$/ do
+#Dann /^sehe ich den Barcode oben links$/ do
+Then /^I see the barcode in the top left$/ do
   @contract_element.find(".barcode")
 end
 
-Dann /^sehe ich den Ausleihenden oben links$/ do
+#Dann /^sehe ich den Ausleihenden oben links$/ do
+Then /^I see the borrower in the top left corner$/ do
   @contract_element.find(".parties .customer")
 end
 
@@ -139,26 +149,28 @@ Dann /^sehe ich den Verleiher neben dem Ausleihenden$/ do
   @contract_element.find(".parties .inventory_pool")
 end
 
-Dann /^möchte ich im Feld des Ausleihenden die folgenden Bereiche sehen:$/ do |table|
+#Dann /^möchte ich im Feld des Ausleihenden die folgenden Bereiche sehen:$/ do |table|
+Then /^the following user information is included on the contract:$/ do |table|
   @customer_element = find(".parties .customer")
   @customer = @contract.user
   table.hashes.each do |area|
-    case area["Bereich"]
-       when "Vorname"
+    case area["Area"]
+       when "First name"
          expect(@customer_element.has_content?(@customer.firstname)).to be true
-       when "Nachname"
+       when "Last name"
          expect(@customer_element.has_content?(@customer.lastname)).to be true
-       when "Strasse", "Hausnummer"
+       when "Street", "Street Number"
          expect(@customer_element.has_content?(@customer.address)).to be true
-       when "Länderkürzel", "PLZ"
+       when "Country code", "postal code"
          expect(@customer_element.has_content?(@customer.zip)).to be true
-       when "Stadt"
+       when "City"
          expect(@customer_element.has_content?(@customer.city)).to be true
      end
    end
 end
 
-Wenn /^es Gegenstände gibt, die zurückgegeben wurden$/ do
+#Wenn /^es Gegenstände gibt, die zurückgegeben wurden$/ do
+When /^there are returned items$/ do
   visit manage_take_back_path(@current_inventory_pool, @customer)
   step 'I select all lines of an open contract'
   step 'I click take back'
@@ -171,19 +183,21 @@ Wenn /^es Gegenstände gibt, die zurückgegeben wurden$/ do
   page.driver.browser.switch_to.window(document_window.handle)
 end
 
-Dann /^sehe ich die Liste (\d+) mit dem Titel "(.*?)"$/ do |arg1, titel|
+#Dann /^sehe ich die Liste (\d+) mit dem Titel "(.*?)"$/ do |arg1, titel|
+Then /^I see list (\d+) with the title "(.*?)"$/ do |arg1, titel|
   find(".contract")
 
-  if titel == "Zurückgegebene Gegenstände"
+  if titel == "Returned Items"
     find_titel = _("Returned Items")
-  elsif titel == "Ausgeliehene Gegenstände"
+  elsif titel == "Borrowed Items"
     find_titel = _("Borrowed Items")
   end
 
   find(".contract", :text => find_titel)
 end
 
-Dann /^diese Liste enthält Gegenstände die ausgeliehen und zurückgegeben wurden$/ do
+#Dann /^diese Liste enthält Gegenstände die ausgeliehen und zurückgegeben wurden$/ do
+Then /^this list contains borrowed and returned items$/ do
   all(".modal .contract .returning_date").each do |date|
     expect(date).not_to eq ""
   end
@@ -202,7 +216,8 @@ Dann /^diese Liste enthält Gegenstände, die ausgeliehen und noch nicht zurück
   end
 end
 
-When(/^die Modelle sind innerhalb ihrer Gruppe alphabetisch sortiert$/) do
+#When(/^die Modelle sind innerhalb ihrer Gruppe alphabetisch sortiert$/) do
+Then(/^the models are sorted alphabetically within their group$/) do
   not_returned_lines, returned_lines = @contract.lines.partition {|line| line.returned_date.blank? }
 
   unless returned_lines.empty?
@@ -244,15 +259,15 @@ Dann(/^wird unter dem Verleiher diese Adresse angezeigt$/) do
   all(".inventory_pool span")[1].text == @address
 end
 
-Wenn(/^the contract contains a software license$/) do
+When(/^the contract contains a software license$/) do
   @selected_items_with_license = @selected_items.select {|i| i.model.is_a? Software }
   expect(@selected_items_with_license).not_to be_empty
 end
 
-Dann(/^I additionally see the following informations$/) do |table|
+Then(/^I additionally see the following information$/) do |table|
   table.raw.flatten.each do |s|
     case s
-      when "Seriennummer"
+      when "Serial number"
         @selected_items_with_license.each do |item|
           find(".contract tbody .model_name", text: item.serial_number)
         end

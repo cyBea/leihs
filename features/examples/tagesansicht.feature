@@ -1,22 +1,22 @@
 
-Feature: Ausleihe
+Feature: Daily view
 
   Background:
     Given I am Pius
     And I open the daily view
 
   @personas @javascript
-  Scenario: Anzeige der längsten Zeitspanne für Bestellungen
-    Given eine Bestellungen mit zwei unterschiedlichen Zeitspannen existiert
+  Scenario: Showing the longest time window for orders
+    Given there is an order with two different time windows
     And I navigate to the open orders
-    Then sehe ich für diese Bestellung die längste Zeitspanne direkt auf der Linie
+    Then I see the longest time span of this order directly on the order's line
 
   @personas @javascript
-  Scenario Outline: Sperrstatus des Benutzers anzeigen
-    Given eigenes Benutzer sind gesperrt
+  Scenario Outline: Showing whether a user is suspended
+    Given the current inventory pool's users are suspended
     And I navigate to the <target>
-    Then sehe ich auf allen Linien dieses Benutzers den Sperrstatus 'Gesperrt'
-  Examples: 
+    Then each line of this user contains the text 'Suspended'
+  Examples:
     | target           |
     | open orders      |
     | hand over visits |

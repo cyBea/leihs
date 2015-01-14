@@ -109,7 +109,8 @@ Dann(/^die Modelle werden blockiert$/) do
   step "bleiben die Modelle in der Bestellung blockiert"
 end
 
-Wenn(/^eine Rücknahme nur Optionen enthält$/) do
+#Wenn(/^eine Rücknahme nur Optionen enthält$/) do
+When(/^a take back contains only options$/) do
   @current_inventory_pool = @current_user.inventory_pools.where("access_rights.suspended_until IS NULL OR access_rights.suspended_until < ?", Date.today).first
   expect(@customer = @current_inventory_pool.users.find{|u| u.visits.take_back.count == 0}).to be
   step "I open a hand over for this customer"
@@ -121,6 +122,7 @@ Wenn(/^eine Rücknahme nur Optionen enthält$/) do
   visit manage_take_back_path @current_inventory_pool, @customer
 end
 
-Dann(/^wird für diese Optionen keine Verfügbarkeit berechnet$/) do
+#Dann(/^wird für diese Optionen keine Verfügbarkeit berechnet$/) do
+Then(/^no availability will be computed for these options$/) do
   expect(find('#status').has_content? _('Availability loaded')).to be true
 end

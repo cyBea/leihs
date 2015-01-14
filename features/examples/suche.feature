@@ -17,31 +17,31 @@ Feature: Search
     And that user's personal details are shown in the tooltip
 
   @javascript @personas
-  Scenario: Keine Aushändigung ohne vorherige Genehmigung
+  Scenario: No hand over without approval
     Given I am Pius
-    And es gibt einen Benutzer, mit einer nicht genehmigter Bestellung
-    When man nach diesem Benutzer sucht
-    Then kann ich die nicht genehmigte Bestellung des Benutzers nicht aushändigen ohne sie vorher zu genehmigen
+    And there is a user with an unapproved order
+    When I search for that user
+    Then I cannot hand over the unapproved order unless I approve it first
 
   @javascript @personas
-  Scenario: Kein 'zeige alle gefundenen Verträge' Link
+  Scenario: No link to show all matching contracts
     Given I am Mike
-    And es existiert ein Benutzer mit mindestens 3 und weniger als 5 Verträgen
-    When man nach dem Benutzer sucht
-    Then sieht man alle unterschriebenen und geschlossenen Veträge des Benutzers
-    And man sieht keinen Link 'Zeige alle gefundenen Verträge'
+    And there is a user with at least 3 and less than 5 contracts
+    When I search for that user
+    Then I see that user's signed and closed contracts
+    Then I don't see a link labeled 'Show all matching contracts'
 
   @javascript @personas
-  Scenario: Anzeige von ausgemusterten Gegenständen
+  Scenario: Displaying retired items
     Given I am Mike
     And there exists a closed contract with a retired item
     When I search globally after this item with its inventory code
-    Then sehe den Gegenstand ihn im Gegenstände-Container
+    Then I see the item in the items container
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model of this item
 
   @javascript @personas
-  Scenario: Anzeige von Gegenständen eines anderen Geräteparks in geschlossenen Verträgen
+  Scenario: Displaying items from another inventory pool in closed contracts
     Given I am Mike
     And there exists a closed contract with an item, for which an other inventory pool is responsible and owner
     When I search globally after this item with its inventory code
@@ -50,15 +50,15 @@ Feature: Search
     Then I see in the tooltip the model of this item
 
   @personas @javascript
-  Scenario Outline: Probleme bei Gegenständen in globaler Suche anzeigen
+  Scenario Outline: Showing items' problems in global search
     Given I am Mike
-    And there is a "<Zustand>" item in my inventory pool
+    And there is a "<state>" item in my inventory pool
     When I search globally after this item with its inventory code
     Then I see the item in the items container
-    And the item line ist marked as "<Zustand>" in red
+    And the item line ist marked as "<state>" in red
     Examples:
-      | Zustand          |
-      | Defekt           |
-      | Ausgemustert     |
-      | Unvollständig    |
-      | Nicht ausleihbar |
+      | state        |
+      | Broken       |
+      | Retired      |
+      | Incomplete   |
+      | Unborrowable |

@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen /^man öffnet eine Werteliste$/ do
-  step 'man öffnet einen Vertrag bei der Aushändigung'
+#Angenommen /^man öffnet eine Werteliste$/ do
+Given /^I open a value list$/ do
+  #step 'man öffnet einen Vertrag bei der Aushändigung'
+  step 'I open a contract during hand over'
 
   page.driver.browser.close
   new_window = page.driver.browser.window_handles.last
