@@ -1,47 +1,56 @@
 # -*- encoding : utf-8 -*-
 
-Wenn(/^ich im Inventarbereich auf den Link "Vorlagen" klicke$/) do
+#Wenn(/^ich im Inventarbereich auf den Link "Vorlagen" klicke$/) do
+When(/^I click on "Templates" in the inventory area$/) do
   @current_inventory_pool = @current_user.managed_inventory_pools.select {|ip| ip.templates.exists? }.sample
   step "I open the inventory"
   click_link _("Vorlagen")
 end
 
-Dann(/^öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen$/) do
+#Dann(/^öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen$/) do
+Then(/^I see a list of currently available templates for the current inventory pool$/) do
   expect(has_content?(_("List of templates"))).to be true
   @current_inventory_pool.templates.each do |t|
     expect(has_content?(t.name)).to be true
   end
 end
 
-Dann(/^die Vorlagen für dieses Inventarpool sind alphabetisch nach Namen sortiert$/) do
+#Dann(/^die Vorlagen für dieses Inventarpool sind alphabetisch nach Namen sortiert$/) do
+Then(/^the templates are ordered alphabetically by their names$/) do
   find(".line .col3of4 strong", match: :first)
   all_names = all(".line .col3of4 strong").map(&:text)
   expect(all_names.sort).to eq @current_inventory_pool.templates.sort.map(&:name)
   expect(all_names.count).to eq @current_inventory_pool.templates.count
 end
 
-Angenommen(/^ich befinde mich auf der Liste der Vorlagen$/) do
+#Angenommen(/^ich befinde mich auf der Liste der Vorlagen$/) do
+Given(/^I am listing templates$/) do
   visit manage_templates_path(@current_inventory_pool)
 end
 
-Wenn(/^ich auf den Button "Neue Vorlage" klicke$/) do
+#Wenn(/^ich auf den Button "Neue Vorlage" klicke$/) do
+When(/^I click the button "New Template"$/) do
   click_link _("New Template")
 end
 
-Dann(/^öffnet sich die Seite zur Erstellung einer neuen Vorlage$/) do
+#Dann(/^öffnet sich die Seite zur Erstellung einer neuen Vorlage$/) do
+Then(/^I can create a new template$/) do
   expect(current_path).to eq manage_new_template_path(@current_inventory_pool)
 end
 
-Wenn(/^ich den Namen der Vorlage eingebe$/) do
+#Wenn(/^ich den Namen der Vorlage eingebe$/) do
+When(/^I enter the template's name$/) do
   find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set "test"
 end
 
-Wenn(/^ich Modelle hinzufüge$/) do
+#Wenn(/^ich Modelle hinzufüge$/) do
+When(/^I add some models to the template$/) do
   @changed_model = @current_inventory_pool.models.find {|m| m.items.borrowable.size > 1}
   fill_in_autocomplete_field("#{_("Quantity")} / #{_("Models")}", @changed_model.name)
 end
 
-Dann(/^steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell$/) do
+#Dann(/^steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell$/) do
+Then(/^each model shows the maximum number of available items$/) do
   within "#models" do
     line = find(".line div[data-model-name]", text: @changed_model.name).find(:xpath, "./..")
     count = @changed_model.items.borrowable.where(inventory_pool_id: @current_inventory_pool).count
@@ -49,7 +58,8 @@ Dann(/^steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegen
   end
 end
 
-Dann(/^für jedes hinzugefügte Modell ist die Mindestanzahl (\d+)$/) do |n|
+#Dann(/^für jedes hinzugefügte Modell ist die Mindestanzahl (\d+)$/) do |n|
+Then(/^each model I've added has the minimum quantity (\d+)$/) do |n|
   within "#models" do
     all(".line").each do |line|
       expect(line.find("input[name='template[model_links_attributes][][quantity]']").value).to eq n
@@ -63,7 +73,8 @@ Dann(/^für das hinzugefügte Modell ist die Mindestanzahl (\d+)$/) do |n|
   end
 end
 
-Wenn(/^ich zu jedem Modell die Anzahl angebe$/) do
+#Wenn(/^ich zu jedem Modell die Anzahl angebe$/) do
+When(/^I enter a quantity for each model$/) do
   @new_value ||= 1
   within "#models" do
     all(".line").each do |line|
@@ -72,21 +83,15 @@ Wenn(/^ich zu jedem Modell die Anzahl angebe$/) do
   end
 end
 
-Dann(/^die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
+#Dann(/^die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
+Then(/^the template and all the entered information are saved$/) do
   @template = @current_inventory_pool.templates.find_by_name("test")
   expect(@template.model_links.size).to eq 1
   expect(@template.model_links.first.model).to eq @changed_model
   expect(@template.model_links.first.quantity).to eq @new_value
 end
 
-Dann(/^ich wurde auf die Liste der Vorlagen weitergeleitet$/) do
-  expect(current_path).to eq manage_templates_path(@current_inventory_pool)
-  expect(has_content?(_("List of templates"))).to be true
-end
-
-Dann(/^ich sehe die Erfolgsbestätigung$/) do
-  find("#flash .notice")
-end
+#Dann(/^ich wurde auf die Liste der Vorlagen weitergeleitet$/) do
 
 Angenommen(/^es existiert eine Vorlage mit mindestens zwei Modellen$/) do
   @template = @current_inventory_pool.templates.find do |t|

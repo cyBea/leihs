@@ -1,32 +1,28 @@
 
-Feature: Vorlagen verwalten
-
-  Als Ausleihe-Verwalter / Inventar-Verwalter möchte ich 
-  die Möglichkeit haben, Vorlagen zu verwalten
+Feature: Managing templates
 
   Background:
     Given I am Mike
 
   @personas
-  Scenario: Liste aller Vorlagen anzeigen
-    When ich im Inventarbereich auf den Link "Vorlagen" klicke
-    Then öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen
-    And die Vorlagen für dieses Inventarpool sind alphabetisch nach Namen sortiert
+  Scenario: Show list of all templates
+    When I click on "Templates" in the inventory area
+    Then I see a list of currently available templates for the current inventory pool
+    And the templates are ordered alphabetically by their names
 
   @javascript @browser @personas
-  Scenario: Vorlage erstellen
-    And ich befinde mich auf der Liste der Vorlagen
-    When ich auf den Button "Neue Vorlage" klicke
-    Then öffnet sich die Seite zur Erstellung einer neuen Vorlage
-    When ich den Namen der Vorlage eingebe
-    And ich Modelle hinzufüge
-    Then steht bei jedem Modell die höchst mögliche ausleihbare Anzahl der Gegenstände für dieses Modell
-    And für jedes hinzugefügte Modell ist die Mindestanzahl 1
-    When ich zu jedem Modell die Anzahl angebe
+  Scenario: Create template
+    Given I am listing templates 
+    When I click the button "New Template"
+    Then I can create a new template
+    When I enter the template's name
+    And I add some models to the template
+    Then each model shows the maximum number of available items
+    And each model I've added has the minimum quantity 1
+    When I enter a quantity for each model
     And I save
-    Then ich wurde auf die Liste der Vorlagen weitergeleitet
-    And ich sehe die Erfolgsbestätigung
-    And die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert
+    Then I am listing templates
+    And the template and all the entered information are saved
 
   @javascript @personas
   Scenario: Prüfen, ob max. Anzahl bei den Modellen überschritten ist
