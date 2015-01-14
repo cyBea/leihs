@@ -210,7 +210,8 @@ Dann(/^sehe ich den Vertrag genau wie im Verwalten-Bereich$/) do
   }
 end
 
-Dann(/^sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"$/) do
+#Dann(/^sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"$/) do
+Then(/^the relevant lines show the person taking back the item in the format "F. Lastname"$/) do
   if @contract_lines_to_take_back
     @contract_lines_to_take_back.map(&:contract).uniq.each do |contract|
       new_window = window_opened_by do

@@ -145,7 +145,8 @@ Then /^I see the borrower in the top left corner$/ do
   @contract_element.find(".parties .customer")
 end
 
-Dann /^sehe ich den Verleiher neben dem Ausleihenden$/ do
+#Dann /^sehe ich den Verleiher neben dem Ausleihenden$/ do
+Then /^the lender is shown next to the borrower$/ do
   @contract_element.find(".parties .inventory_pool")
 end
 
@@ -203,11 +204,13 @@ Then /^this list contains borrowed and returned items$/ do
   end
 end
 
-Wenn /^es Gegenstände gibt, die noch nicht zurückgegeben wurden$/ do
+#Wenn /^es Gegenstände gibt, die noch nicht zurückgegeben wurden$/ do
+When /^there are unreturned items$/ do
   @not_returned = @contract.lines.select{|lines| lines.returned_date.nil?}
 end
 
-Dann /^diese Liste enthält Gegenstände, die ausgeliehen und noch nicht zurückgegeben wurden$/ do
+#Dann /^diese Liste enthält Gegenstände, die ausgeliehen und noch nicht zurückgegeben wurden$/ do
+Then /^this list contains items that were borrowed but not yet returned$/ do
   @not_returned.each do |line|
     within @contract_element.find(".not_returned_items") do
       expect(has_content? line.model.name).to be true
@@ -233,29 +236,35 @@ Then(/^the models are sorted alphabetically within their group$/) do
   end
 end
 
-Dann(/^wird unter 'Verleiher\/in' der Gerätepark aufgeführt$/) do
+#Dann(/^wird unter 'Verleiher\/in' der Gerätepark aufgeführt$/) do
+Then(/^the inventory pool is listed as lender$/) do
   find(".inventory_pool", text: @contract.inventory_pool.name)
 end
 
-Angenommen(/^es gibt einen Kunden mit Vertrag wessen Addresse mit "(.*?)" endet$/) do |arg1|
+#Angenommen(/^es gibt einen Kunden mit Vertrag wessen Addresse mit "(.*?)" endet$/) do |arg1|
+Given(/^there is a contract for a user whose address ends with "(.*?)"$/) do |arg1|
   @user = @current_inventory_pool.users.customers.find {|u| u.contracts.where(status: [:signed, :closed]).exists? and u.read_attribute(:address) =~ /, $/}
   expect(@user).not_to be_nil
 end
 
-Wenn(/^ich einen Vertrag dieses Kunden öffne$/) do
+#Wenn(/^ich einen Vertrag dieses Kunden öffne$/) do
+When(/^I open this user's contract$/) do
   visit manage_contract_path(@current_inventory_pool, @user.contracts.where(status: [:signed, :closed]).sample)
 end
 
-Dann(/^wird seine Adresse ohne den abschliessenden "(.*?)" angezeigt$/) do |arg1|
+#Dann(/^wird seine Adresse ohne den abschliessenden "(.*?)" angezeigt$/) do |arg1|
+Then(/^their address is shown without the  "(.*?)"$/) do |arg1|
   find(".street", text: @user.address)
 end
 
-Wenn(/^in den globalen Einstellungen die Adresse der Instanz konfiguriert ist$/) do
+#Wenn(/^in den globalen Einstellungen die Adresse der Instanz konfiguriert ist$/) do
+When(/^the instance's address is configured in the global settings$/) do
   @address = Setting::CONTRACT_LENDING_PARTY_STRING
   expect(@address).not_to be_nil
 end
 
-Dann(/^wird unter dem Verleiher diese Adresse angezeigt$/) do
+#Dann(/^wird unter dem Verleiher diese Adresse angezeigt$/) do
+Then(/^the lender address is shown underneath the lender$/) do
   all(".inventory_pool span")[1].text == @address
 end
 

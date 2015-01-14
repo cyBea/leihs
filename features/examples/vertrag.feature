@@ -95,29 +95,29 @@ Feature: Contract
     And I select all lines of an open contract
     And I click take back
     And I click take back inside the dialog
-    Then sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"
+    Then the relevant lines show the person taking back the item in the format "F. Lastname"
 
   @javascript @browser @personas
-  Scenario: Verleiher
+  Scenario: Lender
     Given I open a contract during hand over
-    Then sehe ich den Verleiher neben dem Ausleihenden
+    Then the lender is shown next to the borrower
 
   @javascript @browser @personas
-  Scenario: Liste der ausgeliehenen Gegenstände
+  Scenario: List of borrowed items
     Given I open a contract during hand over
-    When es Gegenstände gibt, die noch nicht zurückgegeben wurden
-    Then sehe ich die Liste 2 mit dem Titel "Ausgeliehene Gegenstände"
-    And diese Liste enthält Gegenstände, die ausgeliehen und noch nicht zurückgegeben wurden
+    When there are unreturned items
+    Then I see list 2 with the title "Borrowed Items"
+    And this list contains items that were borrowed but not yet returned
 
   @javascript @browser @personas
-  Scenario: Adresse des Verleihers aufführen
+  Scenario: Listing the lending party's address
     Given I open a contract during hand over
-    Then wird unter 'Verleiher/in' der Gerätepark aufgeführt
-    When in den globalen Einstellungen die Adresse der Instanz konfiguriert ist
-    Then wird unter dem Verleiher diese Adresse angezeigt
+    Then the inventory pool is listed as lender
+    When the instance's address is configured in the global settings
+    Then the lender address is shown underneath the lender
 
   @personas
-  Scenario: Adresse des Kunden ohne abschliessenden ", " anzeigen
-    Given es gibt einen Kunden mit Vertrag wessen Addresse mit ", " endet
-    When ich einen Vertrag dieses Kunden öffne
-    Then wird seine Adresse ohne den abschliessenden ", " angezeigt
+  Scenario: Not showing a ", " after a user's address
+    Given there is a contract for a user whose address ends with  ", "
+    When I open this user's contract
+    Then their address is shown without the  ", "
