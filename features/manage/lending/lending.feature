@@ -83,6 +83,7 @@ Feature: Lending
     And I can set the state of "Completeness" to "Complete" or "Incomplete"
     And I can set the state of "Borrowable" to "Borrowable" or "Unborrowable"
     When I change values during inspection
+    And I write a status note
     And I save the inspection
     Then the item is saved with the currently set states
 
