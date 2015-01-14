@@ -40,6 +40,7 @@ Feature: Inventory (CSV export)
       | Working order                 |
       | Completeness                  |
       | Borrowable                    |
+      | Status note                   |
       | Building                      |
       | Room                          |
       | Shelf                         |

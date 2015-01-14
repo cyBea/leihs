@@ -19,6 +19,7 @@ Feature: Editing an item
       | Working order              |
       | Completeness               |
       | Borrowable                 |
+      | Status note                |
       | - Inventory -              |
       | Relevant for inventory     |
       | Supply Category            |
