@@ -1,36 +1,32 @@
 
-Feature: Werteliste
-
-  Um eine konforme Werteliste aushändigen zu können
-  möchte ich als Verleiher
-  das mir das System für eine Auswahl eine Werteliste zur verfügung stellen kann
+Feature: Value list
 
   Background:
     Given I am Pius
 
   @javascript @browser @personas
-  Scenario: Was ich auf der Werteliste sehen möchte
-    Given man öffnet eine Werteliste
-    Then möchte ich die folgenden Bereiche in der Werteliste sehen:
-    | Bereich          |
-    | Datum            |
-    | Titel            |
-    | Ausleihender     |
-    | Verleier         |
-    | Liste            |
+  Scenario: What I want to see on the value list
+    Given I open a value list
+    Then I want to see the following sections in the value list:
+    | Section  |
+    | Date     |
+    | Title    |
+    | Borrower |
+    | Lender   |
+    | List     |
 
   @javascript @browser @personas
-  Scenario: Der Inhalt der Werte-Liste
-    Given man öffnet eine Werteliste
-    Then beinhaltet die Liste folgende Spalten:
-    | Spaltenname     |
-    | Laufende Nummer |
-    | Inventarcode    |
-    | Modellname      |
-    | End Datum       |
-    | Anzahl          |
-    | Wert            |
-    And die Modelle in der Werteliste sind alphabetisch sortiert
+  Scenario: Content of a value list
+    Given I open a value list
+    Then the value list contains the following columns:
+    | Column             |
+    | Consecutive number |
+    | Inventory code     |
+    | Model name         |
+    | End date           |
+    | Quantity           |
+    | Price              |
+    And the models in the value list are sorted alphabetically
 
   @javascript @personas
   Scenario: Werteliste auf Bestellübersicht ausdrucken

@@ -10,31 +10,32 @@ Given /^I open a value list$/ do
   page.driver.browser.switch_to.window new_window
 
   new_window = window_opened_by do
-    find(".modal a", text: _("Value list")).click
+    find(".modal a", text: _("Value List")).click
   end
   page.driver.browser.switch_to.window new_window.handle
 
   @list_element = find(".value_list")
 end
 
-Dann /^möchte ich die folgenden Bereiche in der (Werteliste|Rüstliste) sehen:$/ do |arg1, table|
+#Dann /^möchte ich die folgenden Bereiche in der (Werteliste|Rüstliste) sehen:$/ do |arg1, table|
+Then /^I want to see the following sections in the (value list|picking list):$/ do |arg1, table|
   within @list_element do
     table.hashes.each do |area|
-      case area["Bereich"]
-        when "Datum"
+      case area["Section"]
+        when "Date"
           within(".date") do
             expect(has_content? Date.today.year).to be true
             expect(has_content? Date.today.month).to be true
             expect(has_content? Date.today.day).to be true
           end
-        when "Titel"
+        when "Title"
           case arg1
-            when "Werteliste"
+            when "value list"
               expect(find("h1", text: _("Value List")).has_content? @contract.id).to be true
-            when "Rüstliste"
+            when "picking list"
               find("h1", text: _("Picking List"))
           end
-        when "Ausleihender"
+        when "Borrower"
           within(".customer") do
             expect(has_content? @contract.user.firstname).to be true
             expect(has_content? @contract.user.lastname).to be true
@@ -42,13 +43,13 @@ Dann /^möchte ich die folgenden Bereiche in der (Werteliste|Rüstliste) sehen:$
             expect(has_content? @contract.user.zip).to be true
             expect(has_content? @contract.user.city).to be true
           end
-        when "Verleiher"
+        when "Lender"
           find(".inventory_pool")
-        when "Liste"
+        when "List"
           case arg1
-            when "Werteliste"
+            when "value list"
               find(".list")
-            when "Rüstliste"
+            when "picking list"
               find(".list", match: :first)
           end
       end
@@ -56,14 +57,14 @@ Dann /^möchte ich die folgenden Bereiche in der (Werteliste|Rüstliste) sehen:$
   end
 end
 
-Dann /^beinhaltet die Liste folgende Spalten:$/ do |table|
+Dann /^the value list contains the following columns:$/ do |table|
   @list ||= @list_element.find(".list")
   within @list do
     table.hashes.each do |area|
-      case area["Spaltenname"]
-        when "Laufende Nummer"
+      case area["Column"]
+        when "Consecutive number"
           @contract.lines.each {|line| find("tr", text: line.item.inventory_code).find(".consecutive_number") }
-        when "Inventarcode"
+        when "Inventory code"
           lines = if @list_element[:class] == "picking_list"
                     @selected_lines_by_date ? @selected_lines_by_date : @contract.lines
                   elsif @list_element[:class] == "value_list"
@@ -75,7 +76,7 @@ Dann /^beinhaltet die Liste folgende Spalten:$/ do |table|
             next if line.item_id.nil?
             find("tr .inventory_code", text: line.item.inventory_code)
           end
-        when "Modellname"
+        when "Model name"
           if @list_element[:class] == "picking_list"
             lines = @selected_lines_by_date ? @selected_lines_by_date : @contract.lines
             lines.group_by(&:model).each_pair do |model, lines|
@@ -86,7 +87,7 @@ Dann /^beinhaltet die Liste folgende Spalten:$/ do |table|
           else
             raise
           end
-        when "End Datum"
+        when "End date"
           @contract.lines.each {|line|
             within find("tr", text: line.item.inventory_code).find(".end_date") do
               expect(has_content? line.end_date.year).to be true
@@ -94,7 +95,7 @@ Dann /^beinhaltet die Liste folgende Spalten:$/ do |table|
               expect(has_content? line.end_date.day).to be true
             end
           }
-        when "Anzahl"
+        when "Quantity"
           if @list_element[:class] == "picking_list"
             picking_lines = @selected_lines_by_date ? @selected_lines_by_date : @contract.lines
             picking_lines.group_by(&:model).each_pair do |model, lines|
@@ -107,7 +108,7 @@ Dann /^beinhaltet die Liste folgende Spalten:$/ do |table|
           else
             raise
           end
-        when "Wert"
+        when "Price"
           @contract.lines.each {|line|
             expect(find("tbody tr", text: line.item.inventory_code).find(".item_price").text.gsub(/\D/, "")).to eq ("%.2f" % line.price).gsub(/\D/, "")
           }
@@ -161,7 +162,8 @@ Dann /^diese summierte die Spalten:$/ do |table|
   end
 end
 
-When(/^die Modelle in der Werteliste sind alphabetisch sortiert$/) do
+#When(/^die Modelle in der Werteliste sind alphabetisch sortiert$/) do
+When(/^the models in the value list are sorted alphabetically$/) do
   names = all(".value_list tbody .model_name").map{|name| name.text}
   expect(names.empty?).to be false
   expect(names.sort == names).to be true
