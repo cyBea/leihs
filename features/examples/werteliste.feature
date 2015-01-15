@@ -29,42 +29,33 @@ Feature: Value list
     And the models in the value list are sorted alphabetically
 
   @javascript @personas
-  Scenario: Werteliste auf Bestellübersicht ausdrucken
-    Given es existiert eine Bestellung mit mindestens zwei Modellen, wo die Bestellmenge mindestens drei pro Modell ist
-    When ich eine Bestellung öffne
-    And ich mehrere Linien von der Bestellung auswähle
-    And das Werteverzeichniss öffne
-    Then sehe ich das Werteverzeichniss für die ausgewählten Linien
-    And die nicht zugewiesenen Linien sind zusammengefasst
-    And für die nicht zugewiesenen Linien ist der Preis der höchste Preis eines Gegenstandes eines Models innerhalb des Geräteparks
+  Scenario: Printing value lists from the list of orders
+    Given there is an order with at least two models and at least two items per model were ordered
+    When I open an order
+    And I select multiple lines of the hand over
+    And I open the value list
+    Then I see the value list for the selected lines
+    And the unassigned lines are summarized
+    And the price shown for the unassigned lines is equal to the highest price of any of the items of that model within this inventory pool
 
   @javascript @personas
-  Scenario: Werteliste auf der Aushändigungsansicht ausdrucken
-    Given es existiert eine Aushändigung mit mindestens zwei Modellen und einer Option, wo die Bestellmenge mindestens drei pro Modell ist
-    And es ist pro Modell genau einer Linie ein Gegenstand zugewiesen
-    When ich die Aushändigung öffne
-    And ich mehrere Linien von der Aushändigung auswähle
-    And das Werteverzeichniss öffne
-    Then sehe ich das Werteverzeichniss für die ausgewählten Linien
-    And für die nicht zugewiesenen Linien ist der Preis der höchste Preis eines Gegenstandes eines Models innerhalb des Geräteparks
-    And für die zugewiesenen Linien ist der Preis der des Gegenstandes
-    And die nicht zugewiesenen Linien sind zusammengefasst
-    And der Preis einer Option ist der innerhalb des Geräteparks
+  Scenario: Printing a value list from the handover view
+    Given there is an order with at least two models and at least two items per model were ordered
+    And each model has exactly one assigned item
+    When I open the hand over
+    And I select multiple lines of the hand over
+    And I open the value list
+    Then I see the value list for the selected lines
+    And the price shown for the unassigned lines is equal to the highest price of any of the items of that model within this inventory pool
+    And the price shown for the assigned lines is that of the assigned item
+    And the unassigned lines are summarized
+    And any options are priced according to their price set in the inventory pool
 
   @javascript @browser @personas
-  Scenario: Totale Werte
-    Given man öffnet eine Werteliste
-    Then gibt es eine Zeile für die totalen Werte
-    And diese summierte die Spalten:
-     | Spaltenname |
-     | Anzahl      |
-     | Wert        |
-
-  @javascript @browser @personas
-  Scenario: Totale Werte
-    Given man öffnet eine Werteliste
-    Then gibt es eine Zeile für die totalen Werte
-    And diese summierte die Spalten:
-     | Spaltenname |
-     | Anzahl      |
-     | Wert        |
+  Scenario: Totals
+    Given I open a value list
+    Then one line shows the grand total
+    And that shows the totals of the columns:
+     | Column   |
+     | Quantity |
+     | Value    |

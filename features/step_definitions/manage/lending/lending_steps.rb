@@ -52,6 +52,7 @@ When /^I return to the daily view$/ do
   step 'I open the daily view'
 end
 
+#Wenn /^ich eine Bestellung editiere$/ do
 When(/^I edit an order$/) do
   @event = "order"
   @contract = @current_inventory_pool.contracts.submitted.sample

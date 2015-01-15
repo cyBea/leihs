@@ -145,18 +145,20 @@ Dann /^the value list contains the following columns:$/ do |table|
   end
 end
 
-Dann /^gibt es eine Zeile für die totalen Werte$/ do
+#Dann /^gibt es eine Zeile für die totalen Werte$/ do
+Then /^one line shows the grand total$/ do
   within @list_element.find(".list") do
     @total = find("tfoot.total")
   end
 end
 
-Dann /^diese summierte die Spalten:$/ do |table|
+#Dann /^diese summierte die Spalten:$/ do |table|
+Then /^that shows the totals of the columns:$/ do |table|
   table.hashes.each do |area|
-    case area["Spaltenname"]
-      when "Anzahl"
+    case area["Column"]
+      when "Quantity"
         expect(@total.find(".quantity", match: :first).has_content? @contract.quantity).to be true
-      when "Wert"
+      when "Value"
         expect(@total.find(".value", match: :first).text.gsub(/\D/, "")).to eq ("%.2f" % @contract.lines.map(&:price).sum).gsub(/\D/, "")
     end
   end
@@ -169,7 +171,8 @@ When(/^the models in the value list are sorted alphabetically$/) do
   expect(names.sort == names).to be true
 end
 
-Angenommen(/^es existiert eine Aushändigung mit mindestens zwei Modellen und einer Option, wo die Bestellmenge mindestens drei pro Modell ist$/) do
+#Angenommen(/^es existiert eine Aushändigung mit mindestens zwei Modellen und einer Option, wo die Bestellmenge mindestens drei pro Modell ist$/) do
+Given(/^there is an order with at least two models and at least two items per model were ordered$/) do
   @hand_over = @current_inventory_pool.visits.hand_over.detect do |ho|
     ho.contract_lines.where(type: "OptionLine").exists? and
       ho.contract_lines.where(type: "ItemLine").exists? and
@@ -181,7 +184,8 @@ Angenommen(/^es existiert eine Aushändigung mit mindestens zwei Modellen und ei
   @lines = @hand_over.lines
 end
 
-Wenn(/^es ist pro Modell genau einer Linie ein Gegenstand zugewiesen$/) do
+#Wenn(/^es ist pro Modell genau einer Linie ein Gegenstand zugewiesen$/) do
+When(/^each model has exactly one assigned item$/) do
   @models = @lines.select{|l| l.is_a? ItemLine}.map(&:model)
 
   @models.uniq.each do |m|
@@ -190,7 +194,8 @@ Wenn(/^es ist pro Modell genau einer Linie ein Gegenstand zugewiesen$/) do
   end
 end
 
-Wenn(/^ich mehrere Linien von der Aushändigung auswähle$/) do
+#Wenn(/^ich mehrere Linien von der Aushändigung auswähle$/) do
+When(/^I select multiple lines of the hand over$/) do
   within "#lines" do
     expect(has_selector?(".line input[type='checkbox']")).to be true
     @number_of_selected_lines = all(".line input[type='checkbox']").size
@@ -206,7 +211,8 @@ Wenn(/^ich mehrere Linien von der Bestellung auswähle$/) do
   end
 end
 
-Wenn(/^das Werteverzeichniss öffne$/) do
+#Wenn(/^das Werteverzeichniss öffne$/) do
+When(/^I open the value list$/) do
   find("[data-selection-enabled]").find(:xpath, "./following-sibling::*").click
   document_window = window_opened_by do
     click_button _("Print Selection")
@@ -214,12 +220,14 @@ Wenn(/^das Werteverzeichniss öffne$/) do
   page.driver.browser.switch_to.window(document_window.handle)
 end
 
-Dann(/^sehe ich das Werteverzeichniss für die ausgewählten Linien$/) do
+#Dann(/^sehe ich das Werteverzeichniss für die ausgewählten Linien$/) do
+Then(/^I see the value list for the selected lines$/) do
   expect(has_content? _("Value list")).to be true
   find("tfoot.total .quantity").text == @number_of_selected_lines.to_s
 end
 
-Dann(/^für die nicht zugewiesenen Linien ist der Preis der höchste Preis eines Gegenstandes eines Models innerhalb des Geräteparks$/) do
+#Dann(/^für die nicht zugewiesenen Linien ist der Preis der höchste Preis eines Gegenstandes eines Models innerhalb des Geräteparks$/) do
+Then(/^the price shown for the unassigned lines is equal to the highest price of any of the items of that model within this inventory pool$/) do
   @models.each do |m|
     lines = @lines.select {|l| l.is_a? ItemLine and l.model == m and not l.item.try(:inventory_code)}
     quantity = lines.size
@@ -230,20 +238,23 @@ Dann(/^für die nicht zugewiesenen Linien ist der Preis der höchste Preis eines
   end
 end
 
-Dann(/^für die zugewiesenen Linien ist der Preis der des Gegenstandes$/) do
+#Dann(/^für die zugewiesenen Linien ist der Preis der des Gegenstandes$/) do
+Then(/^the price shown for the assigned lines is that of the assigned item$/) do
   lines = @lines.select {|l| l.item.try(:inventory_code)}
   lines.each do |line|
     expect(find("tr", text: line.item.inventory_code).find(".item_price").text.delete("'")).to match /#{line.price_or_max_price.to_s}/
   end
 end
 
-Dann(/^die nicht zugewiesenen Linien sind zusammengefasst$/) do
+#Dann(/^die nicht zugewiesenen Linien sind zusammengefasst$/) do
+Then(/^the unassigned lines are summarized$/) do
   @models.each do |m|
     expect(all("tr", text: m.name).select{|line| line.find(".inventory_code").text == "" }.size).to be <= 1 # for models with quantity 1 and an assigned item size == 0, that's why <= 1
   end
 end
 
-Dann(/^der Preis einer Option ist der innerhalb des Geräteparks$/) do
+#Dann(/^der Preis einer Option ist der innerhalb des Geräteparks$/) do
+Then(/^any options are priced according to their price set in the inventory pool$/) do
   lines = @lines.select {|l| l.is_a? OptionLine }
   lines.each do |l|
     line = find("tr", text: l.model.name)
@@ -262,7 +273,8 @@ Angenommen(/^es existiert eine Bestellung mit mindestens zwei Modellen, wo die B
   @models = @lines.select{|l| l.is_a? ItemLine}.map(&:model)
 end
 
-Wenn(/^ich eine Bestellung öffne$/) do
+#Wenn(/^ich eine Bestellung öffne$/) do
+When(/^I open an order$/) do
   @contract = @order
   step "I edit the order"
 end

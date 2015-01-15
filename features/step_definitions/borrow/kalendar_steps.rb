@@ -39,7 +39,7 @@ Wenn(/^man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfüg
   end
   visit borrow_model_path(@model)
   find("[data-create-order-line][data-model-id='#{@model.id}']").click
-  step "ich setze das Startdatum im Kalendar auf '%s'" % I18n.l(inventory_pool.next_open_date(start_date))
+  step "I set the start date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(start_date))
   step "ich setze das Enddatum im Kalendar auf '%s'" % I18n.l(inventory_pool.next_open_date(end_date))
   step "ich setze die Anzahl im Kalendar auf #{@quantity}"
   find("#submit-booking-calendar").click
@@ -51,7 +51,8 @@ Wenn(/^ich setze die Anzahl im Kalendar auf (\d+)$/) do |quantity|
   find("#booking-calendar-quantity").set quantity
 end
 
-Wenn(/^ich setze das Startdatum im Kalendar auf '(.*?)'$/) do |date|
+#Wenn(/^ich setze das Startdatum im Kalendar auf '(.*?)'$/) do |date|
+When(/^I set the start date in the calendar to '(.*?)'$/) do |date|
   find("#booking-calendar-start-date").set date
   find("#booking-calendar-controls").click # blur input in order to fire event listeners
 end
@@ -278,7 +279,7 @@ Wenn(/^man ein Start und Enddatum ändert$/) do
   ip = get_selected_inventory_pool
   @start = ip.next_open_date(Date.today)
   @end = ip.next_open_date(@start)
-  step "ich setze das Startdatum im Kalendar auf '#{I18n.l(@start)}'"
+  step "I set the start date in the calendar to '#{I18n.l(@start)}'"
   step "ich setze das Enddatum im Kalendar auf '#{I18n.l(@end)}'"
 end
 
