@@ -8,41 +8,41 @@ für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu s
     Given I am Gino
 
   @javascript @personas
-  Scenario: Verwalten-Bereich sperren
-    Given ich befinde mich in den Pool-übergreifenden Einstellungen
-    When ich die Funktion "Verwaltung sperren" wähle
-    Then muss ich eine Bemerkung angeben
-    When ich eine Bemerkung für "Verwalten-Bereich" angebe
+  Scenario: Disabling the manage section
+    Given I am in the system-wide settings
+    When I choose the function "Disable manage section"
+    Then I have to enter a note
+    When I enter a note for the "manage section"
     And I save
-    Then wurde die Einstellung für "Verwalten-Bereich" erfolgreich gespeichert
-    And der Bereich "Verwalten" ist für die Benutzer gesperrt
-    And dem Benutzer wird die eingegebene Bemerkung angezeigt
+    Then the settings for the "manage section" were saved
+    And the "manage section" is disabled for users
+    And users see the note that was defined
 
   @javascript @personas
-  Scenario: Ausleihen-Bereich sperren
-    Given ich befinde mich in den Pool-übergreifenden Einstellungen
-    When ich die Funktion "Ausleihen sperren" wähle
-    Then muss ich eine Bemerkung angeben
-    When ich eine Bemerkung für "Ausleihen-Bereich" angebe
+  Scenario: Disabling the borrow section
+    Given I am in the system-wide settings
+    When I choose the function "Disable borrow section"
+    Then I have to enter a note
+    When I enter a note for the "borrow section"
     And I save
-    Then wurde die Einstellung für "Ausleihen-Bereich" erfolgreich gespeichert
-    And der Bereich "Ausleihen" ist für die Benutzer gesperrt
-    And dem Benutzer wird die eingegebene Bemerkung angezeigt
+    Then the settings for the "borrow section" were saved
+    And the "borrow section" is disabled for users
+    And users see the note that was defined
 
   @javascript @personas
-  Scenario: Verwalten-Bereich entsperren
-    Given der "Verwalten" Bereich ist gesperrt
-    And ich befinde mich in den Pool-übergreifenden Einstellungen
-    When ich die Funktion "Verwaltung sperren" deselektiere
+  Scenario: Enabling the manage section
+    Given the "manage section" is disabled
+    And I am in the system-wide settings
+    When I deselect the "disable manage section" option
     And I save
-    Then ist der Bereich "Verwalten" für den Benutzer nicht mehr gesperrt
-    And die eingegebene Meldung für "Verwalten" Bereich ist immer noch gespeichert
+    Then the "manage section" is not disabled for users
+    And the note entered for the "manage section" is still saved
 
   @javascript @personas
-  Scenario: Ausleihen-Bereich entsperren
-    Given der "Ausleihen" Bereich ist gesperrt
-    And ich befinde mich in den Pool-übergreifenden Einstellungen
-    When ich die Funktion "Ausleihen sperren" deselektiere
+  Scenario: Enabling the borrow section
+    Given the "borrow section" is disabled
+    And I am in the system-wide settings
+    When I deselect the "disable borrow section" option
     And I save
-    Then ist der Bereich "Ausleihen" für den Benutzer nicht mehr gesperrt
-    And die eingegebene Meldung für "Ausleihen" Bereich ist immer noch gespeichert
+    Then the "borrow section" is not disabled for users
+    And the note entered for the "borrow section" is still saved
