@@ -1,23 +1,22 @@
 
-Feature: Benutzeransicht
-
-  Als Benutzer möchte ich die Möglichkeit haben meine Benutzerdaten zu sehen
+Feature: Viewing my user data
 
   Background:
     Given I am Normin
 
   @personas
-  Scenario: Benutzerdaten ansehen
-    When ich auf meinen Namen klicke
-    Then gelange ich auf die Seite der Benutzerdaten
-    And werden mir meine Benutzerdaten angezeigt
-    And die Benutzerdaten beinhalten
-    |Vorname|
-    |Nachname|
-    |E-Mail|
-    |Telefon|
+  Scenario: Viewing my own user data
+    When I click on my name
+    Then I get to the "User Data" page
+    And I can see my user data
+    And the user data consist of
+    |First name|
+    |Last name|
+    |Email|
+    |Phone number|
 
   @javascript @personas
-  Scenario: Benutzerdaten unter dem Benutzername
-    When ich über meinen Namen fahre
-    Then sehe ich im Dropdown eine Schaltfläche die zur Benutzeransicht führt
+  Scenario: Seeing user data underneath the user name
+    When I hover over my name
+    And I view my user data
+    Then I get to the "User Data" page
