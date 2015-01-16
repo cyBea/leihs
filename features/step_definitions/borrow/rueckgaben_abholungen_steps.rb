@@ -1,47 +1,52 @@
 # -*- encoding : utf-8 -*-
 
-Dann(/^sehe ich die Anzahl meiner "(.*?)" auf jeder Seite$/) do |visit_type|
+#Dann(/^sehe ich die Anzahl meiner "(.*?)" auf jeder Seite$/) do |visit_type|
+Then(/^I see the number of "(.*?)" on each page$/) do |visit_type|
   find("a[href*='borrow/#{case visit_type
-                          when "Rückgaben"
+                          when "Returns"
                             "returns"
-                          when "Abholungen"
+                          when "Pick ups"
                             "to_pick_up"
                           end}'] > span", match: :first, text: case visit_type
-                                                                when "Rückgaben"
+                                                                when "Returns"
                                                                   @current_user.visits.take_back
-                                                                when "Abholungen"
+                                                                when "Pick ups"
                                                                   @current_user.visits.hand_over
                                                                 end.count.to_s)
 end
 
-Angenommen(/^man befindet sich im Ausleihen\-Bereich$/) do
+#Angenommen(/^man befindet sich im Ausleihen\-Bereich$/) do
+Given(/^I am in the borrow section$/) do
   visit borrow_root_path
 end
 
-Dann(/^sehe ich den "(.*?)" Button nicht$/) do |visit_type|
+# Dann(/^sehe ich den "(.*?)" Button nicht$/) do |visit_type|
+Then(/^I don't see the "(.*?)" button$/) do |visit_type|
   s = case visit_type
-        when "Rückgaben"
+        when "Returns"
           "returns"
-        when "Abholungen"
+        when "Pick ups"
           "to_pick_up"
       end
   expect(has_no_selector?("a[href*='borrow/#{s}']")).to be true
 end
 
-Wenn(/^ich auf den "(.*?)" Link drücke$/) do |visit_type|
+#Wenn(/^ich auf den "(.*?)" Link drücke$/) do |visit_type|
+When(/^I press the "(.*?)" link$/) do |visit_type|
   find("a[href*='borrow/#{case visit_type
-                          when "Rückgaben"
+                          when "Returns"
                             "returns"
-                          when "Abholungen"
+                          when "Pick ups"
                             "to_pick_up"
                           end}']", match: :first).click
 end
 
-Dann(/^sehe ich meine "(.*?)"$/) do |visit_type|
+#Dann(/^sehe ich meine "(.*?)"$/) do |visit_type|
+Then(/^I see my "(.*?)"$/) do |visit_type|
   case visit_type
-  when "Rückgaben"
+  when "Returns"
     @current_user.visits.take_back
-  when "Abholungen"
+  when "Pick ups"
     @current_user.visits.hand_over
   end.each do |visit|
     expect(has_selector?(".row h3", text: I18n.l(visit.date).to_s)).to be true
@@ -49,20 +54,22 @@ Dann(/^sehe ich meine "(.*?)"$/) do |visit_type|
   end
 end
 
-Dann(/^die "(.*?)" sind nach Datum und Gerätepark sortiert$/) do |visit_type|
+#Dann(/^die "(.*?)" sind nach Datum und Gerätepark sortiert$/) do |visit_type|
+Then(/^the "(.*?)" are sorted by date and inventory pool$/) do |visit_type|
   expect(all(".row h3").map(&:text)).to eq case visit_type
-                                       when "Rückgaben"
+                                       when "Returns"
                                          @current_user.visits.take_back
-                                       when "Abholungen"
+                                       when "Pick ups"
                                          @current_user.visits.hand_over
                                        end.order(:date).map(&:date).map {|d| I18n.l d}
 end
 
-Dann(/^jede der "(.*?)" zeigt die (?:.+) Geräte$/) do |visit_type|
+#Dann(/^jede der "(.*?)" zeigt die (?:.+) Geräte$/) do |visit_type|
+Then(/^each of the "(.*?)" shows items to (?:.+)$/) do |visit_type|
   case visit_type
-  when "Rückgaben"
+  when "Returns"
     @current_user.visits.take_back
-  when "Abholungen"
+  when "Pick ups"
     @current_user.visits.hand_over
   end.each do |visit|
     visit.lines.each do |line|
@@ -71,7 +78,8 @@ Dann(/^jede der "(.*?)" zeigt die (?:.+) Geräte$/) do |visit_type|
   end
 end
 
-Dann(/^die Geräte sind alphabetisch sortiert und gruppiert nach Modellname mit Anzahl der Geräte$/) do
+#Dann(/^die Geräte sind alphabetisch sortiert und gruppiert nach Modellname mit Anzahl der Geräte$/) do
+Then(/^the items are sorted alphabetically and grouped by model name and number of items$/) do
   temp = if current_path == borrow_returns_path
            @current_user.visits.take_back
          elsif current_path == borrow_to_pick_up_path

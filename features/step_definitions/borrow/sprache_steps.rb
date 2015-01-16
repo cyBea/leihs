@@ -1,10 +1,11 @@
 # -*- encoding : utf-8 -*-
 
-Wenn(/^ich die Sprache auf "(.*?)" umschalte$/) do |language|
+#Wenn(/^ich die Sprache auf "(.*?)" umschalte$/) do |language|
+When(/^I change the language to "(.*?)"$/) do |language|
   find("a[href*='locale']", match: :first, :text => language).click
 end
 
-Dann(/^ist die Sprache "(.*?)"$/) do |language|
+Then(/^the language is "(.*?)"$/) do |language|
   s = case language
         when "English"
           "en-GB"
