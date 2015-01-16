@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^ich habe eine offene Bestellung mit Modellen$/) do
+#Angenommen(/^ich habe eine offene Bestellung mit Modellen$/) do
+Given(/^I have an unsubmitted order with models$/) do
   expect(@current_user.contracts.unsubmitted.count).to eq 1
 end
 
@@ -10,7 +11,8 @@ end
 
 #######################################################################
 
-Wenn(/^ich ein Modell der Bestellung hinzufüge$/) do
+#Wenn(/^ich ein Modell der Bestellung hinzufüge$/) do
+When(/^I add a model to an order$/) do
   @inventory_pool = @current_user.inventory_pools.first # OPTIMIZE
   contract = @current_user.get_unsubmitted_contract(@inventory_pool)
   @new_contract_line = FactoryGirl.create(:contract_line, :contract => contract)
@@ -81,7 +83,8 @@ Wenn(/^ich eine Aktivität ausführe$/) do
   visit borrow_root_path
 end
 
-Dann(/^werde ich auf die Timeout Page geleitet$/) do
+#Dann(/^werde ich auf die Timeout Page geleitet$/) do
+Then(/^I am redirected to the timeout page$/) do
   expect(current_path).to eq borrow_order_timed_out_path
 end
 

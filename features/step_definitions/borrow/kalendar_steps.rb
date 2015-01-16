@@ -57,7 +57,8 @@ When(/^I set the start date in the calendar to '(.*?)'$/) do |date|
   find("#booking-calendar-controls").click # blur input in order to fire event listeners
 end
 
-Wenn(/^ich setze das Enddatum im Kalendar auf '(.*?)'$/) do |date|
+#Wenn(/^ich setze das Enddatum im Kalendar auf '(.*?)'$/) do |date|
+When(/^I set the end date in the calendar to '(.*?)'$/) do |date|
   find("#booking-calendar-end-date").set date
   find("#booking-calendar-controls").click # blur input in order to fire event listeners
 end

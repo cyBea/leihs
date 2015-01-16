@@ -1,7 +1,8 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^ich habe Gegenstände der Bestellung hinzugefügt$/) do
-  step "ich habe eine offene Bestellung mit Modellen"
+#Angenommen(/^ich habe Gegenstände der Bestellung hinzugefügt$/) do
+Given(/^I have added items to an order$/) do
+  step "I have an unsubmitted order with models"
   purpose = FactoryGirl.create :purpose
   @current_user.contracts.unsubmitted.each do |contract|
     contract.purpose = purpose
@@ -9,7 +10,8 @@ Angenommen(/^ich habe Gegenstände der Bestellung hinzugefügt$/) do
   @contract_ids = @current_user.contracts.unsubmitted.pluck(:id)
 end
 
-Wenn(/^ich die Bestellübersicht öffne$/) do
+#Wenn(/^ich die Bestellübersicht öffne$/) do
+When(/^I open my list of orders$/) do
   visit borrow_current_order_path
   expect(has_content?(_("Order overview"))).to be true
   expect(all(".line").count).to eq @current_user.contracts.unsubmitted.flat_map(&:lines).count
@@ -17,20 +19,23 @@ end
 
 #############################################################################
 
-Dann(/^sehe ich die Einträge gruppiert nach Startdatum und Gerätepark$/) do
+#Dann(/^sehe ich die Einträge gruppiert nach Startdatum und Gerätepark$/) do
+Then(/^I see entries grouped by start date and inventory pool$/) do
   @current_user.contracts.unsubmitted.flat_map(&:lines).group_by{|l| [l.start_date, l.inventory_pool]}.each do |k,v|
     expect(find("#current-order-lines .row", text: I18n.l(k[0]), match: :first).has_content? k[1].name).to be true
   end
 end
 
-Dann(/^die Modelle sind alphabetisch sortiert$/) do
+#Dann(/^die Modelle sind alphabetisch sortiert$/) do
+Then(/^the models are ordered alphabetically$/) do
   all(".emboss.deep").each do |x|
     names = x.all(".line .name").map{|name| name.text}
     expect(names.sort == names).to be true
   end
 end
 
-Dann(/^für jeden Eintrag sehe ich die folgenden Informationen$/) do |table|
+#Dann(/^für jeden Eintrag sehe ich die folgenden Informationen$/) do |table|
+Then(/^each entry has the following information$/) do |table|
   all(".line").each do |line|
     contract_lines = ContractLine.find JSON.parse line["data-ids"]
     table.raw.map{|e| e.first}.each do |row|
@@ -67,7 +72,8 @@ def before_max_available(user)
   h
 end
 
-Wenn(/^ich einen Eintrag lösche$/) do
+#Wenn(/^ich einen Eintrag lösche$/) do
+When(/^I delete an entry$/) do
   line = find(".line", match: :first)
   line_ids = line["data-ids"]
   line.find(".dropdown-holder").click
@@ -77,7 +83,8 @@ Wenn(/^ich einen Eintrag lösche$/) do
   expect(has_no_selector?(".line[data-ids='#{line_ids}']")).to be true
 end
 
-Dann(/^wird der Eintrag aus der Bestellung entfernt$/) do
+#Dann(/^wird der Eintrag aus der Bestellung entfernt$/) do
+Then(/^the entry is removed from the order$/) do
   expect(all(".line").count).to eq @current_user.contracts.unsubmitted.flat_map(&:lines).count
 end
 
@@ -103,7 +110,8 @@ Dann(/^alle Einträge werden aus der Bestellung gelöscht$/) do
   expect(Contract.where(id: @contract_ids).count).to eq 0
 end
 
-Dann(/^die Gegenstände sind wieder zur Ausleihe verfügbar$/) do
+#Dann(/^die Gegenstände sind wieder zur Ausleihe verfügbar$/) do
+Then(/^the items are available for borrowing again$/) do
   @current_user.contracts.unsubmitted.flat_map(&:lines).each do |contract_line|
     after_max_available = contract_line.model.availability_in(contract_line.contract.inventory_pool).maximum_available_in_period_summed_for_groups(contract_line.start_date, contract_line.end_date)
     expect(after_max_available).to eq @before_max_available[contract_line.id]
@@ -152,7 +160,8 @@ end
 
 #############################################################################
 
-Wenn(/^ich den Eintrag ändere$/) do
+#Wenn(/^ich den Eintrag ändere$/) do
+When(/^I change the entry$/) do
   if @just_changed_line
     @just_changed_line.click
   else
@@ -173,16 +182,19 @@ Wenn(/^ich den Eintrag ändere$/) do
   end
 end
 
-Dann(/^öffnet der Kalender$/) do
+#Dann(/^öffnet der Kalender$/) do
+Then(/^the calendar opens$/) do
   find("#booking-calendar .fc-widget-content", :match => :first)
 end
 
-Dann(/^ich ändere die aktuellen Einstellung$/) do
+#Dann(/^ich ändere die aktuellen Einstellung$/) do
+Then(/^I change the date$/) do
   @new_date = select_available_not_closed_date(:start, Date.today)
   select_available_not_closed_date(:end, @new_date)
 end
 
-Dann(/^wird der Eintrag gemäss aktuellen Einstellungen geändert$/) do
+#Dann(/^wird der Eintrag gemäss aktuellen Einstellungen geändert$/) do
+Then(/^the entry's date is changed accordingly$/) do
   within(".line", match: :first) do
     find("[data-change-order-lines]").click
   end
@@ -201,9 +213,10 @@ Dann(/^wird der Eintrag gemäss aktuellen Einstellungen geändert$/) do
   end
 end
 
-Dann(/^der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert$/) do
+#Dann(/^der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert$/) do
+Then(/^the entry is grouped based on its current start date and inventory pool$/) do
   @current_user.contracts.unsubmitted.each(&:reload)
-  step 'sehe ich die Einträge gruppiert nach Startdatum und Gerätepark'
+  step 'I see entries grouped by start date and inventory pool' 
 end
 
 Dann(/^sehe ich die Zeitinformationen in folgendem Format "(.*?)"$/) do |format|

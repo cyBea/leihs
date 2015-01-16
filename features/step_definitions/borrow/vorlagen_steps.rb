@@ -164,7 +164,7 @@ def select_available_not_closed_date(as = :start, from = Date.today)
     current_date += 1.day
     find(".fc-button-next").click if before_date.month < current_date.month
   end
-  step "ich setze das %s im Kalendar auf '#{I18n::l(current_date)}'" % (as == :start ? _("Start Date") : _("End Date"))
+  step "I set the %s in the calendar to '#{I18n::l(current_date)}'" % (as == :start ? "start date" : "end date")
   current_date
 end
 

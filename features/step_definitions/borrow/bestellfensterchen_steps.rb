@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^man befindet sich auf der Bestellübersicht$/) do
+#Angenommen(/^man befindet sich auf der Bestellübersicht$/) do
+When(/^I am listing my orders$/) do
   visit borrow_current_order_path
 end
 
@@ -75,7 +76,8 @@ Dann(/^sehe ich keine Zeitanzeige$/) do
   expect(has_no_selector?("#current-order-basket #timeout-countdown")).to be true
 end
 
-Dann(/^sehe ich die Zeitanzeige$/) do
+#Dann(/^sehe ich die Zeitanzeige$/) do
+Then(/^I see a timer$/) do
   step "I visit the homepage"
   expect(has_selector?("#current-order-basket #timeout-countdown", :visible => true)).to be true
   @timeoutStart = if @current_user.contracts.unsubmitted.empty?
@@ -126,7 +128,8 @@ Dann(/^werde ich auf die Timeout Page weitergeleitet$/) do
   expect(current_path).to eq borrow_order_timed_out_path
 end
 
-Wenn(/^die Zeit überschritten ist$/) do
+#Wenn(/^die Zeit überschritten ist$/) do
+When(/^time has run out$/) do
   past_date = Time.now - (Contract::TIMEOUT_MINUTES + 1).minutes
   @current_user.contracts.unsubmitted.each do |contract|
     contract.update_attribute :updated_at, past_date

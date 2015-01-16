@@ -1,50 +1,46 @@
 
-Feature: Bestellübersicht
-
-  Um die Bestellung in der Übersicht zu sehen
-  möchte ich als Ausleiher
-  die Möglichkeit haben meine bestellten Gegenstände in der Übersicht zu sehen
+Feature: Viewing my orders
 
   Background:
     Given I am Normin
-    And ich habe Gegenstände der Bestellung hinzugefügt
-    When ich die Bestellübersicht öffne
+    And I have added items to an order
+    When I open my list of orders
 
   @personas
-  Scenario: Bestellübersicht Auflistung der Gegenstände
-    Then sehe ich die Einträge gruppiert nach Startdatum und Gerätepark
-    And die Modelle sind alphabetisch sortiert
-    And für jeden Eintrag sehe ich die folgenden Informationen
-    |Bild|
-    |Anzahl|
-    |Modellname|
-    |Hersteller|
-    |Anzahl der Tage|
-    |Enddatum|
-    |die versch. Aktionen|
+  Scenario: Listing items in an order
+    Then I see entries grouped by start date and inventory pool
+    And the models are ordered alphabetically
+    And each entry has the following information
+    |Image|
+    |Quantity|
+    |Model name|
+    |Manufacturer|
+    |Number of days|
+    |End date|
+    |the various actions|
 
   @javascript @browser @personas
-  Scenario: Bestellübersicht Aktion 'löschen'
-    When ich einen Eintrag lösche
-    Then die Gegenstände sind wieder zur Ausleihe verfügbar
-     And wird der Eintrag aus der Bestellung entfernt
+  Scenario: Deleting things in my order overview
+    When I delete an entry
+    Then the items are available for borrowing again
+     And the entry is removed from the order
 
   @javascript @personas
-  Scenario: Zeit überschritten
-    When ich ein Modell der Bestellung hinzufüge
-    Then sehe ich die Zeitanzeige
-    When man befindet sich auf der Bestellübersicht
-    And  die Zeit überschritten ist
-    Then werde ich auf die Timeout Page weitergeleitet
+  Scenario: Timeout
+    When I add a model to an order
+    Then I see a timer
+    When I am listing my orders
+    And time has run out
+    Then I am redirected to the timeout page
 
   @javascript @personas @browser
-  Scenario: Bestellübersicht Aktion 'ändern'
-    When ich den Eintrag ändere
-    Then öffnet der Kalender
-    And ich ändere die aktuellen Einstellung
+  Scenario: Changing one of my orders
+    When I change the entry
+    Then the calendar opens
+    When I change the date
     And I save the booking calendar
-    Then wird der Eintrag gemäss aktuellen Einstellungen geändert
-    And der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert
+    Then the entry's date is changed accordingly
+    And the entry is grouped based on its current start date and inventory pool
 
   @javascript @personas
   Scenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen
