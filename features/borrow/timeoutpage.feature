@@ -33,11 +33,11 @@ Feature: Timeout Page
     Given I am Normin
     And ich zur Timeout Page mit 2 Konfliktmodellen weitergeleitet werde
     When I click on "Continue this order"
-    Then lande ich wieder auf der Timeout Page
+    Then I am redirected to the timeout page
     And ich erhalte einen Fehler
     When ich einen der Fehler korrigiere
     When I click on "Continue this order"
-    Then lande ich wieder auf der Timeout Page
+    Then I am redirected to the timeout page
     And ich erhalte einen Fehler
     When ich alle Fehler korrigiere
     Then verschwindet die Fehlermeldung
@@ -49,7 +49,7 @@ Feature: Timeout Page
     When ich die Bestellung lösche
     Then werden die Modelle meiner Bestellung freigegeben
     And wird die Bestellung des Benutzers gelöscht
-    And ich lande auf der Seite der Hauptkategorien
+    And I am on the root category list
 
   @personas
   Scenario: Nur verfügbare Modelle aus Bestellung übernehmen
@@ -67,7 +67,7 @@ Feature: Timeout Page
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
     And ich einen Eintrag ändere
     Then werden die Änderungen gespeichert
-    And lande ich wieder auf der Timeout Page
+    And I am redirected to the timeout page
 
   @javascript @browser @personas
   Scenario: Die Menge eines Eintrags heruntersetzen
@@ -77,4 +77,4 @@ Feature: Timeout Page
     Then werden die Änderungen gespeichert
     When ich die Menge eines Eintrags heruntersetze
     Then werden die Änderungen gespeichert
-    And lande ich wieder auf der Timeout Page
+    And I am redirected to the timeout page

@@ -1,20 +1,23 @@
 # -*- encoding : utf-8 -*-
 
 Angenommen(/^ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde$/) do
-  step "ich habe eine offene Bestellung mit Modellen"
+  step "I have an unsubmitted order with models"
   step "ein Modell ist nicht verfügbar"
   step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
   step "ich eine Aktivität ausführe"
-  step "werde ich auf die Timeout Page geleitet"
+  #step "werde ich auf die Timeout Page geleitet"
+  step "I am redirected to the timeout page"
   step "ich sehe eine Information, dass die Geräte nicht mehr reserviert sind"
 end
 
 Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werde$/) do |n|
-  step "ich habe eine offene Bestellung mit Modellen"
+  #step "ich habe eine offene Bestellung mit Modellen"
+  step "I have an unsubmitted order with models"
   step "#{n} Modelle sind nicht verfügbar"
   step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
   step "ich eine Aktivität ausführe"
-  step "werde ich auf die Timeout Page geleitet"
+  #step "werde ich auf die Timeout Page geleitet"
+  step "I am redirected to the timeout page"
   step "ich sehe eine Information, dass die Geräte nicht mehr reserviert sind"
 end
 
@@ -64,7 +67,8 @@ Dann(/^wird die Bestellung des Benutzers gelöscht$/) do
   end
 end
 
-Dann(/^ich lande auf der Seite der Hauptkategorien$/) do
+#Dann(/^ich lande auf der Seite der Hauptkategorien$/) do
+Then(/^I am on the root category list$/) do
   expect(current_path).to eq borrow_root_path
 end
 
@@ -88,15 +92,20 @@ end
 #########################################################################
 
 Angenommen(/^ich einen Eintrag ändere$/) do
-  step "ich den Eintrag ändere"
-  step "öffnet der Kalender"
-  step "ich ändere die aktuellen Einstellung"
+  #step "ich den Eintrag ändere"
+  step 'I change the entry'
+  #step "öffnet der Kalender"
+  step 'the calendar opens'
+  #step "ich ändere die aktuellen Einstellung"
+  step 'I change the date'
   step "I save the booking calendar"
 end
 
 When(/^ich die Menge eines Eintrags (heraufsetze|heruntersetze)$/) do |arg1|
-  step "ich den Eintrag ändere"
-  step "öffnet der Kalender"
+  #step "ich den Eintrag ändere"
+  step 'I change the entry'
+  #step "öffnet der Kalender"
+  step 'the calendar opens'
   @new_quantity = case arg1
                     when "heraufsetze"
                       find("#booking-calendar-quantity")[:max].to_i
@@ -110,13 +119,16 @@ When(/^ich die Menge eines Eintrags (heraufsetze|heruntersetze)$/) do |arg1|
 end
 
 Dann(/^werden die Änderungen gespeichert$/) do
-  step "wird der Eintrag gemäss aktuellen Einstellungen geändert"
-  step "der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert"
+  #step "wird der Eintrag gemäss aktuellen Einstellungen geändert"
+  step "the entry's date is changed accordingly"
+  #step "der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert"
+  step 'the entry is grouped based on its current start date and inventory pool'
 end
 
-Dann(/^lande ich wieder auf der Timeout Page$/) do
-  step "werde ich auf die Timeout Page geleitet"
-end
+#Dann(/^lande ich wieder auf der Timeout Page$/) do
+#  #step "werde ich auf die Timeout Page geleitet"
+#  step "I am redirected to the timeout page"
+#end
 
 #########################################################################
 
@@ -138,7 +150,8 @@ Angenommen(/^die letzte Aktivität auf meiner Bestellung ist mehr als (\d+) minu
 end
 
 Wenn(/^ich die Seite der Hauptkategorien besuche$/) do
-  step "man befindet sich auf der Seite der Hauptkategorien"
+  #step "man befindet sich auf der Seite der Hauptkategorien"
+  step "I am listing the root categories"
 end
 
 Dann(/^lande ich auf der Bestellung\-Abgelaufen\-Seite$/) do

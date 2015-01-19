@@ -183,9 +183,9 @@ When(/^I change the entry$/) do
 end
 
 #Dann(/^öffnet der Kalender$/) do
-Then(/^the calendar opens$/) do
-  find("#booking-calendar .fc-widget-content", :match => :first)
-end
+#Then(/^the calendar opens$/) do
+#  find("#booking-calendar .fc-widget-content", :match => :first)
+#end
 
 #Dann(/^ich ändere die aktuellen Einstellung$/) do
 Then(/^I change the date$/) do
