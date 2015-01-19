@@ -5,7 +5,7 @@ Feature: Timeout Page
   Scenario: Bestellung abgelaufen
     Given I am Normin
     And ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde
-    And ich habe Gegenstände der Bestellung hinzugefügt
+    And I have added items to an order
     And die letzte Aktivität auf meiner Bestellung ist mehr als 30 minuten her
     When ich die Seite der Hauptkategorien besuche
     Then lande ich auf der Bestellung-Abgelaufen-Seite

@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^man befindet sich auf der Seite der Hauptkategorien$/) do
+#Angenommen(/^man befindet sich auf der Seite der Hauptkategorien$/) do
+Given(/^I am on the main category list$/) do
   visit borrow_root_path
 end
 

@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Wenn(/^man sich auf der Modellliste befindet$/) do
+#Wenn(/^man sich auf der Modellliste befindet$/) do
+When(/^I am listing models$/) do
   @category = Category.first
   visit borrow_models_path(category_id: @category.id)
 end
@@ -208,7 +209,8 @@ Dann(/^ist kein Ausleihzeitraum ausgewählt$/) do
   expect(find("#end-date").value).to eq nil
 end
 
-Wenn(/^man ein Startdatum auswählt$/) do
+#Wenn(/^man ein Startdatum auswählt$/) do
+When(/^I choose a start date$/) do
   @start_date ||= Date.today
   find("#start-date").set I18n.l @start_date
   find(".ui-state-active").click

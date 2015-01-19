@@ -1,50 +1,36 @@
+Feature: Order window
 
-Feature: Bestellfensterchen
-
-  Um Gegenstände ausleihen zu können
-  möchte ich als Ausleiher
-  die möglichkeit haben Modelle zu bestellen
+  This all happens in the borrow section.
 
   Background:
     Given I am Normin
 
   @personas
-  Scenario: Bestellfensterchen
-    Given man befindet sich auf der Seite der Hauptkategorien
-    Then sehe ich das Bestellfensterchen
+  Scenario: Order window
+    Given I am on the main category list
+    Then I see the order window
 
   @personas
-  Scenario: Kein Bestellfensterchen
-    Given man befindet sich auf der Bestellübersicht
-    Then sehe ich kein Bestellfensterchen
+  Scenario: No order window
+    Given I am listing my orders
+    Then I do not see the order window
 
   @personas
-  Scenario: Bestellfensterchen Inhalt
-    Given ich ein Modell der Bestellung hinzufüge
-    Then erscheint es im Bestellfensterchen
-    And die Modelle im Bestellfensterchen sind alphabetisch sortiert
-    And gleiche Modelle werden zusammengefasst
-    When das gleiche Modell nochmals hinzugefügt wird
-    Then wird die Anzahl dieses Modells erhöht
-    And die Modelle im Bestellfensterchen sind alphabetisch sortiert
-    And gleiche Modelle werden zusammengefasst
-    And ich kann zur detaillierten Bestellübersicht gelangen
+  Scenario: Content of the order window
+    When I add a model to an order
+    Then it appears in the order window
+    And the models in the order window are sorted alphabetically
+    And identical models are collapsed
+    When I add the same model one more time
+    Then its quantity is increased
+    And the models in the order window are sorted alphabetically
+    And identical models are collapsed
+    And I can go to the detailed order overview
 
   @javascript @browser @personas
-  Scenario: Bestellfensterchen aus Kalender updaten
-    When ich mit dem Kalender ein Modell der Bestellung hinzufüge
-    Then wird das Bestellfensterchen aktualisiert
-
-  @javascript @personas
-  Scenario: Zeit abgelaufen
-    When die Zeit abgelaufen ist
-    Then werde ich auf die Timeout Page weitergeleitet
-
-  @javascript @personas
-  Scenario: Zeit überschritten
-    When ich ein Modell der Bestellung hinzufüge
-    Then sehe ich die Zeitanzeige
-    When die Zeit überschritten ist
+  Scenario: Updating the order window from the calendar
+    When I add a model to the order using the calendar
+    Then the order window is updated
 
   @javascript @personas
   Scenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen

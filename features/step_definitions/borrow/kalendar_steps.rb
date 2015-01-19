@@ -7,15 +7,18 @@ Wenn(/^man auf einem Model "Zur Bestellung hinzufügen" wählt$/) do
   line.find("button[data-create-order-line]").click
 end
 
-Wenn(/^man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt$/) do
-  step 'man ein Startdatum auswählt'
+#Wenn(/^man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt$/) do
+When(/^I add an existing model to the order$/) do
+  #step 'man ein Startdatum auswählt'
+  step 'I choose a start date'
   find("#model-list > a.line[data-id]", match: :first)
   line = all("#model-list > a.line[data-id]:not(.grayed-out)").sample
   @model = Model.find line["data-id"]
   line.find("button[data-create-order-line]").click
 end
 
-Dann(/^öffnet sich der Kalender$/) do
+#Dann(/^öffnet sich der Kalender$/) do
+Then(/^the calendar opens$/) do
   find("#booking-calendar .fc-day-content", match: :first)
 end
 
@@ -96,7 +99,8 @@ Dann(/^der Kalender beinhaltet die folgenden Komponenten$/) do |table|
   end
 end
 
-Wenn(/^alle Angaben die ich im Kalender mache gültig sind$/) do
+#Wenn(/^alle Angaben die ich im Kalender mache gültig sind$/) do
+When(/^everything I input into the calendar is valid$/) do
   within "#booking-calendar-inventory-pool" do
     find("option", match: :first)
     @inventory_pool = InventoryPool.find all("option").detect{|o| o.selected?}["data-id"]
@@ -110,7 +114,8 @@ Wenn(/^alle Angaben die ich im Kalender mache gültig sind$/) do
   step "I save the booking calendar"
 end
 
-Dann(/^ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden$/) do
+#Dann(/^ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden$/) do
+Then(/^the model has been added to the order with the respective start and end date, quantity and inventory pool$/) do
   within "#current-order-lines" do
     find(".line", match: :first)
     find(".line", :text => "#{@quantity}x #{@model.name}")
