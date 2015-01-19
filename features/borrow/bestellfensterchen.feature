@@ -33,18 +33,19 @@ Feature: Order window
     Then the order window is updated
 
   @javascript @personas
-  Scenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen
-    Given meine Bestellung ist leer
-    When man befindet sich auf der Seite der Hauptkategorien
-    Then sehe ich keine Zeitanzeige
-    When ich ein Modell der Bestellung hinzufüge
-    Then sehe ich die Zeitanzeige
-    And die Zeitanzeige ist in einer Schaltfläche im Reiter "Bestellung" auf der rechten Seite
-    And die Zeitanzeige zählt von 30 Minuten herunter
+  Scenario: Showing how much time is left for ordering
+    Given my order is empty
+    When I am listing the root categories
+    Then I don't see a timer
+    When I add a model to an order
+    Then I see a timer
+    And the timer is near the basket
+    And the timer counts down from 30 minutes
 
   @personas
-  Scenario: Zeit zurücksetzen
-    Given die Bestellung ist nicht leer
-    Then sehe ich die Zeitanzeige
-    When ich den Time-Out zurücksetze
-    Then wird die Zeit zurückgesetzt
+  Scenario: Reset timer
+    Given my order is not empty
+    Then I see a timer
+
+    When I reset the timer
+    Then the timer is reset

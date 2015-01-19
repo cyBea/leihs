@@ -83,14 +83,16 @@ Then(/^the order window is updated$/) do
   find("#current-order-basket #current-order-lines .line[title='#{@model.name}']", match: :first, text: "#{@quantity}x #{@model.name}")
 end
 
-Angenommen(/^meine Bestellung ist leer$/) do
+#Angenommen(/^meine Bestellung ist leer$/) do
+Given(/^my order is empty$/) do
   # NOTE removing contracts already generated on the dataset
   @current_user.contracts.unsubmitted.map(&:destroy)
 
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).empty?).to be true
 end
 
-Dann(/^sehe ich keine Zeitanzeige$/) do
+#Dann(/^sehe ich keine Zeitanzeige$/) do
+Then(/^I don't see a timer$/) do
   expect(has_no_selector?("#current-order-basket #timeout-countdown")).to be true
 end
 
@@ -106,11 +108,13 @@ Then(/^I see a timer$/) do
   @countdown = find("#timeout-countdown-time", match: :first).text
 end
 
-Dann(/^die Zeitanzeige ist in einer Schaltfläche im Reiter "Bestellung" auf der rechten Seite$/) do
+#Dann(/^die Zeitanzeige ist in einer Schaltfläche im Reiter "Bestellung" auf der rechten Seite$/) do
+Then(/^the timer is near the basket$/) do
   find("#current-order-basket .navigation-tab-item #timeout-countdown #timeout-countdown-time", match: :first)
 end
 
-Dann(/^die Zeitanzeige zählt von (\d+) Minuten herunter$/) do |timeout_minutes|
+#Dann(/^die Zeitanzeige zählt von (\d+) Minuten herunter$/) do |timeout_minutes|
+Then(/^the timer counts down from (\d+) minutes$/) do |timeout_minutes|
   @countdown = find("#timeout-countdown-time", match: :first).text
   minutes = @countdown.split(":")[0].to_i
   seconds = @countdown.split(":")[1].to_i
@@ -119,16 +123,20 @@ Dann(/^die Zeitanzeige zählt von (\d+) Minuten herunter$/) do |timeout_minutes|
   expect(find("#timeout-countdown-time", match: :first).reload.text.split(":")[1].to_i).to be < seconds
 end
 
-Angenommen(/^die Bestellung ist nicht leer$/) do
-  step 'ich ein Modell der Bestellung hinzufüge'
+#Angenommen(/^die Bestellung ist nicht leer$/) do
+Given(/^my order is not empty$/) do
+  #step 'ich ein Modell der Bestellung hinzufüge'
+  step 'I add a model to an order'
 end
 
-Wenn(/^ich den Time-Out zurücksetze$/) do
+#Wenn(/^ich den Time-Out zurücksetze$/) do
+When(/^I reset the timer$/) do
   @countdown = find("#timeout-countdown-time", match: :first).text
   find("#timeout-countdown-refresh", match: :first).click
 end
 
-Dann(/^wird die Zeit zurückgesetzt$/) do
+#Dann(/^wird die Zeit zurückgesetzt$/) do
+Then(/^the timer is reset$/) do
   seconds = @countdown.split(":")[1].to_i
   secondsNow = find("#timeout-countdown-time", match: :first).reload.text.split(":")[1].to_i
   expect(secondsNow).to be >= seconds
