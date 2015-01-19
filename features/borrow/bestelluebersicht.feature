@@ -43,18 +43,6 @@ Feature: Viewing my orders
     And the entry is grouped based on its current start date and inventory pool
 
   @javascript @personas
-  Scenario: Zeitentität, Ablauf der erlaubten Zeit anzeigen
-    Then sehe ich die Zeitinformationen in folgendem Format "mm:ss"
-    And die Zeitanzeige zählt von 30 Minuten herunter
-
-  @personas
-  Scenario: Zeit zurücksetzen
-    Given die Bestellung ist nicht leer
-    Then sehe ich die Zeitanzeige
-    When ich den Time-Out zurücksetze
-    Then wird die Zeit zurückgesetzt
-
-  @javascript @personas
   Scenario: Zeit abgelaufen
     When die Zeit abgelaufen ist
     Then werde ich auf die Timeout Page weitergeleitet
