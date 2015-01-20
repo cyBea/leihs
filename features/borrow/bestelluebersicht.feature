@@ -43,28 +43,28 @@ Feature: Viewing my orders
     And the entry is grouped based on its current start date and inventory pool
 
   @javascript @personas
-  Scenario: Zeit abgelaufen
-    When die Zeit abgelaufen ist
-    Then werde ich auf die Timeout Page weitergeleitet
+  Scenario: Time has run out
+    When the timer has run down
+    Then I am redirected to the timeout page
 
   @javascript @browser @personas
-  Scenario: Bestellübersicht Bestellung löschen
-    When ich die Bestellung lösche
-    Then werde ich gefragt ob ich die Bestellung wirklich löschen möchte
-    And ich befinde mich wieder auf der Startseite
-    And alle Einträge werden aus der Bestellung gelöscht
-    And die Gegenstände sind wieder zur Ausleihe verfügbar
+  Scenario: Deleting an order from my order overview
+    When I delete the order
+    Then I am asked whether I really want to delete the order
+    And I am again on the borrow section's start page
+    And all entries are deleted from the order
+    And the items are available for borrowing again
 
   @personas
-  Scenario: Bestellübersicht Bestellen
-    When ich einen Zweck eingebe
-    And ich die Bestellung abschliesse
-    Then ändert sich der Status der Bestellung auf Abgeschickt
-    And ich erhalte eine Bestellbestätigung
-    And in der Bestellbestätigung wird mitgeteilt, dass die Bestellung in Kürze bearbeitet wird
-    And ich befinde mich wieder auf der Startseite
+  Scenario: Ordering
+    When I enter a purpose
+    And I submit the order
+    Then the order's status changes to submitted
+    And I see an order confirmation
+    And the order confirmation lets me know that my order will be handled soon
+    And I am again on the borrow section's start page
 
   @personas
-  Scenario: Bestellübersicht Zweck nicht eingegeben
-    When der Zweck nicht abgefüllt wird
-    Then hat der Benutzer keine Möglichkeit die Bestellung abzuschicken
+  Scenario: Forgetting to fill in the purpose
+    When I don't fill in the purpose
+    Then I can't submit my order

@@ -35,15 +35,16 @@ Wenn(/^die maximale Anzahl der Gegenstände überschritten ist$/) do
   expect(@new_contract_line.reload.available?).to be false
 end
 
-Dann(/^wird die Bestellung nicht abgeschlossen$/) do
+#Dann(/^wird die Bestellung nicht abgeschlossen$/) do
+Then(/^the order is not submitted$/) do
   @current_user.contracts.unsubmitted.each do |contract|
     expect(contract.status).to eq :unsubmitted
   end
 end
 
-Dann(/^ich erhalte eine Fehlermeldung$/) do
-  step "I see an error message"
-end
+#Dann(/^ich erhalte eine Fehlermeldung$/) do
+#  step "I see an error message"
+#end
 
 #######################################################################
 

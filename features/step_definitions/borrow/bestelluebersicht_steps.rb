@@ -90,7 +90,8 @@ end
 
 #############################################################################
 
-Wenn(/^ich die Bestellung lösche$/) do
+#Wenn(/^ich die Bestellung lösche$/) do
+When(/^I delete the order$/) do
   @contract_line_ids = @current_user.contracts.unsubmitted.flat_map(&:contract_line_ids)
   @contract_ids = @current_user.contracts.unsubmitted.pluck(:id)
 
@@ -100,12 +101,14 @@ Wenn(/^ich die Bestellung lösche$/) do
   a.click
 end
 
-Dann(/^werde ich gefragt ob ich die Bestellung wirklich löschen möchte$/) do
+#Dann(/^werde ich gefragt ob ich die Bestellung wirklich löschen möchte$/) do
+Then(/^I am asked whether I really want to delete the order$/) do
   alert = page.driver.browser.switch_to.alert
   alert.accept
 end
 
-Dann(/^alle Einträge werden aus der Bestellung gelöscht$/) do
+#Dann(/^alle Einträge werden aus der Bestellung gelöscht$/) do
+Then(/^all entries are deleted from the order$/) do
   expect(ContractLine.where(id: @contract_line_ids).count).to eq 0
   expect(Contract.where(id: @contract_ids).count).to eq 0
 end
@@ -118,44 +121,55 @@ Then(/^the items are available for borrowing again$/) do
   end
 end
 
-Dann(/^ich befinde mich wieder auf der Startseite$/) do
+#Dann(/^ich befinde mich wieder auf der Startseite$/) do
+Then(/^I am again on the borrow section's start page$/) do
   expect(current_path).to eq borrow_root_path
 end
 
 #############################################################################
 
-Wenn(/^ich einen Zweck eingebe$/) do
+#Wenn(/^ich einen Zweck eingebe$/) do
+When(/^I enter a purpose$/) do
   find("form textarea[name='purpose']", match: :first).set Faker::Lorem.sentences(2).join()
 end
 
-Wenn(/^ich die Bestellung abschliesse$/) do
+#Wenn(/^ich die Bestellung abschliesse$/) do
+When(/^I submit the order$/) do
   find("form button.green", match: :first).click
 end
 
-Dann(/^ändert sich der Status der Bestellung auf Abgeschickt$/) do
+#Dann(/^ändert sich der Status der Bestellung auf Abgeschickt$/) do
+Then(/^the order's status changes to submitted$/) do
   @current_user.contracts.find(@contract_ids).each do |contract|
     expect(contract.status).to eq :submitted
   end
 end
 
-Dann(/^ich erhalte eine Bestellbestätigung$/) do
+#Dann(/^ich erhalte eine Bestellbestätigung$/) do
+Then(/^I see an order confirmation$/) do
   find(".notice", match: :first)
 end
 
-Dann(/^in der Bestellbestätigung wird mitgeteilt, dass die Bestellung in Kürze bearbeitet wird$/) do
+#Dann(/^in der Bestellbestätigung wird mitgeteilt, dass die Bestellung in Kürze bearbeitet wird$/) do
+Then(/^the order confirmation lets me know that my order will be handled soon$/) do
   find(".notice", match: :first, text: _("Your order has been successfully submitted, but is NOT YET APPROVED."))
 end
 
 #############################################################################
 
-Wenn(/^der Zweck nicht abgefüllt wird$/) do
+#Wenn(/^der Zweck nicht abgefüllt wird$/) do
+When(/^I don't fill in the purpose$/) do
   find("form textarea[name='purpose']", match: :first).set ""
 end
 
-Dann(/^hat der Benutzer keine Möglichkeit die Bestellung abzuschicken$/) do
-  step "ich die Bestellung abschliesse"
-  step "wird die Bestellung nicht abgeschlossen"
-  step "ich erhalte eine Fehlermeldung"
+#Dann(/^hat der Benutzer keine Möglichkeit die Bestellung abzuschicken$/) do
+Then(/^I can't submit my order$/) do
+  #step "ich die Bestellung abschliesse"
+  step 'I submit the order'
+  #step "wird die Bestellung nicht abgeschlossen"
+  step 'the order is not submitted'
+  #step "ich erhalte eine Fehlermeldung"
+  step 'I see an error message'
 end
 
 #############################################################################

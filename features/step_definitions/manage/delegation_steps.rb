@@ -417,7 +417,7 @@ Wenn(/^ich eine Bestellung für eine Delegationsgruppe erstelle$/) do
     Wenn alle Angaben die ich im Kalender mache gültig sind
     Dann lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
     Wenn ich die Bestellübersicht öffne
-    Und ich einen Zweck eingebe
+    And I enter a purpose
     Und man merkt sich die Bestellung
     Und ich die Bestellung abschliesse
     Und ich refreshe die Bestellung

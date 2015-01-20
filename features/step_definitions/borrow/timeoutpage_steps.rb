@@ -7,7 +7,7 @@ Angenommen(/^ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde$
   step "ich eine Aktivität ausführe"
   #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
-  step "ich sehe eine Information, dass die Geräte nicht mehr reserviert sind"
+  step 'I am informed that my items are no longer reserved for me'
 end
 
 Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werde$/) do |n|
@@ -18,10 +18,11 @@ Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werd
   step "ich eine Aktivität ausführe"
   #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
-  step "ich sehe eine Information, dass die Geräte nicht mehr reserviert sind"
+  step 'I am informed that my items are no longer reserved for me'
 end
 
-Dann(/^ich sehe eine Information, dass die Geräte nicht mehr reserviert sind$/) do
+#Dann(/^ich sehe eine Information, dass die Geräte nicht mehr reserviert sind$/) do
+Then(/^I am informed that my items are no longer reserved for me$/) do
   expect(has_content?(_("%d minutes passed. The items are not reserved for you any more!") % Contract::TIMEOUT_MINUTES)).to be true
 end
 

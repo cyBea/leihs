@@ -142,17 +142,22 @@ Then(/^the timer is reset$/) do
   expect(secondsNow).to be >= seconds
 end
 
-Wenn(/^die Zeit abgelaufen ist$/) do
+#Wenn(/^die Zeit abgelaufen ist$/) do
+When(/^the timer has run down$/) do
   Contract::TIMEOUT_MINUTES = 1
-  step 'ich ein Modell der Bestellung hinzufüge'
-  step 'sehe ich die Zeitanzeige'
+  #step 'ich ein Modell der Bestellung hinzufüge'
+  step 'I add a model to an order'
+  #step 'sehe ich die Zeitanzeige'
+  step 'I see a timer'
   sleep(70) # NOTE this sleep is required to test the timeout
 end
 
-Dann(/^werde ich auf die Timeout Page weitergeleitet$/) do
-  step "ich sehe eine Information, dass die Geräte nicht mehr reserviert sind"
-  expect(current_path).to eq borrow_order_timed_out_path
-end
+#Dann(/^werde ich auf die Timeout Page weitergeleitet$/) do
+# alternative implementation in verfuegbarkeit_steps.rb
+#Then(/^I am redirected to the timeout page$/) do
+#  step 'I am informed that my items are no longer reserved for me'
+#  expect(current_path).to eq borrow_order_timed_out_path
+#end
 
 #Wenn(/^die Zeit überschritten ist$/) do
 When(/^time has run out$/) do
