@@ -1,10 +1,12 @@
 # -*- encoding : utf-8 -*-
 
-Dann(/^sehe ich die explorative Suche$/) do
+#Dann(/^sehe ich die explorative Suche$/) do
+Then(/^I see the explorative search$/) do
   find "#explorative-search"
 end
 
-Dann(/^sie beinhaltet die direkten Kinder und deren Kinder gemäss aktuell ausgewählter Kategorie$/) do
+#Dann(/^sie beinhaltet die direkten Kinder und deren Kinder gemäss aktuell ausgewählter Kategorie$/) do
+Then(/^it contains the currently selected category's direct children and their children$/) do
   @children = @category.children.reject {|c| Model.from_category_and_all_its_descendants(@category).active.blank?}
   @grand_children = @children.map(&:children).flatten.reject {|c| Model.from_category_and_all_its_descendants(c).active.blank?}
 
@@ -14,7 +16,8 @@ Dann(/^sie beinhaltet die direkten Kinder und deren Kinder gemäss aktuell ausge
   end
 end
 
-Dann(/^diejenigen Kategorien, die oder deren Nachfolger keine ausleihbare Gegenstände beinhalten, werden nicht angezeigt$/) do
+#Dann(/^diejenigen Kategorien, die oder deren Nachfolger keine ausleihbare Gegenstände beinhalten, werden nicht angezeigt$/) do
+Then(/^those categories and their children that do not contain any borrowable items are hidden$/) do
   expect((@children + @grand_children).length).to eq find("#explorative-search", match: :first).all("a").length
 end
 
