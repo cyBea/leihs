@@ -1,18 +1,18 @@
 
-Feature: Bestellungen
+Feature: Orders
 
   Background:
     Given I am Normin
 
   @personas
-  Scenario: Anzahl
-    Then sehe ich die Anzahl meiner abgeschickten, noch nicht genehmigten Bestellungen auf jeder Seite
+  Scenario: Order counters
+    Then I see the number of submitted, unapproved orders on every page
 
   @personas
-  Scenario: Bestellungen-Übersichtsseite
-    When ich auf den Bestellungen Link drücke
-    Then sehe ich meine abgeschickten, noch nicht genehmigten Bestellungen
-    And ich sehe die Information, dass die Bestellung noch nicht genehmigt wurde
-    And die Bestellungen sind nach Datum und Gerätepark sortiert
-    And jede Bestellung zeigt die zu genehmigenden Geräte
-    And die Geräte der Bestellung sind alphabetisch sortiert nach Modellname
+  Scenario: Overview page for my orders
+    When I am listing my orders
+    Then I see my submitted, unapproved orders
+    And I see the information that the order has not yet been approved
+    And the orders are sorted by date and inventory pool
+    And each order shows the items to approve
+    And the items in the order are sorted alphabetically and by model name

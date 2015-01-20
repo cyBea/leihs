@@ -29,7 +29,7 @@ Feature: Viewing my orders
   Scenario: Timeout
     When I add a model to an order
     Then I see a timer
-    When I am listing my orders
+    When I am viewing my current order
     And time has run out
     Then I am redirected to the timeout page
 

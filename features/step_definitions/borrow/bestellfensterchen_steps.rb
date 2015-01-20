@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 #Angenommen(/^man befindet sich auf der Bestellübersicht$/) do
-When(/^I am listing my orders$/) do
+When(/^I am viewing my current order$/) do
   visit borrow_current_order_path
 end
 

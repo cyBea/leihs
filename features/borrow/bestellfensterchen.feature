@@ -7,12 +7,12 @@ Feature: Order window
 
   @personas
   Scenario: Order window
-    Given I am on the main category list
+    Given I am on the root category list
     Then I see the order window
 
   @personas
   Scenario: No order window
-    Given I am listing my orders
+    Given I am viewing my current order
     Then I do not see the order window
 
   @personas
