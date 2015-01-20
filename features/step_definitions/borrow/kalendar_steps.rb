@@ -78,14 +78,16 @@ Dann(/^ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten
   end
 end
 
-Wenn(/^man einen Gegenstand aus der Modellliste hinzufügt$/) do
+#Wenn(/^man einen Gegenstand aus der Modellliste hinzufügt$/) do
+When(/^I add an item from the model list$/) do
   visit borrow_models_path(category_id: Category.find {|c| !c.models.active.blank?})
   @model_name = find(".line .line-col.col3of6", match: :first).text
   @model = Model.find {|m| [m.name, m.product].include? @model_name}
   find(".line .button", match: :first).click
 end
 
-Dann(/^der Kalender beinhaltet die folgenden Komponenten$/) do |table|
+#Dann(/^der Kalender beinhaltet die folgenden Komponenten$/) do |table|
+Then(/^the calendar contains all necessary interface elements$/) do
   within ".modal[role='dialog']" do
     find ".headline-m", text: @model_name
     find ".fc-header-title", text: I18n.l(Date.today, format: "%B %Y")
@@ -127,25 +129,29 @@ Dann(/^lässt sich das Modell mit Start\- und Enddatum, Anzahl und Gerätepark d
   step 'ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden'
 end
 
-Dann(/^das aktuelle Startdatum ist heute$/) do
+#Dann(/^das aktuelle Startdatum ist heute$/) do
+Then(/^the current start date is today$/) do
   within ".modal[role='dialog']" do
     expect(find("#booking-calendar-start-date").value).to eq I18n.l(Date.today)
   end
 end
 
-Dann(/^das Enddatum ist morgen$/) do
+#Dann(/^das Enddatum ist morgen$/) do
+Then(/^the end date is tomorrow$/) do
   within ".modal[role='dialog']" do
     expect(find("#booking-calendar-end-date").value).to eq I18n.l(Date.today + 1.day) # FIXME Date.tomorrow is returning same as Date.today
   end
 end
 
-Dann(/^die Anzahl ist 1$/) do
+#Dann(/^die Anzahl ist 1$/) do
+Then(/^the quantity is 1$/) do
   within ".modal[role='dialog']" do
     find("#booking-calendar-quantity[value='1']")
   end
 end
 
-Dann(/^es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben$/) do
+#Dann(/^es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben$/) do
+Then(/^all inventory pools are shown that have items of this model$/) do
   within "#booking-calendar-inventory-pool" do
     ips = @current_user.inventory_pools.select do |ip|
       @model.total_borrowable_items_for_user(@current_user, ip)

@@ -1,43 +1,30 @@
 
-Feature: Kalender
-
-  Um einen Gegenstand einer Bestellung hinzuzufügen
-  möchte ich als Ausleihender
-  den Gegenstand der Bestellung hinzufügen können
+Feature: Calendar
 
   Background:
     Given I am Normin
 
   @javascript @browser @personas
-  Scenario: Kalenderkomponenten
-    When man einen Gegenstand aus der Modellliste hinzufügt
-    Then öffnet sich der Kalender
-    And der Kalender beinhaltet die folgenden Komponenten
-    |Modellname                       |
-    |Aktueller Monat                  |
-    |Kalender                         |
-    |Geräteparkauswahl                |
-    |Startdatumfeld                   |
-    |Enddatumfeld                     |
-    |Anzahlfeld                       |
-    |Artikel hinzufügen Schaltfläche  |
-    |Abbrechen Schaltfläche           |
+  Scenario: Calendar components
+    When I add an item from the model list
+    Then the calendar opens
+    And the calendar contains all necessary interface elements
 
   @javascript @personas
-  Scenario: Kalender Grundeinstellung
-    When man einen Gegenstand aus der Modellliste hinzufügt
-    Then öffnet sich der Kalender
-    And das aktuelle Startdatum ist heute
-    And das Enddatum ist morgen
-    And die Anzahl ist 1
-    And es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben
+  Scenario: Default appearance of the calendar
+    When I add an item from the model list
+    Then the calendar opens
+    And the current start date is today
+    And the end date is tomorrow
+    And the quantity is 1
+    And all inventory pools are shown that have items of this model
 
   @javascript @browser @personas
   Scenario: Kalender Grundeinstellung wenn Zeitspanne bereits ausgewählt
     Given man befindet sich auf der Modellliste
     And man hat eine Zeitspanne ausgewählt
     When man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     And das Startdatum entspricht dem vorausgewählten Startdatum
     And das Enddatum entspricht dem vorausgewählten Enddatum
 
@@ -46,7 +33,7 @@ Feature: Kalender
     Given man befindet sich auf der Modellliste
     And man die Geräteparks begrenzt
     And man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     And es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist
     Then werden die Schliesstage gemäss gewähltem Gerätepark angezeigt
 
@@ -68,7 +55,7 @@ Feature: Kalender
   Scenario: Meiner Bestellung einen Gegenstand hinzufügen
     When man sich auf der Modellliste befindet die verfügbare Modelle beinhaltet
     And man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     When alle Angaben die ich im Kalender mache gültig sind
     Then ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden
 
@@ -96,6 +83,7 @@ Feature: Kalender
     When man "Alles zurücksetzen" wählt
     And man auf einem Model "Zur Bestellung hinzufügen" wählt
     Then öffnet sich der Kalender
+    Then the calendar opens
     When alle Angaben die ich im Kalender mache gültig sind
     Then lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
 
@@ -114,7 +102,7 @@ Feature: Kalender
   Scenario: Bestellkalender schliessen
     When man sich auf der Modellliste befindet
     And man auf einem Model "Zur Bestellung hinzufügen" wählt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     When ich den Kalender schliesse
     Then schliesst das Dialogfenster
 
@@ -122,14 +110,14 @@ Feature: Kalender
   Scenario: Kalender Verfügbarkeitsanzeige
     Given es existiert ein Modell für das eine Bestellung vorhanden ist
     When man dieses Modell aus der Modellliste hinzufügt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     And wird die Verfügbarkeit des Modells im Kalendar angezeigt
 
   @javascript @personas
   Scenario: Kalender Verfügbarkeitsanzeige nach Änderung der Kalenderdaten
     Given es existiert ein Modell für das eine Bestellung vorhanden ist
     When man dieses Modell aus der Modellliste hinzufügt
-    Then öffnet sich der Kalender
+    Then the calendar opens
     When man ein Start und Enddatum ändert
     Then wird die Verfügbarkeit des Gegenstandes aktualisiert
     When man die Anzahl ändert
