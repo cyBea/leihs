@@ -406,7 +406,7 @@ end
 
 Wenn(/^ich eine Bestellung für eine Delegationsgruppe erstelle$/) do
   steps %{
-    Wenn ich über meinen Namen fahre
+    When I hover over my name
     Und ich auf "Delegationen" drücke
     Dann werden mir die Delegationen angezeigt, denen ich zugeteilt bin
     Wenn ich eine Delegation wähle

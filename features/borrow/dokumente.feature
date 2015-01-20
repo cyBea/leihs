@@ -1,52 +1,50 @@
 
-Feature: Benutzerdokumente
-
-  Als Benutzer möchte ich meine Dokumente einsehen koennen
+Feature: User documents
 
   Background:
-    Given man ist ein Kunde mit Verträge
+    Given I am a customer with contracts
 
   @javascript @personas
-  Scenario: Schaltfläche zur Dokumentenübersichtsseite
-    When ich unter meinem Benutzernamen auf "Meine Dokumente" klicke
-    Then gelange ich zu der Dokumentenübersichtsseite
+  Scenario: Getting to my documents
+    When I click on "My Documents" underneath my username
+    Then I am on the page showing my documents
 
   @javascript @personas
-  Scenario: Dokumentenübersicht
-    Given ich befinde mich auf der Dokumentenübersichtsseite
-    Then sind die Verträge nach neuestem Zeitfenster sortiert
-    And für jede Vertrag sehe ich folgende Informationen
-      | Vertragsnummer                          |
-      | Zeitfenster mit von bis Datum und Dauer |
-      | Gerätepark                              |
-      | Zweck                                   |
-      | Status                                  |
-      | Vertraglink                             |
-      | Wertelistelink                          |
+  Scenario: Document overview
+    Given I am on my documents page
+    Then my contracts are ordered by the earliest time window
+    And I see the following information for each contract:
+      | Contract number                    |
+      | Time window with its start and end |
+      | Inventory pool                     |
+      | Purpose                            |
+      | Status                             |
+      | Link to the contract               |
+      | Link to the value list             |
 
   @javascript @personas
-  Scenario: Rücknehmende Person
-    When ich einen Vertrag mit zurück gebrachten Gegenständen aus meinen Dokumenten öffne
-    Then sieht man bei den betroffenen Linien die rücknehmende Person im Format "V. Nachname"
+  Scenario: Person taking back
+    When I open a contract with returned items from my documents
+    Then the relevant lines show the person taking back the item in the format "F. Lastname"
 
   @javascript @personas
-  Scenario: Werteliste öffnen
-    Given ich befinde mich auf der Dokumentenübersichtsseite
-    And ich drücke auf den Wertelistelink
-    Then öffnet sich die Werteliste
+  Scenario: Opening value list
+    Given I am on my documents page
+    And I click the value list link
+    Then the value list opens
 
   @javascript @personas
-  Scenario: Was ich auf der Werteliste sehen möchte
-    When ich eine Werteliste aus meinen Dokumenten öffne
-    Then sehe ich die Werteliste genau wie im Verwalten-Bereich
+  Scenario: What I want to see on a value list
+    When I open a value list from my documents
+    Then I see the value list displayed as in the manage section
 
   @javascript @personas
-  Scenario: Vertrag öffnen
-    Given ich befinde mich auf der Dokumentenübersichtsseite
-    And ich drücke auf den Vertraglink
-    Then öffnet sich der Vertrag
+  Scenario: Opening a contract
+    Given I am on my documents page
+    And I click the contract link
+    Then the contract opens
 
   @javascript @personas
-  Scenario: Was ich auf dem Vertrag sehen möchte
-    When ich einen Vertrag aus meinen Dokumenten öffne
-    Then sehe ich den Vertrag genau wie im Verwalten-Bereich
+  Scenario: What I want to see on the contract
+    When I open a contract from my documents
+    Then I see the contract and it looks like in the manage section
