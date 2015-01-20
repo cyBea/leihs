@@ -21,12 +21,14 @@ Then(/^those categories and their children that do not contain any borrowable it
   expect((@children + @grand_children).length).to eq find("#explorative-search", match: :first).all("a").length
 end
 
-Wenn(/^ich eine Kategorie wähle$/) do
+#Wenn(/^ich eine Kategorie wähle$/) do
+When(/^I choose a category$/) do
   @category = @category.children.reject {|c| Model.from_category_and_all_its_descendants(@category).active.blank?}.first
   find("#explorative-search", match: :first).find("a", match: :first, text: @category.name).click
 end
 
-Dann(/^werden die Modelle der aktuell angewählten Kategorie angezeigt$/) do
+#Dann(/^werden die Modelle der aktuell angewählten Kategorie angezeigt$/) do
+Then(/^the models of the currently chosen category are shown$/) do
   expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)["category_id"].to_i).to eq @category.id
   find("#model-list", match: :first)
   models = Model.from_category_and_all_its_descendants(@category.id).active
@@ -37,11 +39,13 @@ Dann(/^werden die Modelle der aktuell angewählten Kategorie angezeigt$/) do
   end
 end
 
-Angenommen(/^man befindet sich auf der Modellliste einer Kategorie ohne Kinder$/) do
+#Angenommen(/^man befindet sich auf der Modellliste einer Kategorie ohne Kinder$/) do
+Given(/^I am in the model list viewing a category without children$/) do
   @category = Category.find {|c| c.descendants.blank?}
   visit borrow_models_path category_id: @category.id
 end
 
-Dann(/^ist die explorative Suche nicht sichtbar und die Modellliste ist erweitert$/) do
+#Dann(/^ist die explorative Suche nicht sichtbar und die Modellliste ist erweitert$/) do
+Then(/^the explorative search panel is not visible and the model list is expanded$/) do
   expect(has_selector?(".col1of1 #model-list")).to be true
 end

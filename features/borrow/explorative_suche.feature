@@ -12,12 +12,12 @@ Feature: Explorative search
     And those categories and their children that do not contain any borrowable items are hidden
 
   @personas
-  Scenario: Wahl einer Subkategorie
+  Scenario: Choosing a subcategory
     Given I am listing models
-    When ich eine Kategorie wähle
-    Then werden die Modelle der aktuell angewählten Kategorie angezeigt
+    When I choose a category
+    Then the models of the currently chosen category are shown
 
   @personas
-  Scenario: Unterstes Blatt erreicht
-    Given man befindet sich auf der Modellliste einer Kategorie ohne Kinder
-    Then ist die explorative Suche nicht sichtbar und die Modellliste ist erweitert
+  Scenario: Reaching the outermost branch/a leaf of the tree
+    Given I am in the model list viewing a category without children
+    Then the explorative search panel is not visible and the model list is expanded
