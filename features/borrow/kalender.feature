@@ -20,22 +20,22 @@ Feature: Calendar
     And all inventory pools are shown that have items of this model
 
   @javascript @browser @personas
-  Scenario: Kalender Grundeinstellung wenn Zeitspanne bereits ausgewählt
-    Given man befindet sich auf der Modellliste
-    And man hat eine Zeitspanne ausgewählt
-    When man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt
+  Scenario: Calendar appearance with date already set
+    Given I am listing models
+    And I have set a time span
+    When I add an item to my order that is available in the selected time span
     Then the calendar opens
-    And das Startdatum entspricht dem vorausgewählten Startdatum
-    And das Enddatum entspricht dem vorausgewählten Enddatum
+    And the start date is equal to the preselected start date
+    And the end date is equal to the preselected end date
 
   @javascript @personas
-  Scenario: Kalender Grundeinstellung wenn Geräteparks bereits ausgewählt sind
-    Given man befindet sich auf der Modellliste
-    And man die Geräteparks begrenzt
-    And man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt
+  Scenario: Calendar appearance with inventory pools already set
+    Given I am listing models
+    And I reduce the selected inventory pools
+    And I add a model to the order that is available across all the still remaining inventory pools
     Then the calendar opens
-    And es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist
-    Then werden die Schliesstage gemäss gewähltem Gerätepark angezeigt
+    And that inventory pool which comes alphabetically first is selected
+    Then any closed days of the selected inventory pool are shown
 
   @javascript  @browser @personas
   Scenario: Kalender zwischen Monaten hin und herspringen
@@ -78,7 +78,7 @@ Feature: Calendar
   @javascript @browser @personas
   Scenario: Bestellkalender nutzen nach dem man alle Filter zurückgesetzt hat
     Given ich ein Modell der Bestellung hinzufüge
-    And man sich auf der Modellliste befindet
+    And I am listing models
     And man den zweiten Gerätepark in der Geräteparkauswahl auswählt
     When man "Alles zurücksetzen" wählt
     And man auf einem Model "Zur Bestellung hinzufügen" wählt
@@ -100,7 +100,7 @@ Feature: Calendar
 
   @javascript @personas
   Scenario: Bestellkalender schliessen
-    When man sich auf der Modellliste befindet
+    When I am listing models
     And man auf einem Model "Zur Bestellung hinzufügen" wählt
     Then the calendar opens
     When ich den Kalender schliesse

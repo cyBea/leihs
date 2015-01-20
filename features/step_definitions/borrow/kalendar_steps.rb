@@ -165,24 +165,28 @@ Then(/^all inventory pools are shown that have items of this model$/) do
   end
 end
 
-Angenommen(/^man hat eine Zeitspanne ausgewählt$/) do
+#Angenommen(/^man hat eine Zeitspanne ausgewählt$/) do
+Given(/^I have set a time span$/) do
   find("#start-date").click
   find("#start-date").set I18n.l(Date.today + 1)
   find("#end-date").click
   find("#end-date").set I18n.l(Date.today + 2)
 end
 
-Wenn(/^man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt$/) do
+#Wenn(/^man einen in der Zeitspanne verfügbaren Gegenstand aus der Modellliste hinzufügt$/) do
+When(/^I add an item to my order that is available in the selected time span$/) do
   @model_name = find(".line:not(.grayed-out) .line-col.col3of6", match: :first).text
   @model = Model.find {|m| [m.name, m.product].include? @model_name}
   find(".line .button", match: :first).click
 end
 
-Dann(/^das Startdatum entspricht dem vorausgewählten Startdatum$/) do
+#Dann(/^das Startdatum entspricht dem vorausgewählten Startdatum$/) do
+Then(/^the start date is equal to the preselected start date$/) do
   expect(find("#booking-calendar-start-date").value).to eq I18n.l(Date.today + 1)
 end
 
-Dann(/^das Enddatum entspricht dem vorausgewählten Enddatum$/) do
+#Dann(/^das Enddatum entspricht dem vorausgewählten Enddatum$/) do
+Then(/^the end date is equal to the preselected end date$/) do
   expect(find("#booking-calendar-end-date").value).to eq I18n.l(Date.today + 2)
 end
 
@@ -274,7 +278,8 @@ Dann(/^wird der Kalender gemäss aktuell gewähltem Monat angezeigt$/) do
   find(".fc-header-title", text: I18n.l(Date.today.next_month, format: "%B %Y"))
 end
 
-Dann(/^werden die Schliesstage gemäss gewähltem Gerätepark angezeigt$/) do
+#Dann(/^werden die Schliesstage gemäss gewähltem Gerätepark angezeigt$/) do
+Then(/^any closed days of the selected inventory pool are shown$/) do
   within "#booking-calendar-inventory-pool" do
     expect(has_selector?("option")).to be true
     @inventory_pool = InventoryPool.find all("option").detect{|o| o.selected?}["data-id"]
@@ -354,7 +359,8 @@ Wenn(/^man den zweiten Gerätepark in der Geräteparkauswahl auswählt$/) do
   step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
 end
 
-Angenommen(/^man die Geräteparks begrenzt$/) do
+#Angenommen(/^man die Geräteparks begrenzt$/) do
+Given(/^I reduce the selected inventory pools$/) do
   inventory_pool_ids = find("#ip-selector").all(".dropdown-item[data-id]", :visible => false).map{|i| i[:"data-id"]}
   find("#ip-selector").click
   find(:xpath, "(//*[@id='ip-selector']//input)[1]", :visible => true).click
@@ -362,7 +368,8 @@ Angenommen(/^man die Geräteparks begrenzt$/) do
   @inventory_pools = inventory_pool_ids.map{|id| InventoryPool.find id}
 end
 
-Angenommen(/^man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt$/) do
+#Angenommen(/^man ein Modell welches über alle Geräteparks der begrenzten Liste beziehbar ist zur Bestellung hinzufügt$/) do
+Given(/^I add a model to the order that is available across all the still remaining inventory pools$/) do
   expect(has_selector?(".line[data-id]", :visible => true)).to be true
   all(".line[data-id]").each do |line|
     model = Model.find line["data-id"]
@@ -376,7 +383,8 @@ Angenommen(/^man ein Modell welches über alle Geräteparks der begrenzten Liste
   find(".line[data-id='#{@model.id}'] *[data-create-order-line]").click
 end
 
-Dann(/^es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist$/) do
+#Dann(/^es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist$/) do
+Then(/^that inventory pool which comes alphabetically first is selected$/) do
   expect(find("#booking-calendar-inventory-pool").value.split(" ")[0]).to eq @inventory_pools.first.name
 end
 
