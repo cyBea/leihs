@@ -41,15 +41,15 @@ Feature: Breadcrumb navigation
     And none of the elements of the breadcrumb navigation bar are active
 
   @personas
-  Scenario: Explorative-Suche Kategorie der ersten Stufe auswählen
-    Given man sich auf der Modellliste befindet
-    When ich eine Kategorie der ersten stufe aus der Explorativen Suche wähle
-    Then öffnet diese Kategorie
-    And die Kategorie ist das zweite und letzte Element der Brotkrumennavigation
+  Scenario: Explorative search picks the the category on the first level
+    Given I am listing models
+    When I pick a first-level category from the results of the explorative search
+    Then that category opens
+    And that category is the second and last element of the breadcrumb navigation bar
 
   @personas
-  Scenario: Explorative-Suche Kategorie der zweiten Stufe auswählen
-    Given man sich auf der Modellliste befindet
-    When ich eine Kategorie der zweiten stufe aus der Explorativen Suche wähle
-    Then öffnet diese Kategorie
-    And die Kategorie ist das zweite und letzte Element der Brotkrumennavigation
+  Scenario: Explorative search: Picking a second-level category
+    Given I am listing models
+    When I pick a second-level category from the results of the explorative search
+    Then that category opens
+    And that category is the second and last element of the breadcrumb navigation bar

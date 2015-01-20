@@ -22,7 +22,8 @@ Then(/^that button directs me to the root categories$/) do
   expect(current_path).to eq borrow_root_path
 end
 
-Wenn(/^ich eine Kategorie der ersten stufe aus der Explorativen Suche wähle$/) do
+#Wenn(/^ich eine Kategorie der ersten stufe aus der Explorativen Suche wähle$/) do
+When(/^I pick a first-level category from the results of the explorative search$/) do
   category_link = find("#explorative-search h2 a", match: :first)
   @category = Category.find_by_name category_link[:title]
   category_link.click
@@ -44,7 +45,8 @@ Then(/^that category opens$/) do
   expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)["category_id"].to_i).to eq @category.id
 end
 
-Wenn(/^ich eine Kategorie der zweiten stufe aus der Explorativen Suche wähle$/) do
+#Wenn(/^ich eine Kategorie der zweiten stufe aus der Explorativen Suche wähle$/) do
+When(/^I pick a second-level category from the results of the explorative search$/) do
   category_link = find("#explorative-search h3 a", match: :first)
   @category = Category.find_by_name category_link[:title]
   category_link.click
