@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
-Wenn(/^man auf einem Model "Zur Bestellung hinzufügen" wählt$/) do
+#Wenn(/^man auf einem Model "Zur Bestellung hinzufügen" wählt$/) do
+When(/^I press "Add to order" on a model$/) do
   find("#model-list > a.line[data-id]", match: :first)
   line = all("#model-list > a.line[data-id]").sample
   @model = Model.find line["data-id"]
@@ -12,6 +13,9 @@ When(/^I add an existing model to the order$/) do
   #step 'man ein Startdatum auswählt'
   step 'I choose a start date'
   find("#model-list > a.line[data-id]", match: :first)
+  # This is necessary because otherwise it seems all() does not wait
+  # for the list to be populated.
+  page.has_css?("#model-list > a.line[data-id]:not(.grayed-out)")
   line = all("#model-list > a.line[data-id]:not(.grayed-out)").sample
   @model = Model.find line["data-id"]
   line.find("button[data-create-order-line]").click
@@ -244,37 +248,47 @@ Dann(/^wird die Verfügbarkeit des Modells im Kalendar angezeigt$/) do
   end
 end
 
-Angenommen(/^man hat den Buchungskalender geöffnet$/) do
-  step 'man sich auf der Modellliste befindet'
-  step 'man auf einem Model "Zur Bestellung hinzufügen" wählt'
-  step 'öffnet sich der Kalender'
+#Angenommen(/^man hat den Buchungskalender geöffnet$/) do
+Given(/^I have opened the booking calendar$/) do
+  #step 'man sich auf der Modellliste befindet'
+  step 'I am listing models'
+  #step 'man auf einem Model "Zur Bestellung hinzufügen" wählt'
+  step 'I press "Add to order" on a model'
+  #step 'öffnet sich der Kalender'
+  step 'the calendar opens'
 end
 
-Wenn(/^man anhand der Sprungtaste zum aktuellen Startdatum springt$/) do
+#Wenn(/^man anhand der Sprungtaste zum aktuellen Startdatum springt$/) do
+When(/^I use the jump button to jump to the current start date$/) do
   find(".fc-button-next").click
   find("#jump-to-start-date").click
 end
 
-Dann(/^wird das Startdatum im Kalender angezeigt$/) do
+#Dann(/^wird das Startdatum im Kalender angezeigt$/) do
+Then(/^the start date is shown in the calendar$/) do
   start_date = Date.parse(find("#booking-calendar-start-date").value).to_s(:db)
   find(".fc-widget-content.start-date[data-date='#{start_date}']")
 end
 
-Wenn(/^man anhand der Sprungtaste zum aktuellen Enddatum springt$/) do
+#Wenn(/^man anhand der Sprungtaste zum aktuellen Enddatum springt$/) do
+When(/^I use the jump button to jump to the current end date$/) do
   find(".fc-button-next").click
   find("#jump-to-end-date").click
 end
 
-Dann(/^wird das Enddatum im Kalender angezeigt$/) do
+#Dann(/^wird das Enddatum im Kalender angezeigt$/) do
+Then(/^the end date is shown in the calendar$/) do
   end_date = Date.parse(find("#booking-calendar-end-date").value).to_s(:db)
   find(".fc-widget-content.end-date[data-date='#{end_date}']")
 end
 
-Wenn(/^man zwischen den Monaten hin und herspring$/) do
+#Wenn(/^man zwischen den Monaten hin und herspring$/) do
+When(/^I jump back and forth between months$/) do
   find(".fc-button-next").click
 end
 
-Dann(/^wird der Kalender gemäss aktuell gewähltem Monat angezeigt$/) do
+#Dann(/^wird der Kalender gemäss aktuell gewähltem Monat angezeigt$/) do
+Then(/^the calendar shows the currently selected month$/) do
   find(".fc-header-title", text: I18n.l(Date.today.next_month, format: "%B %Y"))
 end
 
@@ -329,7 +343,8 @@ Dann(/^die Geräteparks sind alphabetisch sortiert$/) do
   end
 end
 
-Dann(/^wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt$/) do
+#Dann(/^wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt$/) do
+Then(/^the maximum available quantity of the chosen model is displayed$/) do
   within "#booking-calendar-inventory-pool" do
     all("option").each do |option|
       inventory_pool = InventoryPool.find(option["data-id"])
@@ -338,7 +353,8 @@ Dann(/^wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt$/
   end
 end
 
-Dann(/^man kann maximal die maximal ausleihbare Anzahl eingeben$/) do
+#Dann(/^man kann maximal die maximal ausleihbare Anzahl eingeben$/) do
+Then(/^I can enter at most this maximum quantity$/) do
   max_quantity = 0
   within "#booking-calendar-inventory-pool" do
     expect(has_selector?("option")).to be true

@@ -38,32 +38,32 @@ Feature: Calendar
     Then any closed days of the selected inventory pool are shown
 
   @javascript  @browser @personas
-  Scenario: Kalender zwischen Monaten hin und herspringen
-    Given man hat den Buchungskalender geöffnet
-    When man zwischen den Monaten hin und herspring
-    Then wird der Kalender gemäss aktuell gewähltem Monat angezeigt
+  Scenario: Jumping back and forth between months in the calendar
+    Given I have opened the booking calender
+    When I jump back and forth between months
+    Then the calendar shows the currently selected month
 
   @javascript @personas
-  Scenario: Kalender Sprung zu Start und Enddatum
-    Given man hat den Buchungskalender geöffnet
-    When man anhand der Sprungtaste zum aktuellen Startdatum springt
-    Then wird das Startdatum im Kalender angezeigt
-    When man anhand der Sprungtaste zum aktuellen Enddatum springt
-    Then wird das Enddatum im Kalender angezeigt
+  Scenario: Jumping to start and end date in the calendar
+    Given I have opened the booking calendar
+    When I use the jump button to jump to the current start date
+    Then the start date is shown in the calendar
+    When I use the jump button to jump to the current end date
+    Then the end date is shown in the calendar
 
   @javascript @browser @personas
-  Scenario: Meiner Bestellung einen Gegenstand hinzufügen
-    When man sich auf der Modellliste befindet die verfügbare Modelle beinhaltet
-    And man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt
+  Scenario: Adding an item to my order
+    When I am listing some available models
+    And I add an existing model to the order
     Then the calendar opens
-    When alle Angaben die ich im Kalender mache gültig sind
-    Then ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden
+    When everything I input into the calendar is valid
+    Then the model has been added to the order with the respective start and end date, quantity and inventory pool
 
   @javascript @personas
-  Scenario: Kalender max. Verfügbarkeit
-    Given man hat den Buchungskalender geöffnet
-    Then wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt
-    And man kann maximal die maximal ausleihbare Anzahl eingeben
+  Scenario: Maximal quantity available in the calendar
+    Given I have opened the booking calendar
+    Then the maximum available quantity of the chosen model is displayed
+    And I can enter at most this maximum quantity
 
   @javascript @personas
   Scenario: Auswählbare Geräteparks im Kalender
