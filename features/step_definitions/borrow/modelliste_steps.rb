@@ -14,7 +14,8 @@ When(/^I am listing some available models$/) do
   visit borrow_models_path(category_id: @category.id)
 end
 
-Wenn(/^man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet$/) do
+#Wenn(/^man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet$/) do
+When(/^I am listing models and some of them are unavailable$/) do
   @start_date ||= Date.today
   @end_date ||= Date.today+1.day
   model = @current_user.models.borrowable.detect do |m|
@@ -31,21 +32,24 @@ Wenn(/^man sich auf der Modellliste befindet die nicht verfügbare Modelle beinh
   end
 end
 
-Dann(/^sind alle Geräteparks ausgewählt$/) do
-  within "#ip-selector" do
-    all(".dropdown-item input").all? &:checked?
-  end
-end
+#Dann(/^sind alle Geräteparks ausgewählt$/) do
+#Then(/^all inventory pools are selected$/) do
+#  within "#ip-selector" do
+#    all(".dropdown-item input").all? &:checked?
+#  end
+#end
 
-Dann(/^die Modellliste zeigt Modelle aller Geräteparks an$/) do
+#Dann(/^die Modellliste zeigt Modelle aller Geräteparks an$/) do
+Then(/^the model list shows models from all inventory pools$/) do
   within "#model-list" do
     expect(@current_user.models.borrowable.from_category_and_all_its_descendants(@category.id).default_order.paginate(page: 1, per_page: 20).map(&:name)).to eq all(".text-align-left").map(&:text)
   end
 end
 
-Dann(/^im Filter steht "(.*?)"$/) do |button_label_de|
+#Dann(/^im Filter steht "(.*?)"$/) do |button_label_de|
+Then(/^the filter is labeled "(.*?)"$/) do |button_label|
   within "#ip-selector" do
-    find(".button", text: button_label_de)
+    find(".button", text: button_label)
   end
 end
 
@@ -53,7 +57,8 @@ Angenommen(/^man befindet sich auf der Modellliste$/) do
   step "man sich auf der Modellliste befindet"
 end
 
-Wenn(/^man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt$/) do
+#Wenn(/^man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt$/) do
+When(/^I select a specific inventory pool from the choices offered$/) do
   find("#ip-selector").click
   expect(has_selector?("#ip-selector .dropdown .dropdown-item", :visible => true)).to be true
   @current_inventory_pool ||= @current_user.inventory_pools.first
@@ -77,7 +82,8 @@ Dann(/^die Modellliste zeigt nur Modelle dieses Geräteparks an$/) do
   end
 end
 
-Dann(/^die Auswahl klappt zu$/) do
+#Dann(/^die Auswahl klappt zu$/) do
+Then(/^the pool selector is still expanded$/) do
   expect(find("#ip-selector .dropdown").visible?).to be false
 end
 
@@ -133,7 +139,8 @@ Dann(/^im Filter steht der Name des übriggebliebenen Geräteparks$/) do
   find("#ip-selector .button", text: @current_inventory_pool.name)
 end
 
-Dann(/^kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen$/) do
+#Dann(/^kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen$/) do
+Then(/^I cannot deselect all the inventory pools in the inventory pool selector$/) do
   find("#ip-selector").click
   within "#ip-selector" do
     inventory_pool_ids = all(".dropdown-item[data-id]").map{|item| item["data-id"]}
@@ -156,33 +163,35 @@ Dann(/^im Filter steht die Zahl der ausgewählten Geräteparks$/) do
   find("#ip-selector .button", text: (number_of_selected_ips.to_s + " " + _("Inventory pools")))
 end
 
-Wenn(/^man die Liste nach "(.*?)" sortiert$/) do |sort_order|
+#Wenn(/^man die Liste nach "(.*?)" sortiert$/) do |sort_order|
+When(/^I sort the list by "(.*?)"$/) do |sort_order|
   find("#model-sorting").click
   text = case sort_order
-    when "Modellname (alphabetisch aufsteigend)"
+    when "Model, ascending"
       "#{_("Model")} (#{_("ascending")})"
-    when "Modellname (alphabetisch absteigend)"
+    when "Model, descending"
       "#{_("Model")} (#{_("descending")})"
-    when "Herstellername (alphabetisch aufsteigend)"
+    when "Manufacturer, ascending"
       "#{_("Manufacturer")} (#{_("ascending")})"
-    when "Herstellername (alphabetisch absteigend)"
+    when "Manufacturer, descending"
       "#{_("Manufacturer")} (#{_("descending")})"
   end
   find("#model-sorting a", text: text).click
   find("#model-list .line", match: :first)
 end
 
-Dann(/^ist die Liste nach "(.*?)" "(.*?)" sortiert$/) do |sort, order|
+#Dann(/^ist die Liste nach "(.*?)" "(.*?)" sortiert$/) do |sort, order|
+Then(/^the list is sorted by "(.*?)", "(.*?)"$/) do |sort, order|
   attribute = case sort
-              when "Modellname"
+              when "Model"
                 "name"
-              when "Herstellername"
+              when "Manufacturer"
                 "manufacturer"
               end
   direction = case order
-              when "(alphabetisch aufsteigend)"
+              when "ascending"
                 "asc"
-              when "(alphabetisch absteigend)"
+              when "descending"
                 "desc"
               end
   within "#model-list" do
@@ -194,18 +203,21 @@ Dann(/^ist die Liste nach "(.*?)" "(.*?)" sortiert$/) do |sort, order|
   end
 end
 
-Wenn(/^man ein Suchwort eingibt$/) do
+#Wenn(/^man ein Suchwort eingibt$/) do
+When(/^I enter a search term$/) do
   x = find("#model-list-search input")
   x.set " "
   x.set "bea panas"
   find("#model-list .line", :match => :first)
 end
 
-Dann(/^werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen$/) do
+#Dann(/^werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen$/) do
+Then(/^those models are shown whose names or manufacturers match the search term$/) do
   find("#model-list .line", text: /bea.*panas/i)
 end
 
-Dann(/^ist kein Ausleihzeitraum ausgewählt$/) do
+#Dann(/^ist kein Ausleihzeitraum ausgewählt$/) do
+Then(/^no lending period is set$/) do
   expect(find("#start-date").value).to eq nil
   expect(find("#end-date").value).to eq nil
 end
@@ -217,12 +229,14 @@ When(/^I choose a start date$/) do
   find(".ui-state-active").click
 end
 
-Dann(/^wird automatisch das Enddatum auf den folgenden Tag gesetzt$/) do
+#Dann(/^wird automatisch das Enddatum auf den folgenden Tag gesetzt$/) do
+Then(/^the end date is automatically set to the next day$/) do
   @end_date ||= Date.today+1.day
   expect(find("#end-date").value).to eq I18n.l(@end_date)
 end
 
-Dann(/^die Liste wird gefiltert nach Modellen die in diesem Zeitraum verfügbar sind$/) do
+#Dann(/^die Liste wird gefiltert nach Modellen die in diesem Zeitraum verfügbar sind$/) do
+Then(/^the list is filtered by models that are available in that time frame$/) do
   within "#model-list" do
     expect(has_selector?(".line[data-id]")).to be true
     all(".line[data-id]").each do |model_el|
@@ -242,32 +256,37 @@ Dann(/^die Liste wird gefiltert nach Modellen die in diesem Zeitraum verfügbar 
   end
 end
 
-Wenn(/^man ein Enddatum auswählt$/) do
+#Wenn(/^man ein Enddatum auswählt$/) do
+When(/^I choose an end date$/) do
   @end_date = Date.today + 1.day
   fill_in "end-date", with: (I18n.l @end_date)
 end
 
-Dann(/^wird automatisch das Startdatum auf den vorhergehenden Tag gesetzt$/) do
+#Dann(/^wird automatisch das Startdatum auf den vorhergehenden Tag gesetzt$/) do
+Then(/^the start date is automatically set to the previous day$/) do
   sleep(0.55) # NOTE this sleep is required because waiting for onchange event
   @start_date = @end_date - 1.day
   expect(find("#start-date").value).to eq I18n.l(@start_date)
 end
 
-Angenommen(/^das Startdatum und Enddatum des Ausleihzeitraums sind ausgewählt$/) do
-  step 'man ein Startdatum auswählt'
-  step 'man ein Enddatum auswählt'
-end
+#Angenommen(/^das Startdatum und Enddatum des Ausleihzeitraums sind ausgewählt$/) do
+#  step 'man ein Startdatum auswählt'
+#  step 'man ein Enddatum auswählt'
+#end
 
-Wenn(/^man das Startdatum und Enddatum leert$/) do
+#Wenn(/^man das Startdatum und Enddatum leert$/) do
+When(/^I blank the start and end date$/) do
   fill_in "start-date", with: ""
   fill_in "end-date", with: ""
 end
 
-Dann(/^wird die Liste nichtmehr nach Ausleihzeitraum gefiltert$/) do
+#Dann(/^wird die Liste nichtmehr nach Ausleihzeitraum gefiltert$/) do
+Then(/^the list is not filtered by lending time frame$/) do
   expect(has_no_selector?(".grayed-out")).to be true
 end
 
-Wenn(/^kann man für das Startdatum und für das Enddatum den Datepick benutzen$/) do
+#Wenn(/^kann man für das Startdatum und für das Enddatum den Datepick benutzen$/) do
+Then(/^I can also use a date picker to specify start and end date instead of entering them by hand$/) do
   find("#start-date").set I18n.l Date.today
   find(".ui-datepicker")
   find("#end-date").set I18n.l Date.today
@@ -312,37 +331,41 @@ Then(/^I see filters for start and end date$/) do
   expect(has_selector?("#end-date")).to be true
 end
 
-Wenn(/^einen einzelner Modelleintrag beinhaltet$/) do |table|
+#Wenn(/^einen einzelner Modelleintrag beinhaltet$/) do |table|
+When(/^a single model list entry contains:$/) do |table|
   within "#model-list" do
     model_line = find(".line", match: :first)
     model = Model.find model_line["data-id"]
     table.raw.map{|e| e.first}.each do |row|
       case row
-        when "Bild"
+        when "Image"
           model_line.find("img[src*='#{model.id}']", match: :first)
-        when "Modellname"
+        when "Model name"
           model_line.find(".line-col", match: :first, text: model.name)
-        when "Herstellname"
+        when "Manufacturer"
           model_line.find(".line-col", match: :first, text: model.manufacturer)
-        when "Auswahl-Schaltfläche"
+        when "Selection button"
           model_line.find(".line-col .button", match: :first)
         else
-          raise "Unbekannt"
+          raise "Unknown"
       end
     end
   end
 end
 
-Angenommen(/^man sieht eine Modellliste die gescroll werden muss$/) do
+#Angenommen(/^man sieht eine Modellliste die gescroll werden muss$/) do
+Given(/^I see a model list that can be scrolled$/) do
   @category = Category.all.find{|c| c.models.length > 20}
   visit borrow_models_path(category_id: @category.id)
 end
 
-Wenn(/^bis ans ende der bereits geladenen Modelle fährt$/) do
+#Wenn(/^bis ans ende der bereits geladenen Modelle fährt$/) do
+When(/^I scroll to the end of the currently loaded list$/) do
   page.execute_script %Q{ $($('.page')[1]).trigger('inview'); }
 end
 
-Dann(/^wird der nächste Block an Modellen geladen und angezeigt$/) do
+#Dann(/^wird der nächste Block an Modellen geladen und angezeigt$/) do
+Then(/^the next block of models is loaded and shown$/) do
   within "#model-list" do
     expect(all(".line").count).to be > 20
   end
@@ -353,18 +376,21 @@ Wenn(/^I scroll to the end of the list$/) do
   find("footer").click
 end
 
-Dann(/^wurden alle Modelle der ausgewählten Kategorie geladen und angezeigt$/) do
+#Dann(/^wurden alle Modelle der ausgewählten Kategorie geladen und angezeigt$/) do
+Then(/^all models of the chosen category have been loaded and shown$/) do
   within "#model-list" do
     find(".line", match: :first)
     expect(all(".line").size).to eq @current_user.models.borrowable.from_category_and_all_its_descendants(@category).length
   end
 end
 
-Wenn(/^man über das Modell hovered$/) do
+#Wenn(/^man über das Modell hovered$/) do
+When(/^I hover over that model$/) do
   find(".line[data-id='#{@model.id}']").hover
 end
 
-Dann(/^werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften$/) do
+#Dann(/^werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften$/) do
+Then(/^I see the model's name, images, description, list of properties$/) do
   within(".tooltipster-default") do
     find(".headline-s", text: @model.name)
     find(".paragraph-s", text: @model.description)
@@ -380,33 +406,40 @@ Dann(/^werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschr
   end
 end
 
-Angenommen(/^es gibt ein Modell mit Bilder, Beschreibung und Eigenschaften$/) do
+#Angenommen(/^es gibt ein Modell mit Bilder, Beschreibung und Eigenschaften$/) do
+Given(/^there is a model with images, description and properties$/) do
   @model = @current_user.models.borrowable.find {|m| !m.images.blank? and !m.description.blank? and !m.properties.blank?}
 end
 
-Angenommen(/^man befindet sich auf der Modellliste mit diesem Modell$/) do
+#Angenommen(/^man befindet sich auf der Modellliste mit diesem Modell$/) do
+Given(/^the model list contains that model$/) do
   visit borrow_models_path(category_id: @model.categories.first)
 end
 
-Wenn(/^man wählt alle Geräteparks bis auf einen ab$/) do
-  step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
-end
+#Wenn(/^man wählt alle Geräteparks bis auf einen ab$/) do
+#Wenn(/^man wählt alle Geräteparks bis auf einen ab$/) do
+#  step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
+#end
 
-Wenn(/^man wählt "Alle Geräteparks"$/) do
+#Wenn(/^man wählt "Alle Geräteparks"$/) do
+When(/^I select all inventory pools using the \"All inventory pools\" function$/) do
   within "#ip-selector" do
     find(".dropdown-item", :text => _("All inventory pools")).click
   end
 end
 
-Dann(/^sind alle Geräteparks wieder ausgewählt$/) do
+#Dann(/^sind alle Geräteparks wieder ausgewählt$/) do
+Then(/^all inventory pools are selected$/) do
   within "#ip-selector" do
     all(".dropdown-item input[type='checkbox']").each do |checkbox|
-      expect(checkbox.checked?).to be true
+      #expect(checkbox.checked?).to be true
+      expect(checkbox.checked?).to eq "checked"
     end
   end
 end
 
-Dann(/^die Liste zeigt Modelle aller Geräteparks$/) do
+#Dann(/^die Liste zeigt Modelle aller Geräteparks$/) do
+Then(/^the model list contains models from all inventory pools$/) do
   ip_ids = find("#ip-selector").all(".dropdown-item[data-id]").map{|ip| ip["data-id"]}
   step 'I scroll to the end of the list'
   models = @current_user.models.borrowable.from_category_and_all_its_descendants(@category.id).
@@ -498,9 +531,11 @@ Dann(/^die Auswahl klappt nocht nicht zu$/) do
   expect(find("#ip-selector .dropdown").visible?).to be true
 end
 
-Dann(/^wenn ich den Kalendar für dieses Modell benutze$/) do
+#Dann(/^wenn ich den Kalendar für dieses Modell benutze$/) do
+When(/^I open the calendar for this model$/) do
   find(".line[data-id='#{@model.id}'] [data-create-order-line]").click
-  step "ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist"
+  #step "ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist"
+  step "I choose a start and end date when the inventory pool is open"
   find("#submit-booking-calendar:not(:disabled)").click
   step "the modal is closed"
 end
@@ -510,7 +545,8 @@ Dann(/^können die zusätzliche Informationen immer noch abgerufen werden$/) do
   step 'werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften'
 end
 
-Wenn(/^ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist$/) do
+#Wenn(/^ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist$/) do
+When(/^I choose a start and end date when the inventory pool is open$/) do
   step "I see the booking calendar"
 
   while all(".start-date.selected.available:not(.closed)").empty? do

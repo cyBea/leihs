@@ -12,130 +12,132 @@ Feature: Model list
     And I see filters for start and end date
 
   @personas
-  Scenario: Ein einzelner Modelllisteneintrag
+  Scenario: A single model list entry
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    And einen einzelner Modelleintrag beinhaltet
-    | Bild                 |
-    | Modellname           |
-    | Herstellname         |
-    | Auswahl-Schaltfläche |
+    When I am listing models
+    And a single model list entry contains:
+    | Image            |
+    | Model name       |
+    | Manufacturer     |
+    | Selection button |
 
   @javascript @browser @personas
-  Scenario: Modellliste scrollen
+  Scenario: Scrolling the model list
     Given I am Normin
-    And man sieht eine Modellliste die gescroll werden muss
-    When bis ans ende der bereits geladenen Modelle fährt
-    Then wird der nächste Block an Modellen geladen und angezeigt
+    And I see a model list that can be scrolled
+    When I scroll to the end of the currently loaded list
+    Then the next block of models is loaded and shown
     When I scroll to the end of the list
-    Then wurden alle Modelle der ausgewählten Kategorie geladen und angezeigt
+    Then all models of the chosen category have been loaded and shown
 
   @javascript @personas
-  Scenario: Modellliste sortieren
+  Scenario: Sorting the model list
     Given I am Normin
-    And man sich auf der Modellliste befindet
-    When man die Liste nach "Modellname (alphabetisch aufsteigend)" sortiert
-    Then ist die Liste nach "Modellname" "(alphabetisch aufsteigend)" sortiert
-    When man die Liste nach "Modellname (alphabetisch absteigend)" sortiert
-    Then ist die Liste nach "Modellname" "(alphabetisch absteigend)" sortiert
-    When man die Liste nach "Herstellername (alphabetisch aufsteigend)" sortiert
-    Then ist die Liste nach "Herstellername" "(alphabetisch aufsteigend)" sortiert
-    When man die Liste nach "Herstellername (alphabetisch absteigend)" sortiert
-    Then ist die Liste nach "Herstellername" "(alphabetisch absteigend)" sortiert
+    And I am listing models
+    When I sort the list by "Model, ascending"
+    Then the list is sorted by "Model", "ascending"
+    When I sort the list by "Model, descending"
+    Then the list is sorted by "Model", "descending"
+    When I sort the list by "Manufacturer, ascending"
+    Then the list is sorted by "Manufacturer", "ascending"
+    When I sort the list by "Manufacturer, descending"
+    Then the list is sorted by "Manufacturer", "descending"
 
   @personas
-  Scenario: Ausleihezeitraum Standarteinstellung
+  Scenario: Standard settings for lending period
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    Then ist kein Ausleihzeitraum ausgewählt
+    And I am listing models
+    Then no lending period is set
 
   @javascript @personas
-  Scenario: Geräteparkauswahl kann nicht leer sein
+  Scenario: Inventory pool selection cannot be empty
     Given I am Normin
-    When man sich auf der Modellliste befindet
+    When I am listing models
     Then kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen
 
   @personas
   Scenario: Geräteparkauswahl sortierung
     Given I am Normin
-    When man sich auf der Modellliste befindet
+    When I am listing models
     Then ist die Geräteparkauswahl alphabetisch sortiert
 
   @javascript @browser @personas
-  Scenario: Geräteparkauswahl "alle auswählen"
+  Scenario: Inventory pool selection "select all"
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    And man wählt alle Geräteparks bis auf einen ab
-    And man wählt "Alle Geräteparks"
-    Then sind alle Geräteparks wieder ausgewählt
-    And die Auswahl klappt noch nicht zu
-    And die Liste zeigt Modelle aller Geräteparks
+    When I am listing models
+    And I select a specific inventory pool from the choices offered
+    And I select all inventory pools using the "All inventory pools" function
+    Then all inventory pools are selected
+    And the pool selector is still expanded
+    And the model list contains models from all inventory pools
 
   @javascript @personas
-  Scenario: Geräteparkauswahl kann nicht leer sein
+  Scenario: Inventory pool selection can never be empty
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    Then kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen
+    When I am listing models
+    Then I cannot deselect all the inventory pools in the inventory pool selector
 
   @javascript @personas @browser
-  Scenario: Ausleihezeitraum Startdatum wählen
+  Scenario: Specifying the start date of an order
     Given I am Petra
-    When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
-    And man ein Startdatum auswählt
-    Then wird automatisch das Enddatum auf den folgenden Tag gesetzt
-    And die Liste wird gefiltert nach Modellen die in diesem Zeitraum verfügbar sind
+    When I am listing models and some of them are unavailable
+    And I choose a start date
+    Then the end date is automatically set to the next day
+    And the list is filtered by models that are available in that time frame
 
   @javascript @personas
-  Scenario: Ausleihezeitraum Enddatum wählen
+  Scenario: Specifying the end date of an order
     Given I am Petra
-    When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
-    And man ein Enddatum auswählt
-    Then wird automatisch das Startdatum auf den vorhergehenden Tag gesetzt
-    And die Liste wird gefiltert nach Modellen die in diesem Zeitraum verfügbar sind
+    When I am listing models and some of them are unavailable
+    And I choose an end date
+    Then the start date is automatically set to the previous day
+    And the list is filtered by models that are available in that time frame
 
   @javascript @personas
-  Scenario: Ausleihzeitraum löschen
+  Scenario: Removing the lending time frame
     Given I am Petra
-    When man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet
-    And das Startdatum und Enddatum des Ausleihzeitraums sind ausgewählt
-    When man das Startdatum und Enddatum leert
-    Then wird die Liste nichtmehr nach Ausleihzeitraum gefiltert
+    When I am listing models and some of them are unavailable
+    And I choose a start date
+    And I choose an end date
+    When I blank the start and end date
+    Then the list is not filtered by lending time frame
 
   @javascript @personas
-  Scenario: Ausleihzeitraum Datepicker
+  Scenario: Date picker for lending time frame
     Given I am Normin
-    And man sich auf der Modellliste befindet
-    Then kann man für das Startdatum und für das Enddatum den Datepick benutzen
+    And I am listing models
+    Then I can also use a date picker to specify start and end date instead of entering them by hand
 
   @javascript @personas
-  Scenario: Modell suchen
+  Scenario: Searching for a model
     Given I am Normin
-    And man befindet sich auf der Modellliste 
-    When man ein Suchwort eingibt
-    Then werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen
+    And I am listing models
+    When I enter a search term
+    Then those models are shown whose names or manufacturers match the search term
 
   @javascript @browser @personas
-  Scenario: Hovern über Modellen
+  Scenario: Hovering over models
     Given I am Normin
-    And es gibt ein Modell mit Bilder, Beschreibung und Eigenschaften
-    And man befindet sich auf der Modellliste mit diesem Modell
-    When man über das Modell hovered
-    Then werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften
-    And wenn ich den Kalendar für dieses Modell benutze
-    Then können die zusätzliche Informationen immer noch abgerufen werden
+    And there is a model with images, description and properties
+    And the model list contains that model
+    When I hover over that model
+    Then I see the model's name, images, description, list of properties
+    When I open the calendar for this model
+    And I hover over that model
+    Then I see the model's name, images, description, list of properties
 
   @personas
-  Scenario: Geräteparkauswahl Standartwert
+  Scenario: Default values for inventory pool selection
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    Then sind alle Geräteparks ausgewählt
-    And die Modellliste zeigt Modelle aller Geräteparks an
-    And im Filter steht "Alle Geräteparks"
+    When I am listing models
+    Then all inventory pools are selected
+    And the model list shows models from all inventory pools
+    And the filter is labeled "All inventory pools"
 
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelauswählen
     Given I am Normin
-    And man befindet sich auf der Modellliste
+    And I am listing models
     When man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt
     Then sind alle anderen Geräteparks abgewählt
     And die Modellliste zeigt nur Modelle dieses Geräteparks an
@@ -145,7 +147,7 @@ Feature: Model list
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelabwahl
     Given I am Normin
-    And man befindet sich auf der Modellliste
+    And I am listing models
     When man einige Geräteparks abwählt
     Then wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert
     And die Auswahl klappt nocht nicht zu
@@ -154,7 +156,7 @@ Feature: Model list
   @javascript @personas
   Scenario: Geräteparkauswahl Einzelabwahl bis auf einen Gerätepark
     Given I am Normin
-    And man befindet sich auf der Modellliste
+    And I am listing models
     When man alle Geräteparks bis auf einen abwählt
     Then wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert
     And die Auswahl klappt nocht nicht zu
@@ -163,7 +165,7 @@ Feature: Model list
   @javascript @personas
   Scenario: Alles zurücksetzen
     Given I am Normin
-    And man befindet sich auf der Modellliste
+    And I am listing models
     And Filter sind ausgewählt
     And die Schaltfläche "Alles zurücksetzen" ist aktivert
     When man "Alles zurücksetzen" wählt
@@ -177,7 +179,7 @@ Feature: Model list
   @javascript @personas
   Scenario: Alles zurücksetzen verschwindet automatisch, wenn die Filter wieder auf die Starteinstellungen gesetzt werden
     Given I am Normin
-    And man befindet sich auf der Modellliste
+    And I am listing models
     And Filter sind ausgewählt
     And die Schaltfläche "Alles zurücksetzen" ist aktivert
     When ich alle Filter manuell zurücksetze
