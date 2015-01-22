@@ -5,7 +5,8 @@ Given(/^I have an unsubmitted order with models$/) do
   expect(@current_user.contracts.unsubmitted.count).to eq 1
 end
 
-Angenommen(/^die Bestellung Timeout ist (\d+) Minuten$/) do |arg1|
+#Angenommen(/^die Bestellung Timeout ist (\d+) Minuten$/) do |arg1|
+Given(/^the contract timeout is set to (\d+) minutes$/) do |arg1|
   expect(Contract::TIMEOUT_MINUTES).to eq arg1.to_i
 end
 
@@ -20,7 +21,8 @@ When(/^I add a model to an order$/) do
   expect(@new_contract_line.reload.available?).to be true
 end
 
-Wenn(/^ich dasselbe Modell einer Bestellung hinzufüge$/) do
+#Wenn(/^ich dasselbe Modell einer Bestellung hinzufüge$/) do
+When(/^I add the same model to an order$/) do
   contract = @inventory_pool.contracts.submitted.sample
   (@new_contract_line.maximum_available_quantity + 1).times do
     contract.contract_lines << FactoryGirl.create(:contract_line,
@@ -31,7 +33,8 @@ Wenn(/^ich dasselbe Modell einer Bestellung hinzufüge$/) do
   end
 end
 
-Wenn(/^die maximale Anzahl der Gegenstände überschritten ist$/) do
+#Wenn(/^die maximale Anzahl der Gegenstände überschritten ist$/) do
+When(/^the maximum quantity of items is exhausted$/) do
   expect(@new_contract_line.reload.available?).to be false
 end
 
@@ -48,15 +51,17 @@ end
 
 #######################################################################
 
-Wenn(/^ich länger als (\d+) Minuten keine Aktivität ausgeführt habe$/) do |arg1|
+#Wenn(/^ich länger als (\d+) Minuten keine Aktivität ausgeführt habe$/) do |arg1|
+When(/^I have performed no activity for more than (\d+) minutes$/) do |arg1|
   @current_user.contracts.unsubmitted.each do |contract|
     contract.update_attributes updated_at: Time.now - (arg1.to_i + 1).minutes if (Time.now - contract.updated_at) <= arg1.to_i.minutes
   end
 end
 
-Angenommen(/^(ein|\d+) Modelle? (?:ist|sind) nicht verfügbar$/) do |n|
+#Angenommen(/^(ein|\d+) Modelle? (?:ist|sind) nicht verfügbar$/) do |n|
+Given(/^(a|\d+) model (?:is|are) not available$/) do |n|
   n = case n
-        when "ein"
+        when "a"
           1
         else
           n.to_i
@@ -80,7 +85,8 @@ Angenommen(/^(ein|\d+) Modelle? (?:ist|sind) nicht verfügbar$/) do |n|
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).select{|line| not line.available?}.size).to eq n
 end
 
-Wenn(/^ich eine Aktivität ausführe$/) do
+#Wenn(/^ich eine Aktivität ausführe$/) do
+Wenn(/^I perform some activity$/) do
   visit borrow_root_path
 end
 
@@ -91,27 +97,31 @@ end
 
 #######################################################################
 
-Dann(/^werden die Modelle meiner Bestellung freigegeben$/) do
+#Dann(/^werden die Modelle meiner Bestellung freigegeben$/) do
+Then(/^the models in my order are released$/) do
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? {|line| not line.inventory_pool.running_lines.detect{|l| l.id == line.id } }).to be true
 end
 
-Dann(/^bleiben die Modelle in der Bestellung blockiert$/) do
+#Dann(/^bleiben die Modelle in der Bestellung blockiert$/) do
+Then(/^the models in my order remain blocked$/) do
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? {|line| line.inventory_pool.running_lines.detect{|l| l.id == line.id } }).to be true
 end
 
 #######################################################################
 
-Angenommen(/^alle Modelle verfügbar sind$/) do
+#Angenommen(/^alle Modelle verfügbar sind$/) do
+Given(/^all models are available$/) do
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? {|line| line.available? }).to be true
 end
 
-Dann(/^kann man sein Prozess fortsetzen$/) do
+#Dann(/^kann man sein Prozess fortsetzen$/) do
+Then(/^I can continue my order process$/) do
   expect(current_path).to eq borrow_root_path
 end
 
-Dann(/^die Modelle werden blockiert$/) do
-  step "bleiben die Modelle in der Bestellung blockiert"
-end
+#Dann(/^die Modelle werden blockiert$/) do
+#  step "bleiben die Modelle in der Bestellung blockiert"
+#end
 
 #Wenn(/^eine Rücknahme nur Optionen enthält$/) do
 When(/^a take back contains only options$/) do

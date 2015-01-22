@@ -1,21 +1,27 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^ich zur Timeout Page mit einem Konfliktmodell weitergeleitet werde$/) do
+Angenommen(/^I hit the timeout page with a model that has conflicts$/) do
   step "I have an unsubmitted order with models"
-  step "ein Modell ist nicht verfügbar"
-  step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
-  step "ich eine Aktivität ausführe"
+  step "a model is not available"
+  #step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
+  step "I have performed no activity for more than 30 minutes"
+  #step "ich eine Aktivität ausführe"
+  step "I perform some activity"
   #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
   step 'I am informed that my items are no longer reserved for me'
 end
 
-Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werde$/) do |n|
+#Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werde$/) do |n|
+Given(/^I hit the timeout page with (\d+) models that have conflicts$/) do |n|
   #step "ich habe eine offene Bestellung mit Modellen"
   step "I have an unsubmitted order with models"
-  step "#{n} Modelle sind nicht verfügbar"
-  step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
-  step "ich eine Aktivität ausführe"
+  #step "#{n} Modelle sind nicht verfügbar"
+  step "#{n} models are not available" 
+  #step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
+  step "I have performed no activity for more than 30 minutes"
+  #step "ich eine Aktivität ausführe"
+  step "I perform some activity"
   #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
   step 'I am informed that my items are no longer reserved for me'
@@ -32,11 +38,13 @@ end
 
 #########################################################################
 
-Dann(/^sehe ich meine Bestellung$/) do
+#Dann(/^sehe ich meine Bestellung$/) do
+Then(/^I see my order$/) do
   find("#current-order-lines")
 end
 
-Dann(/^die nicht mehr verfügbaren Modelle sind hervorgehoben$/) do
+#Dann(/^die nicht mehr verfügbaren Modelle sind hervorgehoben$/) do
+Then(/^the no longer available items are highlighted$/) do
   @current_user.contracts.unsubmitted.flat_map(&:lines).each do |line|
     unless line.available?
       find("[data-ids*='#{line.id}']", match: :first).find(:xpath, "./../../..").find(".line-info.red[title='#{_("Not available")}']")
@@ -44,19 +52,22 @@ Dann(/^die nicht mehr verfügbaren Modelle sind hervorgehoben$/) do
   end
 end
 
-Dann(/^ich kann Einträge löschen$/) do
+#Dann(/^ich kann Einträge löschen$/) do
+Then(/^I can delete entries$/) do
   all(".row.line").each do |x|
     x.find("a", match: :first, text: _("Delete"))
   end
 end
 
-Dann(/^ich kann Einträge editieren$/) do
+#Dann(/^ich kann Einträge editieren$/) do
+Then(/^I can edit entries$/) do
   all(".row.line").each do |x|
     x.find("button", text: _("Change entry"))
   end
 end
 
-Dann(/^ich kann zur Hauptübersicht$/) do
+#Dann(/^ich kann zur Hauptübersicht$/) do
+Then(/^I can return to the main order overview$/) do
   find("a", text: _("Continue this order"))
 end
 
@@ -144,20 +155,21 @@ end
 
 #########################################################################
 
-Angenommen(/^die letzte Aktivität auf meiner Bestellung ist mehr als (\d+) minuten her$/) do |minutes|
+#Angenommen(/^die letzte Aktivität auf meiner Bestellung ist mehr als (\d+) minuten her$/) do |minutes|
+Given(/^the last activity on my order was more than (\d+) minutes ago$/) do |minutes|
   @current_user.contracts.unsubmitted.each do |contract|
     contract.update_attributes(updated_at: Time.now - (minutes.to_i+1).minutes)
   end
 end
 
-Wenn(/^ich die Seite der Hauptkategorien besuche$/) do
-  #step "man befindet sich auf der Seite der Hauptkategorien"
-  step "I am listing the root categories"
-end
+#Wenn(/^ich die Seite der Hauptkategorien besuche$/) do
+#  #step "man befindet sich auf der Seite der Hauptkategorien"
+#  step "I am listing the root categories"
+#end
 
-Dann(/^lande ich auf der Bestellung\-Abgelaufen\-Seite$/) do
-  expect(current_path).to eq borrow_order_timed_out_path
-end
+#Dann(/^lande ich auf der Bestellung\-Abgelaufen\-Seite$/) do
+#  expect(current_path).to eq borrow_order_timed_out_path
+#end
 
 When(/^werden die nicht verfügbaren Modelle aus der Bestellung gelöscht$/) do
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? { |l| l.available? }).to be true

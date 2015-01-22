@@ -5,7 +5,8 @@ When(/^I am viewing my current order$/) do
   visit borrow_current_order_path
 end
 
-Dann(/^ich lande auf der Seite der Bestellübersicht$/) do
+#Dann(/^ich lande auf der Seite der Bestellübersicht$/) do
+Then(/^I am redirected to my current order$/) do
   expect(current_path).to eq borrow_current_order_path
 end
 
