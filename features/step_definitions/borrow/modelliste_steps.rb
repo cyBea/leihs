@@ -434,7 +434,8 @@ Angenommen(/^die Schaltfläche "(.*?)" ist aktivert$/) do |arg1|
   expect(find("#reset-all-filter").visible?).to be true
 end
 
-Wenn(/^man "Alles zurücksetzen" wählt$/) do
+#Wenn(/^man "Alles zurücksetzen" wählt$/) do
+When(/^I reset all filters$/) do
   find("#reset-all-filter").click
   find("#model-list .line", match: :first)
 end

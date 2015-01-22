@@ -26,15 +26,18 @@ Then(/^the calendar opens$/) do
   find("#booking-calendar .fc-day-content", match: :first)
 end
 
-Wenn(/^ich den Kalender schliesse$/) do
+#Wenn(/^ich den Kalender schliesse$/) do
+When(/^I close the calendar$/) do
   find(".modal-close").click
 end
 
-Dann(/^schliesst das Dialogfenster$/) do
+#Dann(/^schliesst das Dialogfenster$/) do
+Then(/^the dialog window closes$/) do
   expect(has_no_selector?("#booking-calendar")).to be true
 end
 
-Wenn(/^man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfügbar ist$/) do
+#Wenn(/^man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfügbar ist$/) do
+When(/^I try to add a model to the order that is not available$/) do
   start_date = Date.today
   end_date = Date.today + 14
   @quantity = 3
@@ -47,12 +50,13 @@ Wenn(/^man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfüg
   visit borrow_model_path(@model)
   find("[data-create-order-line][data-model-id='#{@model.id}']").click
   step "I set the start date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(start_date))
-  step "ich setze das Enddatum im Kalendar auf '%s'" % I18n.l(inventory_pool.next_open_date(end_date))
-  step "ich setze die Anzahl im Kalendar auf #{@quantity}"
+  step "I set the end date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(end_date))
+  step "I set the quantity in the calendar to #{@quantity}"
   find("#submit-booking-calendar").click
 end
 
-Wenn(/^ich setze die Anzahl im Kalendar auf (\d+)$/) do |quantity|
+#Wenn(/^ich setze die Anzahl im Kalendar auf (\d+)$/) do |quantity|
+When(/^I set the quantity in the calendar to (\d+)$/) do |quantity|
   find("#booking-calendar-quantity")
   find(".fc-widget-content", match: :first)
   find("#booking-calendar-quantity").set quantity
@@ -70,13 +74,15 @@ When(/^I set the end date in the calendar to '(.*?)'$/) do |date|
   find("#booking-calendar-controls").click # blur input in order to fire event listeners
 end
 
-Dann(/^schlägt der Versuch es hinzufügen fehl$/) do
+#Dann(/^schlägt der Versuch es hinzufügen fehl$/) do
+Then(/^my attempt to add it fails$/) do
   find("#booking-calendar")
   models = @current_user.contracts.unsubmitted.flat_map(&:lines).flat_map(&:model)
   expect(models.include? @model).to be false
 end
 
-Dann(/^ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten Zeitraum nicht verfügbar ist$/) do
+# Dann(/^ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten Zeitraum nicht verfügbar ist$/) do
+Then(/^the error lets me know that the chosen model is not available in that time range$/) do
   within ".modal" do
     find("#booking-calendar-errors", text: _("Item is not available in that time range"))
   end
@@ -129,9 +135,9 @@ Then(/^the model has been added to the order with the respective start and end d
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).detect{|line| line.model == @model}).not_to be_nil
 end
 
-Dann(/^lässt sich das Modell mit Start\- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen$/) do
-  step 'ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden'
-end
+#Dann(/^lässt sich das Modell mit Start\- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen$/) do
+#  step 'ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden'
+#end
 
 #Dann(/^das aktuelle Startdatum ist heute$/) do
 Then(/^the current start date is today$/) do
@@ -194,14 +200,16 @@ Then(/^the end date is equal to the preselected end date$/) do
   expect(find("#booking-calendar-end-date").value).to eq I18n.l(Date.today + 2)
 end
 
-Angenommen(/^es existiert ein Modell für das eine Bestellung vorhanden ist$/) do
+#Angenommen(/^es existiert ein Modell für das eine Bestellung vorhanden ist$/) do
+Given(/^there is a model for which an order exists$/) do
   @current_user.inventory_pools.flat_map(&:contract_lines).shuffle.detect do |cl|
     @model = cl.model
     cl.is_a?(ItemLine) and cl.start_date.future? and cl.model.categories.exists?
   end
 end
 
-Wenn(/^man dieses Modell aus der Modellliste hinzufügt$/) do
+#Wenn(/^man dieses Modell aus der Modellliste hinzufügt$/) do
+When(/^I add this model from the model list$/) do
   visit borrow_models_path(category_id: @model.categories.first)
   find("#model-list-search input").set @model.name
   within(".line", match: :prefer_exact, text: @model.name) do
@@ -213,7 +221,8 @@ def get_selected_inventory_pool
   InventoryPool.find_by_name find("#booking-calendar-inventory-pool option").value.split(" ").first
 end
 
-Dann(/^wird die Verfügbarkeit des Modells im Kalendar angezeigt$/) do
+#Dann(/^wird die Verfügbarkeit des Modells im Kalendar angezeigt$/) do
+Then(/^that model's availability is shown in the calendar$/) do
   @current_inventory_pool = get_selected_inventory_pool
   av = @model.availability_in(@current_inventory_pool)
   changes = av.available_total_quantities
@@ -306,15 +315,17 @@ Then(/^any closed days of the selected inventory pool are shown$/) do
   end
 end
 
-Wenn(/^man ein Start und Enddatum ändert$/) do
+#Wenn(/^man ein Start und Enddatum ändert$/) do
+When(/^I change start and end date$/) do
   ip = get_selected_inventory_pool
   @start = ip.next_open_date(Date.today)
   @end = ip.next_open_date(@start)
   step "I set the start date in the calendar to '#{I18n.l(@start)}'"
-  step "ich setze das Enddatum im Kalendar auf '#{I18n.l(@end)}'"
+  step "I set the start date in the calendar to '#{I18n.l(@end)}'"
 end
 
-Dann(/^wird die Verfügbarkeit des Gegenstandes aktualisiert$/) do
+#Dann(/^wird die Verfügbarkeit des Gegenstandes aktualisiert$/) do
+Then(/^the availability for that model is updated$/) do
   (@start..@end).each do |date|
     date_el = get_fullcalendar_day_element date
     expect(date_el.native.attribute("class")).to include "available"
@@ -322,11 +333,12 @@ Dann(/^wird die Verfügbarkeit des Gegenstandes aktualisiert$/) do
   end
 end
 
-Wenn(/^man die Anzahl ändert$/) do
-  step 'ich setze die Anzahl im Kalendar auf 2'  
-end
+#Wenn(/^man die Anzahl ändert$/) do
+#  step 'ich setze die Anzahl im Kalendar auf 2'  
+#end
 
-Dann(/^sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen$/) do
+#Dann(/^sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen$/) do
+Then(/^only those inventory pools are selectable that have capacities for the chosen model$/) do
   @inventory_pools = @model.inventory_pools.reject {|ip| @model.total_borrowable_items_for_user(@current_user, ip) <= 0 }
   within "#booking-calendar-inventory-pool" do
     all("option").each do |option|
@@ -335,7 +347,8 @@ Dann(/^sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten f
   end
 end
 
-Dann(/^die Geräteparks sind alphabetisch sortiert$/) do
+#Dann(/^die Geräteparks sind alphabetisch sortiert$/) do
+Then(/^the inventory pools are sorted alphabetically$/) do
   within "#booking-calendar-inventory-pool" do
     expect(has_selector?("option")).to be true
     texts = all("option").map(&:text)
@@ -370,7 +383,8 @@ Wenn(/^man den letzten Gerätepark in der Geräteparkauswahl auswählt$/) do
   step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
 end
 
-Wenn(/^man den zweiten Gerätepark in der Geräteparkauswahl auswählt$/) do
+#Wenn(/^man den zweiten Gerätepark in der Geräteparkauswahl auswählt$/) do
+When(/^I choose the second inventory pool from the inventory pool list$/) do
   @current_inventory_pool = @current_user.inventory_pools.sort[1]
   step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
 end
@@ -404,13 +418,15 @@ Then(/^that inventory pool which comes alphabetically first is selected$/) do
   expect(find("#booking-calendar-inventory-pool").value.split(" ")[0]).to eq @inventory_pools.first.name
 end
 
-Wenn(/^ein Modell existiert, welches nur einer Gruppe vorbehalten ist$/) do
+#Wenn(/^ein Modell existiert, welches nur einer Gruppe vorbehalten ist$/) do
+When(/^a model exists that is only available to a group$/) do
   @model = Model.all.detect{|m| m.partitions_with_generals.length > 1 and m.partitions_with_generals.find{|p| p.group_id == nil}.quantity == 0}
   expect(@model.blank?).to be false
   @partition = @model.partitions.sample
 end
 
-Dann(/^kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin$/) do
+#Dann(/^kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin$/) do
+Then(/^I cannot order that model unless I am part of that group$/) do
   @current_user.groups << Group.find(@partition.group_id)
   visit borrow_model_path(@model)
   find("[data-create-order-line][data-model-id='#{@model.id}']").click

@@ -66,59 +66,58 @@ Feature: Calendar
     And I can enter at most this maximum quantity
 
   @javascript @personas
-  Scenario: Auswählbare Geräteparks im Kalender
-    Given man hat den Buchungskalender geöffnet
-    Then sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen
-    And die Geräteparks sind alphabetisch sortiert
+  Scenario: Inventory pools that are available in the calendar
+    Given I have opened the booking calendar
+    Then only those inventory pools are selectable that have capacities for the chosen model
+    And the inventory pools are sorted alphabetically
 
   @javascript @personas
-  Scenario: Kalender Anzeige der Schliesstage
-    Given man hat den Buchungskalender geöffnet
+  Scenario: Showing closed days in the calendar
+    Given I have opened the booking calendar
 
   @javascript @browser @personas
-  Scenario: Bestellkalender nutzen nach dem man alle Filter zurückgesetzt hat
-    Given ich ein Modell der Bestellung hinzufüge
+  Scenario: Using the calendar after resetting all filters
+    When I add a model to an order 
     And I am listing models
-    And man den zweiten Gerätepark in der Geräteparkauswahl auswählt
-    When man "Alles zurücksetzen" wählt
-    And man auf einem Model "Zur Bestellung hinzufügen" wählt
-    Then öffnet sich der Kalender
+    And I choose the second inventory pool from the inventory pool list
+    When I reset all filters
+    And I press "Add to order" on a model
     Then the calendar opens
-    When alle Angaben die ich im Kalender mache gültig sind
-    Then lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
+    When everything I input into the calendar is valid
+    Then the model has been added to the order with the respective start and end date, quantity and inventory pool
 
   @javascript @browser @personas
-  Scenario: Etwas bestellen, was nur Gruppen vorbehalten ist
-    When ein Modell existiert, welches nur einer Gruppe vorbehalten ist
-    Then kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin
+  Scenario: Ordering something that only groups may have
+    When a model exists that is only available to a group
+    Then I cannot order that model unless I am part of that group
 
   @javascript @browser @personas
-  Scenario: Kalender Bestellung nicht möglich, wenn Auswahl nicht verfügbar
-    When man versucht ein Modell zur Bestellung hinzufügen, welches nicht verfügbar ist
-    Then schlägt der Versuch es hinzufügen fehl
-    And ich sehe die Fehlermeldung, dass das ausgewählte Modell im ausgewählten Zeitraum nicht verfügbar ist
+  Scenario: Ordering not possible when selection isn't available
+    When I try to add a model to the order that is not available
+    Then my attempt to add it fails
+    And the error lets me know that the chosen model is not available in that time range
 
   @javascript @personas
-  Scenario: Bestellkalender schliessen
+  Scenario: Closing the calendar
     When I am listing models
-    And man auf einem Model "Zur Bestellung hinzufügen" wählt
+    And I press "Add to order" on a model
     Then the calendar opens
-    When ich den Kalender schliesse
-    Then schliesst das Dialogfenster
+    When I close the calendar
+    Then the dialog window closes
 
   @javascript @personas
-  Scenario: Kalender Verfügbarkeitsanzeige
-    Given es existiert ein Modell für das eine Bestellung vorhanden ist
-    When man dieses Modell aus der Modellliste hinzufügt
+  Scenario: Availability display on the calendar
+    Given there is a model for which an order exists
+    When I add this model from the model list
     Then the calendar opens
-    And wird die Verfügbarkeit des Modells im Kalendar angezeigt
+    And that model's availability is shown in the calendar
 
   @javascript @personas
-  Scenario: Kalender Verfügbarkeitsanzeige nach Änderung der Kalenderdaten
-    Given es existiert ein Modell für das eine Bestellung vorhanden ist
-    When man dieses Modell aus der Modellliste hinzufügt
+  Scenario: Availability display on the calendar after changing calendar dates
+    Given there is a model for which an order exists
+    When I add this model from the model list
     Then the calendar opens
-    When man ein Start und Enddatum ändert
-    Then wird die Verfügbarkeit des Gegenstandes aktualisiert
-    When man die Anzahl ändert
-    Then wird die Verfügbarkeit des Gegenstandes aktualisiert
+    When I change start and end date
+    Then the availability for that model is updated
+    When I set the quantity in the calendar to 2
+    Then the availability for that model is updated
