@@ -1,19 +1,15 @@
 
-Feature: Modellliste
-
-  Um Modelle zu bestellen
-  möchte ich als Kunde
-  die Möglichkeit haben Modelle zu finden
+Feature: Model list
 
   @personas
-  Scenario: Modelllistenübersicht
+  Scenario: Model list overview
     Given I am Normin
-    When man sich auf der Modellliste befindet
-    Then sieht man die Explorative Suche
-    And man sieht die Modelle der ausgewählten Kategorie
-    And man sieht Sortiermöglichkeiten
-    And man sieht die Gerätepark-Auswahl
-    And man sieht die Einschränkungsmöglichkeit eines Ausleihzeitraums
+    When I am listing models
+    Then I see the explorative search
+    And I see the models of the selected category
+    And I see the sort options
+    And I see the inventory pool selector
+    And I see filters for start and end date
 
   @personas
   Scenario: Ein einzelner Modelllisteneintrag

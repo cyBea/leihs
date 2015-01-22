@@ -274,12 +274,14 @@ Wenn(/^kann man für das Startdatum und für das Enddatum den Datepick benutzen$
   find(".ui-datepicker")
 end
 
-Dann(/^sieht man die Explorative Suche$/) do
-  expect(has_selector?("#explorative-search")).to be true
-  expect(has_selector?("#explorative-search a[href*='/models']")).to be true
-end
+#Dann(/^sieht man die Explorative Suche$/) do
+#Then(/^I see the explorative search$/) do
+#  expect(has_selector?("#explorative-search")).to be true
+#  expect(has_selector?("#explorative-search a[href*='/models']")).to be true
+#end
 
-Dann(/^man sieht die Modelle der ausgewählten Kategorie$/) do
+#Dann(/^man sieht die Modelle der ausgewählten Kategorie$/) do
+Then(/^I see the models of the selected category$/) do
   category = Category.find Rack::Utils.parse_nested_query(URI.parse(current_url).query)["category_id"]
   models = @current_user.models.borrowable.from_category_and_all_its_descendants(@category)
   within "#model-list" do
@@ -290,19 +292,22 @@ Dann(/^man sieht die Modelle der ausgewählten Kategorie$/) do
   end
 end
 
-Dann(/^man sieht Sortiermöglichkeiten$/) do
+#Dann(/^man sieht Sortiermöglichkeiten$/) do
+Then(/^I see the sort options$/) do
   within "#model-sorting" do
     expect(has_selector?(".dropdown *[data-sort]", visible: false)).to be true
   end
 end
 
-Dann(/^man sieht die Gerätepark\-Auswahl$/) do
+#Dann(/^man sieht die Gerätepark\-Auswahl$/) do
+Then(/^I see the inventory pool selector$/) do
   within "#ip-selector" do
     expect(has_selector?(".dropdown", visible: false)).to be true
   end
 end
 
-Dann(/^man sieht die Einschränkungsmöglichkeit eines Ausleihzeitraums$/) do
+#Dann(/^man sieht die Einschränkungsmöglichkeit eines Ausleihzeitraums$/) do
+Then(/^I see filters for start and end date$/) do
   expect(has_selector?("#start-date")).to be true
   expect(has_selector?("#end-date")).to be true
 end
