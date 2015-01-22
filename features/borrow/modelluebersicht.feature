@@ -38,5 +38,4 @@ Feature: Model overview
     Then the first five properties are shown with their keys and values
     When I toggle all properties
     Then all properties are displayed
-
     And I can use the same toggle to collapse the properties again

@@ -6,46 +6,46 @@ Feature: Navigation
   Navigationsmöglichkeiten haben
 
   @personas
-  Scenario: Navigation für Ausleihenden
+  Scenario: Navigation for borrowers
     Given I am Normin
-    And man befindet sich auf der Seite der Hauptkategorien
-    Then seh ich die Navigation
-    And die Navigation beinhaltet "Abzuholen"
-    And die Navigation beinhaltet "Rückgaben"
-    And die Navigation beinhaltet "Bestellungen"
-    And die Navigation beinhaltet "Geräteparks"
-    And die Navigation beinhaltet "Benutzer"
-    And die Navigation beinhaltet "Logout"
+    And I am listing the root categories
+    Then I can see the navigation bars
+    And the navigation contains "To pick up"
+    And the navigation contains "To return"
+    And the navigation contains "Orders"
+    And the navigation contains "Inventory pools"
+    And the navigation contains "User"
+    And the navigation contains "Log out"
 
   @personas
-  Scenario: Navigation für Manager
+  Scenario: Navigation for managers
     Given I am Pius
-    And man befindet sich auf der Seite der Hauptkategorien
-    Then seh ich die Navigation
-    And die Navigation beinhaltet "Abzuholen"
-    And die Navigation beinhaltet "Rückgaben"
-    And die Navigation beinhaltet "Bestellungen"
-    And die Navigation beinhaltet "Geräteparks"
-    And die Navigation beinhaltet "Verwalten"
-    And die Navigation beinhaltet "Benutzer"
-    And die Navigation beinhaltet "Logout"
+    And I am listing the root categories
+    Then I can see the navigation bars
+    And the navigation contains "To pick up"
+    And the navigation contains "To return"
+    And the navigation contains "Orders"
+    And the navigation contains "Inventory pools"
+    And the navigation contains "Manage"
+    And the navigation contains "User"
+    And the navigation contains "Log out"
 
   @personas
-  Scenario: Navigation für Prüfer
+  Scenario: Navigation for validators
     Given I am Andi
-    And man befindet sich auf der Seite der Hauptkategorien
-    Then seh ich die Navigation
-    And die Navigation beinhaltet "Abzuholen"
-    And die Navigation beinhaltet "Rückgaben"
-    And die Navigation beinhaltet "Bestellungen"
-    And die Navigation beinhaltet "Geräteparks"
-    And die Navigation beinhaltet "Verwalten"
-    And die Navigation beinhaltet "Benutzer"
-    And die Navigation beinhaltet "Logout"
+    And I am listing the root categories
+    Then I can see the navigation bars
+    And the navigation contains "To pick up"
+    And the navigation contains "To return"
+    And the navigation contains "Orders"
+    And the navigation contains "Inventory pools"
+    And the navigation contains "Manage"
+    And the navigation contains "User"
+    And the navigation contains "Log out"
 
   @personas
-  Scenario: Home-Button
+  Scenario: Home button
     Given I am Normin
-    Then seh ich in der Navigation den Home-Button
-    When ich den Home-Button bediene
-    Then lande ich auf der Seite der Hauptkategorien
+    Then I see a home button in the navigation bars
+    When I use the home button
+    Then I am listing the root categories
