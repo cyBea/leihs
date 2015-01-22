@@ -65,14 +65,16 @@ When(/^I select a specific inventory pool from the choices offered$/) do
   find("#ip-selector .dropdown .dropdown-item", text: @current_inventory_pool.name).click
 end
 
-Dann(/^sind alle anderen Geräteparks abgewählt$/) do
+#Dann(/^sind alle anderen Geräteparks abgewählt$/) do
+Then(/^all other inventory pools are deselected$/) do
   find("#ip-selector").click
   (@current_user.inventory_pools - [@current_inventory_pool]).each do |ip|
     expect(find("#ip-selector .dropdown-item", text: ip.name).find("input", match: :first).checked?).to be false
   end
 end
 
-Dann(/^die Modellliste zeigt nur Modelle dieses Geräteparks an$/) do
+#Dann(/^die Modellliste zeigt nur Modelle dieses Geräteparks an$/) do
+Then(/^the model list shows only models of this inventory pool$/) do
   within "#model-list" do
     expect(all(".text-align-left").map(&:text).reject{|t| t.empty?}).to eq @current_user.models.borrowable
                                                                            .from_category_and_all_its_descendants(@category.id)
@@ -83,22 +85,25 @@ Dann(/^die Modellliste zeigt nur Modelle dieses Geräteparks an$/) do
 end
 
 #Dann(/^die Auswahl klappt zu$/) do
-Then(/^the pool selector is still expanded$/) do
+Then(/^the inventory pool selector is no longer expanded$/) do
   expect(find("#ip-selector .dropdown").visible?).to be false
 end
 
-Dann(/^im Filter steht der Name des ausgewählten Geräteparks$/) do
+#Dann(/^im Filter steht der Name des ausgewählten Geräteparks$/) do
+Then(/^the filter shows the name of the selected inventory pool$/) do
   expect(has_selector?("#ip-selector .button", text: @current_inventory_pool.name)).to be true
 end
 
-Wenn(/^man einige Geräteparks abwählt$/) do
+#Wenn(/^man einige Geräteparks abwählt$/) do
+When(/^I deselect some inventory pools$/) do
   find("#ip-selector").click
   @current_inventory_pool = @current_user.inventory_pools.first
   @dropdown_element = find("#ip-selector .dropdown")
   @dropdown_element.find(".dropdown-item", match: :first, text: @current_inventory_pool.name).find("input", match: :first).click
 end
 
-Dann(/^wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert$/) do
+#Dann(/^wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert$/) do
+Then(/^the model list is filtered by the left over inventory pools$/) do
   within "#model-list" do
     expect(has_selector?(".text-align-left")).to be true
     expect(all(".text-align-left").map(&:text)).to eq @current_user.models.borrowable
@@ -110,7 +115,8 @@ Dann(/^wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert$/
   end
 end
 
-Dann(/^wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert$/) do
+#Dann(/^wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert$/) do
+Then(/^the model list is filtered by the left over inventory pool$/) do
   within "#model-list" do
     expect(has_selector?(".text-align-left")).to be true
     expect(all(".text-align-left").map(&:text).reject{|t| t.empty?}[0..20]).to eq @current_user.models.borrowable
@@ -122,11 +128,13 @@ Dann(/^wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert$/)
   end
 end
 
-Dann(/^die Auswahl klappt noch nicht zu$/) do
+#Dann(/^die Auswahl klappt noch nicht zu$/) do
+Then(/^the inventory pool selector is still expanded$/) do
   expect(find("#ip-selector .dropdown").visible?).to be true
 end
 
-Wenn(/^man alle Geräteparks bis auf einen abwählt$/) do
+#Wenn(/^man alle Geräteparks bis auf einen abwählt$/) do
+When(/^I deselect all but one inventory pool$/) do
   find("#ip-selector").click
   @current_inventory_pool = @current_user.inventory_pools.first
   @ips_for_unselect = @current_user.inventory_pools.where("inventory_pools.id != ?", @current_inventory_pool.id)
@@ -135,7 +143,8 @@ Wenn(/^man alle Geräteparks bis auf einen abwählt$/) do
   end
 end
 
-Dann(/^im Filter steht der Name des übriggebliebenen Geräteparks$/) do
+#Dann(/^im Filter steht der Name des übriggebliebenen Geräteparks$/) do
+Then(/^the filter shows the name of the inventory pool that is left$/) do
   find("#ip-selector .button", text: @current_inventory_pool.name)
 end
 
@@ -152,13 +161,15 @@ Then(/^I cannot deselect all the inventory pools in the inventory pool selector$
   end
 end
 
-Dann(/^ist die Geräteparkauswahl alphabetisch sortiert$/) do
+#Dann(/^ist die Geräteparkauswahl alphabetisch sortiert$/) do
+Then(/^the inventory pool selection is ordered alphabetically$/) do
   within "#ip-selector" do
     expect(all(".dropdown-item[data-id]").map(&:text)).to eq @current_user.inventory_pools.order("inventory_pools.name").map(&:name)
   end
 end
 
-Dann(/^im Filter steht die Zahl der ausgewählten Geräteparks$/) do
+#Dann(/^im Filter steht die Zahl der ausgewählten Geräteparks$/) do
+Then(/^the filter shows the count of selected inventory pools$/) do
   number_of_selected_ips = (@current_user.inventory_pool_ids - [@current_inventory_pool.id]).length
   find("#ip-selector .button", text: (number_of_selected_ips.to_s + " " + _("Inventory pools")))
 end
@@ -433,7 +444,7 @@ Then(/^all inventory pools are selected$/) do
   within "#ip-selector" do
     all(".dropdown-item input[type='checkbox']").each do |checkbox|
       #expect(checkbox.checked?).to be true
-      expect(checkbox.checked?).to eq "checked"
+      expect(["checked", true].include?(checkbox.checked?)).to be true
     end
   end
 end
@@ -450,10 +461,11 @@ Then(/^the model list contains models from all inventory pools$/) do
   end
 end
 
-Angenommen(/^Filter sind ausgewählt$/) do
+#Angenommen(/^Filter sind ausgewählt$/) do
+Given(/^filters are being applied$/) do
   find("#model-list-search input").set "a"
-  find("input#start-date").set Date.today.strftime("%d.%m.%Y")
-  find("input#end-date").set (Date.today + 1).strftime("%d.%m.%Y")
+  find("input#start-date").set Date.today.strftime("%d/%m/%Y")
+  find("input#end-date").set (Date.today + 1).strftime("%d/%m/%Y")
   step "I release the focus from this field"
   expect(has_no_selector?(".ui-datepicker-calendar", :visible => true)).to be true
   find("#ip-selector").click
@@ -468,7 +480,8 @@ Angenommen(/^Filter sind ausgewählt$/) do
   end
 end
 
-Angenommen(/^die Schaltfläche "(.*?)" ist aktivert$/) do |arg1|
+#Angenommen(/^die Schaltfläche "(.*?)" ist aktivert$/) do |arg1|
+Given(/^the button \"Reset all filters\" is visible$/) do
   expect(find("#reset-all-filter").visible?).to be true
 end
 
@@ -478,36 +491,43 @@ When(/^I reset all filters$/) do
   find("#model-list .line", match: :first)
 end
 
-Dann(/^sind alle Geräteparks in der Geräteparkauswahl wieder ausgewählt$/) do
+#Dann(/^sind alle Geräteparks in der Geräteparkauswahl wieder ausgewählt$/) do
+Then(/^all inventory pools are selected again in the inventory pool filter$/) do
   within "#ip-selector" do
     all("input[type='checkbox']").each &:checked?
   end
 end
 
-Dann(/^der Ausleihezeitraum ist leer$/) do
+#Dann(/^der Ausleihezeitraum ist leer$/) do
+Then(/^start and end date are both blank$/) do
   expect(find("input#start-date").value.empty?).to be true
   expect(find("input#end-date").value.empty?).to be true
 end
 
-Dann(/^die Sortierung ist nach Modellnamen \(aufsteigend\)$/) do
-  find(".button", text: _("Model")).find(".icon-circle-arrow-up", match: :first)
-end
+#Dann(/^die Sortierung ist nach Modellnamen \(aufsteigend\)$/) do
+#Then(/^die Sortierung ist nach Modellnamen \(aufsteigend\)$/) do
+#  find(".button", text: _("Model")).find(".icon-circle-arrow-up", match: :first)
+#end
 
-Dann(/^die Schaltfläche "(?:.+)" ist deaktiviert$/) do
+#Dann(/^die Schaltfläche "(?:.+)" ist deaktiviert$/) do
+Then(/^the button \"Reset all filters\" is not visible$/) do
   expect(has_selector?("#reset-all-filter", visible: false)).to be true
 end
 
-Dann(/^das Suchfeld ist leer$/) do
+#Dann(/^das Suchfeld ist leer$/) do
+Then(/^the search query field is blank$/) do
   expect(find("#model-list-search input").value.empty?).to be true
 end
 
-Dann(/^man sieht wieder die ungefilterte Liste der Modelle$/) do
+#Dann(/^man sieht wieder die ungefilterte Liste der Modelle$/) do
+Then(/^the model list is unfiltered$/) do
   within "#model-list" do
     expect(all(".text-align-left").map(&:text).reject{|t| t.empty?}).to eq @current_user.models.from_category_and_all_its_descendants(@category.id).default_order.paginate(page: 1, per_page: 20).map(&:name)
   end
 end
 
-Wenn(/^ich alle Filter manuell zurücksetze$/) do
+#Wenn(/^ich alle Filter manuell zurücksetze$/) do
+When(/^I set all filters to their default values by hand$/) do
   find("#model-list-search input").set ""
   find("input#start-date").set ""
   find("input#end-date").set ""
@@ -523,9 +543,9 @@ Wenn(/^ich alle Filter manuell zurücksetze$/) do
   end
 end
 
-Dann(/^verschwindet auch die "Alles zurücksetzen" Schaltfläche$/) do
-  expect(has_selector?("#reset-all-filter", visible: false)).to be true
-end
+#Dann(/^verschwindet auch die "Alles zurücksetzen" Schaltfläche$/) do
+#  expect(has_selector?("#reset-all-filter", visible: false)).to be true
+#end
 
 Dann(/^die Auswahl klappt nocht nicht zu$/) do
   expect(find("#ip-selector .dropdown").visible?).to be true

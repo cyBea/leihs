@@ -53,13 +53,13 @@ Feature: Model list
   Scenario: Inventory pool selection cannot be empty
     Given I am Normin
     When I am listing models
-    Then kann man nicht alle Geräteparks in der Geräteparkauswahl abwählen
+    Then I cannot deselect all the inventory pools in the inventory pool selector
 
   @personas
-  Scenario: Geräteparkauswahl sortierung
+  Scenario: Sorting the inventory pool selection
     Given I am Normin
     When I am listing models
-    Then ist die Geräteparkauswahl alphabetisch sortiert
+    Then the inventory pool selection is ordered alphabetically
 
   @javascript @browser @personas
   Scenario: Inventory pool selection "select all"
@@ -68,7 +68,7 @@ Feature: Model list
     And I select a specific inventory pool from the choices offered
     And I select all inventory pools using the "All inventory pools" function
     Then all inventory pools are selected
-    And the pool selector is still expanded
+    And the inventory pool selector is still expanded
     And the model list contains models from all inventory pools
 
   @javascript @personas
@@ -135,52 +135,52 @@ Feature: Model list
     And the filter is labeled "All inventory pools"
 
   @javascript @personas
-  Scenario: Geräteparkauswahl Einzelauswählen
+  Scenario: Selecting just one inventory pool
     Given I am Normin
     And I am listing models
-    When man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt
-    Then sind alle anderen Geräteparks abgewählt
-    And die Modellliste zeigt nur Modelle dieses Geräteparks an
-    And die Auswahl klappt noch nicht zu
-    And im Filter steht der Name des ausgewählten Geräteparks
+    When I select a specific inventory pool from the choices offered
+    Then all other inventory pools are deselected
+    And the model list shows only models of this inventory pool
+    And the inventory pool selector is still expanded
+    And the filter shows the name of the selected inventory pool
 
   @javascript @personas
-  Scenario: Geräteparkauswahl Einzelabwahl
+  Scenario: Deselecting a single inventory pool
     Given I am Normin
     And I am listing models
-    When man einige Geräteparks abwählt
-    Then wird die Modellliste nach den übrig gebliebenen Geräteparks gefiltert
-    And die Auswahl klappt nocht nicht zu
-    And im Filter steht die Zahl der ausgewählten Geräteparks
+    When I deselect some inventory pools
+    Then the model list is filtered by the left over inventory pools
+    And the inventory pool selector is still expanded
+    And the filter shows the count of selected inventory pools
 
   @javascript @personas
-  Scenario: Geräteparkauswahl Einzelabwahl bis auf einen Gerätepark
+  Scenario: Deselecting all but one inventory pool
     Given I am Normin
     And I am listing models
-    When man alle Geräteparks bis auf einen abwählt
-    Then wird die Modellliste nach dem übrig gebliebenen Gerätepark gefiltert
-    And die Auswahl klappt nocht nicht zu
-    And im Filter steht der Name des übriggebliebenen Geräteparks
+    When I deselect all but one inventory pool
+    Then the model list is filtered by the left over inventory pool
+    And the inventory pool selector is still expanded
+    And the filter shows the name of the inventory pool that is left
 
   @javascript @personas
-  Scenario: Alles zurücksetzen
+  Scenario: Resetting everything
     Given I am Normin
     And I am listing models
-    And Filter sind ausgewählt
-    And die Schaltfläche "Alles zurücksetzen" ist aktivert
-    When man "Alles zurücksetzen" wählt
-    Then sind alle Geräteparks in der Geräteparkauswahl wieder ausgewählt
-    And der Ausleihezeitraum ist leer
-    And die Sortierung ist nach Modellnamen (aufsteigend)
-    And das Suchfeld ist leer
-    And man sieht wieder die ungefilterte Liste der Modelle
-    And die Schaltfläche "Alles zurücksetzen" ist deaktiviert
+    And filters are being applied
+    And the button "Reset all filters" is visible
+    When I reset all filters
+    Then all inventory pools are selected again in the inventory pool filter
+    And start and end date are both blank
+    And the list is sorted by "Model", "ascending"
+    And the search query field is blank
+    And the model list is unfiltered
+    And the button "Reset all filters" is not visible
 
   @javascript @personas
-  Scenario: Alles zurücksetzen verschwindet automatisch, wenn die Filter wieder auf die Starteinstellungen gesetzt werden
+  Scenario: Reset all button disappears automatically when filters were set to their default positions by hand 
     Given I am Normin
     And I am listing models
-    And Filter sind ausgewählt
-    And die Schaltfläche "Alles zurücksetzen" ist aktivert
-    When ich alle Filter manuell zurücksetze
-    Then verschwindet auch die "Alles zurücksetzen" Schaltfläche
+    And filters are being applied
+    And the button "Reset all filters" is visible
+    When I set all filters to their default values by hand
+    Then the button "Reset all filters" is not visible
