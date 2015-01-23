@@ -9,8 +9,9 @@ Feature: Timeout page
     When I am listing the root categories
     Then I am redirected to the timeout page
     And I am informed that my items are no longer reserved for me
+
   @personas
-  Scenario: Ansicht
+  Scenario: View
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
     Then I see my order
@@ -20,59 +21,59 @@ Feature: Timeout page
     And I can return to the main order overview
 
   @javascript @browser @personas
-  Scenario: Eintrag löschen
+  Scenario: Deleting an entry
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    And ich lösche einen Eintrag
-    Then wird der Eintrag aus der Bestellung gelöscht
+    And I delete one entry
+    Then the entry is deleted from the order
 
   @javascript @browser @personas
-  Scenario: In Bestellung übernehmen nicht möglich
+  Scenario: Can't add to order
     Given I am Normin
     And I hit the timeout page with 2 models that have conflicts
     When I click on "Continue this order"
     Then I am redirected to the timeout page
-    And ich erhalte einen Fehler
-    When ich einen der Fehler korrigiere
-    When I click on "Continue this order"
+    And I see an error message
+    When I correct one of the errors
+    And I click on "Continue this order"
     Then I am redirected to the timeout page
-    And ich erhalte einen Fehler
-    When ich alle Fehler korrigiere
-    Then verschwindet die Fehlermeldung
+    And I see an error message
+    When I correct all errors
+    Then the error message appears
 
   @personas
-  Scenario: Bestellung löschen
+  Scenario: Delete an order
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    When ich die Bestellung lösche
-    Then werden die Modelle meiner Bestellung freigegeben
-    And wird die Bestellung des Benutzers gelöscht
+    When I delete the order
+    Then the models in my order are released
+    And the user's order has been deleted
     And I am on the root category list
 
   @personas
-  Scenario: Nur verfügbare Modelle aus Bestellung übernehmen
+  Scenario: Only use those models that are available to continue with your order
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    When ein Modell nicht verfügbar ist
+    When a model is not available
     And I click on "Continue with available models only"
-    Then werden die nicht verfügbaren Modelle aus der Bestellung gelöscht
-    And ich lande auf der Seite der Bestellübersicht
-    And ich sehe eine Information, dass alle Geräte wieder verfügbar sind
+    Then the unavailable models are deleted from the order
+    And I am redirected to my current order
+    And I am informed that the remaining models are all available
 
   @javascript @browser @personas
-  Scenario: Eintrag ändern
+  Scenario: Modifying an entry
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    And ich einen Eintrag ändere
-    Then werden die Änderungen gespeichert
+    And I modify one entry
+    Then the changes I made are saved
     And I am redirected to the timeout page
 
   @javascript @browser @personas
-  Scenario: Die Menge eines Eintrags heruntersetzen
+  Scenario: Decreasing the quantity of one entry
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    When ich die Menge eines Eintrags heraufsetze
-    Then werden die Änderungen gespeichert
-    When ich die Menge eines Eintrags heruntersetze
-    Then werden die Änderungen gespeichert
+    When I increase the quantity of one entry
+    Then the changes I made are saved
+    When I decrease the quantity of one entry
+    Then the changes I made are saved
     And I am redirected to the timeout page

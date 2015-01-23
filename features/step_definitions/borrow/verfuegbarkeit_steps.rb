@@ -59,7 +59,7 @@ When(/^I have performed no activity for more than (\d+) minutes$/) do |arg1|
 end
 
 #Angenommen(/^(ein|\d+) Modelle? (?:ist|sind) nicht verfügbar$/) do |n|
-Given(/^(a|\d+) model (?:is|are) not available$/) do |n|
+Given(/^(a|\d+) model(?:s)? (?:is|are) not available$/) do |n|
   n = case n
         when "a"
           1
