@@ -101,6 +101,12 @@ Feature: Inventory
       | Models            |
 
   @personas @javascript @browser
+  Scenario: The tab 'Packages'
+    Then I can click one of the following tabs to filter inventory by:
+      | Choice |
+      | Packages          |
+    
+  @personas @javascript @browser
   Scenario: The tab 'Options'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
