@@ -103,7 +103,9 @@ Then(/^the items are sorted alphabetically and grouped by model name and number 
     end
 end
 
-Dann(/^die Geräte sind alphabetisch sortiert nach Modellname$/) do
+
+#Dann(/^die Geräte sind alphabetisch sortiert nach Modellname$/) do
+Then(/^the items are sorted alphabetically by model name$/) do
   t = @current_user.visits.take_back.
         joins(:inventory_pool).order("date", "inventory_pools.name").
         map(&:lines).map{|visit_lines| visit_lines.map(&:model)}.
