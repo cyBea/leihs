@@ -214,13 +214,15 @@ Then(/^the list is sorted by "(.*?)", "(.*?)"$/) do |sort, order|
   end
 end
 
+# There is a second one like this in borrow/suche_steps.rb
+# and I think that one makes more sense. - RC
 #Wenn(/^man ein Suchwort eingibt$/) do
-When(/^I enter a search term$/) do
-  x = find("#model-list-search input")
-  x.set " "
-  x.set "bea panas"
-  find("#model-list .line", :match => :first)
-end
+#When(/^I enter a search term$/) do
+#  x = find("#model-list-search input")
+#  x.set " "
+#  x.set "bea panas"
+#  find("#model-list .line", :match => :first)
+#end
 
 #Dann(/^werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen$/) do
 Then(/^those models are shown whose names or manufacturers match the search term$/) do

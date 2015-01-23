@@ -1,56 +1,48 @@
 
-Feature: Suche
-
-  Um etwas zu finden möchte ich als Ausleiher eine Suchfunktionalität
+Feature: Search
 
   Background:
     Given I am Normin
 
   @personas
-  Scenario: Suchfeld
-    Given man befindet sich auf der Seite der Hauptkategorien
-    Then sieht man die Suche
+  Scenario: Search field
+    Given I am listing the root categories
+    Then I can see the search box
 
   @javascript @personas
-  Scenario: Liste gemäss Suchkritieren anzeigen
-    Given man befindet sich auf der Seite der Hauptkategorien
-    When man einen Suchbegriff eingibt
-    Then sieht man das Foto, den Namen und den Hersteller der ersten 6 Modelle gemäss aktuellem Suchbegriff
-    And sieht den Link 'Alle Suchresultate anzeigen'
+  Scenario: Show list according to search criteria
+    Given I am listing the root categories
+    When I enter a search term
+    Then I see image, name and manufacturer of the first 6 matching models
+    And I see a link labeled 'Show all search results'
 
   @javascript @personas
-  Scenario: Man findet nur Modelle die man auch ausleihen kann
-    Given ich nach einem Modell suche, welches in nicht ausleihen kann
-    Then wird dieses Modell auch nicht in den Suchergebnissen angezeigt
+  Scenario: Search only for models I can actually borrow
+    Given I search for a model that I can't borrow
+    Then that model is not shown in the search results
 
   @javascript @personas
-  Scenario: Vorschlag wählen
-    Given man befindet sich auf der Seite der Hauptkategorien
-    And man wählt ein Modell von der Vorschlagsliste der Suche
-    Then wird die Modell-Ansichtsseite geöffnet
-
-  @personas
-  Scenario: Suchfeld
-    Given man befindet sich auf der Seite der Hauptkategorien
-    Then sieht man die Suche
+  Scenario: Choosing a suggestion
+    Given I am listing the root categories
+    And I pick a model from the ones suggested
+    Then I see the model's detail page
 
   @javascript @personas
-  Scenario: Suchresultate anzeigen
-    Given man befindet sich auf der Seite der Hauptkategorien
-    And man gibt einen Suchbegriff ein
-    And drückt ENTER
-    Then wird die Such-Resultatseite angezeigt
-    And man sieht alle gefundenen Modelle mit Bild, Modellname und Herstellername
-    And man sieht die Sortiermöglichkeit
-    And man sieht die Geräteparkeinschränkung
-    And man sieht die Ausleihzeitraumwahl
-    And die Vorschlagswerte sind verschwunden
+  Scenario: Displaying search results
+    Given I am listing the root categories
+    When I enter a search term
+    And I press the Enter key
+    Then the search result page is shown
+    And I see image, name and manufacturer of all matching models
+    And I see the sort options
+    And I see the inventory pool selector
+    And I see filters for start and end date 
+    And the suggestions have disappeared
 
   @javascript @personas
-  Scenario: Suchbegriff mit Leerschlag anzeigen
-    Given man befindet sich auf der Seite der Hauptkategorien
+  Scenario: Showing search term with spaces
+    Given I am listing the root categories
     When I search for models giving at least two space separated terms
-    And drückt ENTER
-    Then wird die Such-Resultatseite angezeigt
-    And man sieht alle gefundenen Modelle mit Bild, Modellname und Herstellername
-
+    And I press the Enter key
+    Then the search result page is shown
+    And I see image, name and manufacturer of all matching models
