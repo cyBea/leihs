@@ -49,7 +49,7 @@ Feature: Delegation
     Given I am Pius
     And I open a hand over for a delegation
     When I pick a user instead of a delegation
-    Then the order shows the user
+    Then the hand over shows the user
 
   @javascript @personas
   Scenario: Switching an order from a normal user to a delegation when handing over
@@ -219,7 +219,7 @@ Feature: Delegation
     Given I am Pius
     And I open a hand over
     When I try to change the delegation
-    Then I can choose only those people that belong to the delegation group
+    Then I can choose only those delegations that have access to this inventory pool
 
   @javascript @personas @browser
   Scenario: Changing contact person during hand over
@@ -237,56 +237,56 @@ Feature: Delegation
     Then I can choose only those people as contact person for the order that belong to the delegation group
 
   @javascript @personas @browser
-  Scenario: Borrow: Bestellung erfassen mit Delegation
+  Scenario: Borrow: Creating an order with a delegation
     Given I am Julie
-    When ich über meinen Namen fahre
+    When I hover over my name
     And I click on "Delegations"
-    Then werden mir die Delegationen angezeigt, denen ich zugeteilt bin
-    When ich eine Delegation wähle
-    Then wechsle ich die Anmeldung zur Delegation
-    Given man befindet sich auf der Modellliste
-    When man auf einem verfügbaren Model "Zur Bestellung hinzufügen" wählt
-    Then öffnet sich der Kalender
-    When alle Angaben die ich im Kalender mache gültig sind
-    Then lässt sich das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen
-    When ich die Bestellübersicht öffne
-    And ich einen Zweck eingebe
-    And man merkt sich die Bestellung
-    And ich die Bestellung abschliesse
-    And ich refreshe die Bestellung
-    Then ändert sich der Status der Bestellung auf Abgeschickt
-    And die Delegation ist als Besteller gespeichert
-    And ich werde als Kontaktperson hinterlegt
+    Then I see the delegations I am assigned to
+    When I pick a delegation to represent
+    Then I am logged in as that delegation
+    Given I am listing models
+    When I add an existing model to the order
+    Then the calendar opens
+    When everything I input into the calendar is valid
+    Then the model has been added to the order with the respective start and end date, quantity and inventory pool
+    When I open my list of orders
+    And I enter a purpose
+    And I take note of the contract
+    And I submit the order
+    And I reload the order
+    Then the order's status changes to submitted
+    And the delegation is saved as borrower
+    And I am saved as contact person
 
   @javascript @personas @browser
-  Scenario: Delegation in Bestellungen ändern
+  Scenario: Changing delegation in an order
     Given I am Pius
-    And ich befinde mich in einer Bestellung
-    When ich die Delegation wechsle
-    And ich die Kontaktperson wechsle
-    And ich bestätige den Benutzerwechsel
-    Then lautet die Aushändigung auf diese neu gewählte Delegation
-    And die neu gewählte Kontaktperson wird gespeichert
+    And I open an order
+    When I change the delegation
+    And I change the contact person
+    And I confirm the user change
+    Then the hand over goes to the new delegation
+    And the newly selected contact person is saved
 
   @javascript @personas
-  Scenario: Auswahl der Delegation in Bestellung ändern
+  Scenario: Which delegations are shown when changing delegation in an order
     Given I am Pius
-    And ich befinde mich in einer Bestellung
-    When ich versuche die Delegation zu wechseln
-    Then kann ich nur diejenigen Delegationen wählen, die Zugriff auf meinen Gerätepark haben
+    And I open an order
+    When I try to change the delegation
+    Then I can choose only those delegations that have access to this inventory pool
 
   @javascript @personas
-  Scenario: Delegation wechseln - nur ein Kontaktpersonfeld
+  Scenario: Changing delegation - only one contact person field
     Given I am Pius
-    And ich befinde mich in einer Bestellung von einer Delegation
-    When ich die Delegation wechsle
-    Then sehe ich genau ein Kontaktpersonfeld
+    And I am editing a delegation's order
+    When I change the delegation
+    Then I see exactly one contact person field
 
   @javascript @personas
-  Scenario: Delegation wechseln - Kontaktperson ist ein Muss
+  Scenario: Changing delegation - contact person is required
     Given I am Pius
-    And ich befinde mich in einer Bestellung
-    When ich die Delegation wechsle
-    And ich keine Kontaktperson angebe
-    And ich den Benutzerwechsel bestätige
-    Then sehe ich im Dialog die Fehlermeldung "Die Kontaktperson ist nicht Mitglied der Delegation oder ist leer"
+    And I open an order
+    When I change the delegation
+    And I do not enter any contact person
+    And I confirm the user change
+    Then an error message pops up saying "Delegated user is not member of the contract's delegation or is empty"

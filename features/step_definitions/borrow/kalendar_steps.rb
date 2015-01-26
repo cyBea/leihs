@@ -118,7 +118,8 @@ When(/^everything I input into the calendar is valid$/) do
     @inventory_pool = InventoryPool.find all("option").detect{|o| o.selected?}["data-id"]
   end
   @quantity = 1 + @current_user.contracts.unsubmitted.flat_map(&:lines).select{|line| line.model == @model}.sum(&:quantity)
-  step "ich setze die Anzahl im Kalendar auf #{1}"
+  #step "ich setze die Anzahl im Kalendar auf #{1}"
+  step "I set the quantity in the calendar to #{1}"
 
   start_date = select_available_not_closed_date
   select_available_not_closed_date(:end, start_date)

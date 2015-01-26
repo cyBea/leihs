@@ -112,9 +112,11 @@ Given(/^I edit a (user|delegation)$/) do |user_type|
   @customer = case user_type
                 when "delegation"
                   @inventory_pool.users.customers.as_delegations
+
                 when "user"
                   @inventory_pool.users.customers.not_as_delegations
               end.sample
+  @delegation = @customer # Some of the delegation tests expect this to be defined
   visit manage_edit_inventory_pool_user_path(@inventory_pool, @customer)
 end
 

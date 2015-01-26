@@ -106,7 +106,8 @@ end
 #Wenn(/^ich nach einer Delegation suche$/) do
 When(/^I search for a delegation$/) do
   @delegation = @current_inventory_pool.users.as_delegations.sample
-  step "ich suche '%s'" % @delegation.firstname
+  #step "ich suche '%s'" % @delegation.firstname
+  step "I search for '%s'" % @delegation.firstname
 end
 
 #Wenn(/^ich über den Delegationname fahre$/) do
@@ -163,15 +164,15 @@ Given(/^there is an order for a delegation$/) do
   expect(@contract).not_to be_nil
 end
 
-Angenommen(/^ich befinde mich in dieser Bestellung$/) do
-  step "I edit the order"
-end
+#Angenommen(/^ich befinde mich in dieser Bestellung$/) do
+#  step "I edit the order"
+#end
 
 #Angenommen(/^ich befinde mich in einer Bestellung von einer Delegation$/) do
 Angenommen(/^I am editing a delegation's order$/) do
   @contract = @current_inventory_pool.contracts.find {|c| [:submitted, :approved].include? c.status and c.delegated_user and c.user.delegated_users.count >= 2}
   @delegation = @contract.user
-  step "ich befinde mich in dieser Bestellung"
+  step 'I edit the order'
 end
 
 #Dann(/^sehe ich den Namen der Delegation$/) do
@@ -296,7 +297,8 @@ Then(/^I can choose only those people as contact person for the order that belon
   end
 end
 
-Wenn(/^ich die Kontaktperson wechsle$/) do
+#Wenn(/^ich die Kontaktperson wechsle$/) do
+When(/^I change the contact person$/) do
   @contact ||= (@delegation or @new_delegation).delegated_users.sample
   within "#contact-person" do
     find("input#user-id", match: :first).set @contact.name
@@ -305,7 +307,8 @@ Wenn(/^ich die Kontaktperson wechsle$/) do
   end
 end
 
-Dann(/^kann ich nur diejenigen Delegationen wählen, die Zugriff auf meinen Gerätepark haben$/) do
+#Dann(/^kann ich nur diejenigen Delegationen wählen, die Zugriff auf meinen Gerätepark haben$/) do
+Then(/^I can choose only those delegations that have access to this inventory pool$/) do
   find("input#user-id", match: :first).set @wrong_delegation.name
   expect(has_no_selector?(".ui-menu-item a")).to be true
   find("input#user-id", match: :first).set @valid_delegation.name
@@ -506,7 +509,8 @@ Then(/^"(.*?)" is the new contact person for this contract$/) do |contact_person
   expect(@delegation.contracts.signed.first.delegated_user).to eq @contact
 end
 
-Dann(/^ist in der Aushändigung der Benutzer aufgeführt$/) do
+#Dann(/^ist in der Aushändigung der Benutzer aufgeführt$/) do
+Then(/^the hand over shows the user$/) do
   find(".content-wrapper", :text => @new_user.name, match: :first)
   expect(current_path).to eq manage_hand_over_path(@current_inventory_pool, @new_user)
   expect(@delegation.visits.hand_over.blank?).to be true
@@ -571,15 +575,18 @@ Then(/^I have to specify a contact person$/) do
   expect(find(".modal #error").text.empty?).to be false
 end
 
-Dann(/^die neu gewählte Kontaktperson wird gespeichert$/) do
+#Dann(/^die neu gewählte Kontaktperson wird gespeichert$/) do
+Then(/^the newly selected contact person is saved$/) do
   expect(@contract.reload.delegated_user).to eq @contact
 end
 
-Dann(/^sehe ich genau ein Kontaktpersonfeld$/) do
+#Dann(/^sehe ich genau ein Kontaktpersonfeld$/) do
+Then(/^I see exactly one contact person field$/) do
   find("#contact-person")
 end
 
-Wenn(/^ich keine Kontaktperson angebe$/) do
+#Wenn(/^ich keine Kontaktperson angebe$/) do
+When(/^I do not enter any contact person$/) do
   expect(find("#contact-person input#user-id", match: :first).value.empty?).to be true
 end
 
@@ -587,7 +594,8 @@ Wenn(/^ich den Benutzerwechsel bestätige$/) do
   step "ich bestätige den Benutzerwechsel"
 end
 
-Dann(/^sehe ich im Dialog die Fehlermeldung "(.*?)"$/) do |text|
+#Dann(/^sehe ich im Dialog die Fehlermeldung "(.*?)"$/) do |text|
+Then(/^an error message pops up saying "(.*?)"$/) do |text|
   expect(has_selector?(".modal .red", text: text)).to be true
 end
 

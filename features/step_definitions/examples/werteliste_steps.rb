@@ -262,7 +262,8 @@ Then(/^any options are priced according to their price set in the inventory pool
   end
 end
 
-Angenommen(/^es existiert eine Bestellung mit mindestens zwei Modellen, wo die Bestellmenge mindestens drei pro Modell ist$/) do
+#Angenommen(/^es existiert eine Bestellung mit mindestens zwei Modellen, wo die Bestellmenge mindestens drei pro Modell ist$/) do
+Given(/^there is an order with at least two models and a quantity of at least three per model$/) do
   @order = @current_inventory_pool.contracts.submitted.find do |o|
     o.contract_lines.map(&:model).instance_eval do
       uniq.count >= 2 and select{|m| o.contract_lines.select{|l| l.model == m}.count >= 3 }.uniq.count >= 2
@@ -275,6 +276,7 @@ end
 
 #Wenn(/^ich eine Bestellung öffne$/) do
 When(/^I open an order$/) do
+  step 'there is an order with at least two models and a quantity of at least three per model'
   @contract = @order
   step "I edit the order"
 end
