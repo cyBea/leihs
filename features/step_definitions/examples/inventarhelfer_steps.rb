@@ -225,6 +225,7 @@ end
 #Dann /^wähle den Gegenstand über die mir vorgeschlagenen Suchtreffer$/ do
 Then /^I choose the item from the list of results$/ do
   expect(has_selector?(".ui-menu-item")).to be true
+  # This sometimes finds multiple results. How is that even possible?
   find(".ui-menu-item a", :text => @item.inventory_code).click
 end
 
