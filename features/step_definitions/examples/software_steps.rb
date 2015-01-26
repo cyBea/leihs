@@ -365,9 +365,9 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
       model_attrs = {}
       @model_properties = table.raw.map do |k, v|
         case k
-          when "Name", "Produktname"
+          when "Name", "Product"
             model_attrs[:product] = v
-          when "Hersteller"
+          when "Manufacturer"
             model_attrs[:manufacturer] = v
           else
             raise

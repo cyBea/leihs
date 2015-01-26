@@ -8,9 +8,9 @@ Feature: Inventory
   Scenario: Finding inventory using a search term
     Given there is a model with the following properties:
       | Name       | suchbegriff1 |
-      | Hersteller | suchbegriff4 |
+      | Manufacturer | suchbegriff4 |
     And there is a item with the following properties:
-      | Inventarcode | suchbegriff2 |
+      | Inventory code | suchbegriff2 |
     When I search in the inventory section for one of those properties
     Then all matching models appear
     And all matching items appear
