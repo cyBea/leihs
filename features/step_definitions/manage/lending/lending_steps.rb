@@ -57,6 +57,7 @@ When(/^I edit an order$/) do
   @event = "order"
   @contract = @current_inventory_pool.contracts.submitted.sample
   @user = @contract.user
+  @customer = @contract.user
   step "I edit the order"
 end
 

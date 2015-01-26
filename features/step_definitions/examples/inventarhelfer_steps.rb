@@ -335,7 +335,8 @@ Then(/^I see an error message that I can't retire the item because it's already 
   expect(@item_before).to eq @item.reload.to_json
 end
 
-Dann(/^erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist$/) do
+#Dann(/^erhält man eine Fehlermeldung, dass man diese Eigenschaft nicht editieren kann, da das Gerät in einem Vortrag vorhanden ist$/) do
+Then(/^I see an error message that I can't change the model because the item is already handed over or assigned to a contract$/) do
   expect(has_content?(_("The model cannot be changed because the item is used in contracts already."))).to be true
   expect(@item_before).to eq @item.reload.to_json
 end

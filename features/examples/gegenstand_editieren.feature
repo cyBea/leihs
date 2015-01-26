@@ -175,7 +175,7 @@ Feature: Editing an item
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the model
     And I save
-    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
+    Then I see an error message that I can't change the model because the item is already handed over or assigned to a contract
 
   @javascript @personas
   Scenario: Can't retire an item that is not in stock
