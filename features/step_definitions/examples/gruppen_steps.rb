@@ -94,7 +94,7 @@ Dann(/^ich sehe eine Bestätigung$/) do
 end
 
 #Wenn(/^ich eine bestehende Gruppe editiere$/) do
-When(/^I edit an existing group$/) do
+When(/^I edit a group that already exists$/) do
   @group = @current_inventory_pool.groups.find {|g| g.models.length >= 2 and g.users.length >= 2}
   visit manage_edit_inventory_pool_group_path @group.inventory_pool_id, @group
 end

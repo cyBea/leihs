@@ -75,24 +75,24 @@ Feature: Groups
 
   @javascript @personas
   Scenario: Adding users
-    When I edit an existing group
+    When I edit a group that already exists
     And I add one user to the group
     Then the user is added to the top of the list
 
   @javascript @personas
   Scenario: Adding models
-    When I edit an existing group
+    When I edit a group that already exists
     And I add a model to the group
     Then the model is added to the top of the list
 
   @personas
   Scenario: Sorting models
-    When I edit an existing group
+    When I edit a group that already exists
     Then the already present models are sorted alphabetically
 
   @javascript @personas
   Scenario: Adding already existing models
-    When I edit an existing group
+    When I edit a group that already exists
     And I add a model that is already present in the group
     Then the model is not added again
     And the already existing model slides to the top of the list
@@ -100,7 +100,7 @@ Feature: Groups
 
   @javascript @personas
   Scenario: Adding already existing users
-    When I edit an existing group
+    When I edit a group that already exists
     And I add a user that is already present in the group
     Then the already existing user is not added
     Then the already existing user slides to the top of the list
