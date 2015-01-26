@@ -113,6 +113,7 @@ Feature: Model list
     Given I am Normin
     And I am listing models
     When I enter a search term
+    And I press the Enter key
     Then those models are shown whose names or manufacturers match the search term
 
   @javascript @browser @personas

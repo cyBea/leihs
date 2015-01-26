@@ -226,7 +226,8 @@ end
 
 #Dann(/^werden diejenigen Modelle angezeigt, deren Name oder Hersteller dem Suchwort entsprechen$/) do
 Then(/^those models are shown whose names or manufacturers match the search term$/) do
-  find("#model-list .line", text: /bea.*panas/i)
+  #find("#model-list .line", text: /bea.*panas/i)
+  expect(all("#model-list .line", text: /.*#{@search_term}.*/i).first.text).to match(/.*#{@search_term}.*/)
 end
 
 #Dann(/^ist kein Ausleihzeitraum ausgewählt$/) do
