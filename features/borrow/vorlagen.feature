@@ -43,7 +43,7 @@ Feature: Vorlagen
   @javascript @browser @personas
   Scenario: Availability display of a template
     Given I am looking at a template
-    Then I can follow the process to the availability display of the template
+    And I am looking at the availability of a template that contains unavailable models
     Then those models are highlighted that are no longer available at this time
     And the models are sorted alphabetically within a group
     And I can remove the models from the view
@@ -54,7 +54,7 @@ Feature: Vorlagen
 
   @personas
   Scenario: Only ordering those models from a template that are available
-    Given this template contains models that don't have enough items to satisfy the quantity required by the template
+    Given I see the availability of a template that has items that are not available
     Then I can follow the process to the availability display of the template
     And some models are not available
     Then I can add those models which are available to an order all at once

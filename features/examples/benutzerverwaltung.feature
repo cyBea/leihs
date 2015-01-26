@@ -143,7 +143,7 @@ Feature: Manage users
     And I am looking at the user list in any inventory pool
     When I delete that user from the list
     Then that user has been deleted from the list
-    And the user is deleted
+    And that user is deleted
 
   @personas
   Scenario: Remove access as an administrator
@@ -447,7 +447,7 @@ Feature: Manage users
     And I pick a user without access rights, orders or contracts
     When I delete that user from the list
     Then that user has been deleted from the list
-    And the user is deleted 
+    And that user is deleted 
 
   # Unimplemented, so not translated.
   @personas @upcoming

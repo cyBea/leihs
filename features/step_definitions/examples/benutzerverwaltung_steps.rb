@@ -814,7 +814,7 @@ end
 
 
 #Dann(/^der Benutzer ist gelöscht$/) do
-Then(/^the user is deleted$/) do
+Then(/^that user is deleted$/) do
   find("#flash .success")
   expect(User.find_by_id(@user.id)).to eq nil
 end

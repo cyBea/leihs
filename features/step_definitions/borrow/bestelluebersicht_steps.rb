@@ -79,7 +79,8 @@ When(/^I delete an entry$/) do
   line.find(".dropdown-holder").click
   @before_max_available = before_max_available(@current_user)
   line.find("a[data-method='delete']").click
-  step "werde ich gefragt ob ich die Bestellung wirklich löschen möchte"
+  #step "werde ich gefragt ob ich die Bestellung wirklich löschen möchte"
+  step "I am asked whether I really want to delete the order"
   expect(has_no_selector?(".line[data-ids='#{line_ids}']")).to be true
 end
 

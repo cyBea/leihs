@@ -115,6 +115,8 @@ end
 #Wenn(/^ich den Lieferanten ändere$/) do
 When(/^I change the supplier$/) do
   @supplier = Supplier.first
+  @new_supplier = @supplier.name # A later step looks for this instead of @supplier, maybe
+                            # fix the later step instead?
   fill_in_autocomplete_field _("Supplier"), @supplier.name
 end
 

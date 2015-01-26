@@ -33,8 +33,8 @@ Then(/^I see the following information for each contract:$/) do |table|
           when "Contract number"
             expect(has_content?(contract.id)).to be true
           when "Time window with its start and end"
-            expect(has_content?(contract.time_window_min.strftime("%d.%m.%Y"))).to be true
-            expect(has_content?(contract.time_window_max.strftime("%d.%m.%Y"))).to be true
+            expect(has_content?(contract.time_window_min.strftime("%d/%m/%Y"))).to be true
+            expect(has_content?(contract.time_window_max.strftime("%d/%m/%Y"))).to be true
             expect(has_content?((contract.time_window_max - contract.time_window_min).to_i.abs + 1)).to be true
           when "Inventory pool"
             expect(has_content?(contract.inventory_pool.shortname)).to be true

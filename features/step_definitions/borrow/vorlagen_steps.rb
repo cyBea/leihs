@@ -120,9 +120,12 @@ end
 #  step "ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage"
 #end
 
-When(/^ich sehe die Verfügbarkeit einer nicht verfügbaren Vorlage$/) do
-  step "in dieser Vorlage hat es Modelle, die nicht genügeng Gegenstände haben, um die in der Vorlage gewünschte Anzahl zu erfüllen"
-  step "ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage"
+#When(/^ich sehe die Verfügbarkeit einer nicht verfügbaren Vorlage$/) do
+When(/^I see the availability of a template that has items that are not available$/) do
+  #step "in dieser Vorlage hat es Modelle, die nicht genügeng Gegenstände haben, um die in der Vorlage gewünschte Anzahl zu erfüllen"
+  step "this template contains models that don't have enough items to satisfy the quantity required by the template"
+  #step "ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage"
+  step 'I can follow the process to the availability display of the template'
   find("[type='submit']", match: :first).click
 end
 
@@ -210,8 +213,9 @@ Then(/^I can continue in the process and add all models to the order at once$/) 
   expect(@current_user.contracts.unsubmitted.flat_map(&:models)).to include @model
 end
 
-Angenommen(/^ich sehe die Verfügbarkeit einer Vorlage, die nicht verfügbare Modelle enthält$/) do
-  step "ich sehe mir eine Vorlage an"
+#Angenommen(/^ich sehe die Verfügbarkeit einer Vorlage, die nicht verfügbare Modelle enthält$/) do
+Given(/^I am looking at the availability of a template that contains unavailable models$/) do
+  step "I am looking at a template"
   find("[type='submit']", match: :first).click
   date = Date.today
   while @template.inventory_pools.first.is_open_on?(date) do
@@ -219,7 +223,7 @@ Angenommen(/^ich sehe die Verfügbarkeit einer Vorlage, die nicht verfügbare Mo
   end
   find("#start_date").set I18n::localize(date)
   find("#end_date").set I18n::localize(date)
-  step "ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage"
+  step 'I can follow the process to the availability display of the template'
 end
 
 #Dann(/^ich muss den Prozess zur Datumseingabe fortsetzen$/) do
