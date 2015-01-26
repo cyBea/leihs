@@ -41,7 +41,7 @@ Feature: Administer inventory pools
   @personas
   Scenario: Editing inventory pool
     Given I am Ramon
-    When I edit an existing inventory pool in the admin area's inventory pool tab
+    When I edit in the admin area's inventory pool tab an existing inventory pool
     And I change name, shortname and email address
     And I save
     Then the inventory pool is saved

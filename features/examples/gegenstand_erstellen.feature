@@ -20,6 +20,7 @@ Feature: Gegenstand erstellen
       | Working order              |
       | Completeness               |
       | Borrowable                 |
+      | Status note                |
       | - Inventory -              |
       | Relevant for inventory     |
       | Supply Category            |
