@@ -1,27 +1,27 @@
 
-Feature: Mailversand bei Delegationsbestellungen und -besuchen
+Feature: Sending email for orders placed by a delegation
 
   @javascript @personas
-  Scenario: Handhabung der Genehmigungsmails
+  Scenario: Approval email for a delegation's order
     Given I am Pius
-    And es existiert eine Bestellung von einer Delegation die nicht von einem Delegationsverantwortlichen erstellt wurde
+    And there is an order for a delegation that was not placed by a person responsible for that delegation
     When I edit the order
-    And die Bestellung genehmige
+    And I approve the order
     Then I receive a notification of success
-    And wird das Genehmigungsmail an den Besteller versendet
-    And das Genehmigungsmail wird nicht an den Delegationsverantwortlichen versendet
+    And the approval email is sent to the orderer
+    And the approval email is not sent to the delegated user
 
   @javascript @personas
-  Scenario: Handhabung der Erinnerungsmails
+  Scenario: Reminder email for a delegation's order
     Given I am Pius
-    And es existiert eine Rücknahme von einer Delegation
-    When ich bei dieser Rücknahme eine Erinnerung sende
-    Then wird das Erinnerungsmail an den Abholenden versendet
-    And das Erinnerungsmail wird nicht an den Delegationsverantwortlichen versendet
+    And there is a take back for a delegation
+    When I send a reminder for this take back
+    Then the reminder is sent to the one who picked up the order
+    And the approval email is not sent to the delegated user
 
   @javascript @personas
-  Scenario: Mail an Delegation senden
+  Scenario: Sending email from the client to a delegation
     Given I am Pius
-    When ich nach einer Delegation suche
-    And ich die Mailfunktion wähle
-    Then wird das Mail an den Delegationsverantwrotlichen verschickt
+    When I search for a delegation
+    And I choose the mail function
+    Then the email is sent to the delegator user
