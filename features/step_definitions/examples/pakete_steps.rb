@@ -57,11 +57,12 @@ end
 Wenn(/^I delete that item package$/) do
   @package_item_ids = @package.children.map(&:id)
   find("[data-type='inline-entry'][data-id='#{@package.id}'] [data-remove]").click
-  step 'ich speichere die Informationen'
+  #step 'ich speichere die Informationen'
+  step 'I save'
   find("#flash")
 end
 
-Dann(/^the item package is (deleted|retired)$/) do |arg1|
+Dann(/^the item package has been (deleted|retired)$/) do |arg1|
   case arg1
     when "deleted"
       expect(Item.find_by_id(@package.id).nil?).to be true

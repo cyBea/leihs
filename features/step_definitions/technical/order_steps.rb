@@ -170,7 +170,7 @@ Then "the contract was placed by a customer named '$name'" do | name |
   expect(find(".table-overview .fresh", match: :first).has_content?(name)).to be true
 end
 
-When(/^the contract is deleted$/) do
+When(/^that contract has been deleted$/) do
   expect { @contract.reload }.to raise_error(ActiveRecord::RecordNotFound)
 end
 
@@ -190,7 +190,7 @@ Then /^the amount of lines decreases by one$/ do
   expect(@contract.lines.size).to eq(@no_of_lines_at_start - 1)
 end
 
-Then /^the line is (.*)(?:\s?)deleted$/ do |not_specifier|
+Then /^that line has (.*)(?:\s?)been deleted$/ do |not_specifier|
   expect(@result_of_line_removal).to eq not_specifier.blank?
 end
 

@@ -190,12 +190,12 @@ When(/^I set a quantity of (\d+) for the option line$/) do |quantity|
   option_line.find("input[data-quantity-returned]").set (@quantity = quantity)
 end
 
-When(/^I inspect an item$/) do
-  within("[data-line-type='item_line']", match: :first) do
-    find(".dropdown-holder").click
-    find(".dropdown-item", text: "Inspektion").click
-  end
-end
+#When(/^I inspect an item$/) do
+#  within("[data-line-type='item_line']", match: :first) do
+#    find(".dropdown-holder").click
+#    find(".dropdown-item", text: "Inspektion").click
+#  end
+#end
 
 When(/^I set "(.*?)" to "(.*?)"$/) do |arg1, arg2|
   select _(arg2), from: _(arg1)

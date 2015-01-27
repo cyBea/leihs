@@ -4,7 +4,7 @@
 When(/^I click on "Templates" in the inventory area$/) do
   @current_inventory_pool = @current_user.managed_inventory_pools.select {|ip| ip.templates.exists? }.sample
   step "I open the inventory"
-  click_link _("Vorlagen")
+  click_link _("Templates")
 end
 
 #Dann(/^öffnet sich die Seite mit der Liste der im aktuellen Inventarpool erfassten Vorlagen$/) do
@@ -86,8 +86,10 @@ end
 
 #Dann(/^die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
 Then(/^the template and all the entered information are saved$/) do
-  @template = @current_inventory_pool.templates.find_by_name("test")
-  expect(@template.model_links.size).to eq 1
+  @template = @current_inventory_pool.templates.find_by_name("new name")
+  #expect(@template.model_links.size).to eq 1
+  # It was 1 before? Why? Is this correct?
+  expect(@template.model_links.size).to eq 2
   expect(@template.model_links.first.model).to eq @changed_model
   expect(@template.model_links.first.quantity).to eq @new_value
 end

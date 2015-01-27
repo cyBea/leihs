@@ -7,7 +7,7 @@ Feature: Search for software
   @javascript @personas
   Scenario: Finding software according to a search term
     Given there is a software product with the following properties:
-      | Product name | suchbegriff1 |
+      | Product | suchbegriff1 |
       | Manufacturer | suchbegriff4 |
     And there is a software license with the following properties:
       | Inventory code       | suchbegriff2        |

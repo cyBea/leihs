@@ -465,7 +465,7 @@ end
 When(/^I create an order for a delegation$/) do
   steps %{
     When I hover over my name
-    And I press "Delegations"
+    And I click on "Delegations"
     Then I see the delegations I am assigned to
     When I pick a delegation to represent
     Then I am logged in as that delegation
@@ -499,7 +499,8 @@ When(/^I hand over the items ordered for this delegation to "(.*?)"$/) do |conta
   expect(has_selector? "[data-remove-assignment]").to be true
   find(".multibutton button[data-hand-over-selection]").click
   @contact = User.find_by_login(contact_person.downcase)
-  step "ich die Kontaktperson wechsle"
+  #step "ich die Kontaktperson wechsle"
+  step "I change the contact person"
   find("button[data-hand-over]").click
   expect(has_no_selector?(".modal button[data-hand-over]")).to be true
 end

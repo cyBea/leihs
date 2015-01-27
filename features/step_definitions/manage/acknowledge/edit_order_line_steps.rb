@@ -56,7 +56,7 @@ When /^I change a contract lines time range$/ do
   end
   expect(has_selector?(".fc-widget-content .fc-day-number")).to be true
   get_fullcalendar_day_element(@new_start_date).click
-  find("#set-start-date", :text => _("Start Date")).click
+  find("#set-start-date", :text => _("Start date")).click
   step 'I save the booking calendar'
   step 'the booking calendar is closed'
 end
@@ -131,7 +131,7 @@ When /^I change the time range for multiple lines$/ do
   step 'I edit the timerange of the selection'
   @new_start_date = [@line1.start_date, Date.today].max + 2.days
   get_fullcalendar_day_element(@new_start_date).click
-  find("#set-start-date", :text => _("Start Date")).click
+  find("#set-start-date", :text => _("Start date")).click
   step 'I save the booking calendar'
   step 'the booking calendar is closed'
 end

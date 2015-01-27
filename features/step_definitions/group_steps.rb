@@ -68,10 +68,10 @@ end
 # Groups
 #
 Given /^a group '([^']*)'( exists)?$/ do |name,foo|
-  step "I add a new group \"#{name}\""
+  step "I add new group called \"#{name}\""
 end
 
-When /^I add a new group "([^"]*)"$/ do |name|
+When /^I add a group called "([^"]*)"$/ do |name|
   @inventory_pool.groups.create(:name => name)
 end
 

@@ -108,7 +108,7 @@ Feature: Create model with packages
     Given a never handed over item package is currently in stock
     When edit the related model package
     When I delete that item package
-    Then the item package is deleted
+    Then the item package has been deleted
     And the packaged items are not part of that item package anymore
     When edit the related model package
     Then that item package is not listed
@@ -118,7 +118,7 @@ Feature: Create model with packages
     Given a once handed over item package is currently in stock
     When edit the related model package
     When I delete that item package
-    Then the item package is retired
+    Then the item package has been retired
     And the packaged items are not part of that item package anymore
     When edit the related model package
     Then that item package is not listed

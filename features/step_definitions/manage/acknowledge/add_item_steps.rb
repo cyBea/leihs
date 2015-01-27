@@ -84,13 +84,13 @@ Given /^I search for a model with default dates and note the current availabilit
 end
 
 When /^I change the start date$/ do
-  fill_in "add-start-date", with: @new_start_date.strftime("%d.%m.%Y")
+  fill_in "add-start-date", with: @new_start_date.strftime("%d/%m/%Y")
   find("#add-start-date").click
   find(".ui-state-active").click
 end
 
 And /^I change the end date$/ do
-  fill_in "add-end-date", with: (@new_start_date + 1).strftime("%d.%m.%Y")
+  fill_in "add-end-date", with: (@new_start_date + 1).strftime("%d/%m/%Y")
   find("#add-end-date").click
   find(".ui-state-active").click
 end
