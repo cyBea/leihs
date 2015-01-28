@@ -490,11 +490,6 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/manage/hand_over/add.feature"
-- name: manage/hand_over/add_purpose
-  scripts:
-    cucumber:
-      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        "features/manage/hand_over/add_purpose.feature"
 - name: manage/hand_over/assign
   scripts:
     cucumber:
@@ -720,11 +715,6 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         "features/technical/visit/hand_over_and_take_back_model.feature"
-- name: technical/visit/hand_over_controller
-  scripts:
-    cucumber:
-      body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        "features/technical/visit/hand_over_controller.feature"
 - name: technical/visit/overdue_model
   scripts:
     cucumber:
