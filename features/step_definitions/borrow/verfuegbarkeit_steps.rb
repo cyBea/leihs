@@ -68,9 +68,9 @@ Given(/^(a|\d+) model(?:s)? (?:is|are) not available$/) do |n|
       end
 
   lines = @current_user.contracts.unsubmitted.flat_map(&:lines)
-  already_unavailable_lines = lines.select{|line| not line.available?}
+  available_lines, unavailable_lines = lines.partition {|line| line.available? }
 
-  lines.take(n - already_unavailable_lines.size).each do |line|
+  available_lines.take(n - unavailable_lines.size).each do |line|
     (line.maximum_available_quantity + 1).times do
       c = FactoryGirl.create(:contract,
                              :status => :submitted,
