@@ -22,7 +22,7 @@ Feature: Copying software
       | Invoice Date           |
       | Initial Price          |
       | Supplier               |
-      | Produred by            |
+      | Procured by            |
       | Note                   |
       | Activation type        |
       | License Type           |

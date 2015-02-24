@@ -831,7 +831,7 @@ When(/^I choose inside all inventory as "(.*?)" the option "(.*?)"$/) do |arg1, 
   case arg1
   when "used & not used"
     filter = find(:select, "used")
-  when "borrowable & not borrowable"
+  when "borrowable & unborrowable"
     filter = find(:select, "is_borrowable")
   when "retired & not retired"
     filter = find(:select, "retired")
@@ -842,7 +842,7 @@ When(/^I choose inside all inventory as "(.*?)" the option "(.*?)"$/) do |arg1, 
 end
 
 Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
-  if arg1 == "unused"
+  if arg1 == "not used"
     models = Model.unused_for_inventory_pool(@current_inventory_pool)
   elsif arg1 == "In stock"
     items = Item.by_owner_or_responsible(@current_inventory_pool).in_stock
@@ -852,17 +852,17 @@ Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
   else
     models = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool)
     case arg1
-    when "ausleihbar"
+    when "borrowable"
       models = models.where(items: {is_borrowable: true})
-    when "nicht ausleihbar"
+    when "unborrowable"
       models = models.where(items: {is_borrowable: false})
-    when "ausgemustert"
+    when "retired"
       models = models.where.not(items: {retired: nil})
-    when "nicht ausgemustert"
+    when "not retired"
       models = models.where(items: {retired: nil})
-    when "Defekt"
+    when "Broken"
       models = models.where(items: {is_broken: true})
-    when "Unvollständig"
+    when "Incomplete"
       models = models.where(items: {is_incomplete: true})
     end
   end

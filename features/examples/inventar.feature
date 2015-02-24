@@ -134,9 +134,9 @@ Feature: Inventory
     When I choose inside all inventory as "<dropdown>" the option "<property>"
     Then only the "<property>" inventory is shown
   Examples:
-    | dropdown                    | property       |
-    | borrowable & not borrowable | borrowable     |
-    | borrowable & not borrowable | not borrowable |
+    | dropdown                  | property       |
+    | borrowable & unborrowable | borrowable     |
+    | borrowable & unborrowable | unborrowable   |
 
   @personas @javascript @browser
   Scenario Outline: Filtering retired and not retired inventory
