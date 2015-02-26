@@ -61,7 +61,7 @@ Feature: Edit a hand over
 
   @javascript @personas
   Scenario: Contract note
-    When I open a hand over
+    When I open a hand over with at least one assigned item
     And I hand over the items
     Then a dialog appears
     And I can enter some text in the contract note field

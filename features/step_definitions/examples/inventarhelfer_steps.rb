@@ -188,8 +188,8 @@ end
 Then /^I choose the fields from a list or by name$/ do
   field = Field.all.select{|f| f[:readonly] == nil and f[:type] != "autocomplete-search" and f[:target_type] != "license" and not f[:visibility_dependency_field_id]}.last
   find("#field-input").click
-  find("#field-input").set field.label
-  find(".ui-menu-item a", match: :first, text: field.label).click
+  find("#field-input").set _(field.label)
+  find(".ui-menu-item a", match: :first, text: _(field.label)).click
   within "#field-selection" do
     @all_editable_fields = all(".field", :visible => true)
   end
@@ -316,7 +316,7 @@ end
 
 #Angenommen(/^man editiert das Feld "(.*?)" eines ausgeliehenen Gegenstandes$/) do |name|
 Given(/^I edit the field "(.*?)" of an item that is not in stock$/) do |name|
-  step %Q{I select the field "#{name}" from the list}
+  step %Q{I select the field "#{name}"}
   @item = @current_inventory_pool.items.not_in_stock.sample
   @item_before = @item.to_json
   step %Q{I scan or enter the inventory code}
@@ -342,8 +342,9 @@ Then(/^I see an error message that I can't change the model because the item is 
   expect(@item_before).to eq @item.reload.to_json
 end
 
-Angenommen(/^man editiert das Feld "(.*?)" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist$/) do |name|
-  step %Q{wähle ich das Feld "#{name}" aus der Liste aus}
+#Angenommen(/^man editiert das Feld "(.*?)" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist$/) do |name|
+Given(/^I edit the field "(.*?)" of an item that is part of a contract$/) do |name|
+  step %Q{I select the field "#{name}"}
   @item = @current_inventory_pool.items.not_in_stock.sample
   @item_before = @item.to_json
   fill_in_autocomplete_field name, @current_inventory_pool.models.select{|m| m != @item.model}.sample.name

@@ -21,8 +21,9 @@ Feature: Managing templates
     And each model I've added has the minimum quantity 1
     When I enter a quantity for each model
     And I save
+    And I see the notice "Template created successfully"
     Then I am listing templates
-    And the template and all the entered information are saved
+    And the new template and all the entered information are saved
 
   @javascript @personas
   Scenario: Check whether a model's maximum quantity is exhausted
@@ -32,14 +33,13 @@ Feature: Managing templates
     When I enter a quantity for a model which exceeds its maximum number of borrowable items for this model
     And I save
     Then I am warned that this template cannot never be ordered due to available quantities being too low
-    And the template and all the entered information are saved
+    And the new template and all the entered information are saved
     And the template is marked as unaccomplishable in the list
     When I edit the same template
     And I use correct quantities
     And I save
     Then I see the notice "Template successfully saved"
-    And the template and all the entered information are saved
-
+    And the edited template and all the entered information are saved
     And the template is not marked as unaccomplishable in the list
 
   @javascript @personas
@@ -60,10 +60,9 @@ Feature: Managing templates
     Then the minimum quantity for the newly added model is 1
     And I change the quantity for one of the models
     And I save
-    Then I am listing templates
-    # Something wrong with this notice
-    #And I see the notice "Template successfully saved"
-    And the template and all the entered information are saved
+    Then I see the notice "Template successfully saved"
+    And I am listing templates
+    And the edited template and all the entered information are saved
 
   @javascript @personas
   Scenario: Required information when editing a template

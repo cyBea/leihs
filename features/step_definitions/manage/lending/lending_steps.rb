@@ -16,7 +16,7 @@ end
 When /^I try to complete a hand over that contains a model with unborrowable items$/ do
   @contract_line = nil
   @contract = @current_inventory_pool.contracts.approved.detect do |c|
-    @contract_line = c.lines.where(item_id: nil).detect do |l|
+    @contract_line = c.item_lines.where(item_id: nil).detect do |l|
       l.model.items.unborrowable.where(inventory_pool_id: @current_inventory_pool).first
     end
   end
@@ -71,7 +71,7 @@ Then(/^the user appears under last visitors$/) do
 end
 
 When /^the chosen items contain some from a future hand over$/ do
-  find("#add-start-date").set (Date.today+2.days).strftime("%d.%m.%Y")
+  find("#add-start-date").set I18n.l(Date.today+2.days)
   step 'I add an item to the hand over by providing an inventory code'
 end
 
@@ -160,8 +160,8 @@ When /^it doesn't exist in any future contracts$/ do
   @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
                               @customer.get_approved_contract(@current_inventory_pool).models).sample
   @item = @model_not_in_contract.items.borrowable.in_stock.sample
-  find("#add-start-date").set (Date.today+7.days).strftime("%d.%m.%Y")
-  find("#add-end-date").set (Date.today+8.days).strftime("%d.%m.%Y")
+  find("#add-start-date").set I18n.l(Date.today+7.days)
+  find("#add-end-date").set I18n.l(Date.today+8.days)
   find("[data-add-contract-line]").set @item.inventory_code
   @amount_lines_before = all(".line").size
   find("[data-add-contract-line] + .addon").click
@@ -280,8 +280,8 @@ end
 When(/^start and end date are set to the corresponding dates of the hand over's first time window$/) do
   first_dates = find("#hand-over-view #lines [data-selected-lines-container]", match: :first).find(".row .col1of2 p.paragraph-s", match: :first).text
   start_date, end_date = first_dates.split('-').map{|x| Date.parse x}
-  expect(Date.parse(find("input#add-start-date").value)).to eq [start_date, Date.today].max
-  expect(Date.parse(find("input#add-end-date").value)).to eq [end_date, Date.today].max
+  expect(Date.parse find("#add-start-date").value).to eq [start_date, Date.today].max
+  expect(Date.parse find("#add-end-date").value).to eq [end_date, Date.today].max
 end
 
 Given /^I search for '(.*)'$/ do |arg1|
@@ -401,7 +401,7 @@ end
 
 Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
   step %Q(I uncheck the "No verification required" button)
-  
+
   if arg0
     @contract = @current_inventory_pool.contracts.find find(".line", match: :prefer_exact, :text => arg1)["data-id"]
     within(".line", match: :prefer_exact, :text => arg1) do
@@ -423,15 +423,15 @@ end
 
 
 Then(/^I see the previously opened order's user as last visitor$/) do
-  find("#daily-view #last-visitors", :text => @user.name)
+  find("#daily-view #last-visitors", :text => @contract.user.name)
 end
 
 When(/^I click on the last visitor's name$/) do
-  find("#daily-view #last-visitors a", :text => @user.name).click
+  find("#daily-view #last-visitors a", :text => @contract.user.name).click
 end
 
 Then(/^I see search results matching that user's name$/) do
-  find("#search-overview h1", text: _("Search Results for \"%s\"") % @user.name)
+  find("#search-overview h1", text: _("Search Results for \"%s\"") % @contract.user.name)
 end
 
 When(/^I enter something in the "(.*?)" field$/) do |field_label|

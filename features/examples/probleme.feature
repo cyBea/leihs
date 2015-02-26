@@ -60,7 +60,7 @@ Feature: Displaying problems
       And "3" are available in total, also counting availability from groups the user is not member of
       And "7" are in this inventory pool (and borrowable)
 
-  @personas
+  @personas @javascript @browser
   Scenario: Showing problems when item is not available while taking back
     Given I open a take back, not overdue
      And a model is no longer available

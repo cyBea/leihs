@@ -555,7 +555,7 @@ When(/^I search for "(.+)"$/) do |search_term|
 end
 
 #Wenn /^ich eine?n? bestehende[s|n]? (.+) bearbeite$/ do |entity|
-When /^I edit an existing (.+)$/ do |entity|
+When /^I edit an existing (Model|Option|Package|)$/ do |entity|
 
   if entity == 'Package'
 
@@ -847,7 +847,7 @@ Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
   elsif arg1 == "In stock"
     items = Item.by_owner_or_responsible(@current_inventory_pool).in_stock
     models = items.map(&:model).uniq
-  elsif arg1 == "Owner"
+  elsif arg1 == "Owned"
     models = Model.joins(:items).where(items: {owner_id: @current_inventory_pool.id}).uniq
   else
     models = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool)

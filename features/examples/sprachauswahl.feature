@@ -9,14 +9,14 @@ Feature: Changing interface language
   Scenario: Changing my interface language
     Given I am Mike
     And I see the language list
-    When I change the language
-    Then the interface language has been changed
+    When I change the language to "English (US)"
+    Then the language is "English (US)"
 
   @personas
   Scenario: Changing the language as normal user
     Given I am Normin
-    And I open the inventory
-    When I change the language to "English"
-    Then the language is "English"
+    And I am listing models
+    When I change the language to "English (UK)"
+    Then the language is "English (UK)"
     When I change the language to "Deutsch"
     Then the language is "Deutsch"

@@ -857,7 +857,7 @@ end
 
 Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
   access_right = AccessRight.all.shuffle.detect { |ar| ar.role == :customer and
-                                                       ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
+                                                       ar.inventory_pool.contract_lines.where(ar.user).empty? }
   @user = access_right.user
   @current_inventory_pool = access_right.inventory_pool
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
@@ -867,7 +867,7 @@ end
 Given(/^I am editing a user who has access to (and no items from )?the current inventory pool$/) do |arg1|
   access_rights = @current_inventory_pool.access_rights.active.select { |ar| ar.role == :customer }
   @user = if arg1
-            access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
+            access_rights.detect { |ar| @current_inventory_pool.contract_lines.where(ar.user).empty? }
           else
             access_rights.sample
           end.user

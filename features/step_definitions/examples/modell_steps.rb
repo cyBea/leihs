@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-
-
 #Wenn(/^ich ein ergänzendes Modell mittel Autocomplete Feld hinzufüge$/) do
 When(/^I use the autocomplete field to add a compatible model$/) do
   @comp1 = Model.find_by_name("Sharp Beamer 123")
@@ -91,7 +89,7 @@ Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
         false
     end
   end
-  klass = case _(entity)
+  klass = case entity
           when "model" then Model
           when "software" then Software
           end
@@ -187,7 +185,9 @@ end
 When(/^I delete this (.+) from the list$/) do |entity|
   step "I open the inventory"
 
-  case _(entity)
+  fill_in 'list-search', with: @model.name
+
+  case entity
   when "model"
     find("[data-type='item']").click
   when "software"
@@ -195,14 +195,15 @@ When(/^I delete this (.+) from the list$/) do |entity|
     find(:select, "retired").first("option").select_option
   end
 
-  fill_in 'list-search', with: @model.name
-  find(".line[data-id='#{@model.id}'] .dropdown-holder").click
-  find(".line[data-id='#{@model.id}'] [data-method='delete']").click
+  within(".line[data-id='#{@model.id}']") do
+    find(".dropdown-holder").click
+    find("[data-method='delete']").click
+  end
 end
 
 Then(/^the (.+) is deleted$/) do |entity|
   find("#flash")
-  klass = case _(entity)
+  klass = case entity
           when "model" then Model
           when "software" then Software
           end

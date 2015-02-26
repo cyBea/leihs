@@ -119,7 +119,8 @@ Feature: Lending
 
   @javascript @personas @browser
   Scenario: Merging the numbers in an item popup
-    Given I hover over the number of items in a line
+    Given I navigate to the open orders
+    And I hover over the number of items in a line
     Then all these items are listed
     And I see one line per model
     And each line shows the sum of items of the respective model
@@ -127,6 +128,7 @@ Feature: Lending
   @javascript @personas
   Scenario: Clicking the last user after editing an order
     Given I open the daily view
+    And I navigate to the open orders
     And I open an order
     Then I return to the daily view
     Then I see the last visitors

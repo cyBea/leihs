@@ -88,7 +88,7 @@ When(/^I specify (.*) as (start|end) date$/) do |arg1, arg2|
             else
               raise
           end
-  step "ich setze das %s im Kalendar auf '#{I18n::l(@date)}'" % (arg2 == "start" ? _("Start Date") : _("End Date"))
+  step "ich setze das %s im Kalendar auf '#{I18n::l(@date)}'" % (arg2 == "start" ? _("Start date") : _("End date"))
 end
 
 Then(/^I receive an error message within the modal$/) do

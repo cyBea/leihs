@@ -40,7 +40,8 @@ end
 
 #Wenn(/^ich den Namen der Vorlage eingebe$/) do
 When(/^I enter the template's name$/) do
-  find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set "test"
+  @new_name = Faker::Lorem.word
+  find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set @new_name
 end
 
 #Wenn(/^ich Modelle hinzufüge$/) do
@@ -85,11 +86,9 @@ When(/^I enter a quantity for each model$/) do
 end
 
 #Dann(/^die neue Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
-Then(/^the template and all the entered information are saved$/) do
-  @template = @current_inventory_pool.templates.find_by_name("new name")
-  #expect(@template.model_links.size).to eq 1
-  # It was 1 before? Why? Is this correct?
-  expect(@template.model_links.size).to eq 2
+Then(/^the new template and all the entered information are saved$/) do
+  @template = @current_inventory_pool.templates.find_by_name(@new_name)
+  expect(@template.model_links.size).to eq 1
   expect(@template.model_links.first.model).to eq @changed_model
   expect(@template.model_links.first.quantity).to eq @new_value
 end
@@ -117,7 +116,7 @@ end
 
 #Wenn(/^ich den Namen ändere$/) do
 When(/^I change the name$/) do
-  @new_name = "new name"
+  @new_name = Faker::Lorem.word
   find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set @new_name
 end
 
@@ -150,7 +149,8 @@ When(/^I change the quantity for one of the models$/) do
   end
 end
 
-Dann(/^die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
+#Dann(/^die bearbeitete Vorlage wurde mit all den erfassten Informationen erfolgreich gespeichert$/) do
+Then(/^the edited template and all the entered information are saved$/) do
   @template.reload
   expect(@template.models.map(&:name)).not_to include @removed_model.name if @removed_model
   expect(@template.models.map(&:name)).to include @additional_model.name if @additional_model

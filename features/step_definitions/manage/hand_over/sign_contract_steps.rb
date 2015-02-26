@@ -145,14 +145,14 @@ When /^I change the contract lines time range to tomorrow$/ do
   puts "@new_start_date = #{@new_start_date}"
   puts "@new_start_date_element = #{@new_start_date_element.text}"
   @new_start_date_element.click
-  find("a", match: :first, :text => /(Start Date|Startdatum)/).click
+  find("a", match: :first, :text => _("Start date")).click
   step 'I save the booking calendar'
   step 'the booking calendar is closed'
 end
 
 Then /^I see that the time range in the summary starts today$/ do
   all(".modal-body > div > div > div > p").each do |date_range|
-    expect(date_range.has_content?("#{Date.today.strftime("%d.%m.%Y")}")).to be true
+    expect(date_range.has_content?("#{I18n.l Date.today}")).to be true
   end
 end
 

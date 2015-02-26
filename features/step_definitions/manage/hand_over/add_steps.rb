@@ -145,10 +145,12 @@ When /^I add so many lines that I break the maximal quantity of a model$/ do
              end
   @target_name = @model.name
   quantity_to_add = if @contract
-    @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups @contract.lines.first.start_date, @contract.lines.first.end_date, @contract.user.groups.map(&:id)
-  else
-    @model.items.size
-  end
+                      start_date = Date.parse find("#add-start-date").value
+                      end_date = Date.parse find("#add-end-date").value
+                      @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups start_date, end_date, @contract.user.groups.map(&:id)
+                    else
+                      @model.items.size
+                    end
   @quantity_added = [quantity_to_add+1, 0].max
   @quantity_added.times do
     type_into_autocomplete "[data-add-contract-line]", @target_name

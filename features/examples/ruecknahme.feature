@@ -43,7 +43,8 @@ Feature: Take back
 
   @personas
   Scenario: Showing whether a user is suspended
-    Given I open a suspended user's order
+    Given I navigate to the open orders
+    And I open a suspended user's order
     Then I see the note 'Suspended!' next to their name
 
   @javascript @personas

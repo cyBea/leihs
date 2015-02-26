@@ -91,5 +91,5 @@ Feature: Inventory helper
   @javascript @personas
   Scenario: You can't edit certain fields for items that are in contracts
     Given I am on the inventory helper screen
-    And I edit the field "Model" of an item that is not in stock
-    Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
+    And I edit the field "Model" of an item that is part of a contract
+    Then I see an error message that I can't change the model because the item is already handed over or assigned to a contract

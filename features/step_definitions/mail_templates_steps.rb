@@ -180,7 +180,13 @@ Given(/^the custom (reminder) mail template looks like$/) do |template_name, str
   mt.update_attributes(body: string)
 end
 
+def reset_language_for_current_user
+  I18n.locale = @current_user.language.locale_name.to_sym
+  expect(I18n.locale).to eq @current_user.language.locale_name.to_sym
+end
+
 def get_reminder_for_visit(visit)
+  reset_language_for_current_user
   sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(visit.inventory_pool.email) }
   sent_mails = sent_mails.select { |m| m.subject == _('[leihs] Reminder') }
   expect(sent_mails.size).to eq 1

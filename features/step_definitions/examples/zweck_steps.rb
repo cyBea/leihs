@@ -41,7 +41,7 @@ end
 
 #Dann /^kann ich den Zweck editieren$/ do
 Then /^I can edit the purpose$/ do
-  find(".button", :text => /(Edit Purpose|Zweck editieren)/).click
+  find(".button", :text => _("Edit Purpose")).click
   @new_purpose_description = "Benötigt für die Sommer-Austellung"
   find(".modal textarea[name='purpose']").set @new_purpose_description
   find(".modal button[type=submit]").click
