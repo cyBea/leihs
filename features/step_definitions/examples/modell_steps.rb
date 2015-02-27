@@ -184,14 +184,15 @@ end
 
 When(/^I delete this (.+) from the list$/) do |entity|
   step "I open the inventory"
+  step "I see retired and not retired inventory"
 
   fill_in 'list-search', with: @model.name
 
   case entity
   when "model"
-    find("[data-type='item']").click
+    find("[data-type='item']", text: _("Models")).click
   when "software"
-    find("[data-type='license']").click
+    find("[data-type='license']", text: _("Software")).click
     find(:select, "retired").first("option").select_option
   end
 

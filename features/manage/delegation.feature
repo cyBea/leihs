@@ -58,14 +58,14 @@ Feature: Delegation
     When I pick a delegation instead of a user
     Then the order shows the delegation
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Tooltip display
     Given I am Pius
     When I search for a delegation
     And I hover over the delegation name
     Then the tooltip shows name and responsible person for the delegation
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Global search
     Given I am Pius
     And I search for 'Julie'
@@ -81,7 +81,7 @@ Feature: Delegation
     But ich bin für diesen Gerätepark gesperrt
     Then kann ich keine Gegenstände dieses Geräteparks absenden
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Filter der Delegationen
     Given I am Pius
     When I navigate to the admin area
@@ -89,7 +89,7 @@ Feature: Delegation
     Then I can restrict the user list to show only delegations
     And I can restrict the user list to show only users
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Creating a delegation
     Given I am Pius
     And I navigate to the admin area
@@ -104,7 +104,7 @@ Feature: Delegation
     And I save
     Then the new delegation is saved with the current information
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Delegation gets access as a customer
     Given I am Pius
     And I navigate to the admin area
@@ -121,7 +121,7 @@ Feature: Delegation
     Then the order shows the user
     And no contact person is shown
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Trying to create a delegation without filling in required fields
     Given I am Pius
     And I navigate to the admin area
@@ -136,7 +136,7 @@ Feature: Delegation
     And I save
     Then I see an error message
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Editing a delegation
     Given I am Pius
     And I navigate to the admin area
@@ -205,7 +205,7 @@ Feature: Delegation
     Then the order shows the name of the user
     And I don't see any contact person
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Changing the delegation during hand over
     Given I am Pius
     And there is a hand over for a delegation
@@ -268,7 +268,7 @@ Feature: Delegation
     Then the hand over goes to the new delegation
     And the newly selected contact person is saved
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Which delegations are shown when changing delegation in an order
     Given I am Pius
     And I open an order
@@ -282,7 +282,7 @@ Feature: Delegation
     When I change the delegation
     Then I see exactly one contact person field
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Changing delegation - contact person is required
     Given I am Pius
     And I open an order

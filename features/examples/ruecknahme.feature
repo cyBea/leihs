@@ -41,7 +41,7 @@ Feature: Take back
     And the contract is closed and all items are returned
     Then a note is made that it was me who took back the item
 
-  @personas
+  @personas @javascript
   Scenario: Showing whether a user is suspended
     Given I navigate to the open orders
     And I open a suspended user's order
