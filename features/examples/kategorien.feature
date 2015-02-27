@@ -45,7 +45,8 @@ Feature: Categories
     When I edit the model
     And I assign categories
     And I save
-    Then the categories are assigned
+    Then I see the notice "Model saved"
+    And the categories are assigned
 
   @javascript @browser @personas
   Scenario: Removing categories

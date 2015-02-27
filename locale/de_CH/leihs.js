@@ -1755,10 +1755,6 @@
 
   msgstr("Werteverzeichnis zu Leihvertrag Nr. %s");
 
-  msgid("Value list");
-
-  msgstr("Werteverzeichnis");
-
   msgid("View %s");
 
   msgstr("%s ansehen");

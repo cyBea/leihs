@@ -2140,10 +2140,6 @@ window.i18n.locale_data = {
          null,
          "Werteverzeichnis für Leihvertrag mit No. %s"
       ],
-      "Value list": [
-         null,
-         "Werteverzeichnis"
-      ],
       "View %s": [
          null,
          "%s gseh"

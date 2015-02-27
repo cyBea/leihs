@@ -200,7 +200,10 @@ When(/^I select multiple lines of the hand over$/) do
   within "#lines" do
     expect(has_selector?(".line input[type='checkbox']")).to be true
     @number_of_selected_lines = all(".line input[type='checkbox']").size
-    @lines.map(&:id).each {|id| find(".line[data-id='#{id}'] input[type='checkbox']").click }
+    @lines.map(&:id).each do |id|
+      cb = find(".line[data-ids*='#{id}'] input[type='checkbox']")
+      cb.click unless cb.checked?
+    end
   end
 end
 
@@ -223,7 +226,7 @@ end
 
 #Dann(/^sehe ich das Werteverzeichniss für die ausgewählten Linien$/) do
 Then(/^I see the value list for the selected lines$/) do
-  expect(has_content? _("Value list")).to be true
+  expect(has_content? _("Value List")).to be true
   find("tfoot.total .quantity").text == @number_of_selected_lines.to_s
 end
 
@@ -234,7 +237,9 @@ Then(/^the price shown for the unassigned lines is equal to the highest price of
     quantity = lines.size
     line = all("tr", text: m.name).find {|line| line.find(".inventory_code").text == "" }
     if line
-      expect(line.find(".item_price").text.delete("'")).to match /#{(@lines.reload.find{|l| not l.item and l.model == m}.price_or_max_price * quantity).to_s}/
+      price = @lines.reload.find{|l| not l.item and l.model == m}.price_or_max_price * quantity
+      formatted_price = ActionController::Base.helpers.number_to_currency(price, format: '%n %u', :unit => Setting::LOCAL_CURRENCY_STRING)
+      find(".item_price", text: formatted_price)
     end
   end
 end

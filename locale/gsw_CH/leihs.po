@@ -1623,9 +1623,6 @@ msgstr "Werteverzeichnis für Leihvertrag mit No."
 msgid "Value List for Lending Contract No. %s"
 msgstr "Werteverzeichnis für Leihvertrag mit No. %s"
 
-msgid "Value list"
-msgstr "Werteverzeichnis"
-
 msgid "View %s"
 msgstr "%s gseh"
 
