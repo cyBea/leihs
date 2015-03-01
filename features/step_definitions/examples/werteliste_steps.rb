@@ -195,23 +195,22 @@ When(/^each model has exactly one assigned item$/) do
   end
 end
 
+#Wenn(/^ich mehrere Linien von der Bestellung auswähle$/) do
 #Wenn(/^ich mehrere Linien von der Aushändigung auswähle$/) do
-When(/^I select multiple lines of the hand over$/) do
+When(/^I select multiple lines of the (order|hand over)$/) do |arg1|
   within "#lines" do
     expect(has_selector?(".line input[type='checkbox']")).to be true
-    @number_of_selected_lines = all(".line input[type='checkbox']").size
-    @lines.map(&:id).each do |id|
-      cb = find(".line[data-ids*='#{id}'] input[type='checkbox']")
-      cb.click unless cb.checked?
+    case arg1
+      when "order"
+        @number_of_selected_lines = @order.lines.size
+        all(".emboss .row input[type='checkbox']").each {|i| i.click unless i.checked? }
+      when "hand over"
+        @number_of_selected_lines = all(".line input[type='checkbox']").size
+        @lines.map(&:id).each do |id|
+          cb = find(".line[data-id='#{id}'] input[type='checkbox']")
+          cb.click unless cb.checked?
+        end
     end
-  end
-end
-
-Wenn(/^ich mehrere Linien von der Bestellung auswähle$/) do
-  within "#lines" do
-    expect(has_selector?(".emboss .row input[type='checkbox']")).to be true
-    @number_of_selected_lines = @order.lines.size
-    all(".emboss .row input[type='checkbox']").each {|i| i.click unless i.checked? }
   end
 end
 
@@ -239,7 +238,7 @@ Then(/^the price shown for the unassigned lines is equal to the highest price of
     if line
       price = @lines.reload.find{|l| not l.item and l.model == m}.price_or_max_price * quantity
       formatted_price = ActionController::Base.helpers.number_to_currency(price, format: '%n %u', :unit => Setting::LOCAL_CURRENCY_STRING)
-      find(".item_price", text: formatted_price)
+      line.find(".item_price", text: formatted_price)
     end
   end
 end
@@ -248,7 +247,8 @@ end
 Then(/^the price shown for the assigned lines is that of the assigned item$/) do
   lines = @lines.select {|l| l.item.try(:inventory_code)}
   lines.each do |line|
-    expect(find("tr", text: line.item.inventory_code).find(".item_price").text.delete("'")).to match /#{line.price_or_max_price.to_s}/
+    formatted_price = ActionController::Base.helpers.number_to_currency(line.price_or_max_price, format: '%n %u', :unit => Setting::LOCAL_CURRENCY_STRING)
+    find("tr", text: line.item.inventory_code).find(".item_price", text: formatted_price)
   end
 end
 
@@ -264,7 +264,8 @@ Then(/^any options are priced according to their price set in the inventory pool
   lines = @lines.select {|l| l.is_a? OptionLine }
   lines.each do |l|
     line = find("tr", text: l.model.name)
-    expect(line.find(".item_price").text.delete("'")).to match /#{@current_inventory_pool.options.find(l.item.id).price * l.quantity}/
+    formatted_price = ActionController::Base.helpers.number_to_currency(@current_inventory_pool.options.find(l.item.id).price * l.quantity, format: '%n %u', :unit => Setting::LOCAL_CURRENCY_STRING)
+    line.find(".item_price", text: formatted_price)
   end
 end
 

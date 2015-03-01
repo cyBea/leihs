@@ -32,7 +32,7 @@ Feature: Value list
   Scenario: Printing value lists from the list of orders
     Given there is an order with at least two models and at least two items per model were ordered
     When I open an order
-    And I select multiple lines of the hand over
+    And I select multiple lines of the order
     And I open the value list
     Then I see the value list for the selected lines
     And the unassigned lines are summarized

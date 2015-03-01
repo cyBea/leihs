@@ -174,8 +174,8 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
       user.access_rights.active.delete_all
       expect(user.access_rights.active.empty?).to be true
   end
-  step %Q(I search for '%s') % user.to_s # this step is needed for CI in order show a line entry which would otherwise be in a non displayed scrollable page
-  @el = find("#users .line", text: user.to_s)
+  step %Q(I scroll to the end of the list)
+  @el = find("#user-list .line", text: user.to_s)
 end
 
 #Dann /^sieht man folgende Informationen in folgender Reihenfolge:$/ do |table|
@@ -192,8 +192,8 @@ Then /^I see the following information, in order:$/ do |table|
       when "Role"
         role = access_right.try(:role) || "no access"
         _(role.to_s.humanize)
-      when "Suspended"
-        "Suspended!"
+      when "Suspended until dd.mm.yyyy"
+        "#{_("Suspended until")} %s" % I18n.l(access_right.suspended_until)
     end
   end
   expect(@el.text).to match Regexp.new(strings.join(".*"))

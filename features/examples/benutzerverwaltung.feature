@@ -174,7 +174,7 @@ Feature: Manage users
       | Inventory manager | inventory_managers |
     And I can open the edit view for each user
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Displaying a user and their roles in lists
     Given I am inventory manager or lending manager
     And a user with assigned role appears in the user list
@@ -184,26 +184,26 @@ Feature: Manage users
       |Phone number|
       |Role|
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Not displaying a user's role in lists if that user doesn't have a role
     Given I am inventory manager or lending manager
     And a user without assigned role appears in the user list
-    # This really seems broken. The user doesn't show up in the list.
     Then I see the following information about the user, in order:
       |attr |
       |First name/last name|
       |Phone number|
       |Role|
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Displaying a user in a list with their assigned roles and suspension status
     Given I am inventory manager or lending manager
     And a suspended user with assigned role appears in the user list
     Then I see the following information, in order:
       |attr |
       |First name/last name|
-      |Suspended|
       |Phone number|
+      |Role|
+      |Suspended until dd.mm.yyyy|
 
   # English: lending manager
   @personas
