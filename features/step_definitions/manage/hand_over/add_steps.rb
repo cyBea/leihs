@@ -22,7 +22,7 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
 end
 
 When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over by using the search input field$/ do |item_attr, item_type|
-  items = @current_inventory_pool.items.send(item_type.pluralize)
+  items = @current_inventory_pool.items.unretired.send(item_type.pluralize)
   @inventory_codes ||= []
   @item = case item_attr
            when "a", "an"
