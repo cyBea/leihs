@@ -55,16 +55,16 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/borrow/bestellfensterchen.feature:46 DEFAULT_BROWSER=firefox
-- name: features/borrow/bestelluebersicht.feature:10:23:29:37:46
+- name: features/borrow/bestelluebersicht.feature:10:23:29:39:48
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/bestelluebersicht.feature:10:23:29:37:46 DEFAULT_BROWSER=firefox
-- name: features/borrow/bestelluebersicht.feature:51:59:68
+        features/borrow/bestelluebersicht.feature:10:23:29:39:48 DEFAULT_BROWSER=firefox
+- name: features/borrow/bestelluebersicht.feature:56:65
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/bestelluebersicht.feature:51:59:68 DEFAULT_BROWSER=firefox
+        features/borrow/bestelluebersicht.feature:56:65 DEFAULT_BROWSER=firefox
 - name: features/borrow/bestellungen.feature:8:12
   scripts:
     cucumber:

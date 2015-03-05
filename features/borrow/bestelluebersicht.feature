@@ -27,10 +27,12 @@ Feature: Viewing my orders
 
   @javascript @personas
   Scenario: Timeout
+    Given the timeout is set to 1 minute
     When I add a model to an order
     Then I see a timer
     When I am viewing my current order
-    And time has run out
+    Then I see the timer formatted as "mm:ss"
+    When the timer has run down
     Then I am redirected to the timeout page
 
   @javascript @personas @browser
@@ -41,11 +43,6 @@ Feature: Viewing my orders
     And I save the booking calendar
     Then the entry's date is changed accordingly
     And the entry is grouped based on its current start date and inventory pool
-
-  @javascript @personas
-  Scenario: Time has run out
-    When the timer has run down
-    Then I am redirected to the timeout page
 
   @javascript @browser @personas
   Scenario: Deleting an order from my order overview

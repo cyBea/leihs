@@ -143,14 +143,14 @@ Then(/^the timer is reset$/) do
   expect(secondsNow).to be >= seconds
 end
 
+Given(/^the timeout is set to (\d+) minutes?$/) do |arg1|
+  Contract.const_set "TIMEOUT_MINUTES", arg1.to_i
+  expect(Contract::TIMEOUT_MINUTES).to eq arg1.to_i
+end
+
 #Wenn(/^die Zeit abgelaufen ist$/) do
 When(/^the timer has run down$/) do
-  Contract::TIMEOUT_MINUTES = 1
-  #step 'ich ein Modell der Bestellung hinzufüge'
-  step 'I add a model to an order'
-  #step 'sehe ich die Zeitanzeige'
-  step 'I see a timer'
-  sleep(70) # NOTE this sleep is required to test the timeout
+  sleep(Contract::TIMEOUT_MINUTES * 60 + 1) # NOTE this sleep is required to test the timeout
 end
 
 #Dann(/^werde ich auf die Timeout Page weitergeleitet$/) do
@@ -160,11 +160,11 @@ end
 #  expect(current_path).to eq borrow_order_timed_out_path
 #end
 
-#Wenn(/^die Zeit überschritten ist$/) do
-When(/^time has run out$/) do
-  past_date = Time.now - (Contract::TIMEOUT_MINUTES + 1).minutes
-  @current_user.contracts.unsubmitted.each do |contract|
-    contract.update_attribute :updated_at, past_date
-  end
-  page.execute_script %Q{ localStorage.currentTimeout = moment("#{past_date.to_s}").toDate() }
-end
+# #Wenn(/^die Zeit überschritten ist$/) do
+# When(/^time has run out$/) do
+#   past_date = Time.now - (Contract::TIMEOUT_MINUTES + 1).minutes
+#   @current_user.contracts.unsubmitted.each do |contract|
+#     contract.update_attribute :updated_at, past_date
+#   end
+#   page.execute_script %Q{ localStorage.currentTimeout = moment("#{past_date.to_s}").toDate() }
+# end

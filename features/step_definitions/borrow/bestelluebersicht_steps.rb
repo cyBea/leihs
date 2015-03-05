@@ -223,7 +223,7 @@ Then(/^the entry's date is changed accordingly$/) do
                                               start_date: @changed_lines.first.start_date,
                                               end_date: @changed_lines.first.end_date).sum(:quantity)
     expect(t).to eq @new_quantity
-    
+
     @just_changed_line = find("[data-model-id='#{@changed_lines.first.model_id}'][data-start-date='#{@changed_lines.first.start_date}'][data-end-date='#{@changed_lines.first.end_date}']")
   end
 end
@@ -231,9 +231,10 @@ end
 #Dann(/^der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert$/) do
 Then(/^the entry is grouped based on its current start date and inventory pool$/) do
   @current_user.contracts.unsubmitted.each(&:reload)
-  step 'I see entries grouped by start date and inventory pool' 
+  step 'I see entries grouped by start date and inventory pool'
 end
 
-Dann(/^sehe ich die Zeitinformationen in folgendem Format "(.*?)"$/) do |format|
+# Dann(/^sehe ich die Zeitinformationen in folgendem Format "(.*?)"$/) do |format|
+Then(/^I see the timer formatted as "(.*?)"$/) do |format|
   find("#timeout-countdown-time", match: :first, text: Regexp.new(format.gsub("mm", "\\d+").gsub("ss", "\\d+")))
 end
