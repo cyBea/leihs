@@ -26,7 +26,7 @@ When /^I try to complete a hand over that contains a model with unborrowable ite
   expect(has_selector?("#hand-over-view", :visible => true)).to be true
 end
 
-Wenn /^I try to assign an inventory code to this model$/ do
+When /^I try to assign an inventory code to this model$/ do
   @item_line_element = find(".line[data-id='#{@contract_line.id}']", :visible => true)
   @item_line_element.find("[data-assign-item]").click
 end

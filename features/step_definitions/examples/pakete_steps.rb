@@ -50,11 +50,11 @@ Given /^a (never|once) handed over item package is currently in stock$/ do |arg1
              end
 end
 
-Wenn(/^edit the related model package$/) do
+When(/^edit the related model package$/) do
   visit manage_edit_model_path(@current_inventory_pool, @package.model)
 end
 
-Wenn(/^I delete that item package$/) do
+When(/^I delete that item package$/) do
   @package_item_ids = @package.children.map(&:id)
   find("[data-type='inline-entry'][data-id='#{@package.id}'] [data-remove]").click
   #step 'ich speichere die Informationen'
@@ -62,7 +62,7 @@ Wenn(/^I delete that item package$/) do
   find("#flash")
 end
 
-Dann(/^the item package has been (deleted|retired)$/) do |arg1|
+Then(/^the item package has been (deleted|retired)$/) do |arg1|
   case arg1
     when "deleted"
       expect(Item.find_by_id(@package.id).nil?).to be true
@@ -80,7 +80,7 @@ Then /^the packaged items are not part of that item package anymore$/ do
   end
 end
 
-Dann(/^that item package is not listed$/) do
+Then(/^that item package is not listed$/) do
   expect(has_no_selector? "[data-type='inline-entry'][data-id='#{@package.id}']").to be true
 end
 
@@ -174,14 +174,14 @@ Then /^those items are no longer assigned to the package$/ do
   expect(@package_to_edit.children.detect {|i| i.inventory_code == @item_to_remove}).to eq nil
 end
 
-Dann /^werden die folgenden Felder angezeigt$/ do |table|
-  values = table.raw.map do |x|
-    x.first.gsub(/^\-\ |\ \-$/, '')
-  end
-  expect(page.text).to match Regexp.new(values.join('.*'), Regexp::MULTILINE)
-end
+# Dann /^werden die folgenden Felder angezeigt$/ do |table|
+#   values = table.raw.map do |x|
+#     x.first.gsub(/^\-\ |\ \-$/, '')
+#   end
+#   expect(page.text).to match Regexp.new(values.join('.*'), Regexp::MULTILINE)
+# end
 
-Wenn /^I save the package$/ do
+When /^I save the package$/ do
   find(".modal #save-package", match: :first).click
 end
 
@@ -243,9 +243,9 @@ When(/^I save this package$/) do
   find("#save-package").click
 end
 
-Wenn(/^ich dieses Paket wieder editiere$/) do
-  step 'ich ein bestehendes Paket editiere'
-end
+# Wenn(/^ich dieses Paket wieder editiere$/) do
+#   step 'ich ein bestehendes Paket editiere'
+# end
 
 #Dann(/^sehe ich die Meldung "(.*?)"$/) do |text|
 Then(/^I see the notice "(.*?)"$/) do |text|

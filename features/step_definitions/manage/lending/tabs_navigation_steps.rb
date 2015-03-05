@@ -40,6 +40,6 @@ When(/^I click somewhere outside of the inventory pool menu list$/) do
   find("body").click
 end
 
-Dann(/^the inventory pool menu list closes$/) do
+Then(/^the inventory pool menu list closes$/) do
   expect(page).to have_no_selector "#ip-dropdown-menu"
 end

@@ -86,7 +86,7 @@ Given(/^(a|\d+) model(?:s)? (?:is|are) not available$/) do |n|
 end
 
 #Wenn(/^ich eine Aktivität ausführe$/) do
-Wenn(/^I perform some activity$/) do
+When(/^I perform some activity$/) do
   visit borrow_root_path
 end
 

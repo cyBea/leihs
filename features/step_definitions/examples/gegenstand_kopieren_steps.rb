@@ -88,9 +88,9 @@ Then(/^the copied item is saved$/) do
   expect(@copied_item).not_to be_nil
 end
 
-Dann /^man wird zur Liste des Inventars zurückgeführt$/ do
-  expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
-end
+# Dann /^man wird zur Liste des Inventars zurückgeführt$/ do
+#   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
+# end
 
 
 #Dann /^wird eine neue Gegenstandskopieransicht geöffnet$/ do

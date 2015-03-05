@@ -219,9 +219,9 @@ Then(/^the field 'Supply Category' offers the following choices$/) do |table|
   expect(expected_values.sort).to eq(discovered_values.sort)
 end
 
-Angenommen(/^ich befinde mich auf der Erstellungsseite eines Gegenstandes$/) do
-  visit manage_new_item_path(@current_inventory_pool)
-end
+# Angenommen(/^ich befinde mich auf der Erstellungsseite eines Gegenstandes$/) do
+#   visit manage_new_item_path(@current_inventory_pool)
+# end
 
 # Wenn(/^ich einen( nicht)? existierenen Lieferanten angebe$/) do |arg1|
 When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|

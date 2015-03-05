@@ -57,7 +57,7 @@ Then /^I want to see the following sections in the (value list|picking list):$/ 
   end
 end
 
-Dann /^the value list contains the following columns:$/ do |table|
+Then /^the value list contains the following columns:$/ do |table|
   @list ||= @list_element.find(".list")
   within @list do
     table.hashes.each do |area|

@@ -15,7 +15,7 @@ When /^each entry of a submitted order refers to a purpose$/ do
 end
 
 #Wenn /^jeder Eintrag eines Vertrages kann auf einen Zweck referenzieren$/ do
-Wenn /^each entry of an order can refer to a purpose$/ do
+When /^each entry of an order can refer to a purpose$/ do
   FactoryGirl.create(:contract_with_lines).lines.each do |line|
     line.purpose = FactoryGirl.create :purpose
     expect(line.purpose.is_a?(Purpose)).to be true
@@ -49,13 +49,13 @@ Then /^I can edit the purpose$/ do
   expect(@contract.reload.lines.first.purpose.description).to eq @new_purpose_description
 end
 
-Dann /^kann ich einen Zweck hinzufügen$/ do
-  step 'I click an inventory code input field of an item line'
-  step 'I select one of those'
-  find(".multibutton .button[data-hand-over-selection]").click
-  find(".purpose .button").click
-  find("#purpose")
-end
+# Dann /^kann ich einen Zweck hinzufügen$/ do
+#   step 'I click an inventory code input field of an item line'
+#   step 'I select one of those'
+#   find(".multibutton .button[data-hand-over-selection]").click
+#   find(".purpose .button").click
+#   find("#purpose")
+# end
 
 #Wenn /^keine der ausgewählten Gegenstände hat einen Zweck angegeben$/ do
 When /^none of the selected items have an assigned purpose$/ do

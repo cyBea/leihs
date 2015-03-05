@@ -25,9 +25,9 @@ Given(/^I am an inventory manager$/) do
   @inventory_pool = ar.inventory_pool
 end
 
-Angenommen /^man ist Administrator$/ do
-  step 'I am %s' % "Ramon"
-end
+# Angenommen /^man ist Administrator$/ do
+#   step 'I am %s' % "Ramon"
+# end
 
 ####################################################################
 
@@ -104,9 +104,9 @@ Then /^I can open the edit view for each user$/ do
   end
 end
 
-Dann(/^man kann einen neuen Benutzer erstellen$/) do
-  find(".top .content_navigation .button .icon.user")
-end
+# Dann(/^man kann einen neuen Benutzer erstellen$/) do
+#   find(".top .content_navigation .button .icon.user")
+# end
 
 ####################################################################
 
@@ -487,45 +487,45 @@ end
 
 ####################################################################
 
-Dann /^kann man neue Geräteparks erstellen$/ do
-  c = InventoryPool.count
-  ids = InventoryPool.pluck(:id)
-  attributes = FactoryGirl.attributes_for :inventory_pool
+# Dann /^kann man neue Geräteparks erstellen$/ do
+#   c = InventoryPool.count
+#   ids = InventoryPool.pluck(:id)
+#   attributes = FactoryGirl.attributes_for :inventory_pool
+#
+#   page.driver.browser.process(:post, manage_inventory_pools_path, inventory_pool: attributes)
+#   expect(page.status_code == 302).to be true
+#
+#   expect(InventoryPool.count).to eq c+1
+#   id = (InventoryPool.pluck(:id) - ids).first
+#
+#   expect(URI.parse(current_path).path).to eq manage_inventory_pools_path
+# end
 
-  page.driver.browser.process(:post, manage_inventory_pools_path, inventory_pool: attributes)
-  expect(page.status_code == 302).to be true
+# Dann /^man kann neue Benutzer erstellen und löschen$/ do
+#   step 'man kann neue Benutzer erstellen ohne inventory_pool'
+#
+#   expect(page.driver.browser.process(:delete, manage_user_path(@user, format: :json)).successful?).to be true
+#
+#   assert_raises(ActiveRecord::RecordNotFound) do
+#     @user.reload
+#   end
+# end
 
-  expect(InventoryPool.count).to eq c+1
-  id = (InventoryPool.pluck(:id) - ids).first
-
-  expect(URI.parse(current_path).path).to eq manage_inventory_pools_path
-end
-
-Dann /^man kann neue Benutzer erstellen und löschen$/ do
-  step 'man kann neue Benutzer erstellen ohne inventory_pool'
-
-  expect(page.driver.browser.process(:delete, manage_user_path(@user, format: :json)).successful?).to be true
-
-  assert_raises(ActiveRecord::RecordNotFound) do
-    @user.reload
-  end
-end
-
-Dann /^man kann Benutzern jegliche Rollen zuweisen und wegnehmen$/ do
-  user = User.where(:login => "normin").first
-  inventory_pool = InventoryPool.find_by_name "IT-Ausleihe"
-  expect(user.has_role?(:inventory_manager, inventory_pool)).to be false
-
-  expect(page.driver.browser.process(:put, manage_user_path(user, format: :json), access_right: {inventory_pool_id: inventory_pool.id, role: :inventory_manager}).successful?).to be true
-
-  expect(user.has_role?(:inventory_manager, inventory_pool)).to be true
-  expect(user.access_right_for(inventory_pool).deleted_at).to eq nil
-
-  expect(page.driver.browser.process(:put, manage_user_path(user, format: :json), access_right: {inventory_pool_id: inventory_pool.id, role: :no_access}).successful?).to be true
-
-  expect(user.has_role?(:inventory_manager, inventory_pool)).to be false
-  expect(user.access_rights.where.not(deleted_at: nil).where(inventory_pool_id: inventory_pool).first.deleted_at).not_to be_nil
-end
+# Dann /^man kann Benutzern jegliche Rollen zuweisen und wegnehmen$/ do
+#   user = User.where(:login => "normin").first
+#   inventory_pool = InventoryPool.find_by_name "IT-Ausleihe"
+#   expect(user.has_role?(:inventory_manager, inventory_pool)).to be false
+#
+#   expect(page.driver.browser.process(:put, manage_user_path(user, format: :json), access_right: {inventory_pool_id: inventory_pool.id, role: :inventory_manager}).successful?).to be true
+#
+#   expect(user.has_role?(:inventory_manager, inventory_pool)).to be true
+#   expect(user.access_right_for(inventory_pool).deleted_at).to eq nil
+#
+#   expect(page.driver.browser.process(:put, manage_user_path(user, format: :json), access_right: {inventory_pool_id: inventory_pool.id, role: :no_access}).successful?).to be true
+#
+#   expect(user.has_role?(:inventory_manager, inventory_pool)).to be false
+#   expect(user.access_rights.where.not(deleted_at: nil).where(inventory_pool_id: inventory_pool).first.deleted_at).not_to be_nil
+# end
 
 #Dann(/^kann man Gruppen über eine Autocomplete\-Liste hinzufügen$/) do
 Then(/^I can add groups using a list with autocomplete$/) do
@@ -590,12 +590,12 @@ When(/^I choose the following roles$/) do |table|
   page.select @role_hash[:tab], from: "access_right[role]"
 end
 
-Wenn(/^man wählt ein Sperrdatum und ein Sperrgrund$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("Suspended until")).find("input").set (Date.today + 1).strftime("%d.%m.%Y")
-  find(".ui-datepicker-current-day").click
-  suspended_reason = find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("textarea")
-  suspended_reason.set "test"
-end
+# Wenn(/^man wählt ein Sperrdatum und ein Sperrgrund$/) do
+#   find(".row.emboss", match: :prefer_exact, text: _("Suspended until")).find("input").set (Date.today + 1).strftime("%d.%m.%Y")
+#   find(".ui-datepicker-current-day").click
+#   suspended_reason = find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("textarea")
+#   suspended_reason.set "test"
+# end
 
 #Wenn(/^man teilt mehrere Gruppen zu$/) do
 When(/^I assign multiple groups$/) do
@@ -845,23 +845,23 @@ Given(/^I pick one user with access rights, one with orders and one with contrac
   @users << User.find { |u| u.contracts.empty? }
 end
 
-Dann(/^wird der Delete Button für diese Benutzer nicht angezeigt$/) do
-  @users.each do |user|
-    step %Q(I search for "%s") % user.name
-    within("#user-list .line", text: user.name) do
-      find(".multibutton .dropdown-toggle").click
-      expect(has_no_selector?(".multibutton .dropdown-item.red", text: _("Delete"))).to be true
-    end
-  end
-end
+# Dann(/^wird der Delete Button für diese Benutzer nicht angezeigt$/) do
+#   @users.each do |user|
+#     step %Q(I search for "%s") % user.name
+#     within("#user-list .line", text: user.name) do
+#       find(".multibutton .dropdown-toggle").click
+#       expect(has_no_selector?(".multibutton .dropdown-item.red", text: _("Delete"))).to be true
+#     end
+#   end
+# end
 
-Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
-  access_right = AccessRight.all.shuffle.detect { |ar| ar.role == :customer and
-                                                       ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
-  @user = access_right.user
-  @current_inventory_pool = access_right.inventory_pool
-  visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
-end
+# Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
+#   access_right = AccessRight.all.shuffle.detect { |ar| ar.role == :customer and
+#                                                        ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
+#   @user = access_right.user
+#   @current_inventory_pool = access_right.inventory_pool
+#   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
+# end
 
 #Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
 Given(/^I am editing a user who has access to (and no items from )?the current inventory pool$/) do |arg1|

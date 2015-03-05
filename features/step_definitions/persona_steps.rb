@@ -10,10 +10,10 @@ Given(/^I am ([a-zA-Z]*)$/) do |persona_name|
   end
 end
 
-Angenommen(/^man ist ein Kunde$/) do
-  user = AccessRight.where(role: :customer).map(&:user).uniq.sample
-  step "I am %s" % user.firstname
-end
+# Angenommen(/^man ist ein Kunde$/) do
+#   user = AccessRight.where(role: :customer).map(&:user).uniq.sample
+#   step "I am %s" % user.firstname
+# end
 
 #Angenommen(/^man ist ein Kunde mit Verträge$/) do
 Given(/^I am a customer with contracts$/) do

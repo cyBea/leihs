@@ -53,9 +53,9 @@ Then(/^the filter is labeled "(.*?)"$/) do |button_label|
   end
 end
 
-Angenommen(/^man befindet sich auf der Modellliste$/) do
-  step "man sich auf der Modellliste befindet"
-end
+# Angenommen(/^man befindet sich auf der Modellliste$/) do
+#   step "man sich auf der Modellliste befindet"
+# end
 
 #Wenn(/^man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt$/) do
 When(/^I select a specific inventory pool from the choices offered$/) do
@@ -386,7 +386,7 @@ Then(/^the next block of models is loaded and shown$/) do
 end
 
 #Wenn(/^man bis zum Ende der Liste fährt$/) do
-Wenn(/^I scroll to the end of the list$/) do
+When(/^I scroll to the end of the list$/) do
   find("footer").click
 end
 
@@ -550,9 +550,9 @@ end
 #  expect(has_selector?("#reset-all-filter", visible: false)).to be true
 #end
 
-Dann(/^die Auswahl klappt nocht nicht zu$/) do
-  expect(find("#ip-selector .dropdown").visible?).to be true
-end
+# Dann(/^die Auswahl klappt nocht nicht zu$/) do
+#   expect(find("#ip-selector .dropdown").visible?).to be true
+# end
 
 #Dann(/^wenn ich den Kalendar für dieses Modell benutze$/) do
 When(/^I open the calendar for this model$/) do
@@ -563,10 +563,10 @@ When(/^I open the calendar for this model$/) do
   step "the modal is closed"
 end
 
-Dann(/^können die zusätzliche Informationen immer noch abgerufen werden$/) do
-  step 'man über das Modell hovered'
-  step 'werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften'
-end
+# Dann(/^können die zusätzliche Informationen immer noch abgerufen werden$/) do
+#   step 'man über das Modell hovered'
+#   step 'werden zusätzliche Informationen angezeigt zu Modellname, Bilder, Beschreibung, Liste der Eigenschaften'
+# end
 
 #Wenn(/^ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist$/) do
 When(/^I choose a start and end date when the inventory pool is open$/) do

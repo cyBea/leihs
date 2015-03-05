@@ -6,9 +6,9 @@ When(/^I navigate to the admin area$/) do
   find(".topbar-navigation a", text: _("Admin")).click
 end
 
-Angenommen(/^es existiert noch kein Gerätepark$/) do
-  InventoryPool.delete_all
-end
+# Angenommen(/^es existiert noch kein Gerätepark$/) do
+#   InventoryPool.delete_all
+# end
 
 #Wenn(/^ich im Admin\-Bereich unter dem Reiter Geräteparks einen neuen Gerätepark erstelle$/) do
 When(/^I create a new inventory pool in the admin area's inventory pool tab$/) do

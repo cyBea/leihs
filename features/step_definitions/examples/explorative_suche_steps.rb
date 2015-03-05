@@ -117,26 +117,26 @@ Then(/^I can navigate to the parent category$/) do
   find("#category-current a").click
 end
 
-Angenommen(/^ich befinde mich in einer Bestellung$/) do
-  step 'I open an order'
-end
+# Angenommen(/^ich befinde mich in einer Bestellung$/) do
+#   step 'I open an order'
+# end
 
-Dann(/^kann ich ein Modell anhand der explorativen Suche wählen$/) do
-  find("button.addon[type='submit'] .icon-plus-sign-alt").click
-  find(".modal.ui-shown .line", match: :first)
-  find("[data-type='category-filter']", :match => :first).click
-  find(".modal.ui-shown .line", match: :first)
-  model = Model.find find(".modal.ui-shown .line", match: :first)["data-id"]
-  find(".modal.ui-shown .line .button", match: :first).click
-  find("#flash")
-  if @contract
-    expect(@contract.models.include? model).to be true
-  else
-    expect(@customer.contracts.map(&:models).flatten.include? model).to be true
-  end
-end
+# Dann(/^kann ich ein Modell anhand der explorativen Suche wählen$/) do
+#   find("button.addon[type='submit'] .icon-plus-sign-alt").click
+#   find(".modal.ui-shown .line", match: :first)
+#   find("[data-type='category-filter']", :match => :first).click
+#   find(".modal.ui-shown .line", match: :first)
+#   model = Model.find find(".modal.ui-shown .line", match: :first)["data-id"]
+#   find(".modal.ui-shown .line .button", match: :first).click
+#   find("#flash")
+#   if @contract
+#     expect(@contract.models.include? model).to be true
+#   else
+#     expect(@customer.contracts.map(&:models).flatten.include? model).to be true
+#   end
+# end
 
-Dann(/^die explorative Suche zeigt nur Modelle aus meinem Park an$/) do
+Then(/^die explorative Suche zeigt nur Modelle aus meinem Park an$/) do
   find("button.addon[type='submit'] .icon-plus-sign-alt").click
   find(".modal.ui-shown .line", match: :first)
   all(".modal .line[data-id]").each do |line|
@@ -145,21 +145,21 @@ Dann(/^die explorative Suche zeigt nur Modelle aus meinem Park an$/) do
   end
 end
 
-Dann(/^die nicht verfügbaren Modelle sind rot markiert$/) do
-  all(".model.line .availability", :text => /0 \(\d+\) \/ \d+/).each do |cell|
-    line = cell.find(:xpath, "./../..")
-    expect(line[:class]).to match /error/
-  end
-end
+# Dann(/^die nicht verfügbaren Modelle sind rot markiert$/) do
+#   all(".model.line .availability", :text => /0 \(\d+\) \/ \d+/).each do |cell|
+#     line = cell.find(:xpath, "./../..")
+#     expect(line[:class]).to match /error/
+#   end
+# end
 
 
-Wenn(/^I select the not categorized filter$/) do
+When(/^I select the not categorized filter$/) do
   within("#categories #category-list") do
     find("a[data-type='category-filter']", text: "* %s *" % _("Not categorized")).click
   end
 end
 
-Dann(/^I see the models not assigned to any category$/) do
+Then(/^I see the models not assigned to any category$/) do
   step "I fetch all pages of the list"
   within("#inventory") do
     @current_inventory_pool.models.select {|model| model.categories.empty? }.each do |model|

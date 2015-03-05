@@ -114,8 +114,8 @@ Then(/^the items are sorted alphabetically by model name$/) do
   expect(t).to eq all(".row.line .col6of10").map(&:text)
 end
 
-Dann(/^jedes Gerät zeigt seinen Inventarcode$/) do
-  @current_user.contract_lines.to_take_back.each do |line|
-    expect(find(".line.row", match: :first, text: line.model.name).has_content?(line.item.inventory_code)).to be true
-  end
-end
+# Dann(/^jedes Gerät zeigt seinen Inventarcode$/) do
+#   @current_user.contract_lines.to_take_back.each do |line|
+#     expect(find(".line.row", match: :first, text: line.model.name).has_content?(line.item.inventory_code)).to be true
+#   end
+# end

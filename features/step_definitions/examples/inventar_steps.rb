@@ -1,31 +1,31 @@
 # encoding: utf-8
 
-Angenommen /^man öffnet die Liste des Inventars$/ do
-  #really needed?# @current_inventory_pool = @current_user.managed_inventory_pools.select { |ip| ip.models.exists? and ip.options.exists? }.sample
-  step "I open the inventory"
-  find("#inventory")
-end
+# Angenommen /^man öffnet die Liste des Inventars$/ do
+#   #really needed?# @current_inventory_pool = @current_user.managed_inventory_pools.select { |ip| ip.models.exists? and ip.options.exists? }.sample
+#   step "I open the inventory"
+#   find("#inventory")
+# end
 
-Dann /^sieht man Modelle$/ do
-  find("#inventory .line[data-type='model']", match: :first)
-end
+# Dann /^sieht man Modelle$/ do
+#   find("#inventory .line[data-type='model']", match: :first)
+# end
 
-Dann /^man sieht Software$/ do
-  step %Q(I search for "%s") % ""
-  step "I scroll to the bottom of the page"
-  find("#inventory .line[data-type='software']", match: :first)
-end
+# Dann /^man sieht Software$/ do
+#   step %Q(I search for "%s") % ""
+#   step "I scroll to the bottom of the page"
+#   find("#inventory .line[data-type='software']", match: :first)
+# end
 
-Dann /^man sieht Optionen$/ do
-  step "I scroll to the bottom of the page"
-  find("#inventory .line[data-type='option']", match: :first)
-end
+# Dann /^man sieht Optionen$/ do
+#   step "I scroll to the bottom of the page"
+#   find("#inventory .line[data-type='option']", match: :first)
+# end
 
-Dann /^man sieht Pakete$/ do
-  package = @current_inventory_pool.items.packages.sample
-  step 'I search for "%s"' % package.inventory_code
-  find(".line[data-is_package='true']", match: :prefer_exact, text: package.name)
-end
+# Dann /^man sieht Pakete$/ do
+#   package = @current_inventory_pool.items.packages.sample
+#   step 'I search for "%s"' % package.inventory_code
+#   find(".line[data-is_package='true']", match: :prefer_exact, text: package.name)
+# end
 
 ########################################################################
 
@@ -102,42 +102,42 @@ end
 
 ########################################################################
 
-Dann /^hat man folgende Filtermöglichkeiten$/ do |table|
-  items = Item.by_owner_or_responsible(@current_inventory_pool)
+# Dann /^hat man folgende Filtermöglichkeiten$/ do |table|
+#   items = Item.by_owner_or_responsible(@current_inventory_pool)
+#
+#   section_filter = find("#list-filters")
+#
+#   table.hashes.each do |row|
+#     section_filter.all("input[type='checkbox']").select { |x| x.checked? }.map(&:click)
+#     expect(section_filter.all("input[type='checkbox']").select { |x| x.checked? }.empty?).to be true
+#     case row["filtermöglichkeit"]
+#       when "An Lager"
+#         section_filter.find("input#in_stock[type='checkbox']").click
+#         check_existing_inventory_codes(items.in_stock)
+#       when "Besitzer bin ich"
+#         section_filter.find("input#owned[type='checkbox']").click
+#         check_existing_inventory_codes(items.where(:owner_id => @current_inventory_pool))
+#       when "Defekt"
+#         section_filter.find("input#broken[type='checkbox']").click
+#         check_existing_inventory_codes(items.broken)
+#       when "Unvollständig"
+#         section_filter.find("input#incomplete[type='checkbox']").click
+#         check_existing_inventory_codes(items.incomplete)
+#       when "Verantwortliche Abteilung"
+#         o = section_filter.find("select#responsibles").all("option[value]").to_a.sample
+#         o.select_option
+#         check_existing_inventory_codes(items.where(inventory_pool_id: o[:value]))
+#         o = section_filter.find("select#responsibles").all("option").first
+#         o.select_option
+#     end
+#   end
+# end
 
-  section_filter = find("#list-filters")
-
-  table.hashes.each do |row|
-    section_filter.all("input[type='checkbox']").select { |x| x.checked? }.map(&:click)
-    expect(section_filter.all("input[type='checkbox']").select { |x| x.checked? }.empty?).to be true
-    case row["filtermöglichkeit"]
-      when "An Lager"
-        section_filter.find("input#in_stock[type='checkbox']").click
-        check_existing_inventory_codes(items.in_stock)
-      when "Besitzer bin ich"
-        section_filter.find("input#owned[type='checkbox']").click
-        check_existing_inventory_codes(items.where(:owner_id => @current_inventory_pool))
-      when "Defekt"
-        section_filter.find("input#broken[type='checkbox']").click
-        check_existing_inventory_codes(items.broken)
-      when "Unvollständig"
-        section_filter.find("input#incomplete[type='checkbox']").click
-        check_existing_inventory_codes(items.incomplete)
-      when "Verantwortliche Abteilung"
-        o = section_filter.find("select#responsibles").all("option[value]").to_a.sample
-        o.select_option
-        check_existing_inventory_codes(items.where(inventory_pool_id: o[:value]))
-        o = section_filter.find("select#responsibles").all("option").first
-        o.select_option
-    end
-  end
-end
-
-Dann /^die Filter können kombiniert werden$/ do
-  section_filter = find("#list-filters")
-  section_filter.all("input[type='checkbox']").select { |x| not x.checked? }.map(&:click)
-  expect(section_filter.all("input[type='checkbox']").select { |x| x.checked? }.size).to be > 1
-end
+# Dann /^die Filter können kombiniert werden$/ do
+#   section_filter = find("#list-filters")
+#   section_filter.all("input[type='checkbox']").select { |x| not x.checked? }.map(&:click)
+#   expect(section_filter.all("input[type='checkbox']").select { |x| x.checked? }.size).to be > 1
+# end
 
 ########################################################################
 
@@ -151,11 +151,11 @@ Then(/^the tab "(.*?)" is active$/) do |arg1|
   end
 end
 
-Dann /^es sind keine Filtermöglichkeiten aktiviert$/ do
-  find("#list-filters").all("input[type='checkbox']").each do |filter|
-    expect(filter.checked?).to be false
-  end
-end
+# Dann /^es sind keine Filtermöglichkeiten aktiviert$/ do
+#   find("#list-filters").all("input[type='checkbox']").each do |filter|
+#     expect(filter.checked?).to be false
+#   end
+# end
 
 ########################################################################
 
@@ -195,10 +195,10 @@ end
 
 ########################################################################
 
-Wenn /^man eine Gegenstands\-Zeile sieht$/ do
-  all(".tab").detect { |x| x["data-tab"] == '{"borrowable":true}' }.click
-  find(".filter input#in_stock").click unless find(".filter input#in_stock").checked?
-end
+# Wenn /^man eine Gegenstands\-Zeile sieht$/ do
+#   all(".tab").detect { |x| x["data-tab"] == '{"borrowable":true}' }.click
+#   find(".filter input#in_stock").click unless find(".filter input#in_stock").checked?
+# end
 
 #Dann /^enthält die (?:Gegenstands|Software\-Lizenz)\-Zeile folgende Informationen:$/ do |table|
 Then /^the (?:item|software license) line contains the following information:$/ do |table|
@@ -737,19 +737,19 @@ Then /^the attachments are saved$/ do
   expect(@model.attachments.reload.where(filename: @attachment_filenames.sample).empty?).to be false
 end
 
-Dann /^sieht man keine Modelle, denen keine Gegenstänge zugewiesen unter keinem der vorhandenen Reiter$/ do
-  within "#list-tabs" do
-    all(".inline-tab-item").each do |tab|
-      tab.click
-      find("#inventory .line[data-type]", match: :first)
-      if tab.text == _("Unused Models")
-        expect(has_no_selector?(".line[data-type='model'] button[data-type='inventory-expander'] .arrow.right")).to be true
-      else
-        expect(has_no_selector?(".line[data-type='model'] button[data-type='inventory-expander']", text: "0")).to be true
-      end
-    end
-  end
-end
+# Dann /^sieht man keine Modelle, denen keine Gegenstänge zugewiesen unter keinem der vorhandenen Reiter$/ do
+#   within "#list-tabs" do
+#     all(".inline-tab-item").each do |tab|
+#       tab.click
+#       find("#inventory .line[data-type]", match: :first)
+#       if tab.text == _("Unused Models")
+#         expect(has_no_selector?(".line[data-type='model'] button[data-type='inventory-expander'] .arrow.right")).to be true
+#       else
+#         expect(has_no_selector?(".line[data-type='model'] button[data-type='inventory-expander']", text: "0")).to be true
+#       end
+#     end
+#   end
+# end
 
 #Wenn(/^ich eine resultatlose Suche mache$/) do
 When(/^I make a search without any results$/) do

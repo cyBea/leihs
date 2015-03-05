@@ -189,11 +189,11 @@ Then(/^automatic access is disabled$/) do
   expect(@current_inventory_pool.reload.automatic_access).to be false
 end
 
-Angenommen(/^man ist ein Benutzer, der sich zum ersten Mal einloggt$/) do
-  @username = Faker::Internet.user_name
-  @password = Faker::Internet.password
-  step %Q(ich einen Benutzer mit Login "#{@username}" und Passwort "#{@password}" erstellt habe)
-end
+# Angenommen(/^man ist ein Benutzer, der sich zum ersten Mal einloggt$/) do
+#   @username = Faker::Internet.user_name
+#   @password = Faker::Internet.password
+#   step %Q(ich einen Benutzer mit Login "#{@username}" und Passwort "#{@password}" erstellt habe)
+# end
 
 Given(/^I edit an inventory pool( that is granting automatic access)?$/) do |arg1|
   if arg1

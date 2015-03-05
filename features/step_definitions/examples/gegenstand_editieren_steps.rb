@@ -81,13 +81,13 @@ When(/^"(.*?)" is selected for "(.*?)", "(.*?)" must also be selected$/) do |val
   expect(newfield[:"data-required"]).to eq "true"
 end
 
-Dann(/^ist der Gegenstand mit all den angegebenen Informationen gespeichert$/) do
-  find(:select, "retired").first("option").select_option if @table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" } and (@table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" }["Wert"]) == "Ja"
-  step %Q(I search for "%s") %  (@table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"])
-  find(".line", :text => @table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"], :visible => true)
-  step "I am on this item's edit page"
-  step 'hat der Gegenstand alle zuvor eingetragenen Werte'
-end
+# Dann(/^ist der Gegenstand mit all den angegebenen Informationen gespeichert$/) do
+#   find(:select, "retired").first("option").select_option if @table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" } and (@table_hashes.detect { |r| r["Feldname"] == "Ausmusterung" }["Wert"]) == "Ja"
+#   step %Q(I search for "%s") %  (@table_hashes.detect { |r| r["Feldname"] == "Inventarcode" }["Wert"])
+#   find(".line", :text => @table_hashes.detect { |r| r["Feldname"] == "Modell" }["Wert"], :visible => true)
+#   step "I am on this item's edit page"
+#   step 'hat der Gegenstand alle zuvor eingetragenen Werte'
+# end
 
 #Wenn(/^ich den Lieferanten lösche$/) do
 When(/^I delete the supplier$/) do
@@ -127,22 +127,22 @@ Given(/^I edit an item that belongs to the current inventory pool and is not in 
   step "I am on this item's edit page"
 end
 
-Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist$/) do
-  @item = @current_inventory_pool.items.not_in_stock.sample
-  @item_before = @item.to_json
-  step "I am on this item's edit page"
-end
+# Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist$/) do
+#   @item = @current_inventory_pool.items.not_in_stock.sample
+#   @item_before = @item.to_json
+#   step "I am on this item's edit page"
+# end
 
 #Wenn(/^ich die verantwortliche Abteilung ändere$/) do
 When(/^I change the responsible department$/) do
   fill_in_autocomplete_field _("Responsible"), InventoryPool.where("id != ?", @item.inventory_pool.id).sample.name
 end
 
-Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist$/) do
-  @item = @current_inventory_pool.items.items.not_in_stock.sample
-  @item_before = @item.to_json
-  step "I am on this item's edit page"
-end
+# Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist$/) do
+#   @item = @current_inventory_pool.items.items.not_in_stock.sample
+#   @item_before = @item.to_json
+#   step "I am on this item's edit page"
+# end
 
 #Wenn(/^ich das Modell ändere$/) do
 When(/^I change the model$/) do
@@ -155,15 +155,15 @@ When(/^I retire the item$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Reason for Retirement")).find("input, textarea", match: :first).set "Retirement reason"
 end
 
-Angenommen(/^there is a model without a version$/) do
+Given(/^there is a model without a version$/) do
   @model = Model.find { |m| !m.version }
   expect(@model).not_to be_nil
 end
 
-Wenn(/^I assign this model to the item$/) do
+When(/^I assign this model to the item$/) do
   fill_in_autocomplete_field _("Model"), @model.name
 end
 
-Dann(/^there is only product name in the input field of the model$/) do
+Then(/^there is only product name in the input field of the model$/) do
   expect(find("input[data-autocomplete_value_target='item[model_id]']").value).to eq @model.product
 end

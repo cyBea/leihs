@@ -87,12 +87,12 @@ Then(/^I see a warning on the page itself and on every affected model$/) do
   find(".separated-top .row.line .line-info.red", match: :first)
 end
 
-Dann(/^kann ich Start\- und Enddatum einer potenziellen Bestellung angeben$/) do
-  @start_date = Date.tomorrow
-  @end_date = Date.tomorrow + 4.days
-  find("#start_date", match: :first).set I18n.localize @start_date
-  find("#end_date", match: :first).set I18n.localize @end_date
-end
+# Dann(/^kann ich Start\- und Enddatum einer potenziellen Bestellung angeben$/) do
+#   @start_date = Date.tomorrow
+#   @end_date = Date.tomorrow + 4.days
+#   find("#start_date", match: :first).set I18n.localize @start_date
+#   find("#end_date", match: :first).set I18n.localize @end_date
+# end
 
 #Dann(/^ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage$/) do
 Then(/^I can follow the process to the availability display of the template$/) do

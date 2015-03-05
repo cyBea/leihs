@@ -92,7 +92,7 @@ Then(/^that image remains the main image even when I'm not hovering over it$/) d
 end
 
 #Angenommen(/^man befindet sich in einer Modellübersicht mit Eigenschaften$/) do
-Angenommen(/^I see a model's detail page that includes properties$/) do
+Given(/^I see a model's detail page that includes properties$/) do
   @model = @current_user.models.borrowable.detect {|m| m.properties.length > 5}
   visit borrow_model_path @model
 end

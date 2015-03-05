@@ -105,7 +105,7 @@ Then(/^the line is selected$/) do
 end
 
 #Dann(/^die Zeile wird grün markiert|wird die Zeile grün markiert$/) do
-Dann(/^the line is highlighted in green$/) do
+Then(/^the line is highlighted in green$/) do
   expect(find(@line_css).native.attribute("class")).to include "green"
 end
 

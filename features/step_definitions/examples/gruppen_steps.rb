@@ -89,9 +89,9 @@ Then(/^the group list is sorted alphabetically$/) do
   step 'die Liste ist alphabetisch sortiert'
 end
 
-Dann(/^ich sehe eine Bestätigung$/) do
-  find("#flash .success")
-end
+# Dann(/^ich sehe eine Bestätigung$/) do
+#   find("#flash .success")
+# end
 
 #Wenn(/^ich eine bestehende Gruppe editiere$/) do
 When(/^I edit a group that already exists$/) do

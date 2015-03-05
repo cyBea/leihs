@@ -6,15 +6,15 @@ Then(/^the new software product is created and can be found in the software sect
   step "the information is saved"
 end
 
-Angenommen(/^ich befinde mich auf der Software\-Erstellungsseite$/) do
-  visit manage_new_model_path(inventory_pool_id: @current_inventory_pool.id, type: :software)
-end
+# Angenommen(/^ich befinde mich auf der Software\-Erstellungsseite$/) do
+#   visit manage_new_model_path(inventory_pool_id: @current_inventory_pool.id, type: :software)
+# end
 
-Dann(/^kann ich auf mehreren Zeilen Hinweise und Links anfügen$/) do
-  @line_1 = "#{Faker::Lorem.word} #{Faker::Internet.url}"
-  @line_2 = Faker::Lorem.sentence
-  find(".field", text: _("Technical Details")).find("textarea").set "#{@line_1}\r\n#{@line_2}"
-end
+# Dann(/^kann ich auf mehreren Zeilen Hinweise und Links anfügen$/) do
+#   @line_1 = "#{Faker::Lorem.word} #{Faker::Internet.url}"
+#   @line_2 = Faker::Lorem.sentence
+#   find(".field", text: _("Technical Details")).find("textarea").set "#{@line_1}\r\n#{@line_2}"
+# end
 
 Angenommen(/^ich befinde mich auf der Lizenz\-Erstellungsseite$/) do
   visit manage_new_item_path(inventory_pool_id: @current_inventory_pool.id, type: :license)
@@ -54,19 +54,19 @@ Wenn(/^ich eine Seriennummer eingebe$/) do
   find(".field[data-type='field']", match: :first, text: _("Serial Number")).find("input").set @serial_number
 end
 
-Wenn(/^ich eine Aktivierungsart eingebe$/) do
-  within(".field", text: _("Activation Type")) do
-    @activation_type = all("option").map(&:value).sample
-    find("option[value='#{@activation_type}']").click
-  end
-end
+# Wenn(/^ich eine Aktivierungsart eingebe$/) do
+#   within(".field", text: _("Activation Type")) do
+#     @activation_type = all("option").map(&:value).sample
+#     find("option[value='#{@activation_type}']").click
+#   end
+# end
 
-Wenn(/^ich eine Lizenzart eingebe$/) do
-  within(".field", text: _("License Type")) do
-    @license_type = all("option").map(&:value).sample
-    find("option[value='#{@license_type}']").click
-  end
-end
+# Wenn(/^ich eine Lizenzart eingebe$/) do
+#   within(".field", text: _("License Type")) do
+#     @license_type = all("option").map(&:value).sample
+#     find("option[value='#{@license_type}']").click
+#   end
+# end
 
 Wenn(/^ich die den Wert "ausleihbar" setze$/) do
   @is_borrowable = true
@@ -104,15 +104,15 @@ When(/^I edit software$/) do
   find(".line[data-type='software'][data-id='#{@software.id}']").find("a", text: _("Edit Software")).click
 end
 
-Wenn(/^ich eine bestehende Software\-Lizenz editiere$/) do
-  step "I open the inventory"
-  @page_to_return = current_path
-  find("a", text: _("Software"), match: :first).click
-  @software = Software.all.select{|s| not s.items.empty?}.sample
-  @license = @software.items.sample
-  find(".line[data-type='software'][data-id='#{@software.id}']").find("button[data-type='inventory-expander']").click
-  find(".line[data-type='license'][data-id='#{@license.id}']").find("a", text: _("Edit License")).click
-end
+# Wenn(/^ich eine bestehende Software\-Lizenz editiere$/) do
+#   step "I open the inventory"
+#   @page_to_return = current_path
+#   find("a", text: _("Software"), match: :first).click
+#   @software = Software.all.select{|s| not s.items.empty?}.sample
+#   @license = @software.items.sample
+#   find(".line[data-type='software'][data-id='#{@software.id}']").find("button[data-type='inventory-expander']").click
+#   find(".line[data-type='license'][data-id='#{@license.id}']").find("a", text: _("Edit License")).click
+# end
 
 Then(/^I can copy an existing software license$/) do
   step "I'am on the software inventory overview"
@@ -150,10 +150,10 @@ When(/^I select a different activation type$/) do
   find(".field", text: _("Activation Type")).find("option[value='#{@new_activation_type}']").click
 end
 
-Wenn(/^ich einen anderen Lizenztyp wähle$/) do
-  @new_license_type = find(".field", text: _("License Type")).all("option").map(&:value).select{|v| v != @license.properties[:license_type]}.sample
-  find(".field", text: _("License Type")).find("option[value='#{@new_license_type}']").click
-end
+# Wenn(/^ich einen anderen Lizenztyp wähle$/) do
+#   @new_license_type = find(".field", text: _("License Type")).all("option").map(&:value).select{|v| v != @license.properties[:license_type]}.sample
+#   find(".field", text: _("License Type")).find("option[value='#{@new_license_type}']").click
+# end
 
 #Wenn(/^ich den Wert "Ausleihbar" ändere$/) do
 When(/^I change the value of "Borrowable"$/) do
@@ -332,7 +332,7 @@ When(/^I change the license expiration date$/) do
   find(".field", text: _("License expiration")).find("input").set @new_license_expiration_date.strftime("%d.%m.%Y")
 end
 
-Wenn(/^I change the value for maintenance contract$/) do
+When(/^I change the value for maintenance contract$/) do
   within(".field", text: _("Maintenance contract")) do
     o = all("option").detect &:selected?
     find("option[value='#{@new_maintenance_contract = !(o.value == "true")}']").select_option
@@ -620,7 +620,7 @@ When(/^I delete the data for the following fields:$/) do |table|
   table.raw.flatten.each {|field| find(".field", text: _(field)).find("input").set ""}
 end
 
-Dann(/^the following fields of the license are empty:$/) do |table|
+Then(/^the following fields of the license are empty:$/) do |table|
   table.raw.flatten.each do |field|
     expect(find(".field", text: _(field)).find("input").value.empty?).to be true
   end
@@ -706,7 +706,7 @@ Given(/^I add a new or I change an existing (.+)$/) do |entity|
     expect(input_field.value).to eq @manufacturer
 end
 
-Wenn(/^I set a non existing manufacturer$/) do
+When(/^I set a non existing manufacturer$/) do
   input_field = find(".field", text: _("Manufacturer")).find("input")
   @manufacturer = Faker::Company.name
   while Software.manufacturers.include?(@manufacturer) do
@@ -893,12 +893,12 @@ Then(/^the (.*) is labeled as "(.*?)"$/) do |arg1, arg2|
   end
 end
 
-Dann(/^the new software license is created$/) do
+Then(/^the new software license is created$/) do
   @target_item = @current_inventory_pool.items.find_by_inventory_code(@target_inventory_code)
   expect(@target_item).not_to be_nil
 end
 
-Dann(/^the following fields were copied from the original software license$/) do |table|
+Then(/^the following fields were copied from the original software license$/) do |table|
   table.rows.flatten.each do |field|
     case field
       when "Software"

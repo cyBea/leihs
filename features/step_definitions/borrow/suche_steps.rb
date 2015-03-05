@@ -6,9 +6,9 @@ Then(/^I can see the search box$/) do
   expect(has_selector?(".topbar .topbar-search")).to be true
 end
 
-Wenn(/^man einen Suchbegriff eingibt$/) do
-  step 'man gibt einen Suchbegriff ein'
-end
+# Wenn(/^man einen Suchbegriff eingibt$/) do
+#   step 'man gibt einen Suchbegriff ein'
+# end
 
 #Dann(/^sieht man das Foto, den Namen und den Hersteller der ersten 6 Modelle gemäss aktuellem Suchbegriff$/) do
 Then(/^I see image, name and manufacturer of the first 6 matching models$/) do

@@ -216,10 +216,10 @@ Then(/^I see orders placed by users in groups requiring verification$/) do
   end
 end
 
-Dann(/^ist die Bestellung wieder im Status noch nicht genehmigt$/) do
-  find(@line_css).has_text? _("Approved")
-  expect(@contract.reload.status).to eq :submitted
-end
+# Dann(/^ist die Bestellung wieder im Status noch nicht genehmigt$/) do
+#   find(@line_css).has_text? _("Approved")
+#   expect(@contract.reload.status).to eq :submitted
+# end
 
 #Dann(/^ich eine bereits gehmigte Bestellung editiere$/) do
 When(/^I edit an already approved order$/) do
@@ -286,7 +286,7 @@ But(/^I cannot assign items$/) do
   find("#flash .error", text: _("You don't have permission to perform this action"))
 end
 
-Wenn(/^I am listing the (orders|contracts|visits)$/) do |arg1|
+When(/^I am listing the (orders|contracts|visits)$/) do |arg1|
   case arg1
     when "orders"
       visit manage_contracts_path(@current_inventory_pool, status: [:approved, :submitted, :rejected])

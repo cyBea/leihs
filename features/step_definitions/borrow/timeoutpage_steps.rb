@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-Angenommen(/^I hit the timeout page with a model that has conflicts$/) do
+Given(/^I hit the timeout page with a model that has conflicts$/) do
   step "I have an unsubmitted order with models"
   step "a model is not available"
   #step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
@@ -157,9 +157,9 @@ end
 #end
 
 
-Dann(/^ich erhalte einen Fehler$/) do
-  expect(has_content?(_("Please solve the conflicts for all highlighted lines in order to continue."))).to be true
-end
+# Dann(/^ich erhalte einen Fehler$/) do
+#   expect(has_content?(_("Please solve the conflicts for all highlighted lines in order to continue."))).to be true
+# end
 
 #########################################################################
 

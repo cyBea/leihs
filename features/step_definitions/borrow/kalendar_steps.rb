@@ -379,10 +379,10 @@ Then(/^I can enter at most this maximum quantity$/) do
   expect(find("#booking-calendar-quantity").value).to eq (max_quantity).to_s
 end
 
-Wenn(/^man den letzten Gerätepark in der Geräteparkauswahl auswählt$/) do
-  @current_inventory_pool = @current_user.inventory_pools.sort.last
-  step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
-end
+# Wenn(/^man den letzten Gerätepark in der Geräteparkauswahl auswählt$/) do
+#   @current_inventory_pool = @current_user.inventory_pools.sort.last
+#   step 'man ein bestimmten Gerätepark in der Geräteparkauswahl auswählt'
+# end
 
 #Wenn(/^man den zweiten Gerätepark in der Geräteparkauswahl auswählt$/) do
 When(/^I choose the second inventory pool from the inventory pool list$/) do

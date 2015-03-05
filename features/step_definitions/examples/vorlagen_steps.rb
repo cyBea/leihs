@@ -199,9 +199,9 @@ When(/^I fill in the name$/) do
 end
 
 
-Wenn(/^ich den Namen einer bereits existierenden Vorlage eingebe$/) do
-  find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set @current_inventory_pool.templates.first.name
-end
+# Wenn(/^ich den Namen einer bereits existierenden Vorlage eingebe$/) do
+#   find(".row.emboss.padding-inset-s", match: :prefer_exact, text: _("Name")).find("input").set @current_inventory_pool.templates.first.name
+# end
 
 #Wenn(/^kein Modell hinzugefügt habe$/) do
 When(/^I have not added any models$/) do

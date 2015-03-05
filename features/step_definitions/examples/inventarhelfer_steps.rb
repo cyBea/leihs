@@ -279,7 +279,7 @@ Then(/^I select the field "(.*?)"$/) do |field|
   end
 end
 
-Dann(/^I set some value for the field "(.*?)"$/) do |field|
+Then(/^I set some value for the field "(.*?)"$/) do |field|
   find(".row.emboss", match: :prefer_exact, text: field).find("input").set "Test123"
 end
 
@@ -301,7 +301,7 @@ Then(/^the location of the other item has remained the same$/) do
 end
 
 #Wenn(/^"(.*?)" ausgewählt und auf "(.*?)" gesetzt wird, dann muss auch "(.*?)" angegeben werden$/) do |field, value, dependent_field|
-Wenn(/^"(.*?)" is selected and set to "(.*?)", then "(.*?)" must also be filled in$/) do |field, value, dependent_field|
+When(/^"(.*?)" is selected and set to "(.*?)", then "(.*?)" must also be filled in$/) do |field, value, dependent_field|
   find("#field-input").click
   find("#field-input").set field
   find(".ui-menu-item a", match: :prefer_exact, text: field).click

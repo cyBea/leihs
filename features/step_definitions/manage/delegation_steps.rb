@@ -169,7 +169,7 @@ end
 #end
 
 #Angenommen(/^ich befinde mich in einer Bestellung von einer Delegation$/) do
-Angenommen(/^I am editing a delegation's order$/) do
+Given(/^I am editing a delegation's order$/) do
   @contract = @current_inventory_pool.contracts.find {|c| [:submitted, :approved].include? c.status and c.delegated_user and c.user.delegated_users.count >= 2}
   @delegation = @contract.user
   step 'I edit the order'
@@ -375,9 +375,9 @@ Then(/^I can delete that delegation$/) do
   expect { @delegation.reload }.to raise_error ActiveRecord::RecordNotFound
 end
 
-Angenommen(/^ich in den Admin\-Bereich wechsle$/) do
-  click_link _("Admin")
-end
+# Angenommen(/^ich in den Admin\-Bereich wechsle$/) do
+#   click_link _("Admin")
+# end
 
 #Dann(/^kann ich dieser Delegation ausschliesslich Zugriff als Kunde zuteilen$/) do
 Then(/^I can at most give the delegation access on the customer level$/) do
@@ -490,9 +490,9 @@ When(/^I create an order for a delegation$/) do
   }
 end
 
-Dann(/^bin ich die Kontaktperson für diesen Auftrag$/) do
-  step "ich werde als Kontaktperson hinterlegt"
-end
+# Dann(/^bin ich die Kontaktperson für diesen Auftrag$/) do
+#   step "ich werde als Kontaktperson hinterlegt"
+# end
 
 #Wenn(/^ich die Gegenstände für die Delegation an "(.*?)" aushändige$/) do |contact_person|
 When(/^I hand over the items ordered for this delegation to "(.*?)"$/) do |contact_person|
@@ -597,9 +597,9 @@ When(/^I do not enter any contact person$/) do
   expect(find("#contact-person input#user-id", match: :first).value.empty?).to be true
 end
 
-Wenn(/^ich den Benutzerwechsel bestätige$/) do
-  step "ich bestätige den Benutzerwechsel"
-end
+# Wenn(/^ich den Benutzerwechsel bestätige$/) do
+#   step "ich bestätige den Benutzerwechsel"
+# end
 
 #Dann(/^sehe ich im Dialog die Fehlermeldung "(.*?)"$/) do |text|
 Then(/^an error message pops up saying "(.*?)"$/) do |text|
@@ -624,12 +624,12 @@ When(/^I choose a suspended contact person$/) do
   find(".ui-menu-item a", match: :first, text: delegated_user.name).click
 end
 
-Dann(/^muss ich eine Kontaktperson auswählen$/) do
-  within ".modal" do
-    find("[data-hand-over]").click
-    has_selector? ".red", text: _("Specification of the contact person is required")
-  end
-end
+# Dann(/^muss ich eine Kontaktperson auswählen$/) do
+#   within ".modal" do
+#     find("[data-hand-over]").click
+#     has_selector? ".red", text: _("Specification of the contact person is required")
+#   end
+# end
 
 #Angenommen(/^ich befinde mich in der Editieransicht einer Delegation$/) do
 Given(/^I am editing a delegation$/) do
@@ -644,15 +644,15 @@ When(/^I assign a responsible person that is suspended for the current inventory
   step 'I enter exactly one responsible person'
 end
 
-Wenn(/^ich einen Benutzer hinzufüge, der für diesen Gerätepark gesperrt ist$/) do
-  @delegated_user = @current_inventory_pool.users.select{|u| u.suspended? @current_inventory_pool}.sample
-  @delegated_user ||= begin
-      user = @current_inventory_pool.users.not_as_delegations.sample
-      ensure_suspended_user(user, @current_inventory_pool)
-      user
-  end
-  fill_in_autocomplete_field _("Users"), @delegated_user.name
-end
+# Wenn(/^ich einen Benutzer hinzufüge, der für diesen Gerätepark gesperrt ist$/) do
+#   @delegated_user = @current_inventory_pool.users.select{|u| u.suspended? @current_inventory_pool}.sample
+#   @delegated_user ||= begin
+#       user = @current_inventory_pool.users.not_as_delegations.sample
+#       ensure_suspended_user(user, @current_inventory_pool)
+#       user
+#   end
+#   fill_in_autocomplete_field _("Users"), @delegated_user.name
+# end
 
 #Angenommen(/^ich wechsle den Benutzer$/) do
 Given(/^I swap the user$/) do
