@@ -405,9 +405,11 @@ end
 
 #Wenn(/^ich den Verantwortlichen ändere$/) do
 When(/^I change the responsible person$/) do
+  expect(has_no_selector?("ul.ui-autocomplete")).to be true
   @responsible = @current_inventory_pool.users.not_as_delegations.find {|u| u != @delegation.delegator_user }
   find(".row.emboss", text: _("Responsible")).find("input[data-type='autocomplete']").set @responsible.name
-  find("ul.ui-autocomplete > li").click
+  find("ul.ui-autocomplete > li > a").click
+  expect(has_no_selector?("ul.ui-autocomplete")).to be true
 end
 
 #Wenn(/^ich einen bestehenden Benutzer lösche$/) do
@@ -421,11 +423,15 @@ end
 
 #Wenn(/^ich der Delegation einen neuen Benutzer hinzufüge$/) do
 When(/^I add a user to the delegation$/) do
+  expect(has_no_selector?("ul.ui-autocomplete")).to be true
   find("[data-search-users]").set " "
-  find("ul.ui-autocomplete")
-  el = all("ul.ui-autocomplete > li").to_a.sample
-  @delegated_users << User.find {|u| u.name == el.text}
+  find("ul.ui-autocomplete > li > a", match: :first)
+  el = all("ul.ui-autocomplete > li > a").to_a.sample
+  user = User.find {|u| u.name == el.text}
+  @delegated_users << user
   el.click
+  expect(has_no_selector?("ul.ui-autocomplete")).to be true
+  find("#users .line", text: user.name)
 end
 
 #Dann(/^ist die bearbeitete Delegation mit den aktuellen Informationen gespeichert$/) do

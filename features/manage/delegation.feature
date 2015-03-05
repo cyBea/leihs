@@ -136,7 +136,7 @@ Feature: Delegation
     And I save
     Then I see an error message
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Editing a delegation
     Given I am Pius
     And I navigate to the admin area
