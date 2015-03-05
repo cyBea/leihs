@@ -213,8 +213,10 @@ Then(/^the entry's date is changed accordingly$/) do
   within(".line", match: :first) do
     find("[data-change-order-lines]").click
   end
-  find("#booking-calendar .fc-widget-content", :match => :first)
-  find(".modal-close").click
+  within ".modal" do
+    find("#booking-calendar .fc-widget-content", :match => :first)
+    find(".modal-close").click
+  end
   if @new_date
     expect(@changed_lines.first.reload.start_date).to eq @new_date
   end

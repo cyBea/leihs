@@ -92,7 +92,7 @@ end
 Then /^I can open the edit view for each user$/ do
   step 'I can filter by the role "%s"' % "All"
   expect(has_selector?("#user-list [data-type='user-cell']")).to be true
-  all("#user-list > .line").each do |line|
+  all("#user-list > .line").sample(5).each do |line|
     within line.find(".multibutton") do
       if has_selector?(".button", text: _("Edit"))
         find(".button", text: _("Edit"))
@@ -101,6 +101,7 @@ Then /^I can open the edit view for each user$/ do
         find(".dropdown-item", text: _("Edit"))
       end
     end
+    find("body").click
   end
 end
 
