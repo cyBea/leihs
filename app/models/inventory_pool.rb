@@ -271,4 +271,36 @@ class InventoryPool < ActiveRecord::Base
     end
   end
 
+  def csv_import(inventory_pool, csv_file)
+    require 'csv'
+
+    items = []
+
+    transaction do
+      CSV.foreach(csv_file, col_sep: ",", quote_char: "\"", headers: :first_row) do |row|
+        unless row["inventory_code"].blank?
+          location = if row["building"].blank? and row["room"].blank?
+                       nil
+                     else
+                       building_id = row["building"].blank? ? nil : Building.find_or_create_by(name: row["building"]).id
+                       room = row["room"].blank? ? nil : row["room"]
+                       Location.find_or_create(building_id: building_id, room: room)
+                     end
+
+          item = inventory_pool.items.create(inventory_code: row["inventory_code"].strip,
+                                             model: Model.find(row["model_id"]),
+                                             serial_number: row["serial_number"],
+                                             location: location,
+                                             is_borrowable: (row["is_borrowable"].blank? ? 0 : row["is_borrowable"].to_i))
+          item.valid?
+          items << item
+        end
+      end
+
+      raise ActiveRecord::Rollback unless items.all? &:valid?
+    end
+
+    items
+  end
+
 end
