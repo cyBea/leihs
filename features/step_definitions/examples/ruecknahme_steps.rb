@@ -52,26 +52,14 @@ Given(/^I am taking something back$/) do
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
 
-#Dann(/^ich erhalte eine Meldung$/) do
-#Dann(/^ich erhalte eine Bestätitungsmeldung$/) do
-Then(/^I receive a notification$/) do
-  find("#flash .notice")
-end
-
-
-#Dann(/^ich erhalte eine Erfolgsmeldung$/) do
-Then(/^I receive a notification of success$/) do
-  find("#flash .success")
-end
-
-#Wenn(/^ich einen Gegenstand über das Zuweisenfeld zurücknehme$/) do
-When(/^I take back an item using the assignment field$/) do
-  @contract_line = @take_back.lines.select{|l| l.is_a? ItemLine}.sample
-  within "form#assign" do
-    find("input#assign-input").set @contract_line.item.inventory_code
-    find("button .icon-ok-sign").click
+Then(/^I receive a notification( of success)?$/) do |arg1|
+  within "#flash" do
+    if arg1
+      find(".success")
+    else
+      find(".notice")
+    end
   end
-  @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
 #Angenommen(/^ich befinde mich in einer Rücknahme mit mindestens einem verspäteten Gegenstand$/) do
@@ -81,9 +69,17 @@ Given(/^I am taking back at least one overdue item$/) do
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
 
-#Wenn(/^ich einen verspäteten Gegenstand über das Zuweisenfeld zurücknehme$/) do
-When(/^I take back an overdue item using the assignment field$/) do
-  @contract_line = @take_back.lines.find{|l| l.end_date.past?}
+When(/^I take back an( overdue)? (item|option) using the assignment field$/) do |arg1, arg2|
+  @contract_line = case arg2
+                     when "item"
+                       if arg1
+                         @take_back.lines.find{|l| l.end_date.past?}
+                       else
+                         @take_back.lines.select{|l| l.is_a? ItemLine}.sample
+                       end
+                     when "option"
+                       @take_back.lines.find {|l| l.quantity >= 2 }
+                   end
   within "form#assign" do
     find("input#assign-input").set @contract_line.item.inventory_code
     find("button .icon-ok-sign").click
@@ -102,16 +98,6 @@ Given(/^I am on a take back with at least two of the same options$/) do
   @take_back = @current_inventory_pool.visits.take_back.find {|v| v.lines.any? {|l| l.quantity >= 2 }}
   @user = @take_back.user
   step "man die Rücknahmenansicht für den Benutzer öffnet"
-end
-
-#Wenn(/^ich eine Option über das Zuweisenfeld zurücknehme$/) do
-When(/^I take back an option using the assignment field$/) do
-  @contract_line = @take_back.lines.find {|l| l.quantity >= 2 }
-  within "form#assign" do
-    find("input#assign-input").set @contract_line.item.inventory_code
-    find("button .icon-ok-sign").click
-  end
-  @line_css = ".line[data-id='#{@contract_line.id}']"
 end
 
 #Dann(/^die Zeile ist nicht grün markiert$/) do
@@ -141,10 +127,7 @@ end
 #Wenn(/^ich diese Option zurücknehme$/) do
 When(/^I take back this option$/) do
   @option = Option.find {|o| o.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}.count >= 2}
-  within "form#assign" do
-    find("input#assign-input").set @option.inventory_code
-    find("button .icon-ok-sign").click
-  end
+  step 'I add the same option again'
 end
 
 #Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
@@ -165,10 +148,7 @@ end
 #Wenn(/^im ersten Zeitfenster bereits die maximale Anzahl dieser Option erreicht ist$/) do
 When(/^the first time window has already reached the maximum quantity of this option$/) do
   until find("[data-selected-lines-container]", match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i == @option_line.quantity
-    within "form#assign" do
-      find("input#assign-input").set @option.inventory_code
-      find("button .icon-ok-sign").click
-    end
+    step 'I add the same option again'
   end
 end
 

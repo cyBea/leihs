@@ -24,10 +24,10 @@ Then "that model should not be available in any group"  do
 end
 
 # TODO: currently unused
-Given /^(\d+) items of that model in group "([^"]*)"$/ do |n, group_name|
-  step "#{n} items of model '#{@model.name}' exist"
-  step "I assign #{n} items to group \"#{group_name}\""
-end
+# Given /^(\d+) items of that model in group "([^"]*)"$/ do |n, group_name|
+#   step "#{n} items of model '#{@model.name}' exist"
+#   step "I assign #{n} items to group \"#{group_name}\""
+# end
 
 #
 # Items

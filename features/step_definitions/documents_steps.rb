@@ -114,6 +114,7 @@ end
 
 #Dann(/^sehe ich die Werteliste genau wie im Verwalten\-Bereich$/) do
 Then(/^I see the value list displayed as in the manage section$/) do
+  pending
   # This kind of step reuse is pointless since it does not automatically
   # update when the step sequence for the manage section changes.
   # We should instead make the steps below into a reusable thing

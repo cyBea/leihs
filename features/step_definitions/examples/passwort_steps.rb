@@ -81,22 +81,18 @@ When(/^I change the username from "(.*?)" to "(.*?)"$/) do |person, login|
   expect(DatabaseAuthentication.find_by_user_id(@user.id)).not_to be_nil
 end
 
-#Wenn(/^ich einen Benutzer ohne Loginnamen erstellen probiere$/) do
-When(/^I try to create a user without username$/) do
+When(/^I try to create a user (.*)$/) do |arg1|
   step "I add a user"
-  fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", password: "newpassword", password_confirmation: "newpassword")
-end
-
-#Wenn(/^ich einen Benutzer mit falscher Passwort\-Bestätigung erstellen probiere$/) do
-When(/^I try to create a user with a non-matching password confirmation$/) do
-  step "I add a user"
-  fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", login: "new_username", password: "newpassword", password_confirmation: "wrongconfir")
-end
-
-#Wenn(/^ich einen Benutzer mit fehlenden Passwortangaben erstellen probiere$/) do
-When(/^I try to create a user without a password$/) do
-  step "I add a user"
-  fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", login: "new_username")
+  case arg1
+    when "without username"
+      fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", password: "newpassword", password_confirmation: "newpassword")
+    when "without a password"
+      fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", login: "new_username")
+    when "with a non-matching password confirmation"
+      fill_in_user_information(firstname: "test", lastname: "test", email: "test@test.ch", login: "new_username", password: "newpassword", password_confirmation: "wrongconfir")
+    else
+      raise
+  end
 end
 
 #Wenn(/^ich den Benutzernamen von nicht ausfülle und speichere$/) do

@@ -85,10 +85,6 @@ Given /^there are open contracts for all users$/ do
   }
 end
 
-Given /^there are open contracts for all users of a specific inventory pool$/ do
-  step "there are open contracts for all users"
-end
-
 Given /^every contract has a different start date$/ do
   make_sure_no_start_date_is_identical_to_any_other! @open_contracts
 end
