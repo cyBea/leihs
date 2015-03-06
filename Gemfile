@@ -28,6 +28,7 @@ gem 'geocoder', '~> 1.1'
 gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 4.0'
 gem 'haml_assets', '~> 0.2'
+gem 'i18n', '0.6.11' # NOTE '~> 0.7' error :"en-gb" is not a valid locale (I18n::InvalidLocale)
 gem 'jquery-rails', '~> 3.1'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'jquery-ui-rails', '~> 5.0'
