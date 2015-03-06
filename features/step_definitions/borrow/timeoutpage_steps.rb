@@ -108,15 +108,15 @@ end
 #########################################################################
 
 #Angenommen(/^ich einen Eintrag ändere$/) do
-Given(/^I modify one entry$/) do
-  #step "ich den Eintrag ändere"
-  step 'I change the entry'
-  #step "öffnet der Kalender"
-  step 'the calendar opens'
-  #step "ich ändere die aktuellen Einstellung"
-  step 'I change the date'
-  step "I save the booking calendar"
-end
+# Given(/^I modify one entry$/) do
+#   #step "ich den Eintrag ändere"
+#   step 'I change the entry'
+#   #step "öffnet der Kalender"
+#   step 'the calendar opens'
+#   #step "ich ändere die aktuellen Einstellung"
+#   step 'I change the date'
+#   step "I save the booking calendar"
+# end
 
 #When(/^ich die Menge eines Eintrags (heraufsetze|heruntersetze)$/) do |arg1|
 When(/^I (increase|decrease) the quantity of one entry$/) do |arg1|
@@ -134,15 +134,16 @@ When(/^I (increase|decrease) the quantity of one entry$/) do |arg1|
                   end
   find("#booking-calendar-quantity").set(@new_quantity)
   step "I save the booking calendar"
+  step "the booking calendar is closed"
 end
 
 #Dann(/^werden die Änderungen gespeichert$/) do
-Then(/^the changes I made are saved$/) do
-  #step "wird der Eintrag gemäss aktuellen Einstellungen geändert"
-  step "the entry's date is changed accordingly"
-  #step "der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert"
-  step 'the entry is grouped based on its current start date and inventory pool'
-end
+# Then(/^the changes I made are saved$/) do
+#   #step "wird der Eintrag gemäss aktuellen Einstellungen geändert"
+#   step "the entry's date is changed accordingly"
+#   #step "der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert"
+#   step 'the entry is grouped based on its current start date and inventory pool'
+# end
 
 #Dann(/^lande ich wieder auf der Timeout Page$/) do
 #  #step "werde ich auf die Timeout Page geleitet"

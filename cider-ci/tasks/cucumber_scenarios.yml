@@ -185,11 +185,11 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/borrow/timeoutpage.feature:4:14:24:31:45 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:54:64:72
+- name: features/borrow/timeoutpage.feature:54:64:76
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/timeoutpage.feature:54:64:72 DEFAULT_BROWSER=firefox
+        features/borrow/timeoutpage.feature:54:64:76 DEFAULT_BROWSER=firefox
 - name: features/borrow/verfuegbarkeit.feature:10:23:28:33:41
   scripts:
     cucumber:

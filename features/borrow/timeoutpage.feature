@@ -64,8 +64,12 @@ Feature: Timeout page
   Scenario: Modifying an entry
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
-    And I modify one entry
-    Then the changes I made are saved
+    And I change the entry
+    And the calendar opens
+    And I change the date
+    And I save the booking calendar
+    Then the entry's date is changed accordingly
+    And the entry is grouped based on its current start date and inventory pool
     And I am redirected to the timeout page
 
   @javascript @browser @personas
@@ -73,7 +77,9 @@ Feature: Timeout page
     Given I am Normin
     And I hit the timeout page with a model that has conflicts
     When I increase the quantity of one entry
-    Then the changes I made are saved
+    Then the entry's date is changed accordingly
+    And the entry is grouped based on its current start date and inventory pool
     When I decrease the quantity of one entry
-    Then the changes I made are saved
+    Then the entry's date is changed accordingly
+    And the entry is grouped based on its current start date and inventory pool
     And I am redirected to the timeout page
