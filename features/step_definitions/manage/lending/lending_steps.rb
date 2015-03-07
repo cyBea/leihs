@@ -292,20 +292,22 @@ end
 
 
 Then /^I see search results in the following categories:$/ do |table|
-  table.hashes.each do |t|
-    case t[:category]
-      when "Users"
-        find("#users .list-of-lines .line", match: :first)
-      when "Models"
-        find("#models .list-of-lines .line", match: :first)
-      when "Items"
-        find("#items .list-of-lines .line", match: :first)
-      when "Contracts"
-        find("#contracts .list-of-lines .line", match: :first)
-      when "Orders"
-        find("#orders .list-of-lines .line", match: :first)
-      when "Options"
-        find("#options .list-of-lines .line", match: :first)
+  within "#search-overview" do
+    table.hashes.each do |t|
+      case t[:category]
+        when "Users"
+          find("#users .list-of-lines .line", match: :first)
+        when "Models"
+          find("#models .list-of-lines .line", match: :first)
+        when "Items"
+          find("#items .list-of-lines .line", match: :first)
+        when "Contracts"
+          find("#contracts .list-of-lines .line", match: :first)
+        when "Orders"
+          find("#orders .list-of-lines .line", match: :first)
+        when "Options"
+          find("#options .list-of-lines .line", match: :first)
+      end
     end
   end
 end
