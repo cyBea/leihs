@@ -54,17 +54,21 @@ module Dataset
       # in order to guarantuee the same shuffle and sample results on CI and locally, we have to change these ruby methods to use the global TEST_DATETIME seed
       Array.class_eval do
         def shuffle_with_random
-          shuffle_without_random(random: @random)
+          r = shuffle_without_random(random: @random)
+          puts "--- RANDOMIZED (shuffle) ---", r.inspect
+          r
         end
         alias_method_chain :shuffle, :random
         def sample_with_random(*args)
-          if args.empty?
+          r = if args.empty?
             sample_without_random(random: @random)
           elsif args.last.is_a? Hash
             sample_without_random(*args)
           elsif not args.first.is_a? Hash
             sample_without_random(args.first, {random: @random})
           end
+          puts "--- RANDOMIZED (sample) ---", r.inspect
+          r
         end
         alias_method_chain :sample, :random
       end
