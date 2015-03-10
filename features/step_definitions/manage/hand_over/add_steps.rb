@@ -176,7 +176,7 @@ end
 Given(/^there is a model or software which all items are set to "(.*?)"$/) do |arg1|
   @model = case arg1
              when "not borrowable"
-               @current_inventory_pool.models.shuffle.detect { |m| m.items.all? { |i| not i.is_borrowable? } }
+               @current_inventory_pool.models.order("RAND ()").detect { |m| m.items.all? { |i| not i.is_borrowable? } }
              else
                "not found"
            end

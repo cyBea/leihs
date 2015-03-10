@@ -857,7 +857,7 @@ end
 # end
 
 # Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
-#   access_right = AccessRight.all.shuffle.detect { |ar| ar.role == :customer and
+#   access_right = AccessRight.order("RAND ()").detect { |ar| ar.role == :customer and
 #                                                        ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
 #   @user = access_right.user
 #   @current_inventory_pool = access_right.inventory_pool

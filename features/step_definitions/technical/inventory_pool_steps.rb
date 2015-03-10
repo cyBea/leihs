@@ -242,7 +242,7 @@ Then /^the first 2 contract lines should now be grouped inside the 1st visit, wh
 end
 
 Given(/^a maximum amount of visits is defined for a week day$/) do
-  @inventory_pool = @current_user.inventory_pools.shuffle.detect { |ip| not ip.workday.max_visits.empty? }
+  @inventory_pool = @current_user.inventory_pools.order("RAND ()").detect { |ip| not ip.workday.max_visits.empty? }
   expect(@inventory_pool).not_to be_nil
 end
 

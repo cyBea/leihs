@@ -2,7 +2,7 @@
 
 Given(/^there is an empty order$/) do
   @current_inventory_pool = @current_user.managed_inventory_pools.detect do |ip|
-    @customer = ip.users.to_a.shuffle.detect {|c| c.visits.hand_over.empty? }
+    @customer = ip.users.order("RAND ()").detect {|c| c.visits.hand_over.empty? }
   end
   raise "customer not found" unless @customer
   step "I open a hand over to this customer"

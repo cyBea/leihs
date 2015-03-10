@@ -15,7 +15,7 @@ Given(/^I navigate to the (open orders|hand over visits|take back visits)$/) do 
 end
 
 When(/^I quick approve a submitted order$/) do
-  @contract ||= @current_inventory_pool.contracts.submitted.shuffle.detect{|o| o.approvable? }
+  @contract ||= @current_inventory_pool.contracts.submitted.order("RAND ()").detect{|o| o.approvable? }
   within(".line[data-id='#{@contract.id}']") do
     find("[data-order-approve]", :text => _("Approve")).click
   end
@@ -26,7 +26,7 @@ Then(/^I see a link to the hand over process of that order$/) do
 end
 
 Given /^I try to approve a contract that has problems$/ do
-  @contract =  @current_inventory_pool.contracts.submitted.shuffle.detect{|o| not o.approvable?}
+  @contract =  @current_inventory_pool.contracts.submitted.order("RAND ()").detect{|o| not o.approvable?}
   step "I quick approve a submitted order"
   find(".modal")
 end
