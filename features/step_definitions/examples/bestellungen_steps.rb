@@ -276,7 +276,7 @@ end
 #Aber(/^ich kann keine Gegenstände zuteilen$/) do
 But(/^I cannot assign items$/) do
   find("[data-line-type='item_line']", match: :first)
-  all("[data-line-type='item_line']").to_a.shuffle.each do |dom_line|
+  all("[data-line-type='item_line']").each do |dom_line|
     within dom_line do
       find("input[data-assign-item]").click
       next unless has_selector?("li.ui-menu-item a")
