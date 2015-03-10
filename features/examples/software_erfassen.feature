@@ -99,7 +99,7 @@ Feature: Creating software
     And I save
     Then sind die Informationen dieser Software-Lizenz gespeichert
 
-  @personas @javascript @browser
+  @personas @javascript
   Scenario: Choosing a license for multiple/concurrent/site licenses
     Given a software product exists
     When I add a new Software License

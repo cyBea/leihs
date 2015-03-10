@@ -113,7 +113,7 @@ Feature: Manage users
     And I edit a user that has access rights
     Then inventory pools they have access to are listed with the respective role
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Requirements for deleting a user in an inventory pool
     Given I am Ramon
     And I pick one user with access rights, one with orders and one with contracts
@@ -363,7 +363,7 @@ Feature: Manage users
     And I save
     Then the user has the role "inventory manager"
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Requirements for deleting a user
     Given I am Ramon
     And I am looking at the user list outside an inventory pool

@@ -46,7 +46,7 @@ Feature: Lending
     Then I see which groups the customer is a member of
     And I see which groups the customer is not a member of
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Scanning behavior during hand over
     When I open a hand over for a customer that has things to pick up today as well as in the future
     When I scan something (assign it using its inventory code) and it is already assigned to a future contract
@@ -54,7 +54,7 @@ Feature: Lending
     When it doesn't exist in any future contracts
     Then it is added for the selected time span
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Handing over items and licenses by inventory code
     Given I am doing a hand over
     When I add an item to the hand over by providing an inventory code

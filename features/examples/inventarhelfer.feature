@@ -21,7 +21,7 @@ Feature: Inventory helper
     And the changed values are highlighted
     And the location of the other item has remained the same
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: You can't change the responsible department while something is not in stock
     Given I am on the inventory helper screen
     And I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool

@@ -10,7 +10,7 @@ Feature: Managing templates
     Then I see a list of currently available templates for the current inventory pool
     And the templates are ordered alphabetically by their names
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Create template
     Given I am listing templates 
     When I click the button "New Template"

@@ -22,7 +22,7 @@ Feature: Displaying problems
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Showing problems when handing over a defective item
     Given I am doing a hand over
     And one item is defective
@@ -70,7 +70,7 @@ Feature: Displaying problems
       And "3" are available in total, also counting availability from groups the user is not member of
       And "7" are in this inventory pool (and borrowable)
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Problemanzeige bei Aushändigung wenn Gegenstand unvollständig
     Given I am doing a hand over
     And one item is incomplete

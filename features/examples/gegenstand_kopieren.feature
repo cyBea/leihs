@@ -56,7 +56,7 @@ Feature: Copy item
     Then the copied item is saved
     And I am redirected to the inventory list
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Copying an item selected from a list
     Given I open the inventory
     When I copy an item

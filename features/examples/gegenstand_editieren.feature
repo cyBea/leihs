@@ -63,7 +63,7 @@ Feature: Editing an item
     And I save
     Then the item has no supplier
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Edit all an item's information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information
@@ -98,14 +98,14 @@ Feature: Editing an item
     And I save
     Then the edited item has the new supplier
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: You can't change the responsible department for items that are not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the responsible department
     And I save
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Editing an item an all its information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information

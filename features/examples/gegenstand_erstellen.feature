@@ -56,7 +56,7 @@ Feature: Gegenstand erstellen
       | Warranty expiration        |
       | Contract expiration        |
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Forgetting to fill out the required fields when creating an item
     Given I am Matti
     And I create an item
@@ -111,7 +111,7 @@ Feature: Gegenstand erstellen
     Then a new supplier is created
     And the created item has the new supplier
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Creating an item with all its information
     Given I am Matti
     And I create an item

@@ -35,7 +35,7 @@ Feature: Viewing my orders
     When the timer has run down
     Then I am redirected to the timeout page
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Changing one of my orders
     When I change the entry
     Then the calendar opens

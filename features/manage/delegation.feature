@@ -112,7 +112,7 @@ Feature: Delegation
     When I create a new delegation
     Then I can at most give the delegation access on the customer level
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Switching delegation to a user in an order
     Given I am Pius
     And there is an order for a delegation
@@ -229,7 +229,7 @@ Feature: Delegation
     When I try to change the contact person
     Then I can choose only those people that belong to the delegation group
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Changing contact person while editing an order
     Given I am Pius
     And I am editing a delegation's order
@@ -268,7 +268,7 @@ Feature: Delegation
     Then the hand over goes to the new delegation
     And the newly selected contact person is saved
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Which delegations are shown when changing delegation in an order
     Given I am Pius
     And I open an order
@@ -282,7 +282,7 @@ Feature: Delegation
     When I change the delegation
     Then I see exactly one contact person field
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Changing delegation - contact person is required
     Given I am Pius
     And I open an order

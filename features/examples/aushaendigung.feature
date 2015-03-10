@@ -107,7 +107,7 @@ Feature: Edit a hand over
     And ich auf der Modelllinie die Gegenstandsauswahl öffne
     Then wird der ausgemusterte Gegenstand nicht aufgelistet
 
-  @personas @javascript @browser
+  @personas @javascript
   Scenario: Displaying already assigned items
     Given there is a hand over with at least 21 assigned items for a user
     When I open the hand over
