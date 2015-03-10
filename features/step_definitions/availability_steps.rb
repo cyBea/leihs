@@ -18,7 +18,7 @@ do |quantity, model, from, to|
   to   = to_date(to)
 
   model = Model.find_by_name(model)
-  inventory_pool = model.items.sample.inventory_pool
+  inventory_pool = model.items.order("RAND()").first.inventory_pool
   user = LeihsFactory.create_user
   FactoryGirl.create :access_right, user: user, inventory_pool: inventory_pool
   @contract = user.get_approved_contract(inventory_pool)

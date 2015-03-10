@@ -263,7 +263,7 @@ Given(/^a line with an assigned item which doesn't have a location is marked$/) 
 end
 
 Given(/^an option line is marked$/) do
-  @contract_line = @hand_over.lines.where(type: "OptionLine").sample
+  @contract_line = @hand_over.lines.where(type: "OptionLine").order("RAND()").first
   @line_css = ".line[data-id='#{@contract_line.id}']"
   step "ich die Zeile wieder selektiere"
 end
@@ -302,7 +302,7 @@ end
 Given(/^there is a model with a retired and a borrowable item$/) do
   @model = @current_inventory_pool.models.find { |m| m.items.borrowable.where(retired: nil).exists? and m.items.retired.exists? }
   expect(@model).not_to be_nil
-  @item = @model.items.retired.sample
+  @item = @model.items.retired.order("RAND()").first
 end
 
 Then(/^the retired item is not displayed in the list$/) do

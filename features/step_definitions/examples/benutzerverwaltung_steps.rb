@@ -120,7 +120,7 @@ Given(/^I edit a (user|delegation)$/) do |user_type|
 
                 when "user"
                   @inventory_pool.users.customers.not_as_delegations
-              end.sample
+              end.order("RAND()").first
   @delegation = @customer # Some of the delegation tests expect this to be defined
   visit manage_edit_inventory_pool_user_path(@inventory_pool, @customer)
 end
@@ -866,11 +866,11 @@ end
 
 #Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
 Given(/^I am editing a user who has access to (and no items from )?the current inventory pool$/) do |arg1|
-  access_rights = @current_inventory_pool.access_rights.active.select { |ar| ar.role == :customer }
+  access_rights = @current_inventory_pool.access_rights.active.where(role: :customer)
   @user = if arg1
             access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
           else
-            access_rights.sample
+            access_rights.order("RAND()").first
           end.user
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end

@@ -27,7 +27,7 @@ end
 
 #When(/^ich kann eine der Vorlagen detailliert betrachten$/) do
 Then(/^I can look at one of the templates in detail$/) do
-  template = @current_user.templates.sample
+  template = @current_user.templates.order("RAND()").first
   find("a[href='#{borrow_template_path(template)}']", match: :first, text: template.name).click
   find("nav a[href='#{borrow_template_path(template)}']", match: :first)
 end
@@ -70,7 +70,7 @@ end
 
 #When(/^ich kann die Anzahl jedes Modells verändern, bevor ich den Prozess fortsetze$/) do
 When(/^I can modify the quantity of each model before ordering$/) do
-  @model_link = @template.model_links.sample
+  @model_link = @template.model_links.order("RAND()").first
   find(".row", match: :first, text: @model_link.model.name).find("input[name='lines[][quantity]'][value='#{@model_link.quantity}']", match: :first).set rand(10)
 end
 

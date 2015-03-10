@@ -86,7 +86,7 @@ end
 
 #Wenn /^das Paket zurzeit ausgeliehen ist$/ do
 When /^the package is currently not in stock$/ do
-  @package_not_in_stock = @current_inventory_pool.items.packages.not_in_stock.sample
+  @package_not_in_stock = @current_inventory_pool.items.packages.not_in_stock.order("RAND()").first
   visit manage_edit_model_path(@current_inventory_pool, @package_not_in_stock.model)
 end
 

@@ -29,7 +29,7 @@ end
 When(/^I open the calendar of a model related to an inventory pool for which the number of days between order submission and hand over is defined as (\d+)$/) do |arg1|
   @inventory_pool = @current_user.inventory_pools.order("RAND ()").detect { |ip| ip.workday.reservation_advance_days == arg1.to_i }
   @inventory_pool ||= begin
-    ip = @current_user.inventory_pools.sample
+    ip = @current_user.inventory_pools.order("RAND()").first
     ip.workday.update_attributes(reservation_advance_days: arg1.to_i)
     ip
   end

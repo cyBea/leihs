@@ -55,7 +55,7 @@ end
 #Wenn /^ich eine Bestellung editiere$/ do
 When(/^I edit an order$/) do
   @event = "order"
-  @contract = @current_inventory_pool.contracts.submitted.sample
+  @contract = @current_inventory_pool.contracts.submitted.order("RAND()").first
   @user = @contract.user
   @customer = @contract.user
   step "I edit the order"
@@ -143,8 +143,8 @@ end
 
 When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
   begin
-    @model = @customer.get_approved_contract(@current_inventory_pool).models.sample
-    @item = @model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).sample
+    @model = @customer.get_approved_contract(@current_inventory_pool).models.order("RAND()").first
+    @item = @model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).order("RAND()").first
   end while @item.nil?
   find("[data-add-contract-line]").set @item.inventory_code
   find("[data-add-contract-line] + .addon").click
@@ -159,7 +159,7 @@ end
 When /^it doesn't exist in any future contracts$/ do
   @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
                               @customer.get_approved_contract(@current_inventory_pool).models).sample
-  @item = @model_not_in_contract.items.borrowable.in_stock.sample
+  @item = @model_not_in_contract.items.borrowable.in_stock.order("RAND()").first
   find("#add-start-date").set I18n.l(Date.today+7.days)
   find("#add-end-date").set I18n.l(Date.today+8.days)
   find("[data-add-contract-line]").set @item.inventory_code
@@ -411,7 +411,7 @@ Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
       find(".dropdown-item", :text => _("Edit")).click
     end
   else
-    @contract = @current_inventory_pool.contracts.submitted.sample
+    @contract = @current_inventory_pool.contracts.submitted.order("RAND()").first
     visit manage_edit_contract_path(@current_inventory_pool, @contract)
   end
   @user = @contract.user

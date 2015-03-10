@@ -6,7 +6,7 @@ When /^I add a model by typing in the inventory code of an item of that model to
 end
 
 When /^I start to type the inventory code of an item$/ do
-  @item = @current_inventory_pool.items.borrowable.sample
+  @item = @current_inventory_pool.items.borrowable.order("RAND()").first
   fill_in "add-input", :with => @item.inventory_code[0..3]
 end
 
@@ -37,7 +37,7 @@ When /^I start to type the name of a model( which is not yet in the contract)?$/
 end
 
 When /^I add a model to the acknowledge which is already existing in the selected date range by providing an inventory code$/ do
-  @line = @contract.lines.sample
+  @line = @contract.lines.order("RAND()").first
   @old_lines_count = @contract.lines.count
   @model = @line.model
   find(".line", match: :prefer_exact, text: @model.name)

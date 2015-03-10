@@ -103,7 +103,7 @@ end
 
 #Dann /^scanne oder gebe ich den Inventarcode von einem Gegenstand ein, der am Lager und in keinem Vertrag vorhanden ist$/ do
 Then /^I scan or enter the inventory code of an item that is in stock and not in any contract$/ do
-  @item = @current_inventory_pool.items.in_stock.sample
+  @item = @current_inventory_pool.items.in_stock.order("RAND()").first
   within("#item-selection") do
     find("[data-barcode-scanner-target]").set @item.inventory_code
     find("button[type=submit]").click
@@ -114,10 +114,10 @@ end
 #Dann /^scanne oder gebe ich den Inventarcode ein(, wo man Besitzer ist)$/ do |arg1|
 Then /^I scan or enter the inventory code( of an item belonging to the current inventory pool)?$/ do |arg1|
   @item ||= if arg1
-              @current_inventory_pool.items.in_stock.where(owner_id: @current_inventory_pool).sample
+              @current_inventory_pool.items.where(owner_id: @current_inventory_pool)
             else
-              @current_inventory_pool.items.in_stock.sample
-            end
+              @current_inventory_pool.items
+            end.in_stock.order("RAND()").first
   within("#item-selection") do
     find("[data-barcode-scanner-target]").set @item.inventory_code
     find("button[type=submit]").click
@@ -286,7 +286,7 @@ end
 #Angenommen(/^es existiert ein Gegenstand, welches sich denselben Ort mit einem anderen Gegenstand teilt$/) do
 Given(/^there is an item that shares its location with another$/) do
   location = Location.find {|l| l.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).count >= 2}
-  @item, @item_2 = location.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).sample(2)
+  @item, @item_2 = location.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).order("RAND()").limit(2)
   @item_2_location = @item_2.location
 end
 
@@ -317,7 +317,7 @@ end
 #Angenommen(/^man editiert das Feld "(.*?)" eines ausgeliehenen Gegenstandes$/) do |name|
 Given(/^I edit the field "(.*?)" of an item that is not in stock$/) do |name|
   step %Q{I select the field "#{name}"}
-  @item = @current_inventory_pool.items.not_in_stock.sample
+  @item = @current_inventory_pool.items.not_in_stock.order("RAND()").first
   @item_before = @item.to_json
   step %Q{I scan or enter the inventory code}
 end
@@ -345,7 +345,7 @@ end
 #Angenommen(/^man editiert das Feld "(.*?)" eines Gegenstandes, der im irgendeinen Vertrag vorhanden ist$/) do |name|
 Given(/^I edit the field "(.*?)" of an item that is part of a contract$/) do |name|
   step %Q{I select the field "#{name}"}
-  @item = @current_inventory_pool.items.not_in_stock.sample
+  @item = @current_inventory_pool.items.not_in_stock.order("RAND()").first
   @item_before = @item.to_json
   fill_in_autocomplete_field name, @current_inventory_pool.models.select{|m| m != @item.model}.sample.name
   step %Q{I scan or enter the inventory code}
@@ -356,15 +356,15 @@ Given(/^I retire an item that is not in stock$/) do
   step %Q{I select the field "Retiremen"}
   find(".row.emboss", match: :prefer_exact, text: _("Retirement")).find("select").select _("Yes")
   find(".row.emboss", match: :prefer_exact, text: _("Reason for Retirement")).find("input, textarea").set "Retirement reason"
-  @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.sample
+  @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.order("RAND()").first
   @item_before = @item.to_json
   step %Q{I scan or enter the inventory code}
 end
 
 Given(/^I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool$/) do
   step %Q{I select the field "Responsible department"}
-  @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.sample
+  @item = @current_inventory_pool.items.where(owner: @current_inventory_pool).not_in_stock.order("RAND()").first
   @item_before = @item.to_json
-  fill_in_autocomplete_field "Responsible department", InventoryPool.where.not(id: @current_inventory_pool).sample.name
+  fill_in_autocomplete_field "Responsible department", InventoryPool.where.not(id: @current_inventory_pool).order("RAND()").first.name
   step %Q{I scan or enter the inventory code}
 end

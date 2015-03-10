@@ -158,7 +158,7 @@ end
 
 #Wenn(/^ich einen Benutzer hinzufüge$/) do
 When(/^I add one user to the group$/) do
-  fill_in_autocomplete_field _("Users"), @user_name = @current_inventory_pool.users.sample.name
+  fill_in_autocomplete_field _("Users"), @user_name = @current_inventory_pool.users.order("RAND()").first.name
 end
 
 #Dann(/^wird der Benutzer zuoberst in der Liste hinzugefügt$/) do
@@ -169,7 +169,7 @@ end
 
 #Wenn(/^ich ein Modell hinzufüge$/) do
 When(/^I add a model to the group$/) do
-  @model = @current_inventory_pool.models.sample
+  @model = @current_inventory_pool.models.order("RAND()").first
   fill_in_autocomplete_field _("Models"), @model.name
 end
 
@@ -190,7 +190,7 @@ end
 
 #Wenn(/^ich ein bereits hinzugefügtes Modell hinzufüge$/) do
 When(/^I add a model that is already present in the group$/) do
-  @model = @group.models.sample
+  @model = @group.models.order("RAND()").first
   @quantity = 2
   find("#models-allocations .list-of-lines .line", match: :prefer_exact, text: @model.name).fill_in "group[partitions_attributes][][quantity]", :with => @quantity
   fill_in_autocomplete_field _("Models"), @model.name
@@ -204,7 +204,7 @@ end
 
 #Wenn(/^ich einen bereits hinzugefügten Benutzer hinzufüge$/) do
 When(/^I add a user that is already present in the group$/) do
-  @user = @group.users.sample
+  @user = @group.users.order("RAND()").first
   fill_in_autocomplete_field _("Users"), @user.name
 end
 

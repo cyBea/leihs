@@ -191,7 +191,7 @@ When(/^each model has exactly one assigned item$/) do
 
   @models.uniq.each do |m|
     l = @lines.find{|l| l.model == m}
-    l.update_attribute(:item, l.model.borrowable_items.where(inventory_pool_id: @current_inventory_pool).sample) unless l.is_a? OptionLine
+    l.update_attribute(:item, l.model.borrowable_items.where(inventory_pool_id: @current_inventory_pool).order("RAND()").first) unless l.is_a? OptionLine
   end
 end
 

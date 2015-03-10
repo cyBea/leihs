@@ -56,7 +56,7 @@ end
 
 When(/^I search for models giving at least two space separated terms$/) do
   @models = @current_user.models.borrowable.where.not(product: nil).where.not(version: nil)
-  @search_term = @models.sample.name
+  @search_term = @models.order("RAND()").first.name
   expect(@search_term.split(' ').size).to be >= 2
   fill_in "search_term", :with => @search_term
 end

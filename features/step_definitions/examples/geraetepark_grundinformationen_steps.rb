@@ -205,7 +205,7 @@ end
 
 #Angenommen(/^es ist bei mehreren Geräteparks aut. Zuweisung aktiviert$/) do
 Given(/^multiple inventory pools are granting automatic access$/) do
-  InventoryPool.all.sample(rand(2..4)).each do |inventory_pool|
+  InventoryPool.order("RAND()").limit(rand(2..4)).each do |inventory_pool|
     inventory_pool.update_attributes automatic_access: true
   end
   if inventory_pool = @current_user.managed_inventory_pools.select{|ip| not ip.automatic_access? }.sample
@@ -270,7 +270,7 @@ When(/^on the inventory pool I enable the automatic suspension for users with ov
 end
 
 When(/^a user is already suspended for this inventory pool$/) do
-  @user = @current_inventory_pool.visits.take_back_overdue.sample.user
+  @user = @current_inventory_pool.visits.take_back_overdue.order("RAND()").first.user
   @suspended_until = rand(1.years.from_now..3.years.from_now).to_date
   @suspended_reason = Faker::Lorem.paragraph
 

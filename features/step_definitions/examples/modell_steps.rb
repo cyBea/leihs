@@ -178,7 +178,7 @@ end
 #Wenn(/^ich ein bestehendes, genutztes Modell bearbeite$/) do
 When(/^I edit a model that exists and is in use$/) do
   @page_to_return = current_path
-  @model = @current_inventory_pool.items.items.unretired.where(parent_id: nil).sample.model
+  @model = @current_inventory_pool.items.items.unretired.where(parent_id: nil).order("RAND()").first.model
   visit manage_edit_model_path @current_inventory_pool, @model
 end
 

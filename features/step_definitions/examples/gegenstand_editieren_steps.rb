@@ -122,31 +122,31 @@ end
 
 #Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist und wo man Besitzer ist$/) do
 Given(/^I edit an item that belongs to the current inventory pool and is not in stock$/) do
-  @item = @current_inventory_pool.own_items.not_in_stock.sample
+  @item = @current_inventory_pool.own_items.not_in_stock.order("RAND()").first
   @item_before = @item.to_json
   step "I am on this item's edit page"
 end
 
 # Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der ausgeliehen ist$/) do
-#   @item = @current_inventory_pool.items.not_in_stock.sample
+#   @item = @current_inventory_pool.items.not_in_stock.order("RAND()").first
 #   @item_before = @item.to_json
 #   step "I am on this item's edit page"
 # end
 
 #Wenn(/^ich die verantwortliche Abteilung ändere$/) do
 When(/^I change the responsible department$/) do
-  fill_in_autocomplete_field _("Responsible"), InventoryPool.where("id != ?", @item.inventory_pool.id).sample.name
+  fill_in_autocomplete_field _("Responsible"), InventoryPool.where("id != ?", @item.inventory_pool.id).order("RAND()").first.name
 end
 
 # Angenommen(/^man navigiert zur Bearbeitungsseite eines Gegenstandes, der in einem Vertrag vorhanden ist$/) do
-#   @item = @current_inventory_pool.items.items.not_in_stock.sample
+#   @item = @current_inventory_pool.items.items.not_in_stock.order("RAND()").first
 #   @item_before = @item.to_json
 #   step "I am on this item's edit page"
 # end
 
 #Wenn(/^ich das Modell ändere$/) do
 When(/^I change the model$/) do
-  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.sample.name
+  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.order("RAND()").first.name
 end
 
 #Wenn(/^ich den Gegenstand ausmustere$/) do

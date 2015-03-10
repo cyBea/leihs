@@ -249,7 +249,7 @@ end
 
 #Wenn(/^ich einen Vertrag dieses Kunden öffne$/) do
 When(/^I open this user's contract$/) do
-  visit manage_contract_path(@current_inventory_pool, @user.contracts.where(status: [:signed, :closed]).sample)
+  visit manage_contract_path(@current_inventory_pool, @user.contracts.where(status: [:signed, :closed]).order("RAND()").first)
 end
 
 #Dann(/^wird seine Adresse ohne den abschliessenden "(.*?)" angezeigt$/) do |arg1|

@@ -22,7 +22,7 @@
 # end
 
 # Dann /^man sieht Pakete$/ do
-#   package = @current_inventory_pool.items.packages.sample
+#   package = @current_inventory_pool.items.packages.order("RAND()").first
 #   step 'I search for "%s"' % package.inventory_code
 #   find(".line[data-is_package='true']", match: :prefer_exact, text: package.name)
 # end
@@ -560,7 +560,7 @@ When /^I edit an existing (Model|Option|Package|)$/ do |entity|
   if entity == 'Package'
 
     if @model
-      @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).sample
+      @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).order("RAND()").first
       find("#packages .line[data-id='#{@package.id}'] [data-edit-package]").click
     else
       find("#packages .line[data-new] [data-edit-package]", match: :first).click
@@ -573,11 +573,11 @@ When /^I edit an existing (Model|Option|Package|)$/ do |entity|
     @page_to_return = current_path
     object_name = case entity
                     when "Model"
-                      @model = @current_inventory_pool.models.where(type: "Model").sample
+                      @model = @current_inventory_pool.models.where(type: "Model").order("RAND()").first
                       @model.name
                     when "Option"
                       find(:select, "retired").first("option").select_option
-                      @option = @current_inventory_pool.options.sample
+                      @option = @current_inventory_pool.options.order("RAND()").first
                       @option.name
                   end
     step 'I search for "%s"' % object_name

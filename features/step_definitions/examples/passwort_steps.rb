@@ -15,7 +15,7 @@ Given(/^I am listing users$/) do
   if @current_user == User.find_by_login("gino")
     step "I am looking at the user list outside an inventory pool"
   else
-    @inventory_pool = @current_inventory_pool || @current_user.inventory_pools.sample
+    @inventory_pool = @current_inventory_pool || @current_user.inventory_pools.order("RAND()").first
     visit manage_inventory_pool_users_path(@inventory_pool)
   end
 end

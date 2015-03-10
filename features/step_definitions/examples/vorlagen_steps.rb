@@ -160,7 +160,7 @@ end
 
 #Dann(/^kann ich beliebige Vorlage direkt aus der Liste löschen$/) do
 Then(/^I can delete any template directly from this list$/) do
-  @template = @current_inventory_pool.templates.sample
+  @template = @current_inventory_pool.templates.order("RAND()").first
   within(".line", text: @template.name) do
     within(".multibutton") do
       find(".dropdown-toggle").click

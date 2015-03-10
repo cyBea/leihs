@@ -84,13 +84,13 @@ end
 
 #Wenn(/^ich kann dieser Delegation keine Delegation zuteile$/) do
 When(/^I cannot assign a delegation to the delegation$/) do
-  find("[data-search-users]").set @current_inventory_pool.users.as_delegations.sample.name
+  find("[data-search-users]").set @current_inventory_pool.users.as_delegations.order("RAND()").first.name
   expect(has_no_selector?("ul.ui-autocomplete > li")).to be true
 end
 
 #Wenn(/^ich genau einen Verantwortlichen eintrage$/) do
 When(/^I enter exactly one responsible person$/) do
-  @responsible ||= @current_inventory_pool.users.not_as_delegations.sample
+  @responsible ||= @current_inventory_pool.users.not_as_delegations.order("RAND()").first
   find(".row.emboss", text: _("Responsible")).find("input[data-type='autocomplete']").set @responsible.name
   find("ul.ui-autocomplete > li").click
 end
@@ -105,7 +105,7 @@ end
 
 #Wenn(/^ich nach einer Delegation suche$/) do
 When(/^I search for a delegation$/) do
-  @delegation = @current_inventory_pool.users.as_delegations.sample
+  @delegation = @current_inventory_pool.users.as_delegations.order("RAND()").first
   #step "ich suche '%s'" % @delegation.firstname
   step "I search for '%s'" % @delegation.firstname
 end
@@ -208,7 +208,7 @@ Given(/^there is a hand over( for a delegation)?( with assigned items)?$/) do |a
                elsif arg1
                  @current_inventory_pool.visits.hand_over.find {|v| v.user.is_delegation and v.lines.any? &:item and not v.date.future? }
                else
-                 @current_inventory_pool.visits.hand_over.sample
+                 @current_inventory_pool.visits.hand_over.order("RAND()").first
                end
   expect(@hand_over).not_to be_nil
 end
@@ -251,7 +251,7 @@ When(/^I try to change the delegation$/) do
   find(".modal", match: :first)
   find("input#user-id", match: :first)
   @wrong_delegation = User.as_delegations.find {|d| not d.access_right_for @current_inventory_pool}
-  @valid_delegation = @current_inventory_pool.users.as_delegations.sample
+  @valid_delegation = @current_inventory_pool.users.as_delegations.order("RAND()").first
 end
 
 #Dann(/^lautet die Aushändigung auf diese neu gewählte Delegation$/) do
@@ -266,14 +266,14 @@ When(/^I try to change the contact person$/) do
   step "I select all lines selecting all linegroups"
   find("button", text: _("Hand Over Selection")).click
   @delegation = @hand_over.user
-  @contact = @delegation.delegated_users.sample
+  @contact = @delegation.delegated_users.order("RAND()").first
   @not_contact = @current_inventory_pool.users.find {|u| not @delegation.delegated_users.include? u}
 end
 
 #Wenn(/^ich versuche bei der Bestellung die Kontaktperson zu wechseln$/) do
 When(/^I try to change the order's contact person$/) do
   click_button "swap-user"
-  @contact = @delegation.delegated_users.sample
+  @contact = @delegation.delegated_users.order("RAND()").first
   @not_contact = @current_inventory_pool.users.find {|u| not @delegation.delegated_users.include? u}
 end
 
@@ -299,7 +299,7 @@ end
 
 #Wenn(/^ich die Kontaktperson wechsle$/) do
 When(/^I change the contact person$/) do
-  @contact ||= (@delegation or @new_delegation).delegated_users.sample
+  @contact ||= (@delegation or @new_delegation).delegated_users.order("RAND()").first
   within "#contact-person" do
     find("input#user-id", match: :first).set @contact.name
     find(".ui-menu-item a", match: :first, text: @contact.name).click
@@ -321,7 +321,7 @@ When(/^I pick a user instead of a delegation$/) do
   @contract ||= @hand_over.lines.map(&:contract).uniq.first
   @delegation = @contract.user
   @delegated_user = @contract.delegated_user
-  @new_user = @current_inventory_pool.users.not_as_delegations.sample
+  @new_user = @current_inventory_pool.users.not_as_delegations.order("RAND()").first
   has_selector?("input[data-select-lines]", match: :first)
   all("input[data-select-lines]").each_with_index do |line, i|
     el = all("input[data-select-lines]")[i]
@@ -534,7 +534,7 @@ end
 When(/^I pick a delegation instead of a user$/) do
   @contract ||= @hand_over.lines.map(&:contract).uniq.first
   @user = @contract.user
-  @delegation = @current_inventory_pool.users.as_delegations.sample
+  @delegation = @current_inventory_pool.users.as_delegations.order("RAND()").first
   expect(has_selector?("input[data-select-lines]", match: :first)).to be true
   step "I select all lines selecting all linegroups"
   multibutton = first(".multibutton", text: _("Hand Over Selection")) || first(".multibutton", text: _("Edit Selection"))
@@ -547,7 +547,7 @@ end
 
 #Und(/^ich eine Kontaktperson aus der Delegation wähle$/) do
 When(/^I pick a contact person from the delegation$/) do
-  @contact = @delegation.delegated_users.sample
+  @contact = @delegation.delegated_users.order("RAND()").first
   find("#contact-person input#user-id", match: :first).click
   find("#contact-person input#user-id", match: :first).set @contact.name
   find(".ui-menu-item a", match: :first, text: @contact.name).click
@@ -616,7 +616,7 @@ end
 When(/^I choose a suspended contact person$/) do
   delegated_user = @hand_over.user.delegated_users.select{|u| u.suspended? @current_inventory_pool}.sample
   delegated_user ||= begin
-    user = @hand_over.user.delegated_users.sample
+    user = @hand_over.user.delegated_users.order("RAND()").first
     ensure_suspended_user(user, @current_inventory_pool)
     user
   end
@@ -633,7 +633,7 @@ end
 
 #Angenommen(/^ich befinde mich in der Editieransicht einer Delegation$/) do
 Given(/^I am editing a delegation$/) do
-  @delegation = @current_inventory_pool.users.as_delegations.sample
+  @delegation = @current_inventory_pool.users.as_delegations.order("RAND()").first
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @delegation)
 end
 
@@ -647,7 +647,7 @@ end
 # Wenn(/^ich einen Benutzer hinzufüge, der für diesen Gerätepark gesperrt ist$/) do
 #   @delegated_user = @current_inventory_pool.users.select{|u| u.suspended? @current_inventory_pool}.sample
 #   @delegated_user ||= begin
-#       user = @current_inventory_pool.users.not_as_delegations.sample
+#       user = @current_inventory_pool.users.not_as_delegations.order("RAND()").first
 #       ensure_suspended_user(user, @current_inventory_pool)
 #       user
 #   end
@@ -662,7 +662,7 @@ end
 
 #Angenommen(/^ich wähle eine Delegation$/) do
 Given(/^I pick a delegation$/) do
-  @delegation = @current_inventory_pool.users.as_delegations.sample
+  @delegation = @current_inventory_pool.users.as_delegations.order("RAND()").first
   find("#user input#user-id", match: :first).set @delegation.name
   find(".ui-menu-item a", match: :first, text: @delegation.name).click
 end
@@ -671,7 +671,7 @@ end
 When(/^I pick a contact person that is suspended for the current inventory pool$/) do
   delegated_user = @delegation.delegated_users.select{|u| u.suspended? @current_inventory_pool}.sample
   delegated_user ||= begin
-    user = @delegation.delegated_users.sample
+    user = @delegation.delegated_users.order("RAND()").first
     ensure_suspended_user(user, @current_inventory_pool)
     user
   end

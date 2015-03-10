@@ -34,10 +34,10 @@ end
 Given(/^I have a contract with deadline (yesterday|tomorrow)( for the inventory pool "(.*?)")?$/) do |day, arg1, inventory_pool_name|
   @visit = if arg1
              inventory_pool = InventoryPool.find_by(name: inventory_pool_name)
-             @current_user.visits.take_back.where(inventory_pool_id: inventory_pool).sample
+             @current_user.visits.where(inventory_pool_id: inventory_pool)
            else
-             @current_user.visits.take_back.sample
-           end
+             @current_user.visits
+           end.take_back.order("RAND()").first
   expect(@visit).not_to be_nil
 
   sign = case day

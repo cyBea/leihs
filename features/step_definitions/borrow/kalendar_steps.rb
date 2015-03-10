@@ -423,7 +423,7 @@ end
 When(/^a model exists that is only available to a group$/) do
   @model = Model.all.detect{|m| m.partitions_with_generals.length > 1 and m.partitions_with_generals.find{|p| p.group_id == nil}.quantity == 0}
   expect(@model.blank?).to be false
-  @partition = @model.partitions.sample
+  @partition = @model.partitions.order("RAND()").first
 end
 
 #Dann(/^kann ich dieses Modell ausleihen, wenn ich in dieser Gruppe bin$/) do

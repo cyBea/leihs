@@ -58,7 +58,7 @@ end
 
 #Angenommen(/^ich drücke auf den Wertelistelink$/) do
 Given(/^I click the value list link$/) do
-  @contract = @current_user.contracts.where(status: [:signed, :closed]).sample
+  @contract = @current_user.contracts.where(status: [:signed, :closed]).order("RAND()").first
   within(".row.line[data-id='#{@contract.id}']") do
     find(".dropdown-toggle").click
     document_window = window_opened_by do
@@ -75,7 +75,7 @@ end
 
 #Angenommen(/^ich drücke auf den Vertraglink$/) do
 Given(/^I click the contract link$/) do
-  @contract = @current_user.contracts.where(status: [:signed, :closed]).sample
+  @contract = @current_user.contracts.where(status: [:signed, :closed]).order("RAND()").first
   document_window = window_opened_by do
     find("a[href='#{borrow_user_contract_path(@contract.id)}']", text: _("Contract")).click
   end
@@ -89,7 +89,7 @@ end
 
 #Wenn(/^ich eine Werteliste aus meinen Dokumenten öffne$/) do
 When(/^I open a value list from my documents$/) do
-  @contract = @current_user.contracts.where(status: [:signed, :closed]).sample
+  @contract = @current_user.contracts.where(status: [:signed, :closed]).order("RAND()").first
   visit borrow_user_value_list_path(@contract.id)
   #step "öffnet sich die Werteliste"
   step 'the value list opens'
@@ -98,7 +98,7 @@ end
 
 #Wenn(/^ich einen Vertrag aus meinen Dokumenten öffne$/) do
 When(/^I open a contract from my documents$/) do
-  @contract = @current_user.contracts.where(status: [:signed, :closed]).sample
+  @contract = @current_user.contracts.where(status: [:signed, :closed]).order("RAND()").first
   visit borrow_user_contract_path(@contract.id)
   #step "öffnet sich der Vertrag"
   step 'the contract opens'

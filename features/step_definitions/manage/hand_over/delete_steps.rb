@@ -20,7 +20,7 @@ Then /^this line is deleted$/ do
 end
 
 When /^I select multiple lines$/ do
-  @selected_line_ids = @hand_over.lines.sample(rand(1..@hand_over.lines.count)).map &:id
+  @selected_line_ids = @hand_over.lines.order("RAND()").limit(rand(1..@hand_over.lines.count)).map &:id
   expect(has_selector?(".line[data-id]", match: :first)).to be true
   @selected_line_ids.each do |id|
     cb = find(".line[data-id='#{id}'] input[type='checkbox'][data-select-line]")

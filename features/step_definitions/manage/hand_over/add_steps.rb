@@ -75,7 +75,7 @@ Then /^the (.*?) is added to the hand over$/ do |type|
 end
 
 When /^I add an option to the hand over which is already existing in the selected date range by providing an inventory code$/ do
-  option_line = @contract.option_lines.sample
+  option_line = @contract.option_lines.order("RAND()").first
   @option = option_line.option
   @quantity_before = option_line.quantity
   @n = rand(2..5)
@@ -139,9 +139,9 @@ end
 
 When /^I add so many lines that I break the maximal quantity of a model$/ do
   @model ||= if @contract
-               @contract.lines.where(option_id: nil).sample.model
+               @contract.lines.where(option_id: nil).order("RAND()").first.model
              else
-               @customer.get_approved_contract(@current_inventory_pool).lines.sample.model
+               @customer.get_approved_contract(@current_inventory_pool).lines.order("RAND()").first.model
              end
   @target_name = @model.name
   quantity_to_add = if @contract

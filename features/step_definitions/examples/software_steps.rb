@@ -95,7 +95,7 @@ end
 
 #Wenn(/^ich eine Software editiere$/) do
 When(/^I edit software$/) do
-  @software ||= Software.all.sample
+  @software ||= Software.order("RAND()").first
   step "I open the inventory"
   @page_to_return = current_path
   all("a", text: _("Software")).first.click
@@ -109,7 +109,7 @@ end
 #   @page_to_return = current_path
 #   find("a", text: _("Software"), match: :first).click
 #   @software = Software.all.select{|s| not s.items.empty?}.sample
-#   @license = @software.items.sample
+#   @license = @software.items.order("RAND()").first
 #   find(".line[data-type='software'][data-id='#{@software.id}']").find("button[data-type='inventory-expander']").click
 #   find(".line[data-type='license'][data-id='#{@license.id}']").find("a", text: _("Edit License")).click
 # end
@@ -281,7 +281,7 @@ end
 Then(/^for "(.*?)" one can select a supplier$/) do |arg1|
   i = find(".field", text: _(arg1)).find "input"
   i.click
-  supplier = Supplier.all.sample
+  supplier = Supplier.order("RAND()").first
   find(".ui-menu-item", text: supplier.name).click
   expect(i.value).to eq supplier.name
 end
@@ -289,7 +289,7 @@ end
 Then(/^for "(.*?)" one can select an inventory pool$/) do |arg1|
   i = find(".field", text: _(arg1)).find "input"
   i.click
-  ip = InventoryPool.all.sample
+  ip = InventoryPool.order("RAND()").first
   find(".ui-menu-item", text: ip.name).click
   expect(i.value).to eq ip.name
 end
@@ -410,7 +410,7 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
                                    when "Current inventory pool"
                                      @current_inventory_pool
                                    when "Another inventory pool"
-                                     @other_inventory_pool ||= InventoryPool.where.not(id: @current_inventory_pool).sample
+                                     @other_inventory_pool ||= InventoryPool.where.not(id: @current_inventory_pool).order("RAND()").first
                                  end
           else
             puts "Don't know how to handle the field named #{k}"
@@ -540,7 +540,7 @@ Given(/^there exist licenses for this software product$/) do
   rand(1..3).times do
     @model.items << FactoryGirl.create(:license, {owner: @current_inventory_pool, model: @model})
   end
-  @item = @model.items.sample
+  @item = @model.items.order("RAND()").first
 end
 
 When(/^I see these in my search result$/) do
@@ -593,7 +593,7 @@ When(/^I fill in all the required fields for the license$/) do
 end
 
 When(/^I fill in the software$/) do
-  @software = Software.all.sample
+  @software = Software.order("RAND()").first
   fill_in_autocomplete_field _("Software"), @software.name
 end
 
@@ -696,7 +696,7 @@ Given(/^I add a new or I change an existing (.+)$/) do |entity|
   end
 
   When(/^there exists already a manufacturer$/) do
-    @manufacturer = Software.manufacturers.sample
+    @manufacturer = Software.manufacturers.order("RAND()").first
   end
 
   Then(/^the manufacturer can be selected from the list$/) do
@@ -749,7 +749,7 @@ Given(/^a software product with more than (\d+) text rows in field "(.*?)" exist
                r ||= begin
                  td = []
                  (arg1.to_i + rand(1..10)).times { td << Faker::Lorem.paragraph }
-                 m = @current_inventory_pool.models.sample
+                 m = @current_inventory_pool.models.order("RAND()").first
                  m.update_attributes(technical_detail: td.join("\r\n"))
                  m
                end

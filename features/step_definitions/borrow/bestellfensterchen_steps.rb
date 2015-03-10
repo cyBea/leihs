@@ -104,7 +104,7 @@ Then(/^I see a timer$/) do
   @timeoutStart = if @current_user.contracts.unsubmitted.empty?
                     Time.now
                   else
-                    @current_user.contracts.unsubmitted.sample.updated_at
+                    @current_user.contracts.unsubmitted.order("RAND()").first.updated_at
                   end
   @countdown = find("#timeout-countdown-time", match: :first).text
 end

@@ -55,7 +55,7 @@ Then /^none of the lines are deleted$/ do
 end
 
 When(/^I delete a hand over$/) do
-  @visit = @current_inventory_pool.visits.hand_over.where(date: Date.today).sample
+  @visit = @current_inventory_pool.visits.hand_over.where(date: Date.today).order("RAND()").first
   expect(@visit).not_to be_nil
   expect(@visit.lines.empty?).to be false
   @visit_line_ids = @visit.lines.map(&:id)

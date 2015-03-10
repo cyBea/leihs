@@ -1,7 +1,7 @@
 Then(/^I see a list of buildings$/) do
   find("nav .active", text: _("Buildings"))
   within ".list-of-lines" do
-    Building.all.sample(5).each do |building|
+    Building.order("RAND()").limit(5).each do |building|
       find(".line > .col2of6", text: building.name)
     end
   end

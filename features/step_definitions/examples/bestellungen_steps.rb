@@ -16,7 +16,7 @@ end
 
 #When(/^ich öffne eine Bestellung von ein gesperrter Benutzer$/) do
 When(/^I open a suspended user's order$/) do
-  user = @current_inventory_pool.contracts.submitted.sample.user
+  user = @current_inventory_pool.contracts.submitted.order("RAND()").first.user
   ensure_suspended_user(user, @current_inventory_pool)
   step 'I open an order placed by "%s"' % user
 end
@@ -269,7 +269,7 @@ end
 
 #Dann(/^ich kann Optionen hinzufügen$/) do
 Then(/^I can add options$/) do
-  option = @current_inventory_pool.options.sample
+  option = @current_inventory_pool.options.order("RAND()").first
   hand_over_assign_or_add option.to_s
 end
 

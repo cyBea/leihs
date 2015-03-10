@@ -43,9 +43,9 @@ end
 
 When /^I change a contract lines time range$/ do
   @line = if @contract
-    @contract.lines.sample
+    @contract.lines.order("RAND()").first
   else
-    @customer.visits.where(inventory_pool_id: @current_inventory_pool).hand_over.first.lines.sample
+    @customer.visits.where(inventory_pool_id: @current_inventory_pool).hand_over.first.lines.order("RAND()").first
   end
   @line_element = all(".line[data-ids*='#{@line.id}']").first || all(".line[data-id='#{@line.id}']").first
   step 'I open the booking calendar for this line'
@@ -87,9 +87,9 @@ end
 When /^I change a contract lines quantity$/ do
   if @line_element.nil? and page.has_selector?("#hand-over-view")
     @line = if @contract
-              @contract.lines.sample
+              @contract.lines.order("RAND()").first
             else
-              @customer.visits.where(inventory_pool_id: @current_inventory_pool).hand_over.first.lines.sample
+              @customer.visits.where(inventory_pool_id: @current_inventory_pool).hand_over.first.lines.order("RAND()").first
             end
     @total_quantity = @line.contract.lines.where(:model_id => @line.model_id).sum(&:quantity)
     @new_quantity = @line.quantity + 1

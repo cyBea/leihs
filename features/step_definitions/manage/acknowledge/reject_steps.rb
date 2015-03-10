@@ -1,11 +1,11 @@
 # newer version in lending/lending_steps.rb?
 #When /^I open the daily view$/ do
-#  @current_inventory_pool = @current_inventory_pool || @current_user.managed_inventory_pools.sample
+#  @current_inventory_pool = @current_inventory_pool || @current_user.managed_inventory_pools.order("RAND()").first
 #  visit manage_daily_view_path @current_inventory_pool
 #end
 
 When /^I reject a contract$/ do
-  @contract = @current_inventory_pool.contracts.submitted.sample
+  @contract = @current_inventory_pool.contracts.submitted.order("RAND()").first
 
   step %Q(I uncheck the "No verification required" button)
 

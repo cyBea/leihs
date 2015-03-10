@@ -23,7 +23,7 @@ end
 
 #Wenn(/^ich dasselbe Modell einer Bestellung hinzufüge$/) do
 When(/^I add the same model to an order$/) do
-  contract = @inventory_pool.contracts.submitted.sample
+  contract = @inventory_pool.contracts.submitted.order("RAND()").first
   (@new_contract_line.maximum_available_quantity + 1).times do
     contract.contract_lines << FactoryGirl.create(:contract_line,
                                                   :contract => contract,
