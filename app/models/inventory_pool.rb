@@ -287,11 +287,19 @@ class InventoryPool < ActiveRecord::Base
                        Location.find_or_create(building_id: building_id, room: room)
                      end
 
+          supplier = row["supplier_name"].blank? ? nil : Supplier.find_or_create_by(name: row["supplier_name"])
+
           item = inventory_pool.items.create(inventory_code: row["inventory_code"].strip,
                                              model: Model.find(row["model_id"]),
-                                             serial_number: row["serial_number"],
+                                             serial_number: (row["serial_number"].blank? ? nil : row["serial_number"]),
                                              location: location,
-                                             is_borrowable: (row["is_borrowable"].blank? ? 0 : row["is_borrowable"].to_i))
+                                             note: (row["note"].blank? ? nil : row["note"]),
+                                             is_borrowable: (row["is_borrowable"] == "1" ? 1 : 0),
+                                             is_inventory_relevant: (row["is_inventory_relevant"] == "0" ? 0 : 1),
+                                             invoice_number: (row["invoice_number"].blank? ? nil : row["invoice_number"]),
+                                             invoice_date: (row["invoice_date"].blank? ? nil : row["invoice_date"]),
+                                             price: (row["price"].blank? ? nil : row["price"]),
+                                             supplier: supplier )
           item.valid?
           items << item
         end

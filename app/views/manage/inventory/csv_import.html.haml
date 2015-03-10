@@ -11,13 +11,13 @@
       .row
         %h1.headline-xl= yield(:title)
 
-    .row.margin-top-l
+    .row.margin-top-l.padding-horizontal-l
 
-      .row.margin-vertical-xs.padding-horizontal-s
+      .row
+        %h2= _("Upload a comma separated CSV file (with UTF-8 encoding), each row describing an item.")
+
+      .row.margin-vertical-l
         .col2of3
-          %h2= _("Upload a comma separated CSV file, each row describing an item.")
-          %br
-          %br
           %h3
             = succeed ':' do
               = _("Accepted columns")
@@ -33,7 +33,13 @@
             %li serial_number
             %li building
             %li room
+            %li note
             %li is_borrowable (0 or 1, default: 0)
+            %li is_inventory_relevant (0 or 1, default: 1)
+            %li invoice_number
+            %li invoice_date
+            %li price
+            %li supplier_name
           %h3
             = _("All other columns are ignored.")
         .col1of3
@@ -76,3 +82,8 @@
             - @valid_items.each do |item|
               .emboss.margin-bottom-s
                 = item.inspect
+
+:coffeescript
+  $("form[enctype='multipart/form-data']").on 'submit', ->
+    $(this).find("button").parent().text("Uploading...")
+
