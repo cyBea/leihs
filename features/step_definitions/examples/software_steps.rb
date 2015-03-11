@@ -696,7 +696,7 @@ Given(/^I add a new or I change an existing (.+)$/) do |entity|
   end
 
   When(/^there exists already a manufacturer$/) do
-    @manufacturer = Software.manufacturers.order("RAND()").first
+    @manufacturer = Software.manufacturers.sample
   end
 
   Then(/^the manufacturer can be selected from the list$/) do

@@ -146,7 +146,7 @@ end
 
 #Wenn(/^ich das Modell ändere$/) do
 When(/^I change the model$/) do
-  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.order("RAND()").first.name
+  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.sample.name
 end
 
 #Wenn(/^ich den Gegenstand ausmustere$/) do
