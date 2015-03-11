@@ -204,7 +204,7 @@ end
 #Angenommen(/^es existiert ein Modell für das eine Bestellung vorhanden ist$/) do
 Given(/^there is a model for which an order exists$/) do
   @model = @current_user.inventory_pools.flat_map(&:contract_lines).select do |cl|
-    cl.is_a?(ItemLine) and cl.start_date.future? and cl.model.categories.exists?
+    cl.is_a?(ItemLine) and cl.start_date > Date.today and cl.model.categories.exists? # NOTE cl.start_date.future? doesn't work properly because timezone
   end.sample.model
 end
 

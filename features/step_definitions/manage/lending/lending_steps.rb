@@ -42,7 +42,7 @@ Then /^unborrowable items are highlighted$/ do
 end
 
 Given /^I open the daily view$/ do
-  @current_inventory_pool = @current_user.managed_inventory_pools.select{|ip| ip.contracts.submitted.exists? }.sample
+  @current_inventory_pool = @current_user.managed_inventory_pools.select{|ip| ip.visits.hand_over.where(date: Date.today).exists? }.sample
   raise "contract not found" unless @current_inventory_pool
   visit manage_daily_view_path(@current_inventory_pool)
   find("#daily-view")
@@ -142,10 +142,9 @@ When /^I open a hand over for a customer that has things to pick up today as wel
 end
 
 When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
-  begin
-    @model = @customer.get_approved_contract(@current_inventory_pool).models.order("RAND()").first
-    @item = @model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).order("RAND()").first
-  end while @item.nil?
+  @model = @customer.get_approved_contract(@current_inventory_pool).models.order("RAND()").detect do |model|
+    @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).order("RAND()").first
+  end
   find("[data-add-contract-line]").set @item.inventory_code
   find("[data-add-contract-line] + .addon").click
   @assigned_line = find("[data-assign-item][disabled][value='#{@item.inventory_code}']")

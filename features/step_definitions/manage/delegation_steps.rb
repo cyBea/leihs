@@ -206,7 +206,7 @@ Given(/^there is a hand over( for a delegation)?( with assigned items)?$/) do |a
   @hand_over = if arg1 and arg2
                  @current_inventory_pool.visits.hand_over.find {|v| v.user.is_delegation and v.lines.all?(&:item) and Date.today >= v.date }
                elsif arg1
-                 @current_inventory_pool.visits.hand_over.find {|v| v.user.is_delegation and v.lines.any? &:item and not v.date.future? }
+                 @current_inventory_pool.visits.hand_over.find {|v| v.user.is_delegation and v.lines.any? &:item and not v.date > Date.today } # NOTE v.date.future? doesn't work properly because timezone
                else
                  @current_inventory_pool.visits.hand_over.order("RAND()").first
                end
