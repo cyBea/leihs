@@ -72,8 +72,9 @@ module Dataset
         def order_with_seed(*args)
           if args[0].is_a? String and args[0] == "RAND ()"
             args[0] = "RAND (%d)" % ($random.rand * 10**5).to_i
+            puts "--- RANDOMIZED (mysql) ---", args[0]
           end
-          order_without_seed(args)
+          order_without_seed(*args)
         end
         alias_method_chain :order, :seed
       end

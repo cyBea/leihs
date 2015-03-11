@@ -27,7 +27,7 @@ end
 
 #When(/^ich kann eine der Vorlagen detailliert betrachten$/) do
 Then(/^I can look at one of the templates in detail$/) do
-  template = @current_user.templates.order("RAND()").first
+  template = @current_user.templates.sample
   find("a[href='#{borrow_template_path(template)}']", match: :first, text: template.name).click
   find("nav a[href='#{borrow_template_path(template)}']", match: :first)
 end

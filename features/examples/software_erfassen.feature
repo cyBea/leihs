@@ -4,7 +4,7 @@ Feature: Creating software
   Background:
     Given I am Mike
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Creating a software product
     When I add a new Software
     And I enter the following details

@@ -203,10 +203,9 @@ end
 
 #Angenommen(/^es existiert ein Modell für das eine Bestellung vorhanden ist$/) do
 Given(/^there is a model for which an order exists$/) do
-  @current_user.inventory_pools.flat_map(&:contract_lines).select do |cl|
-    @model = cl.model
+  @model = @current_user.inventory_pools.flat_map(&:contract_lines).select do |cl|
     cl.is_a?(ItemLine) and cl.start_date.future? and cl.model.categories.exists?
-  end.sample
+  end.sample.model
 end
 
 #Wenn(/^man dieses Modell aus der Modellliste hinzufügt$/) do
