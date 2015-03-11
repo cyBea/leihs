@@ -18,7 +18,7 @@ Feature: Reject Order
     When I confirm the contract rejection
     Then the contract is rejected
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Reject a contract on the edit view
     When I open the daily view
     And I navigate to the open orders
