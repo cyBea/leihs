@@ -48,23 +48,34 @@ module Dataset
     test_datetime = ENV['TEST_DATETIME'].gsub(/\D/, '').to_i
     srand(test_datetime)
 
-    unless @random
-      @random = Random.new(test_datetime)
+    unless $random
+      $random = Random.new(test_datetime)
 
       # in order to guarantuee the same sample results on CI and locally, we have to change these ruby methods to use the global TEST_DATETIME seed
       Array.class_eval do
         def sample_with_random(*args)
           r = if args.empty?
-            sample_without_random(random: @random)
+            sample_without_random(random: $random)
           elsif args.last.is_a? Hash
             sample_without_random(*args)
           elsif not args.first.is_a? Hash
-            sample_without_random(args.first, {random: @random})
+            sample_without_random(args.first, {random: $random})
           end
           puts "--- RANDOMIZED (sample) ---", r.inspect
           r
         end
         alias_method_chain :sample, :random
+      end
+
+      # in order to guarantuee the same sample results on CI and locally, we seed the mysql random function
+      Arel::SelectManager.class_eval do
+        def order_with_seed(*args)
+          if args[0].is_a? String and args[0] == "RAND ()"
+            args[0] = "RAND (%d)" % ($random.rand * 10**5).to_i
+          end
+          order_without_seed(args)
+        end
+        alias_method_chain :order, :seed
       end
     end
 
