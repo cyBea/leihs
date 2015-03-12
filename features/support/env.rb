@@ -166,3 +166,7 @@ if ENV["PRY"]
     binding.pry
   end
 end
+
+AfterStep do
+  sleep 1
+end
