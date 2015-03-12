@@ -24,23 +24,19 @@ Then(/^I see all delegations Julie is a member of$/) do
   # TODO also check contracts matches, etc...
 end
 
-#Dann(/^kann ich in der Benutzerliste nach Delegationen einschränken$/) do
-Then(/^I can restrict the user list to show only delegations$/) do
-  find("#user-index-view form#list-filters select#type").select _("Delegations")
-  within "#user-list.list-of-lines" do
-    find(".line", match: :first)
-    ids = all(".line [data-type='user-cell']").map {|user_data| user_data["data-id"] }
-    expect(User.find(ids).all?(&:is_delegation)).to be true
-  end
-end
+Then(/^I can restrict the user list to show only (users|delegations)$/) do |arg1|
+  t, b = case arg1
+           when "users"
+             [_("Users"), false]
+           when "delegations"
+             [_("Delegations"), true]
+         end
 
-#Dann(/^ich kann in der Benutzerliste nach Benutzer einschränken$/) do
-Then(/^I can restrict the user list to show only users$/) do
-  find("#user-index-view form#list-filters select#type").select _("Users")
+  find("#user-index-view form#list-filters select#type").select t
   within "#user-list.list-of-lines" do
     find(".line", match: :first)
-    ids = all(".line [data-type='user-cell']").map {|user_data| user_data["data-id"] }
-    expect(User.find(ids).any?(&:is_delegation)).to be false
+    ids = all(".line [data-type='user-cell']").map { |user_data| user_data["data-id"] }
+    expect(User.find(ids).any?(&:is_delegation)).to be b
   end
 end
 
@@ -383,8 +379,9 @@ end
 Then(/^I can at most give the delegation access on the customer level$/) do
   roles = all("[name='access_right[role]'] option")
   expect(roles.size).to eq 2
-  roles.include? "no_access"
-  roles.include? "customer"
+  values = roles.map(&:value)
+  expect(values.include? "no_access").to be true
+  expect(values.include? "customer").to be true
 end
 
 #Wenn(/^ich keinen Verantwortlichen zuteile$/) do

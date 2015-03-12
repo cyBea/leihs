@@ -156,14 +156,13 @@ end
 ####################################################################
 
 Then /^I can find the user administration features in the "Admin" area under "Users"$/ do
-  step 'I follow "Admin"'
-  step 'I follow "%s"' % _("Users")
+  step 'I navigate to the admin area'
+  step "I am on the tab '%s'" % _("Users")
 end
 
 #Angenommen /^ein (.*?)Benutzer (mit zugeteilter|ohne zugeteilte) Rolle erscheint in einer Benutzerliste$/ do |arg1, arg2|
 Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |suspended, with_or_without|
   user = User.where(:login => "normin").first
-  step 'I can find the user administration features in the "Admin" area under "Users"'
   case suspended
     when "suspended "
       user.access_rights.active.first.update_attributes(suspended_until: Date.today + 1.year, suspended_reason: "suspended reason")
@@ -175,6 +174,7 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
       user.access_rights.active.delete_all
       expect(user.access_rights.active.empty?).to be true
   end
+  step %Q(I can find the user administration features in the "Admin" area under "Users")
   step %Q(I scroll to the end of the list)
   @el = find("#user-list .line", text: user.to_s)
 end
