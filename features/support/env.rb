@@ -86,7 +86,6 @@ Before('@ldap') do
 end
 
 Before('@javascript') do
-  @use_phantomjs = true
   @use_browser = :firefox
 end
 
