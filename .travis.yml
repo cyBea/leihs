@@ -16,5 +16,4 @@ before_install:
 bundler_args: --without development
 cache: bundler
 script:
-  - bundle exec script/run_tests.rb nojs
   - bundle exec cucumber -t ~@browser
