@@ -15,7 +15,7 @@ FactoryGirl.define do
     delegated_user { user.delegated_users.sample if user.is_delegation }
 
     factory :contract_with_lines do
-      ignore do
+      transient do
         lines_count { rand(3..6) }
       end
       after(:create) do |contract, evaluator|
