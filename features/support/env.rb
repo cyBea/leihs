@@ -87,6 +87,7 @@ end
 
 Before('@javascript') do
   @use_phantomjs = true
+  @use_browser = :firefox
 end
 
 Before('@browser', '@firefox') do
