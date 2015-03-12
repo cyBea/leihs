@@ -3,11 +3,14 @@
 
 #Angenommen /^man editiert einen Gegenstand, wo man der Besitzer ist(, der am Lager)?( und in keinem Vertrag vorhanden ist)?$/ do |arg1, arg2|
 Given(/^I edit an item that belongs to the current inventory pool( and is in stock)?( and is not part of any contract)?$/) do |in_stock, not_in_contract|
-  items = @current_inventory_pool.items.items.where(owner_id: @current_inventory_pool, models: {is_package: false})
+  items = @current_inventory_pool.items.items.where(owner_id: @current_inventory_pool, models: {is_package: false}).order("RAND()")
   items = items.in_stock if in_stock
-  items = items.select { |i| ContractLine.where(item_id: i.id).empty? } if not_in_contract
 
-  @item = items.sample
+  @item = if not_in_contract
+            items.detect { |i| ContractLine.where(item_id: i.id).empty? }
+          else
+            items.first
+          end
 
   visit manage_edit_item_path @current_inventory_pool, @item
   expect(has_selector?(".row.emboss")).to be true
@@ -146,7 +149,7 @@ end
 
 #Wenn(/^ich das Modell ändere$/) do
 When(/^I change the model$/) do
-  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.select { |m| m != @item.model }.sample.name
+  fill_in_autocomplete_field _("Model"), @current_inventory_pool.models.order("RAND()").detect { |m| m != @item.model }.name
 end
 
 #Wenn(/^ich den Gegenstand ausmustere$/) do

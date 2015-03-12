@@ -31,7 +31,7 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
              items.in_stock.where(is_borrowable: true)
            when "an unborrowable"
              items.in_stock.where(is_borrowable: false)
-           end.sample
+           end.order("RAND()").first
   @model = @item.model
   @inventory_codes << @item.inventory_code
   fill_in "assign-or-add-input", with: @item.model.name

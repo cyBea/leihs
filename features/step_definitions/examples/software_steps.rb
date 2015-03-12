@@ -108,7 +108,7 @@ end
 #   step "I open the inventory"
 #   @page_to_return = current_path
 #   find("a", text: _("Software"), match: :first).click
-#   @software = Software.all.select{|s| not s.items.empty?}.sample
+#   @software = Software.order("RAND()").detect {|s| not s.items.empty?}
 #   @license = @software.items.order("RAND()").first
 #   find(".line[data-type='software'][data-id='#{@software.id}']").find("button[data-type='inventory-expander']").click
 #   find(".line[data-type='license'][data-id='#{@license.id}']").find("a", text: _("Edit License")).click
@@ -134,7 +134,7 @@ end
 
 #Wenn(/^ich eine andere Software auswähle$/) do
 When(/^I select some different software$/) do
-  @new_software = Software.all.select{|s| s != @software}.sample
+  @new_software = Software.where.not(id: @software.id).order("RAND()").first
   fill_in_autocomplete_field _("Software"), @new_software.name
 end
 

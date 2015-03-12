@@ -611,7 +611,7 @@ end
 
 #Wenn(/^ich eine gesperrte Kontaktperson wähle$/) do
 When(/^I choose a suspended contact person$/) do
-  delegated_user = @hand_over.user.delegated_users.select{|u| u.suspended? @current_inventory_pool}.sample
+  delegated_user = @hand_over.user.delegated_users.order("RAND()").detect {|u| u.suspended? @current_inventory_pool}
   delegated_user ||= begin
     user = @hand_over.user.delegated_users.order("RAND()").first
     ensure_suspended_user(user, @current_inventory_pool)
@@ -636,13 +636,13 @@ end
 
 #Wenn(/^ich einen Verantwortlichen zuteile, der für diesen Gerätepark gesperrt ist$/) do
 When(/^I assign a responsible person that is suspended for the current inventory pool$/) do
-  @responsible = @current_inventory_pool.users.select{|u| u.suspended? @current_inventory_pool}.sample
+  @responsible = @current_inventory_pool.users.order("RAND()").detect {|u| u.suspended? @current_inventory_pool}
   #step 'ich genau einen Verantwortlichen eintrage'
   step 'I enter exactly one responsible person'
 end
 
 # Wenn(/^ich einen Benutzer hinzufüge, der für diesen Gerätepark gesperrt ist$/) do
-#   @delegated_user = @current_inventory_pool.users.select{|u| u.suspended? @current_inventory_pool}.sample
+#   @delegated_user = @current_inventory_pool.users.order("RAND()").detect{|u| u.suspended? @current_inventory_pool}
 #   @delegated_user ||= begin
 #       user = @current_inventory_pool.users.not_as_delegations.order("RAND()").first
 #       ensure_suspended_user(user, @current_inventory_pool)
@@ -666,7 +666,7 @@ end
 
 #Wenn(/^ich eine Kontaktperson wähle, der für diesen Gerätepark gesperrt ist$/) do
 When(/^I pick a contact person that is suspended for the current inventory pool$/) do
-  delegated_user = @delegation.delegated_users.select{|u| u.suspended? @current_inventory_pool}.sample
+  delegated_user = @delegation.delegated_users.order("RAND()").detect {|u| u.suspended? @current_inventory_pool}
   delegated_user ||= begin
     user = @delegation.delegated_users.order("RAND()").first
     ensure_suspended_user(user, @current_inventory_pool)

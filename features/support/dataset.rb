@@ -54,15 +54,13 @@ module Dataset
       # in order to guarantuee the same sample results on CI and locally, we have to change these ruby methods to use the global TEST_DATETIME seed
       Array.class_eval do
         def sample_with_random(*args)
-          r = if args.empty?
+          if args.empty?
             sample_without_random(random: $random)
           elsif args.last.is_a? Hash
             sample_without_random(*args)
           elsif not args.first.is_a? Hash
             sample_without_random(args.first, {random: $random})
           end
-          puts "--- RANDOMIZED (sample) ---", r.inspect
-          r
         end
         alias_method_chain :sample, :random
       end
@@ -72,7 +70,6 @@ module Dataset
         def order_with_seed(*args)
           if args[0].is_a? String and args[0] == "RAND ()"
             args[0] = "RAND (%d)" % ($random.rand * 10**5).to_i
-            puts "--- RANDOMIZED (mysql) ---", args[0]
           end
           order_without_seed(*args)
         end

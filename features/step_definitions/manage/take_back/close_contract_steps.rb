@@ -1,12 +1,12 @@
 When /^I open a take back(, not overdue)?( with at least an option handed over before today)?$/ do |arg1, arg2|
   contracts = Contract.signed.where(inventory_pool_id: @current_user.managed_inventory_pools)
   contract = if arg1
-               contracts.select {|c| not c.lines.any? {|l| l.end_date < Date.today} }
+               contracts.order("RAND()").detect {|c| not c.lines.any? {|l| l.end_date < Date.today} }
              elsif arg2
-               contracts.select {|c| c.lines.any? {|l| l.is_a? OptionLine and l.start_date < Date.today} }
+               contracts.order("RAND()").detect {|c| c.lines.any? {|l| l.is_a? OptionLine and l.start_date < Date.today} }
              else
-               contracts
-             end.sample
+               contracts.order("RAND()").first
+             end
   expect(contract).not_to be_nil
   @current_inventory_pool = contract.inventory_pool
   @customer = contract.user

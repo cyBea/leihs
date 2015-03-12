@@ -30,9 +30,12 @@ Then /^the model is added to the contract$/ do
 end
 
 When /^I start to type the name of a model( which is not yet in the contract)?$/ do |arg1|
-  items = @current_inventory_pool.items.borrowable
-  items = items.select {|i| not @contract.models.include? i.model} if arg1
-  @item = items.sample
+  items = @current_inventory_pool.items.borrowable.order("RAND()")
+  @item = if arg1
+            items.detect {|i| not @contract.models.include? i.model}
+          else
+            items.first
+          end
   fill_in 'add-input', :with => @item.model.name[0..-2]
 end
 

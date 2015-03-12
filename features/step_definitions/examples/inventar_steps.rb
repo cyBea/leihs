@@ -807,18 +807,18 @@ Then(/^the license line contains the '(.*)' information$/) do |arg1|
 end
 
 Given(/^there exists a software license$/) do
-  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).select { |l| l.properties[:operating_system] and l.properties[:license_type] }.sample
+  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).order("RAND()").detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
   expect(@license).not_to be_nil
 end
 
 Given(/^there exists a software license of one of the following types$/) do |table|
   types = table.hashes.map { |h| h["technical"] }
-  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).select { |l| types.include?(l.properties[:license_type]) and l.properties[:operating_system] }.sample
+  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).order("RAND()").detect { |l| types.include?(l.properties[:license_type]) and l.properties[:operating_system] }
   expect(@license).not_to be_nil
 end
 
 Given(/^there exists a software license, owned by my inventory pool, but given responsibility to another inventory pool$/) do
-  @item = @license = Item.licenses.where.not(inventory_pool_id: nil).where("owner_id = :ip_id AND inventory_pool_id != :ip_id", {ip_id: @current_inventory_pool.id}).select { |l| l.properties[:operating_system] and l.properties[:license_type] }.sample
+  @item = @license = Item.licenses.where.not(inventory_pool_id: nil).where("owner_id = :ip_id AND inventory_pool_id != :ip_id", {ip_id: @current_inventory_pool.id}).order("RAND()").detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
   expect(@license).not_to be_nil
 end
 
@@ -903,7 +903,7 @@ Given(/^one is on the list of the options$/) do
 end
 
 When(/^I choose a certain responsible pool inside the whole inventory$/) do
-  @responsible_pool = @current_inventory_pool.own_items.select(:inventory_pool_id).where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]}).uniq.sample.inventory_pool
+  @responsible_pool = @current_inventory_pool.own_items.select(:inventory_pool_id).where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]}).order("RAND()").uniq.first.inventory_pool
   find(:select, "responsible_inventory_pool_id").find(:option, @responsible_pool.name).select_option
 end
 

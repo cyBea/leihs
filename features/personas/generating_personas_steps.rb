@@ -204,7 +204,7 @@ Given(/^(\d+) (unsubmitted|submitted|approved) contracts?(?: for user "(.*)")? e
   attrs[:user] = User.find_by_email(user_email) if user_email
 
   n.to_i.times do
-    attrs[:inventory_pool] = attrs[:user].inventory_pools.sample if attrs[:user]
+    attrs[:inventory_pool] = attrs[:user].inventory_pools.order("RAND()").first if attrs[:user]
     FactoryGirl.create :contract_with_lines, attrs
   end
 end

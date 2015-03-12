@@ -260,10 +260,10 @@ end
 
 Then(/^I can add models$/) do
   @model = if @current_user.access_right_for(@current_inventory_pool).role == :group_manager
-             @current_inventory_pool.models.select {|m| m.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(Date.today, Date.today) > 0 }
+             @current_inventory_pool.models.order("RAND()").select {|m| m.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(Date.today, Date.today) > 0 }
            else
-             @current_inventory_pool.models
-           end.select{|m| m.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).exists? }.sample
+             @current_inventory_pool.models.order("RAND()")
+           end.detect {|m| m.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).exists? }
   hand_over_assign_or_add @model.to_s
 end
 
@@ -314,7 +314,7 @@ Given(/^(orders|contracts|visits) exist$/) do |arg1|
 end
 
 When(/^I search for (an order|a contract|a visit)$/) do |arg1|
-  @contract = @contracts.sample
+  @contract = @contracts.order("RAND()").first
   @search_term = @contract.user.to_s
   el = arg1 == "a visit" ? "#visits-index-view" : "#contracts-index-view"
   within el do

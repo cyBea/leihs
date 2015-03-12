@@ -47,7 +47,7 @@ end
 
 #Angenommen(/^ich befinde mich in einer Rücknahme$/) do
 Given(/^I am taking something back$/) do
-  @take_back = @current_inventory_pool.visits.take_back.select{|v| v.lines.any? {|l| l.is_a? ItemLine}}.sample
+  @take_back = @current_inventory_pool.visits.take_back.order("RAND()").detect {|v| v.lines.any? {|l| l.is_a? ItemLine}}
   @user = @take_back.user
   step "man die Rücknahmenansicht für den Benutzer öffnet"
 end
@@ -75,7 +75,7 @@ When(/^I take back an( overdue)? (item|option) using the assignment field$/) do 
                        if arg1
                          @take_back.lines.find{|l| l.end_date.past?}
                        else
-                         @take_back.lines.select{|l| l.is_a? ItemLine}.sample
+                         @take_back.lines.order("RAND()").detect {|l| l.is_a? ItemLine}
                        end
                      when "option"
                        @take_back.lines.find {|l| l.quantity >= 2 }

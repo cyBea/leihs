@@ -347,7 +347,7 @@ Given(/^I edit the field "(.*?)" of an item that is part of a contract$/) do |na
   step %Q{I select the field "#{name}"}
   @item = @current_inventory_pool.items.not_in_stock.order("RAND()").first
   @item_before = @item.to_json
-  fill_in_autocomplete_field name, @current_inventory_pool.models.select{|m| m != @item.model}.sample.name
+  fill_in_autocomplete_field name, @current_inventory_pool.models.order("RAND()").detect {|m| m != @item.model}.name
   step %Q{I scan or enter the inventory code}
 end
 
