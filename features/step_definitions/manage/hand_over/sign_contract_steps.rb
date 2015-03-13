@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 When(/^I open a hand over( with at least one unassigned line)?( for today)?( with options| with models)?$/) do |unassigned_line, for_today, with_options_or_models|
-  @current_inventory_pool = @current_user.managed_inventory_pools.detect do |ip|
+  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
 
     @customer = ip.users.not_as_delegations.order("RAND ()").detect do |user|
       if unassigned_line and for_today

@@ -21,7 +21,7 @@ When(/^I open a model that already has compatible models$/) do
   @model = @current_inventory_pool.models.order("RAND()").detect {|m| m.compatibles.exists? }
 
   @model ||= begin
-    @current_inventory_pool = @current_user.managed_inventory_pools.select {|ip| not ip.models.empty? and ip.models.any? {|m| m.compatibles.exists?} }.sample
+    @current_inventory_pool = @current_user.inventory_pools.managed.select {|ip| not ip.models.empty? and ip.models.any? {|m| m.compatibles.exists?} }.sample
     step "I open the inventory"
     @current_inventory_pool.models.order("RAND()").detect {|m| m.compatibles.exists? }
   end

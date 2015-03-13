@@ -2,7 +2,7 @@
 
 #Angenommen /^ich suche ein Modell um es hinzuzufügen$/ do
   Given(/^I search for a model to add$/) do
-  @truncated_model_name = @current_user.managed_inventory_pools.first.items.first.model.name[0]
+  @truncated_model_name = @current_user.inventory_pools.managed.first.items.first.model.name[0]
   find("[data-add-contract-line]").set @truncated_model_name
   find(".ui-autocomplete .ui-menu-item", match: :first)
 end

@@ -61,7 +61,8 @@ Given(/^I am editing the user "(.*?)"$/) do |persona|
   if @current_user.access_rights.active.map(&:role).include? :admin
     visit manage_edit_user_path @user
   else
-    visit manage_edit_inventory_pool_user_path((@user.inventory_pools & @current_user.managed_inventory_pools).first, @user)
+    ip = @current_user.inventory_pools.managed.where("inventory_pools.id" => @user.inventory_pools.select("inventory_pools.id")).order("RAND()").first
+    visit manage_edit_inventory_pool_user_path(ip, @user)
   end
 end
 

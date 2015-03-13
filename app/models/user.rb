@@ -14,6 +14,15 @@ class User < ActiveRecord::Base
     def with_borrowable_items
       joins(:items).where(items: {retired: nil, is_borrowable: true, parent_id: nil})
     end
+
+    # get the inventory pools managed by the current user
+    def managed(role = [:inventory_manager, :lending_manager, :group_manager])
+      if proxy_association.owner.has_role? :admin
+        where(nil)
+      else
+        where(access_rights: {role: role})
+      end
+    end
   end
 
   has_many :items, -> { uniq }, :through => :inventory_pools
@@ -134,18 +143,6 @@ class User < ActiveRecord::Base
     users = users.order(User.arel_table[:firstname].asc)
     users = users.default_paginate params unless params[:paginate] == "false"
     users
-  end
-
-################################################
-
-  # TODO has_many :managed_inventory_pools OR scope ??
-  # get the inventory pools managed by the current user
-  def managed_inventory_pools(role = [:inventory_manager, :lending_manager, :group_manager])
-    if has_role? :admin
-      InventoryPool.all
-    else
-      access_rights.active.where(role: role).includes(:inventory_pool).collect(&:inventory_pool)
-    end
   end
 
 ################################################
@@ -331,17 +328,21 @@ class User < ActiveRecord::Base
 #################### Start role_requirement
 
   def has_role?(role, inventory_pool = nil)
-    roles = if inventory_pool
-      access_rights.active.where(inventory_pool_id: inventory_pool).collect(&:role)
+    if role == :admin
+      access_rights.active.where(role: role).exists?
     else
-      access_rights.active.collect(&:role)
-    end
+      roles = if inventory_pool
+                access_rights.where(inventory_pool_id: inventory_pool)
+              else
+                access_rights
+              end.active.collect(&:role)
 
-    if AccessRight::ROLES_HIERARCHY.include? role
-      i = AccessRight::ROLES_HIERARCHY.index role
-      (roles & AccessRight::ROLES_HIERARCHY).any? {|r| AccessRight::ROLES_HIERARCHY.index(r) >= i }
-    else
-      roles.include? role
+      if AccessRight::ROLES_HIERARCHY.include? role
+        i = AccessRight::ROLES_HIERARCHY.index role
+        (roles & AccessRight::ROLES_HIERARCHY).any? {|r| AccessRight::ROLES_HIERARCHY.index(r) >= i }
+      else
+        roles.include? role
+      end
     end
   end
 

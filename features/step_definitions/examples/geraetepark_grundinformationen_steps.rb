@@ -196,7 +196,7 @@ end
 
 Given(/^I edit an inventory pool( that is granting automatic access)?$/) do |arg1|
   if arg1
-    @current_inventory_pool = @current_user.managed_inventory_pools.select{|ip| ip.automatic_access? }.sample
+    @current_inventory_pool = @current_user.inventory_pools.managed.select{|ip| ip.automatic_access? }.sample
   end
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
   @last_edited_inventory_pool = @current_inventory_pool
@@ -207,7 +207,7 @@ Given(/^multiple inventory pools are granting automatic access$/) do
   InventoryPool.order("RAND()").limit(rand(2..4)).each do |inventory_pool|
     inventory_pool.update_attributes automatic_access: true
   end
-  if inventory_pool = @current_user.managed_inventory_pools.select{|ip| not ip.automatic_access? }.sample
+  if inventory_pool = @current_user.inventory_pools.managed.select{|ip| not ip.automatic_access? }.sample
     inventory_pool.update_attributes automatic_access: true
   end
   @inventory_pools_with_automatic_access = InventoryPool.where(automatic_access: true)

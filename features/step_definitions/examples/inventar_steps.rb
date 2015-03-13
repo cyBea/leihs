@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 # Angenommen /^man öffnet die Liste des Inventars$/ do
-#   #really needed?# @current_inventory_pool = @current_user.managed_inventory_pools.select { |ip| ip.models.exists? and ip.options.exists? }.sample
+#   #really needed?# @current_inventory_pool = @current_user.inventory_pools.managed.select { |ip| ip.models.exists? and ip.options.exists? }.sample
 #   step "I open the inventory"
 #   find("#inventory")
 # end

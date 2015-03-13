@@ -13,7 +13,7 @@ Then /^I see a list of inventory codes of items that are in stock and matching t
 end
 
 When /^I assign an item to the hand over by providing an inventory code and a date range$/ do
-  @inventory_code = @current_user.managed_inventory_pools.first.items.in_stock.first.inventory_code unless @inventory_code
+  @inventory_code = @current_user.inventory_pools.managed.first.items.in_stock.first.inventory_code unless @inventory_code
   model_already_there = @customer.visits.where(inventory_pool_id: @current_inventory_pool).hand_over.flat_map(&:lines).any? {|l| l.model == Item.find_by_inventory_code(@inventory_code).model}
   line_amount_before = all(".line").count
   assigned_amount_before = all(".line [data-assign-item][disabled]").count

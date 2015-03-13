@@ -1,5 +1,5 @@
 When /^I open a take back(, not overdue)?( with at least an option handed over before today)?$/ do |arg1, arg2|
-  contracts = Contract.signed.where(inventory_pool_id: @current_user.managed_inventory_pools)
+  contracts = Contract.signed.where(inventory_pool_id: @current_user.inventory_pools.managed)
   contract = if arg1
                contracts.order("RAND()").detect {|c| not c.lines.any? {|l| l.end_date < Date.today} }
              elsif arg2

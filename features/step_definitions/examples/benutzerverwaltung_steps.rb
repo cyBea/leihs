@@ -113,7 +113,7 @@ end
 
 #Angenommen /^man editiert einen (Benutzer|Delegation)$/ do |arg1|
 Given(/^I edit a (user|delegation)$/) do |user_type|
-  @inventory_pool ||= @current_user.managed_inventory_pools.first
+  @inventory_pool ||= @current_user.inventory_pools.managed.first
   @customer = case user_type
                 when "delegation"
                   @inventory_pool.users.customers.as_delegations
@@ -936,8 +936,9 @@ end
 
 #Angenommen(/^man editiert einen Benutzer der mal einen Zugriff auf das aktuelle Inventarpool hatte$/) do
 Given(/^I edit a user who used to have access to the current inventory pool$/) do
-  @current_inventory_pool = (@current_user.managed_inventory_pools & AccessRight.select(&:deleted_at).map(&:inventory_pool)).sample
-  @user = @current_inventory_pool.access_rights.select(&:deleted_at).map(&:user).sample
+  @current_inventory_pool = @current_user.inventory_pools.managed.where(id: AccessRight.select(:inventory_pool_id).where.not(deleted_at: nil)).order("RAND()").first
+  # TODO use rewhere instead of unscope+where (from Rails 4.1.8)
+  @user = @current_inventory_pool.users.unscope(where: :deleted_at).where.not(access_rights: {deleted_at: nil}).order("RAND()").first
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 

@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 Given(/^there is an empty order$/) do
-  @current_inventory_pool = @current_user.managed_inventory_pools.detect do |ip|
+  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
     @customer = ip.users.order("RAND ()").detect {|c| c.visits.hand_over.empty? }
   end
   raise "customer not found" unless @customer

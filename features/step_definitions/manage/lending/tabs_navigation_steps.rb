@@ -20,7 +20,7 @@ end
 
 Then(/^I see all inventory pools for which I am a manager$/) do
   within "#ip-dropdown-menu" do
-    @current_user.managed_inventory_pools.each {|ip| has_content? ip.name unless ip == @current_inventory_pool}
+    @current_user.inventory_pools.managed.each {|ip| has_content? ip.name unless ip == @current_inventory_pool}
   end
 end
 

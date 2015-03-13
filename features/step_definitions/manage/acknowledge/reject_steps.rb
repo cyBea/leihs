@@ -1,6 +1,6 @@
 # newer version in lending/lending_steps.rb?
 #When /^I open the daily view$/ do
-#  @current_inventory_pool = @current_inventory_pool || @current_user.managed_inventory_pools.order("RAND()").first
+#  @current_inventory_pool = @current_inventory_pool || @current_user.inventory_pools.managed.order("RAND()").first
 #  visit manage_daily_view_path @current_inventory_pool
 #end
 
