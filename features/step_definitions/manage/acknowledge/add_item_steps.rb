@@ -108,7 +108,7 @@ Then (/^the model's availability has changed$/) do
 end
 
 When(/^I start searching some model for adding it$/) do
-  @model = @current_inventory_pool.items.borrowable.map(&:model).sample
+  @model = @current_inventory_pool.items.borrowable.order("RAND()").first.model
   find('#add-input').set @model.name[0..-2]
   find('#add-input').click
 end
@@ -141,10 +141,10 @@ end
 
 When(/^I enter a model name( which is not related to my current pool)?$/) do |arg1|
   model = if arg1
-            Model.all - @current_inventory_pool.models
+            Model.order("RAND()") - @current_inventory_pool.models
           else
-            Model.all
-          end.sample
+            Model.order("RAND()")
+          end.first
   find('#assign-or-add-input').set model.name[0..-2]
 end
 

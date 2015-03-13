@@ -110,7 +110,7 @@ When(/^I add and remove users from the group$/) do
   all("[name*='users'][name*='id']", visible: false).each do |existing_user_line|
     existing_user_line.first(:xpath, "./..").find(".button[data-remove-user]", :text => _("Remove")).click
   end
-  user = (@current_inventory_pool.users-@group.users).sample
+  user = @current_inventory_pool.users.where("users.id" => @group.users.select("users.id")).order("RAND()").first
   @users = [user]
   find("input[data-search-users]").set user.name
   find(".ui-menu-item a", match: :prefer_exact, :text => user.name).click

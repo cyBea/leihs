@@ -103,7 +103,7 @@ end
 
 #Wenn(/^ich nach einem Modell suche, welches in nicht ausleihen kann$/) do
 When(/^I search for a model that I can't borrow$/) do
-  @model = (@current_user.models - @current_user.models.borrowable).sample
+  @model = (@current_user.models.order("RAND()") - @current_user.models.borrowable).first
 end
 
 #Dann(/^wird dieses Modell auch nicht in den Suchergebnissen angezeigt$/) do

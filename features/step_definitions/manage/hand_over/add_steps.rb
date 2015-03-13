@@ -50,9 +50,9 @@ When /^I add an option to the hand over by providing an inventory code and a dat
   @inventory_code = if @option
                       @option
                     else
-                      (@current_inventory_pool.options -
+                      (@current_inventory_pool.options.order("RAND()") -
                           (@contract || @current_user.get_approved_contract(@current_inventory_pool)).option_lines.map(&:option)
-                      ).sample
+                      ).first
                     end.inventory_code
   find("[data-add-contract-line]").set @inventory_code
   find("[data-add-contract-line] + .addon").click

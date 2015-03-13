@@ -17,7 +17,7 @@ end
 
 #Angenommen(/^man ist ein Kunde mit Verträge$/) do
 Given(/^I am a customer with contracts$/) do
-  user = Contract.where(status: [:signed, :closed]).select{|c| c.lines.any? &:returned_to_user}.map(&:user).select{|u| not u.access_rights.active.blank?}.uniq.sample
+  user = Contract.where(status: [:signed, :closed]).order("RAND()").select{|c| c.lines.any? &:returned_to_user}.map(&:user).select{|u| not u.access_rights.active.blank?}.uniq.first
   step %Q(I am logged in as '#{user.login}' with password 'password')
 end
 

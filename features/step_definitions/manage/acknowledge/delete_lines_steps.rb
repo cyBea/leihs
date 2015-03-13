@@ -28,7 +28,7 @@ When /^I delete multiple lines of this contract$/ do
 end
 
 When(/^I add a model that is not already part of that contract$/) do
-  @item = (@current_inventory_pool.models - @contract.models).sample.items.sample
+  @item = (@current_inventory_pool.models.order("RAND()") - @contract.models).first.items.order("RAND()").first
   step 'I add a model by typing in the inventory code of an item of that model to the quick add'
 end
 

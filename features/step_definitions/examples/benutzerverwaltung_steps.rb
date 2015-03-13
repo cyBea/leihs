@@ -333,7 +333,7 @@ end
 #Dann /^man kann Benutzern die folgende Rollen zuweisen und wegnehmen, wobei diese immer auf den Gerätepark bezogen ist, für den auch der Verwalter berechtigt ist$/ do |table|
 Then(/^I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager$/) do |table|
   table.hashes.map do |x|
-    unknown_user = User.select { |u| not u.access_right_for(@inventory_pool) }.sample
+    unknown_user = User.order("RAND()").detect { |u| not u.access_right_for(@inventory_pool) }
     expect(unknown_user).not_to be_nil
 
     role = case x[:role]
@@ -413,7 +413,7 @@ end
 #Dann /^man kann sie einem anderen Gerätepark als Besitzer zuweisen$/ do
 Then(/^I can make another inventory pool the owner of the items$/) do
   attributes = {
-      owner_id: (InventoryPool.pluck(:id) - [@inventory_pool.id]).sample
+      owner_id: (InventoryPool.order("RAND()").pluck(:id) - [@inventory_pool.id]).first
   }
   expect(@item.owner_id).not_to eq attributes[:owner_id]
 
@@ -425,7 +425,7 @@ end
 When(/^I don't choose a responsible department when creating or editing items$/) do
   @item = @inventory_pool.own_items.find &:in_stock?
   attributes = {
-      inventory_pool_id: (InventoryPool.pluck(:id) - [@inventory_pool.id, @item.inventory_pool_id]).sample
+      inventory_pool_id: (InventoryPool.order("RAND()").pluck(:id) - [@inventory_pool.id, @item.inventory_pool_id]).first
   }
   expect(@item.inventory_pool_id).not_to eq attributes[:inventory_pool_id]
 

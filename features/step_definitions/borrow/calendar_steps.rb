@@ -1,5 +1,5 @@
 When(/^I open the calendar of a model$/) do
-  model = (@inventory_pool.models & @current_user.models.borrowable).sample
+  model = @current_user.models.borrowable.where("models.id" => @inventory_pool.models.select("models.id")).order("RAND()").first
   visit borrow_model_path(model)
   find("[data-create-order-line][data-model-id='#{model.id}']").click
 end

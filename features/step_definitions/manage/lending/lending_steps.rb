@@ -42,7 +42,7 @@ Then /^unborrowable items are highlighted$/ do
 end
 
 Given /^I open the daily view$/ do
-  @current_inventory_pool = @current_user.inventory_pools.managed.select{|ip| ip.visits.hand_over.where(date: Date.today).exists? }.sample
+  @current_inventory_pool = @current_user.inventory_pools.managed.order("RAND()").detect {|ip| ip.visits.hand_over.where(date: Date.today).exists? }
   raise "contract not found" unless @current_inventory_pool
   visit manage_daily_view_path(@current_inventory_pool)
   find("#daily-view")
