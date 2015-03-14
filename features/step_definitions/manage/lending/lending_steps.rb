@@ -41,15 +41,11 @@ Then /^unborrowable items are highlighted$/ do
   end
 end
 
-Given /^I open the daily view$/ do
+Given /^I (open|return to) the daily view$/ do |arg1|
   @current_inventory_pool = @current_user.inventory_pools.managed.order("RAND()").detect {|ip| ip.visits.hand_over.where(date: Date.today).exists? }
-  raise "contract not found" unless @current_inventory_pool
+  expect(@current_inventory_pool).not_to be_nil
   visit manage_daily_view_path(@current_inventory_pool)
   find("#daily-view")
-end
-
-When /^I return to the daily view$/ do
-  step 'I open the daily view'
 end
 
 #Wenn /^ich eine Bestellung editiere$/ do

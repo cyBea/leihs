@@ -43,8 +43,10 @@ end
 Then /^I can edit the purpose$/ do
   find(".button", :text => _("Edit Purpose")).click
   @new_purpose_description = "Benötigt für die Sommer-Austellung"
-  find(".modal textarea[name='purpose']").set @new_purpose_description
-  find(".modal button[type=submit]").click
+  within ".modal" do
+    find("textarea[name='purpose']").set @new_purpose_description
+    find("button[type=submit]").click
+  end
   find("#purpose", text: @new_purpose_description)
   expect(@contract.reload.lines.first.purpose.description).to eq @new_purpose_description
 end

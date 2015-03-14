@@ -141,24 +141,18 @@ def open_inspection_for_line(line_id)
   find(".modal")
 end
 
-#Dann /^markiere ich den Gegenstand als nicht ausleihbar$/ do
-Then /^I mark the item as not borrowable$/ do
+Then /^I mark the item as (.*)$/ do |arg1|
   open_inspection_for_line(@line_id)
-  find("select[name='is_borrowable']").select "Unborrowable"
-  find(".modal button[type='submit']").click
-end
-
-#Dann /^markiere ich den Gegenstand als defekt$/ do
-Then /^I mark the item as defective$/ do
-  open_inspection_for_line(@line_id)
-  find("select[name='is_broken']").select "Defective"
-  find(".modal button[type='submit']").click
-end
-
-#Dann /^markiere ich den Gegenstand als unvollständig$/ do
-Then /^I mark the item as incomplete$/ do
-  open_inspection_for_line(@line_id)
-  find("select[name='is_incomplete']").select "Incomplete"
+  case arg1
+    when "not borrowable"
+      find("select[name='is_borrowable']").select "Unborrowable"
+    when "defective"
+      find("select[name='is_broken']").select "Defective"
+    when "incomplete"
+      find("select[name='is_incomplete']").select "Incomplete"
+    else
+      raise
+  end
   find(".modal button[type='submit']").click
 end
 

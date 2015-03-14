@@ -13,14 +13,16 @@ end
 
 #Wenn /^ich(?: kann | )diesem Paket eines oder mehrere Gegenstände hinzufügen$/ do
 When /^I add one or more items to this package$/ do
-  find(".modal #search-item").set "beam123"
-  find("a", match: :prefer_exact, text: "beam123").click
-  find(".modal #search-item").set "beam345"
-  find("a", match: :prefer_exact, text: "beam345").click
+  within ".modal" do
+    find("#search-item").set "beam123"
+    find("a", match: :prefer_exact, text: "beam123").click
+    find("#search-item").set "beam345"
+    find("a", match: :prefer_exact, text: "beam345").click
 
-  # check that the retired items are excluded from autocomplete search. pivotal bug 69161270
-  find(".modal #search-item").set "Bose"
-  find("a", match: :prefer_exact, text: "Bose").click
+    # check that the retired items are excluded from autocomplete search. pivotal bug 69161270
+    find("#search-item").set "Bose"
+    find("a", match: :prefer_exact, text: "Bose").click
+  end
 end
 
 #Dann /^ist das Modell erstellt und die Pakete und dessen zugeteilten Gegenstände gespeichert$/ do
