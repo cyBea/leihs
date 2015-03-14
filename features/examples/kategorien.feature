@@ -83,7 +83,7 @@ Feature: Categories
     When I save
     Then the category is created with the assigned name and parent categories
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario: Editing categories with an image
     Given there exists a category with an image
     And one edits this category

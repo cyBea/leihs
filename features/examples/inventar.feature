@@ -15,7 +15,7 @@ Feature: Inventory
     Then all matching models appear
     And all matching items appear
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Finding packages using search term
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -33,7 +33,7 @@ Feature: Inventory
     And all matching package items appear
     And all matching items appear
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario: Finding model and item in the inventory pool that owns them
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -59,7 +59,7 @@ Feature: Inventory
     Then the item corresponding to the model appears
     And the item appears
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario Outline: Finding a package's models and items in its responsible inventory pool
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -183,7 +183,7 @@ Feature: Inventory
     Then enthält die Auswahl "Software" Software und Software-Lizenzen
     And der Filter "Nicht Ausgemustert" ist aktiviert
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: What an option line contains
     Given one is on the list of the options
     Then the option line contains the following information:
@@ -201,7 +201,7 @@ Feature: Inventory
     And I see the components of this package
     And such a line shows only inventory code and model name of the component
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Look of a model line
     When I see a model line
     Then the model line contains the following information:
@@ -292,7 +292,7 @@ Feature: Inventory
     And I save
     Then werde ich zur Liste des eben gewählten Reiters mit den eben ausgewählten Filtern zurueckgefuehrt
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario Outline: Labeling of broken, retired, incomplete and unborrowable items
     Given I see the list of "<condition>" inventory
     When I open a model line

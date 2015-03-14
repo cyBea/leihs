@@ -97,7 +97,7 @@ Feature: Calendar
     Then my attempt to add it fails
     And the error lets me know that the chosen model is not available in that time range
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Closing the calendar
     When I am listing models
     And I press "Add to order" on a model

@@ -4,7 +4,7 @@ Feature: Model properties
   Background:
     Given I am Mike
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Creating properties
   Given I create a model and fill in all required fields
   When I add some properties and fill in their keys and values

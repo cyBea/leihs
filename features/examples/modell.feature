@@ -5,7 +5,7 @@ Feature: Model
     Given I am Mike
     And I open the inventory
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Overview when adding a new model
     When I add a new Model
     Then I can enter the following information:

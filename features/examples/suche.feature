@@ -7,7 +7,7 @@ Feature: Search
     And I search for the inventory code of an item that is in a contract
     Then I see the contract this item is assigned to in the list of results
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Searching for a user that has contracts but no longer has access to the current inventory pool
     Given I am Mike
     And there is a user with contracts who no longer has access to the current inventory pool
@@ -40,7 +40,7 @@ Feature: Search
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model of this item
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Displaying items from another inventory pool in closed contracts
     Given I am Mike
     And there exists a closed contract with an item, for which an other inventory pool is responsible and owner
@@ -49,7 +49,7 @@ Feature: Search
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model of this item
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario Outline: Showing items' problems in global search
     Given I am Mike
     And there is a "<state>" item in my inventory pool

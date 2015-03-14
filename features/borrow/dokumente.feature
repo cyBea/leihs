@@ -38,7 +38,7 @@ Feature: User documents
     When I open a value list from my documents
     Then I see the value list displayed as in the manage section
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Opening a contract
     Given I am on my documents page
     And I click the contract link

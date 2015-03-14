@@ -11,7 +11,7 @@ Feature: Sending email for orders placed by a delegation
     And the approval email is sent to the orderer
     And the approval email is not sent to the delegated user
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Reminder email for a delegation's order
     Given I am Pius
     And there is a take back for a delegation
@@ -19,7 +19,7 @@ Feature: Sending email for orders placed by a delegation
     Then the reminder is sent to the one who picked up the order
     And the approval email is not sent to the delegated user
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Sending email from the client to a delegation
     Given I am Pius
     When I search for a delegation

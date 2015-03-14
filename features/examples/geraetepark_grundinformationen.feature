@@ -53,7 +53,7 @@ Feature: Basic information for inventory pools
     And in my inventory pool the user gets the role 'inventory manager'
 
   #72676850
-  @personas @javascript
+  @personas @javascript @browser
   Scenario: Remove automatic access
     Given I am Mike
     And multiple inventory pools are granting automatic access

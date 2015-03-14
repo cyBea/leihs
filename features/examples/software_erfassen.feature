@@ -99,7 +99,7 @@ Feature: Creating software
     And I save
     Then sind die Informationen dieser Software-Lizenz gespeichert
 
-  @personas @javascript
+  @personas @javascript @browser
   Scenario: Choosing a license for multiple/concurrent/site licenses
     Given a software product exists
     When I add a new Software License
@@ -124,7 +124,7 @@ Feature: Creating software
       | 1        | Christina Meier| 
     Then I see the remaining number of licenses shown as follows "remaining 0"
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Software-Lizenz Anschaffungswert mit 2 Dezimalstellen erfassen
     Given a software product exists
     When I add a new Software License
