@@ -15,7 +15,7 @@ Feature: Inventory
     Then all matching models appear
     And all matching items appear
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Finding packages using search term
     Given there is a model with the following properties:
       | Name | Package Model |

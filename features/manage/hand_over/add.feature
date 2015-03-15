@@ -35,7 +35,7 @@ Feature: Add lines during hand over
     When I select the template from the list
     Then each model of the template is added to the hand over for the provided date range
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Add lines which changes other lines availability
     Given I open a hand over for today
     And I add so many lines that I break the maximal quantity of a model

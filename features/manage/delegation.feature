@@ -154,7 +154,7 @@ Feature: Delegation
     And I save
     Then no orders can be created for this delegation in the current inventory pool
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Persönliche Bestellung in Delegationsbestellung ändern in Bestellung
     Given I am Pius
     And I open an order

@@ -63,7 +63,7 @@ Feature: Copy item
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Copying an item from the edit view
     When I am editing an item
     And I save and copy

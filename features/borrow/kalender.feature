@@ -19,7 +19,7 @@ Feature: Calendar
     And the quantity is 1
     And all inventory pools are shown that have items of this model
 
-  @javascript @browser @personas
+  @javascript @personas
   Scenario: Calendar appearance with date already set
     Given I am listing models
     And I have set a time span
@@ -105,7 +105,7 @@ Feature: Calendar
     When I close the calendar
     Then the dialog window closes
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Availability display on the calendar
     Given there is a model for which an order exists
     When I add this model from the model list

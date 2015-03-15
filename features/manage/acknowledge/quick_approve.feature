@@ -15,7 +15,7 @@ Feature: Quick Approve orders
     Then this contract is approved
     And I see a link to the hand over process of that order
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Approve anyway on daily view
     Given I open the daily view
     And I navigate to the open orders

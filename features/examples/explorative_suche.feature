@@ -34,7 +34,7 @@ Feature: Explorative search
     And I see a search indicator with the current search term as well the currently selected category and its children
     And the inventory I see is filtered by this category
 
-  @javascript @personas @browser
+  @javascript @personas
   Scenario: Navigating back in the explorative search
     Given I used the explorative search to get to a subcategory
     Then I can navigate to the parent category
