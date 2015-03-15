@@ -134,7 +134,7 @@ end
 
 #Wenn(/^ich eine andere Software auswähle$/) do
 When(/^I select some different software$/) do
-  @new_software = Software.where.not(id: @software.id).order("RAND()").first
+  @new_software = Software.where.not(id: @license.model_id).order("RAND()").first
   fill_in_autocomplete_field _("Software"), @new_software.name
 end
 

@@ -561,12 +561,20 @@ Then(/^their group membership is saved$/) do
   end
 end
 
-
 #Wenn(/^man in der Benutzeransicht ist$/) do
-When(/^I am looking at the user list$/) do
-  visit manage_inventory_pool_users_path(@current_inventory_pool)
+#Angenommen(/^man befindet sich auf der Benutzerliste ausserhalb der Inventarpools$/) do
+#Angenommen(/^man befindet sich auf der Benutzerliste im beliebigen Inventarpool$/) do
+When(/^I am looking at the user list( outside an inventory pool| in any inventory pool)?$/) do |arg1|
+  visit case arg1
+          when " outside an inventory pool"
+            manage_users_path
+          when " in any inventory pool"
+            @current_inventory_pool = InventoryPool.first
+            manage_inventory_pool_users_path(@current_inventory_pool)
+          else
+            manage_inventory_pool_users_path(@current_inventory_pool)
+        end
 end
-
 
 #Wenn(/^man einen Benutzer hinzufügt$/) do
 When(/^I add a user$/) do
@@ -643,13 +651,6 @@ end
 When(/^I did not enter reason for suspension$/) do
   find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("input,textarea").set ""
 end
-
-
-#Angenommen(/^man befindet sich auf der Benutzerliste ausserhalb der Inventarpools$/) do
-Given(/^I am looking at the user list outside an inventory pool$/) do
-  visit manage_users_path
-end
-
 
 #Wenn(/^man von hier auf die Benutzererstellungsseite geht$/) do
 When(/^I navigate from here to the user creation page$/) do
@@ -833,11 +834,6 @@ Then(/^the user is not deleted$/) do
 end
 
 
-#Angenommen(/^man befindet sich auf der Benutzerliste im beliebigen Inventarpool$/) do
-Given(/^I am looking at the user list in any inventory pool$/) do
-  visit manage_inventory_pool_users_path(InventoryPool.first)
-end
-
 #Angenommen(/^man sucht sich je einen Benutzer mit Zugriffsrechten, Bestellungen und Verträgen aus$/) do
 Given(/^I pick one user with access rights, one with orders and one with contracts$/) do
   @users = []
@@ -865,13 +861,20 @@ end
 # end
 
 #Angenommen(/^man editiert einen Benutzer der Zugriff auf das aktuelle Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
-Given(/^I am editing a user who has access to (and no items from )?the current inventory pool$/) do |arg1|
-  access_rights = @current_inventory_pool.access_rights.active.where(role: :customer)
-  @user = if arg1
-            access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
-          else
-            access_rights.order("RAND()").first
-          end.user
+Given(/^I am editing a user who has access to (and no items from )?(the current|an) inventory pool$/) do |arg1, arg2|
+  case arg2
+    when "the current"
+      access_rights = @current_inventory_pool.access_rights.active.where(role: :customer)
+      @user = if arg1
+                access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
+              else
+                access_rights.order("RAND()").first
+              end.user
+    when "an"
+      access_right = AccessRight.active.where(role: :customer).order("RAND ()").detect {|ar| ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
+      @user = access_right.user
+      @current_inventory_pool = access_right.inventory_pool
+  end
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 

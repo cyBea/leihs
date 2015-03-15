@@ -148,7 +148,7 @@ Feature: Manage users
   @personas
   Scenario: Remove access as an administrator
     Given I am Gino
-    And I am editing a user who has access to and no items from the current inventory pool
+    And I am editing a user who has access to and no items from an inventory pool
     When I remove their access
     And I save
     Then the user has no access to the inventory pool
@@ -391,7 +391,7 @@ Feature: Manage users
   @javascript @personas
   Scenario: Add new user to the inventory pool as administrator
     Given I am Gino
-    When I am looking at the user list
+    When I am looking at the user list in any inventory pool
     And I add a user
     And I enter the following information
       | Last name      |
