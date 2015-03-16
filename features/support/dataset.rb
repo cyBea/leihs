@@ -14,7 +14,8 @@ module Dataset
     end
 
     # The minimum representable time is 1901-12-13, and the maximum representable time is 2038-01-19
-    ActiveRecord::Base.connection.execute "SET TIMESTAMP=unix_timestamp('#{Time.now.utc.iso8601}')"
+    #ActiveRecord::Base.connection.execute "SET time_zone='+1:00'"
+    ActiveRecord::Base.connection.execute "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')" #old# Time.now.utc.iso8601
     # FIXME
     # mysql_now = ActiveRecord::Base.connection.exec_query("SELECT NOW()").rows.flatten.first
     # raise "MySQL current datetime has not been changed" if mysql_now != Time.now
