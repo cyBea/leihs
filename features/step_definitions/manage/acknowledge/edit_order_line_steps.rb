@@ -32,7 +32,7 @@ When /^I edit the timerange of the selection$/ do
 end
 
 When /^I save the booking calendar$/ do
-  find("#submit-booking-calendar").click
+  find("#submit-booking-calendar:not(:disabled)").click
 end
 
 Then /^the booking calendar is( not)? closed$/ do |arg1|

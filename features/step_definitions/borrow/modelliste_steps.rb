@@ -559,7 +559,7 @@ When(/^I open the calendar for this model$/) do
   find(".line[data-id='#{@model.id}'] [data-create-order-line]").click
   #step "ich wähle ein Startdatum und ein Enddatum an dem der Geräterpark geöffnet ist"
   step "I choose a start and end date when the inventory pool is open"
-  find("#submit-booking-calendar:not(:disabled)").click
+  step "I save the booking calendar"
   step "the modal is closed"
 end
 

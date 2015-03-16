@@ -23,12 +23,16 @@ end
 
 #Dann(/^öffnet sich der Kalender$/) do
 Then(/^the calendar opens$/) do
-  find("#booking-calendar .fc-day-content", match: :first)
+  within ".modal" do
+    find("#booking-calendar .fc-day-content", match: :first)
+  end
 end
 
 #Wenn(/^ich den Kalender schliesse$/) do
 When(/^I close the calendar$/) do
-  find(".modal-close").click
+  within ".modal" do
+    find(".modal-close").click
+  end
 end
 
 #Dann(/^schliesst das Dialogfenster$/) do
@@ -52,31 +56,39 @@ When(/^I try to add a model to the order that is not available$/) do
   step "I set the start date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(start_date))
   step "I set the end date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(end_date))
   step "I set the quantity in the calendar to #{@quantity}"
-  find("#submit-booking-calendar").click
+  step "I save the booking calendar"
 end
 
 #Wenn(/^ich setze die Anzahl im Kalendar auf (\d+)$/) do |quantity|
 When(/^I set the quantity in the calendar to (\d+)$/) do |quantity|
-  find("#booking-calendar-quantity")
-  find(".fc-widget-content", match: :first)
-  find("#booking-calendar-quantity").set quantity
+  within ".modal" do
+    find("#booking-calendar-quantity")
+    find(".fc-widget-content", match: :first)
+    find("#booking-calendar-quantity").set quantity
+  end
 end
 
 #Wenn(/^ich setze das Startdatum im Kalendar auf '(.*?)'$/) do |date|
 When(/^I set the start date in the calendar to '(.*?)'$/) do |date|
-  find("#booking-calendar-start-date").set date
-  find("#booking-calendar-controls").click # blur input in order to fire event listeners
+  within ".modal" do
+    find("#booking-calendar-start-date").set date
+    find("#booking-calendar-controls").click # blur input in order to fire event listeners
+  end
 end
 
 #Wenn(/^ich setze das Enddatum im Kalendar auf '(.*?)'$/) do |date|
 When(/^I set the end date in the calendar to '(.*?)'$/) do |date|
-  find("#booking-calendar-end-date").set date
-  find("#booking-calendar-controls").click # blur input in order to fire event listeners
+  within ".modal" do
+    find("#booking-calendar-end-date").set date
+    find("#booking-calendar-controls").click # blur input in order to fire event listeners
+  end
 end
 
 #Dann(/^schlägt der Versuch es hinzufügen fehl$/) do
 Then(/^my attempt to add it fails$/) do
-  find("#booking-calendar")
+  within ".modal" do
+    find("#booking-calendar")
+  end
   models = @current_user.contracts.unsubmitted.flat_map(&:lines).flat_map(&:model)
   expect(models.include? @model).to be false
 end
@@ -113,7 +125,7 @@ end
 
 #Wenn(/^alle Angaben die ich im Kalender mache gültig sind$/) do
 When(/^everything I input into the calendar is valid$/) do
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     find("option", match: :first)
     @inventory_pool = InventoryPool.find all("option").detect{|o| o.selected?}["data-id"]
   end
@@ -163,7 +175,7 @@ end
 
 #Dann(/^es sind alle Geräteparks angezeigt die Gegenstände von dem Modell haben$/) do
 Then(/^all inventory pools are shown that have items of this model$/) do
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     ips = @current_user.inventory_pools.select do |ip|
       @model.total_borrowable_items_for_user(@current_user, ip)
     end
@@ -193,12 +205,16 @@ end
 
 #Dann(/^das Startdatum entspricht dem vorausgewählten Startdatum$/) do
 Then(/^the start date is equal to the preselected start date$/) do
-  expect(find("#booking-calendar-start-date").value).to eq I18n.l(Date.today + 1)
+  within ".modal" do
+    expect(find("#booking-calendar-start-date").value).to eq I18n.l(Date.today + 1)
+  end
 end
 
 #Dann(/^das Enddatum entspricht dem vorausgewählten Enddatum$/) do
 Then(/^the end date is equal to the preselected end date$/) do
-  expect(find("#booking-calendar-end-date").value).to eq I18n.l(Date.today + 2)
+  within ".modal" do
+    expect(find("#booking-calendar-end-date").value).to eq I18n.l(Date.today + 2)
+  end
 end
 
 #Angenommen(/^es existiert ein Modell für das eine Bestellung vorhanden ist$/) do
@@ -340,7 +356,7 @@ end
 #Dann(/^sind nur diejenigen Geräteparks auswählbar, welche über Kapizäteten für das ausgewählte Modell verfügen$/) do
 Then(/^only those inventory pools are selectable that have capacities for the chosen model$/) do
   @inventory_pools = @model.inventory_pools.reject {|ip| @model.total_borrowable_items_for_user(@current_user, ip) <= 0 }
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     all("option").each do |option|
       expect(@inventory_pools.include?(InventoryPool.find(option["data-id"]))).to be true
     end
@@ -349,7 +365,7 @@ end
 
 #Dann(/^die Geräteparks sind alphabetisch sortiert$/) do
 Then(/^the inventory pools are sorted alphabetically$/) do
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     expect(has_selector?("option")).to be true
     texts = all("option").map(&:text)
     expect(texts).to eq texts.sort
@@ -358,7 +374,7 @@ end
 
 #Dann(/^wird die maximal ausleihbare Anzahl des ausgewählten Modells angezeigt$/) do
 Then(/^the maximum available quantity of the chosen model is displayed$/) do
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     all("option").each do |option|
       inventory_pool = InventoryPool.find(option["data-id"])
       expect(option.text[/#{@model.total_borrowable_items_for_user(@current_user, inventory_pool)}/]).to be
@@ -369,7 +385,7 @@ end
 #Dann(/^man kann maximal die maximal ausleihbare Anzahl eingeben$/) do
 Then(/^I can enter at most this maximum quantity$/) do
   max_quantity = 0
-  within "#booking-calendar-inventory-pool" do
+  within ".modal #booking-calendar-inventory-pool" do
     expect(has_selector?("option")).to be true
     inventory_pool = InventoryPool.find(all("option").detect{|o| o.selected?}["data-id"])
     max_quantity = @model.total_borrowable_items_for_user(@current_user, inventory_pool)
@@ -415,7 +431,9 @@ end
 
 #Dann(/^es wird der alphabetisch erste Gerätepark ausgewählt der teil der begrenzten Geräteparks ist$/) do
 Then(/^that inventory pool which comes alphabetically first is selected$/) do
-  expect(find("#booking-calendar-inventory-pool").value.split(" ")[0]).to eq @inventory_pools.first.name
+  within ".modal" do
+    expect(find("#booking-calendar-inventory-pool").value.split(" ")[0]).to eq @inventory_pools.first.name
+  end
 end
 
 #Wenn(/^ein Modell existiert, welches nur einer Gruppe vorbehalten ist$/) do
