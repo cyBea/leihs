@@ -762,18 +762,18 @@ Given(/^I edit a user who is customer in any inventory pool$/) do
 end
 
 #Wenn(/^man den Zugriff auf "Kunde" ändert$/) do
-When(/^I change the access level to "customer"$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Customer")
-end
-
 #Wenn(/^man den Zugriff auf "Ausleihe-Verwalter" ändert$/) do
-When(/^I change the access level to "lending manager"$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Lending manager")
-end
-
 #Wenn(/^man den Zugriff auf "Inventar-Verwalter" ändert$/) do
-When(/^I change the access level to "inventory manager"$/) do
-  find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select _("Inventory manager")
+When(/^I change the access level to "(.*)"$/) do |arg1|
+  s = case arg1
+        when "customer"
+          _("Customer")
+        when "lending manager"
+          _("Lending manager")
+        when "inventory manager"
+          _("Inventory manager")
+      end
+  find(".row.emboss", match: :prefer_exact, text: _("Access as")).find("select").select s
 end
 
 #Dann(/^hat der Benutzer die Rolle Kunde$/) do

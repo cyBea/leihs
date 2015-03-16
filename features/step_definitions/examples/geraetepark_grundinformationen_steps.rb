@@ -221,13 +221,6 @@ Given(/^my inventory pool is granting automatic access$/) do
   expect(@inventory_pools_with_automatic_access.count).to be > 1
 end
 
-#Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'$/) do
-Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access$/) do
-  expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
-  expect(@user.access_rights.pluck(:inventory_pool_id)).to eq @inventory_pools_with_automatic_access.pluck(:id)
-  expect(@user.access_rights.all? {|ar| ar.role == :customer}).to be true
-end
-
 #Wenn(/^ich in meinem Gerätepark einen neuen Benutzer mit Rolle 'Inventar\-Verwalter' erstelle$/) do
 When(/^I create a new user with the 'inventory manager' role in my inventory pool$/) do
   steps %Q{
@@ -247,11 +240,16 @@ When(/^I create a new user with the 'inventory manager' role in my inventory poo
   @user = User.find_by_lastname "test"
 end
 
+#Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut. Zuweisung die Rolle 'Kunde'$/) do
 #Dann(/^kriegt der neu erstellte Benutzer bei allen Geräteparks mit aut\. Zuweisung ausser meinem die Rolle 'Kunde'$/) do
-Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access, but not to mine$/) do
+Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access(, but not to mine)?$/) do |arg1|
   expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
   expect(@user.access_rights.pluck(:inventory_pool_id)).to eq @inventory_pools_with_automatic_access.pluck(:id)
-  expect(@user.access_rights.where("inventory_pool_id != ?", @current_inventory_pool ).all? {|ar| ar.role == :customer}).to be true
+  if arg1
+    expect(@user.access_rights.where("inventory_pool_id != ?", @current_inventory_pool ).all? {|ar| ar.role == :customer}).to be true
+  else
+    expect(@user.access_rights.all? {|ar| ar.role == :customer}).to be true
+  end
 end
 
 #Dann(/^in meinem Gerätepark hat er die Rolle 'Inventar\-Verwalter'$/) do

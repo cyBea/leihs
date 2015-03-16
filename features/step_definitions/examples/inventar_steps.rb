@@ -232,47 +232,30 @@ Then /^the (?:item|software license) line contains the following information:$/ 
   end
 end
 
-#Dann /^enthält die Gegenstands\-Zeile den Inventarcode$/ do
-Then /^the item line contains the inventory code$/ do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.inventory_code)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile den Ort des Gegenstands$/ do
-Then /^the item line contains the location of the item$/ do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.to_s)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile die Gebäudeabkürzung$/ do
-Then(/^the item line contains the code of the building$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.building.code)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile den Raum$/ do
-Then(/^the item line contains the room$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.room)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile das Gestell$/ do
-Then(/^the item line contains the shelf$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.location.shelf)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile den aktuell Ausleihenden$/ do
-Then(/^the item line contains the name of the current borrower$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_borrower.to_s)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile das Enddatum der Ausleihe$/ do
-Then(/^the item line contains the end date of the current contract$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.year)).to be true
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.month)).to be true
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.current_return_date.day)).to be true
-end
-
-#Dann /^enthält die Gegenstands\-Zeile die Verantwortliche Abteilung$/ do
-Then(/^the item line contains the responsible department$/) do
-  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(@item.inventory_pool.to_s)).to be true
-  #step 'ich nach "%s" suche' % " "
+Then /^the item line contains the (.*)$/ do |arg1|
+  s = case arg1
+        when "inventory code"
+          @item.inventory_code
+        when "location of the item"
+          @item.location.to_s
+        when "code of the building"
+          @item.location.building.code
+        when "room"
+          @item.location.room
+        when "shelf"
+          @item.location.shelf
+        when "name of the current borrower"
+          @item.current_borrower.to_s
+        when "end date of the current contract"
+          @item.current_return_date.year
+          @item.current_return_date.month
+          @item.current_return_date.day
+        when "responsible department"
+          @item.inventory_pool.to_s
+        else
+          raise
+      end
+  expect((@item_line.is_a?(String) ? find(@item_line, match: :first) : @item_line).has_content?(s)).to be true
 end
 
 # not needed -> is a problem for capybara: "element not found in cache" error

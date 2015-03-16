@@ -43,7 +43,6 @@ end
 
 Given /^I (open|return to) the daily view$/ do |arg1|
   @current_inventory_pool = @current_user.inventory_pools.managed.order("RAND()").detect {|ip| ip.visits.hand_over.where(date: Date.today).exists? }
-  expect(@current_inventory_pool).not_to be_nil
   visit manage_daily_view_path(@current_inventory_pool)
   find("#daily-view")
 end

@@ -98,13 +98,16 @@ end
 #######################################################################
 
 #Dann(/^werden die Modelle meiner Bestellung freigegeben$/) do
-Then(/^the models in my order are released$/) do
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? {|line| not line.inventory_pool.running_lines.detect{|l| l.id == line.id } }).to be true
-end
-
 #Dann(/^bleiben die Modelle in der Bestellung blockiert$/) do
-Then(/^the models in my order remain blocked$/) do
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? {|line| line.inventory_pool.running_lines.detect{|l| l.id == line.id } }).to be true
+Then(/^the models in my order (are released|remain blocked)$/) do |arg1|
+  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? { |line|
+           case arg1
+             when "are released"
+               line.inventory_pool.running_lines.detect { |l| l.id == line.id }
+             when "remain blocked"
+               not line.inventory_pool.running_lines.detect { |l| l.id == line.id }
+           end
+         }).to be true
 end
 
 #######################################################################

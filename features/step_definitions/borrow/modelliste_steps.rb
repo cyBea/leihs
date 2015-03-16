@@ -1,11 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-#Wenn(/^man sich auf der Modellliste befindet$/) do
-When(/^I am listing models$/) do
-  @category = Category.first
-  visit borrow_models_path(category_id: @category.id)
-end
-
 #Wenn(/^man sich auf der Modellliste befindet die verfügbare Modelle beinhaltet$/) do
 When(/^I am listing some available models$/) do
   @category = Category.find do |c|
@@ -14,21 +8,31 @@ When(/^I am listing some available models$/) do
   visit borrow_models_path(category_id: @category.id)
 end
 
+#Wenn(/^man sich auf der Modellliste befindet$/) do
 #Wenn(/^man sich auf der Modellliste befindet die nicht verfügbare Modelle beinhaltet$/) do
-When(/^I am listing models and some of them are unavailable$/) do
-  @start_date ||= Date.today
-  @end_date ||= Date.today+1.day
-  model = @current_user.models.borrowable.detect do |m|
-    quantity = @current_user.inventory_pools.to_a.sum do |ip|
-      m.availability_in(ip).maximum_available_in_period_summed_for_groups(@start_date, @end_date, @current_user.groups.map(&:id))
-    end
-    quantity <= 0 and not m.categories.blank?
-  end
-  @category = model.categories.first
+When(/^I am listing models( and some of them are unavailable)?$/) do |arg1|
+  @category = if arg1
+                @start_date ||= Date.today
+                @end_date ||= Date.today+1.day
+                model = @current_user.models.borrowable.detect do |m|
+                  quantity = @current_user.inventory_pools.to_a.sum do |ip|
+                    m.availability_in(ip).maximum_available_in_period_summed_for_groups(@start_date, @end_date, @current_user.groups.map(&:id))
+                  end
+                  quantity <= 0 and not m.categories.blank?
+                end
+                model.categories.first
+              else
+                Category.first
+
+              end
+
   visit borrow_models_path(category_id: @category.id)
-  within "#model-list-search" do
-    find("input").click
-    find("input").set model.name
+
+  if arg1
+    within "#model-list-search" do
+      find("input").click
+      find("input").set model.name
+    end
   end
 end
 

@@ -11,8 +11,8 @@
 #
 #   @old-ui
 #  Scenario: Search and sort customers
-#   Given a customer 'Customer B' exists
-#     And a customer 'Customer A' exists
+#   Given a customer "Customer B" exists
+#     And a customer "Customer A" exists
 #    When I follow "Users"
 #     And I sort by "Full name"
 #    Then "Customer A" should appear before "Customer B"
