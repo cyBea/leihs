@@ -14,11 +14,12 @@ module Dataset
     end
 
     # The minimum representable time is 1901-12-13, and the maximum representable time is 2038-01-19
-    #ActiveRecord::Base.connection.execute "SET time_zone='+1:00'"
+    #tmp# ActiveRecord::Base.connection.execute "SET time_zone='+1:00'"
     ActiveRecord::Base.connection.execute "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')" #old# Time.now.utc.iso8601
-    # FIXME
-    # mysql_now = ActiveRecord::Base.connection.exec_query("SELECT NOW()").rows.flatten.first
-    # raise "MySQL current datetime has not been changed" if mysql_now != Time.now
+    #mysql_now = ActiveRecord::Base.connection.exec_query("NOW()").rows.flatten.first
+    #raise "MySQL current datetime has not been changed" if mysql_now != Time.now
+    mysql_now = ActiveRecord::Base.connection.exec_query("SELECT CURDATE()").rows.flatten.first
+    raise "MySQL current datetime has not been changed" if mysql_now != Date.today
   end
 
   def restore_random_dump(minimal = false)
@@ -101,7 +102,7 @@ module Dataset
                              # NOTE we do not test on saturday or sunday
                              begin
                                new_date = rand(3.years.ago..3.years.from_now)
-                             end while new_date.saturday? or new_date.sunday?
+                             end while new_date.saturday? or new_date.sunday? or not (6..18).include?(new_date.hour)
                              new_date.to_time.iso8601
                            else
                              existing_dump_file_name.match(/.*seed_(.*)\.sql/).captures.first
