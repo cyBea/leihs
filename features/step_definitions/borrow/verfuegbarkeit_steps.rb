@@ -103,9 +103,9 @@ Then(/^the models in my order (are released|remain blocked)$/) do |arg1|
   expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? { |line|
            case arg1
              when "are released"
-               line.inventory_pool.running_lines.detect { |l| l.id == line.id }
-             when "remain blocked"
                not line.inventory_pool.running_lines.detect { |l| l.id == line.id }
+             when "remain blocked"
+               line.inventory_pool.running_lines.detect { |l| l.id == line.id }
            end
          }).to be true
 end
