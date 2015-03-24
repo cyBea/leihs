@@ -15,11 +15,10 @@ Feature: Edit order
     And I approve the order
     Then I cannot force the order to be approved
 
-  @personas
+  @personas @javascript
   Scenario: No empty orders in the order list
     Given I am Pius
-    And there is an empty order
-    Then I don't see this order in the list of orders
+    Then I don't see empty orders in the list of orders
 
   @personas
   Scenario: Visible tabs

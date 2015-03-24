@@ -56,6 +56,7 @@ Feature: Viewing my orders
   Scenario: Ordering
     When I enter a purpose
     And I submit the order
+    And I reload the order
     Then the order's status changes to submitted
     And I see an order confirmation
     And the order confirmation lets me know that my order will be handled soon

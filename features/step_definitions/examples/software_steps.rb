@@ -296,7 +296,7 @@ end
 
 When(/^I choose a date for license expiration$/) do
   @license_expiration_date = rand(12).months.from_now.to_date
-  find(".field", text: _("License expiration")).find("input").set @license_expiration_date.strftime("%d.%m.%Y")
+  find(".field", text: _("License expiration")).find("input").set I18n.l @license_expiration_date
 end
 
 When(/^I choose "(.*?)" for maintenance contract$/) do |arg1|
@@ -311,7 +311,7 @@ end
 
 When(/^I choose a date for the maintenance expiration$/) do
   @maintenance_expiration_date = rand(12).months.from_now.to_date
-  find(".field", text: _("Maintenance expiration")).find("input").set @maintenance_expiration_date.strftime("%d.%m.%Y")
+  find(".field", text: _("Maintenance expiration")).find("input").set I18n.l @maintenance_expiration_date
 end
 
 When(/^I choose "(.*?)" as reference$/) do |arg1|
@@ -329,7 +329,7 @@ end
 
 When(/^I change the license expiration date$/) do
   @new_license_expiration_date = rand(12).months.from_now.to_date
-  find(".field", text: _("License expiration")).find("input").set @new_license_expiration_date.strftime("%d.%m.%Y")
+  find(".field", text: _("License expiration")).find("input").set I18n.l @new_license_expiration_date
 end
 
 When(/^I change the value for maintenance contract$/) do
@@ -340,7 +340,7 @@ When(/^I change the value for maintenance contract$/) do
 
   if @new_maintenance_contract
     @new_maintenance_expiration_date = rand(12).months.from_now.to_date
-    find(".field", text: _("Maintenance expiration")).find("input").set @new_maintenance_expiration_date.strftime("%d.%m.%Y")
+    find(".field", text: _("Maintenance expiration")).find("input").set I18n.l @new_maintenance_expiration_date
   end
 end
 
@@ -515,9 +515,12 @@ Given(/^a software license exists$/) do
 end
 
 Given(/^this software license is handed over to somebody$/) do
-  @contract_with_software_license = FactoryGirl.create :contract, {inventory_pool: @current_inventory_pool, status: :submitted}
-  @contract_with_software_license.lines << FactoryGirl.create(:item_line, {contract: @contract_with_software_license, model: @model, item: @item})
+  line = FactoryGirl.create :item_line, inventory_pool: @current_inventory_pool, status: :approved, model: @model, item: @item
+  @contract_with_software_license = line.user.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool)
   expect(@contract_with_software_license.lines.reload.empty?).to be false
+  document = @contract_with_software_license.sign(@current_user, [line])
+  expect(document).to be_valid
+  @contract_with_software_license = line.user.contracts.signed.find(document.id)
 end
 
 When(/^I search after the name of that person$/) do

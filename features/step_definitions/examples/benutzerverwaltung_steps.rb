@@ -600,7 +600,7 @@ When(/^I choose the following roles$/) do |table|
 end
 
 # Wenn(/^man wählt ein Sperrdatum und ein Sperrgrund$/) do
-#   find(".row.emboss", match: :prefer_exact, text: _("Suspended until")).find("input").set (Date.today + 1).strftime("%d.%m.%Y")
+#   find(".row.emboss", match: :prefer_exact, text: _("Suspended until")).find("input").set I18n.l(Date.today + 1)
 #   find(".ui-datepicker-current-day").click
 #   suspended_reason = find(".row.emboss", match: :prefer_exact, text: _("Suspended reason")).find("textarea")
 #   suspended_reason.set "test"
@@ -854,7 +854,7 @@ end
 
 # Angenommen(/^man editiert einen Benutzer der Zugriff auf ein Inventarpool hat( und keine Gegenstände hat)?$/) do |arg1|
 #   access_right = AccessRight.order("RAND ()").detect { |ar| ar.role == :customer and
-#                                                        ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
+#                                                        ar.inventory_pool.contract_lines.where(user: ar.user).empty? }
 #   @user = access_right.user
 #   @current_inventory_pool = access_right.inventory_pool
 #   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
@@ -866,12 +866,12 @@ Given(/^I am editing a user who has access to (and no items from )?(the current|
     when "the current"
       access_rights = @current_inventory_pool.access_rights.active.where(role: :customer)
       @user = if arg1
-                access_rights.detect { |ar| @current_inventory_pool.contract_lines.by_user(ar.user).empty? }
+                access_rights.detect { |ar| @current_inventory_pool.contract_lines.where(user_id: ar.user).empty? }
               else
                 access_rights.order("RAND()").first
               end.user
     when "an"
-      access_right = AccessRight.active.where(role: :customer).order("RAND ()").detect {|ar| ar.inventory_pool.contract_lines.by_user(ar.user).empty? }
+      access_right = AccessRight.active.where(role: :customer).order("RAND ()").detect {|ar| ar.inventory_pool.contract_lines.where(user: ar.user).empty? }
       @user = access_right.user
       @current_inventory_pool = access_right.inventory_pool
   end

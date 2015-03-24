@@ -467,9 +467,6 @@ msgstr ""
 msgid "Empty Username and/or Password"
 msgstr ""
 
-msgid "End Date"
-msgstr ""
-
 msgid "End date"
 msgstr ""
 
@@ -1242,9 +1239,6 @@ msgid "Something went wrong!"
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Start Date"
 msgstr ""
 
 msgid "Start Date must be before End Date"

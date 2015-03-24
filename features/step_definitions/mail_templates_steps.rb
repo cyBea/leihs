@@ -166,7 +166,7 @@ Then(/^I receive an email formatted according to the (custom|system\-wide|defaul
                  File.read(File.join(Rails.root, "app/views/mailer/user/", "#{template_name}.text.liquid"))
              end
 
-  variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.visit_lines)
+  variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.contract_lines)
   expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template).render(variables)
 end
 
@@ -229,7 +229,7 @@ Then(/^I receive an approved mail based on the system\-wide template for the lan
 end
 
 Then(/^I receive a (custom|system\-wide|default) (.*) in "(.*?)"$/) do |scope, template_name, locale_names|
-  variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.visit_lines)
+  variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.contract_lines)
   string = if scope == "default"
              template = File.read(File.join(Rails.root, "app/views/mailer/user/", "#{template_name}.text.liquid"))
              Liquid::Template.parse(template).render(variables)

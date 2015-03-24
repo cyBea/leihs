@@ -23,7 +23,7 @@ Given /^a model is no longer available$/ do
     @entity = if @contract
                 @contract
               else
-                @customer.get_approved_contract(@current_inventory_pool)
+                @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool)
               end
     contract_line = @entity.lines.order("RAND()").first
     @model = contract_line.model
@@ -81,9 +81,9 @@ end
 
 #Dann /^"(.*?)" sind verfügbar für den Kunden inklusive seinen Gruppenzugehörigen$/ do |arg1|
 Then /^"(.*?)" are available for the user, also counting availability from groups the user is member of$/ do |arg1|
-  max = if [:unsubmitted, :submitted].include? @line.contract.status
+  max = if [:unsubmitted, :submitted].include? @line.status
           @initial_quantity + @max_before
-        elsif [:approved, :signed].include? @line.contract.status
+        elsif [:approved, :signed].include? @line.status
           @av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @line.group_ids) + 1 # free up self blocking
         else
           @max_before - @quantity_added
@@ -94,7 +94,7 @@ end
 #Dann /^"(.*?)" sind insgesamt verfügbar inklusive diejenigen Gruppen, welchen der Kunde nicht angehört$/ do |arg1|
 Then /^"(.*?)" are available in total, also counting availability from groups the user is not member of$/ do |arg1|
   max = @av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @av.inventory_pool_and_model_group_ids)
-  if [:unsubmitted, :submitted].include? @line.contract.status
+  if [:unsubmitted, :submitted].include? @line.status
     max += @line.contract.lines.where(:start_date => @line.start_date, :end_date => @line.end_date, :model_id => @line.model).size
   else
     max += @line.quantity

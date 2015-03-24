@@ -64,8 +64,11 @@ class User < ActiveRecord::Base
 
   has_many :notifications, :dependent => :delete_all
 
-  has_many :contracts, dependent: :restrict_with_exception
-  has_many :contract_lines, -> { uniq }, :through => :contracts
+  #has_many :contract_containers
+  has_many :contracts, class_name: "ContractContainer" #, -> { uniq }, :through => :contract_lines
+  has_many :contract_lines, dependent: :restrict_with_exception
+  has_many :item_lines, dependent: :restrict_with_exception
+  has_many :option_lines, dependent: :restrict_with_exception
   has_many :visits #, :include => :inventory_pool # MySQL View based on contract_lines
 
   validates_presence_of     :firstname
@@ -171,10 +174,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def documents
-    contracts
-  end
-
 ################################################
 
   def email
@@ -209,65 +208,26 @@ class User < ActiveRecord::Base
 
 ################################################
 
-  # get or create a new unsubmitted contract for a specific inventory_pool
-  def get_unsubmitted_contract(inventory_pool, current_delegated_user = nil)
-    contract = contracts.unsubmitted.where(inventory_pool_id: inventory_pool).first
-    unless contract
-      contract = contracts.create(status: :unsubmitted, inventory_pool: inventory_pool, delegated_user: current_delegated_user)
-      reload
-    end
-    contract
-  end
-
-  # a user has at most one approved contract for each inventory pool
-  def approved_contract(inventory_pool)
-    contracts = self.contracts.where(:inventory_pool_id => inventory_pool, :status => :approved)
-    return nil if contracts.empty?
-    if contracts.size > 1
-      contracts[1..-1].each do |c|
-        c.contract_lines.update_all(:contract_id => contracts.first.id)
-        c.reload.destroy
-      end
-    end
-    return contracts.first
-  end
-
-  # get or create a new contract for a given inventory pool
-  def get_approved_contract(inventory_pool)
-    contract = approved_contract(inventory_pool)
-    if contract.nil?
-      contract = contracts.new(:status => :approved, :inventory_pool => inventory_pool, :note => inventory_pool.default_contract_note)
-      # simply choose the first delegated user in order to pass contract validation. the delegated user has to be chosen again in the hand over process anyway
-      contract.delegated_user = contract.user.delegated_users.first if contract.user.is_delegation
-      contract.save
-      reload
-    end
-    #contract.update_attributes(delegated_user: nil) # remove delegated user from contract, as it has to be explicitly chosen in the hand over process
-    contract
-  end
-
-####################################################################
-
   def self.remind_and_suspend_all
     # TODO dry
-    grouped_visit_lines = Visit.take_back_overdue.flat_map(&:visit_lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: (vl.delegated_user_id || vl.user_id)} }
-    grouped_visit_lines.each_pair do |k, visit_lines|
+    grouped_contract_lines = Visit.take_back_overdue.flat_map(&:lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: (vl.delegated_user_id || vl.user_id)} }
+    grouped_contract_lines.each_pair do |k, contract_lines|
       user = User.find(k[:user_id])
-      user.remind(visit_lines)
+      user.remind(contract_lines)
     end
     # TODO dry
-    grouped_visit_lines = Visit.take_back_overdue.flat_map(&:visit_lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: vl.user_id} }
-    grouped_visit_lines.each_pair do |k, visit_lines|
+    grouped_contract_lines = Visit.take_back_overdue.flat_map(&:lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: vl.user_id} }
+    grouped_contract_lines.each_pair do |k, contract_lines|
       user = User.find(k[:user_id])
       user.automatic_suspend(k[:inventory_pool])
     end
   end
 
   def self.send_deadline_soon_reminder_to_everybody
-    grouped_visit_lines = Visit.take_back.where("date = ?", Date.tomorrow).flat_map(&:visit_lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: (vl.delegated_user_id || vl.user_id)} }
-    grouped_visit_lines.each_pair do |k, visit_lines|
+    grouped_contract_lines = Visit.take_back.where("date = ?", Date.tomorrow).flat_map(&:lines).group_by { |vl| {inventory_pool: vl.inventory_pool, user_id: (vl.delegated_user_id || vl.user_id)} }
+    grouped_contract_lines.each_pair do |k, contract_lines|
       user = User.find(k[:user_id])
-      user.send_deadline_soon_reminder(visit_lines)
+      user.send_deadline_soon_reminder(contract_lines)
     end
   end
 
@@ -279,15 +239,15 @@ class User < ActiveRecord::Base
     end
   end
 
-  def remind(visit_lines, reminder_user = self)
-    unless visit_lines.empty?
+  def remind(contract_lines, reminder_user = self)
+    unless contract_lines.empty?
       begin
-        Notification.remind_user(self, visit_lines)
-        create_history _("Reminded %{q} items for contracts %{c}"), visit_lines, reminder_user
+        Notification.remind_user(self, contract_lines)
+        create_history _("Reminded %{q} items for contracts %{c}"), contract_lines, reminder_user
         puts "Reminded: #{self.name}"
         return true
       rescue Exception => exception
-        create_history _("Unsuccessful reminder of %{q} items for contracts %{c}"), visit_lines, reminder_user
+        create_history _("Unsuccessful reminder of %{q} items for contracts %{c}"), contract_lines, reminder_user
         puts "Failed to remind: #{self.name}"
         # archive problem in the log, so the admin/developper
         # can look up what happened
@@ -297,11 +257,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def send_deadline_soon_reminder(visit_lines, reminder_user = self)
-    unless visit_lines.empty?
+  def send_deadline_soon_reminder(contract_lines, reminder_user = self)
+    unless contract_lines.empty?
       begin
-        Notification.deadline_soon_reminder(self, visit_lines)
-        create_history _("Deadline soon reminder sent for %{q} items on contracts %{c}"), visit_lines, reminder_user
+        Notification.deadline_soon_reminder(self, contract_lines)
+        create_history _("Deadline soon reminder sent for %{q} items on contracts %{c}"), contract_lines, reminder_user
         puts "Deadline soon: #{self.name}"
       rescue
         puts "Couldn't send reminder: #{self.name}"
@@ -311,16 +271,16 @@ class User < ActiveRecord::Base
 
   private
 
-  def create_history text, visit_lines, user
+  def create_history text, contract_lines, user
     histories.create \
-      text: text % hash_for_quantity_and_contracts(visit_lines),
+      text: text % hash_for_quantity_and_contracts(contract_lines),
       user_id: user,
       type_const: History::REMIND
   end
 
-  def hash_for_quantity_and_contracts visit_lines
-    { :q => visit_lines.to_a.sum(&:quantity),
-      :c => visit_lines.flat_map(&:contract_line).map(&:contract_id).uniq.join(',') }
+  def hash_for_quantity_and_contracts contract_lines
+    { :q => contract_lines.to_a.sum(&:quantity),
+      :c => contract_lines.map(&:contract_id).uniq.join(',') }
   end
 
   public
@@ -363,12 +323,7 @@ class User < ActiveRecord::Base
   ############################################
 
   def timeout?
-    # NOTE the second check is superfluous in case we ensure there are no empty contracts
-    if contracts.unsubmitted.empty? or contracts.unsubmitted.flat_map(&:lines).empty?
-      false
-    else
-      (Time.now - contracts.unsubmitted.first.updated_at) > Contract::TIMEOUT_MINUTES.minutes
-    end
+    contract_lines.unsubmitted.exists? and contract_lines.unsubmitted.where("updated_at > ?", Time.now - Contract::TIMEOUT_MINUTES.minutes).empty?
   end
 
 end

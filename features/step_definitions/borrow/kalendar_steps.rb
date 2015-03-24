@@ -89,7 +89,7 @@ Then(/^my attempt to add it fails$/) do
   within ".modal" do
     find("#booking-calendar")
   end
-  models = @current_user.contracts.unsubmitted.flat_map(&:lines).flat_map(&:model)
+  models = @current_user.contract_lines.unsubmitted.flat_map(&:model)
   expect(models.include? @model).to be false
 end
 
@@ -129,14 +129,14 @@ When(/^everything I input into the calendar is valid$/) do
     find("option", match: :first)
     @inventory_pool = InventoryPool.find all("option").detect{|o| o.selected?}["data-id"]
   end
-  @quantity = 1 + @current_user.contracts.unsubmitted.flat_map(&:lines).select{|line| line.model == @model}.sum(&:quantity)
+  @quantity = 1 + @current_user.contract_lines.unsubmitted.select{|line| line.model == @model}.sum(&:quantity)
   #step "ich setze die Anzahl im Kalendar auf #{1}"
   step "I set the quantity in the calendar to #{1}"
 
   start_date = select_available_not_closed_date
   select_available_not_closed_date(:end, start_date)
-
   step "I save the booking calendar"
+  #step "the booking calendar is closed"
 end
 
 #Dann(/^ist das Modell mit Start- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügt worden$/) do
@@ -145,7 +145,7 @@ Then(/^the model has been added to the order with the respective start and end d
     find(".line", match: :first)
     find(".line", :text => "#{@quantity}x #{@model.name}")
   end
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).detect{|line| line.model == @model}).not_to be_nil
+  expect(@current_user.contract_lines.unsubmitted.detect{|line| line.model == @model}).not_to be_nil
 end
 
 #Dann(/^lässt sich das Modell mit Start\- und Enddatum, Anzahl und Gerätepark der Bestellung hinzugefügen$/) do
@@ -456,5 +456,5 @@ Then(/^I cannot order that model unless I am part of that group$/) do
   find(".fc-widget-content", :match => :first)
   step "I save the booking calendar"
   expect(find("#current-order-lines").has_content?(@model.name)).to be true
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).map(&:model).include?(@model)).to be true
+  expect(@current_user.contract_lines.unsubmitted.map(&:model).include?(@model)).to be true
 end

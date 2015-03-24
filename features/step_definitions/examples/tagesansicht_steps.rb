@@ -3,9 +3,9 @@
 #Angenommen(/^eine Bestellungen mit zwei unterschiedlichen Zeitspannen existiert$/) do
 Given(/^there is an order with two different time windows$/) do
   @customer = @current_inventory_pool.users.customers.order("RAND()").first
-  @contract = FactoryGirl.create :contract, user: @customer, status: 'submitted', inventory_pool: @current_inventory_pool
-  FactoryGirl.create :contract_line, contract_id: @contract.id, start_date: Date.today, end_date: Date.tomorrow 
-  FactoryGirl.create :contract_line, contract_id: @contract.id, start_date: Date.today, end_date: Date.today+10.days 
+  FactoryGirl.create :contract_line, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.tomorrow
+  FactoryGirl.create :contract_line, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.today+10.days
+  @contract = @customer.contracts.submitted.find_by(inventory_pool_id: @current_inventory_pool)
 end
 
 #Dann(/^sehe ich für diese Bestellung die längste Zeitspanne direkt auf der Linie$/) do

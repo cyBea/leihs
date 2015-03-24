@@ -158,7 +158,7 @@ Then /^that shows the totals of the columns:$/ do |table|
   table.hashes.each do |area|
     case area["Column"]
       when "Quantity"
-        expect(@total.find(".quantity", match: :first).has_content? @contract.quantity).to be true
+        expect(@total.find(".quantity", match: :first).has_content? @contract.total_quantity).to be true
       when "Value"
         expect(@total.find(".value", match: :first).text.gsub(/\D/, "")).to eq ("%.2f" % @contract.lines.map(&:price).sum).gsub(/\D/, "")
     end

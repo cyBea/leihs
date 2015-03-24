@@ -46,8 +46,8 @@ When /^I add a model to the acknowledge which is already existing in the selecte
   find(".line", match: :prefer_exact, text: @model.name)
   @line_el_count = all(".line").size
 
-  fill_in "add-start-date", with: @line.start_date.strftime("%d.%m.%Y")
-  fill_in "add-end-date", with: @line.end_date.strftime("%d.%m.%Y")
+  fill_in "add-start-date", with: I18n.l(@line.start_date)
+  fill_in "add-end-date", with: I18n.l(@line.end_date)
   fill_in 'add-input', with: @model.items.first.inventory_code
 
   find("#add-input+button").click

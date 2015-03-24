@@ -33,17 +33,16 @@ class Visit < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :inventory_pool
-  
-  has_many :visit_lines
-  has_many :contract_lines, :through => :visit_lines
-  alias :lines :contract_lines
 
-#  def line_ids
-#    contract_line_ids.split(',').map(&:to_i)
-#  end
-#  def contract_lines
-#    @contract_lines ||= ContractLine.includes(:model).find(line_ids)
-#  end
+  has_many :contract_lines, -> (r){ if r.status == :approved
+                                      where(start_date: r.date)
+                                    else
+                                      where(end_date: r.date)
+                                    end.where(inventory_pool_id: r.inventory_pool_id, user_id: r.user_id) }, foreign_key: :status, primary_key: :status
+  alias :lines :contract_lines
+  def contract_line_ids
+    contract_lines.pluck(:id)
+  end
 
   #######################################################
   

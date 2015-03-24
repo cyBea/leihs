@@ -72,4 +72,4 @@
     new App.HandOverController
       el: "#hand-over-view"
       user: App.User.find(#{@user.id})
-      contract: App.Contract.find #{@contract.id}
+      contract: App.Contract.find '#{@contract.id}'

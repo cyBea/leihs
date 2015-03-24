@@ -12,21 +12,15 @@ class Borrow::ApplicationController < ApplicationController
     @any_template = current_user.templates.any?
   end
 
-  def unsubmitted_contracts
-    @unsubmitted_contracts ||= current_user.contracts.unsubmitted
-  end
-  helper_method :unsubmitted_contracts
-
   def refresh_timeout
     # ok, refreshed
     respond_to do |format|
       format.html {render :nothing => true}
-      if unsubmitted_contracts.empty?
-        date = Time.now
-      else
-        date = unsubmitted_contracts.first.updated_at
-      end
-
+      date = if current_user.contract_lines.unsubmitted.empty?
+               Time.now
+             else
+               current_user.contract_lines.unsubmitted.first.updated_at
+             end
       format.json do
         render :json => { date: date }
       end
@@ -50,12 +44,10 @@ class Borrow::ApplicationController < ApplicationController
                borrow_order_remove_path,
                borrow_order_remove_lines_path,
                borrow_change_time_range_path].include? request.path
-    if current_user.timeout? and unsubmitted_contracts.flat_map(&:lines).any? {|l| not l.available? }
+    if current_user.timeout? and current_user.contract_lines.unsubmitted.any? {|l| not l.available? }
       redirect_to borrow_order_timed_out_path
     else
-      unsubmitted_contracts.each do |contract|
-        contract.touch
-      end
+      current_user.contract_lines.unsubmitted.each &:touch
     end
   end
 

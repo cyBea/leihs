@@ -161,7 +161,7 @@ end
 
 #Wenn(/^ein Benutzer wegen verspäteter Rückgaben automatisch gesperrt wird$/) do
 When(/^a user is suspended automatically due to late contracts$/) do
-  @user = ContractLine.by_inventory_pool(@current_inventory_pool).to_take_back.where("end_date < ?", Date.today).order("RAND()").first.user
+  @user = ContractLine.where(inventory_pool_id: @current_inventory_pool).signed.where("end_date < ?", Date.today).order("RAND()").first.user
   @user.automatic_suspend(@current_inventory_pool)
 end
 

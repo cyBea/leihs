@@ -45,7 +45,13 @@ Then /^the contract is rejected$/ do
       find(".button", match: :first, text: _("Rejected"))
     end
   end
-  expect(@contract.reload.status).to eq :rejected
+
+  rejected_contract = @current_inventory_pool.contracts.rejected.find_by(user_id: @contract.user)
+  @contract.lines.each do |line|
+    expect(rejected_contract.contract_lines.include? line).to be true
+    expect(line.reload.status).to eq :rejected
+  end
+  step "that contract has been deleted"
 end
 
 Then(/^I am redirected to the daily view$/) do

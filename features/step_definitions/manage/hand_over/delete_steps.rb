@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 When /^I delete a line$/ do
-  @contract = @customer.get_approved_contract(@current_inventory_pool)
+  @contract = @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool)
   @line = @contract.lines.first
   step 'I delete this line element'
 end
@@ -43,7 +43,7 @@ Then /^these lines are deleted$/ do
 end
 
 When /^I delete all lines of a model thats availability is blocked by these lines$/ do
-  unless @customer.get_approved_contract(@current_inventory_pool).lines.first.available?
+  unless @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool).lines.first.available?
     step 'I add an item to the hand over by providing an inventory code'
     @model = Item.find_by_inventory_code(@inventory_code).model
     find(".line", match: :prefer_exact, text: @model.name).find("input[type='checkbox'][data-select-line]").click

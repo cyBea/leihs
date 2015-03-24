@@ -133,7 +133,7 @@ Feature: Delegation
     And I save
     Then I see an error message
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Editing a delegation
     Given I am Pius
     And I can find the user administration features in the "Admin" area under "Users"

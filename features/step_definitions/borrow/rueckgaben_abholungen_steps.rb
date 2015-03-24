@@ -86,15 +86,15 @@ Then(/^the items are sorted alphabetically and grouped by model name and number 
            @current_user.visits.hand_over
          end.joins(:inventory_pool).order("date", "inventory_pools.name").map(&:lines)
 
-  t = temp.map{|visit_lines| visit_lines.to_a.uniq(&:model_id)}.
-        map{|visit_lines| visit_lines.map(&:model)}.
+  t = temp.map{|contract_lines| contract_lines.to_a.uniq(&:model_id)}.
+        map{|contract_lines| contract_lines.map(&:model)}.
         map{|visit_models| visit_models.map(&:name)}.
         map{|visit_model_names| visit_model_names.sort}.
         flatten
   expect(t).to eq all(".row.line .col6of10").map(&:text)
 
   temp.
-    map{|visit_lines| visit_lines.group_by {|l| l.model.name}}.
+    map{|contract_lines| contract_lines.group_by {|l| l.model.name}}.
     map {|h| h.sort}.
     flatten(1).
     map{|vl| [vl.first, (if vl.second.first.is_a? OptionLine then vl.second.first.quantity else vl.second.length end)]}.
@@ -108,7 +108,7 @@ end
 Then(/^the items are sorted alphabetically by model name$/) do
   t = @current_user.visits.take_back.
         joins(:inventory_pool).order("date", "inventory_pools.name").
-        map(&:lines).map{|visit_lines| visit_lines.map(&:model)}.
+        map(&:lines).map{|contract_lines| contract_lines.map(&:model)}.
         map{|visit_models| visit_models.map(&:name)}.
         map{|visit_model_names| visit_model_names.sort}.flatten
   expect(t).to eq all(".row.line .col6of10").map(&:text)

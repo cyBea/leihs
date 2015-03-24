@@ -60,11 +60,11 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/borrow/bestelluebersicht.feature:10:23:29:39:48 DEFAULT_BROWSER=firefox
-- name: features/borrow/bestelluebersicht.feature:56:65
+- name: features/borrow/bestelluebersicht.feature:56:66
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/bestelluebersicht.feature:56:65 DEFAULT_BROWSER=firefox
+        features/borrow/bestelluebersicht.feature:56:66 DEFAULT_BROWSER=firefox
 - name: features/borrow/bestellungen.feature:8:12
   scripts:
     cucumber:
@@ -180,16 +180,16 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/borrow/suche.feature:43 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:4:14:24:31:45
+- name: features/borrow/timeoutpage.feature:8:16:24:29:41
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/timeoutpage.feature:4:14:24:31:45 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:54:64:76
+        features/borrow/timeoutpage.feature:8:16:24:29:41 DEFAULT_BROWSER=firefox
+- name: features/borrow/timeoutpage.feature:48:56:66
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/borrow/timeoutpage.feature:54:64:76 DEFAULT_BROWSER=firefox
+        features/borrow/timeoutpage.feature:48:56:66 DEFAULT_BROWSER=firefox
 - name: features/borrow/verfuegbarkeit.feature:10:23:28:33:41
   scripts:
     cucumber:
@@ -260,21 +260,21 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/examples/bestellenden_wechseln.feature:7 DEFAULT_BROWSER=firefox
-- name: features/examples/bestellung.feature:4:11:19:25:31
+- name: features/examples/bestellung.feature:4:11:19:24:30
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/examples/bestellung.feature:4:11:19:25:31 DEFAULT_BROWSER=firefox
-- name: features/examples/bestellung.feature:37:46:63:80:93
+        features/examples/bestellung.feature:4:11:19:24:30 DEFAULT_BROWSER=firefox
+- name: features/examples/bestellung.feature:36:45:62:79:92
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/examples/bestellung.feature:37:46:63:80:93 DEFAULT_BROWSER=firefox
-- name: features/examples/bestellung.feature:102
+        features/examples/bestellung.feature:36:45:62:79:92 DEFAULT_BROWSER=firefox
+- name: features/examples/bestellung.feature:101
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/examples/bestellung.feature:102 DEFAULT_BROWSER=firefox
+        features/examples/bestellung.feature:101 DEFAULT_BROWSER=firefox
 - name: features/examples/besuche.feature:5
   scripts:
     cucumber:
@@ -906,21 +906,21 @@ tasks:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
         features/technical/contract/orders_controller.feature:8 DEFAULT_BROWSER=firefox
-- name: features/technical/contract/remove_line_model.feature:8:14:20:26:32
+- name: features/technical/contract/remove_line_model.feature:9:16:23:30:37
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/technical/contract/remove_line_model.feature:8:14:20:26:32 DEFAULT_BROWSER=firefox
-- name: features/technical/contract/remove_line_model.feature:38:44
+        features/technical/contract/remove_line_model.feature:9:16:23:30:37 DEFAULT_BROWSER=firefox
+- name: features/technical/contract/remove_line_model.feature:44:51
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/technical/contract/remove_line_model.feature:38:44 DEFAULT_BROWSER=firefox
-- name: features/technical/contract/sign_model.feature:6:14
+        features/technical/contract/remove_line_model.feature:44:51 DEFAULT_BROWSER=firefox
+- name: features/technical/contract/sign_model.feature:6
   scripts:
     cucumber:
       body: DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default -f json -o log/cucumber_report.json
-        features/technical/contract/sign_model.feature:6:14 DEFAULT_BROWSER=firefox
+        features/technical/contract/sign_model.feature:6 DEFAULT_BROWSER=firefox
 - name: features/technical/contract/submit_model.feature:10
   scripts:
     cucumber:

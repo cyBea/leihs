@@ -41,9 +41,10 @@ class MailTemplate < ActiveRecord::Base
         start_date: l.start_date,
         end_date: l.end_date}
      end,
-     histories: order.histories.select{|h| h.type_const == History::CHANGE}.map do |h|
-       {text: h.text}
-     end,
+     #6628029#
+     # histories: order.histories.select{|h| h.type_const == History::CHANGE}.map do |h|
+     #   {text: h.text}
+     # end,
      comment: comment,
      purpose: purpose
     }.deep_stringify_keys
@@ -67,20 +68,20 @@ class MailTemplate < ActiveRecord::Base
     ]
   end
 
-  def self.liquid_variables_for_user(user, inventory_pool, visit_lines)
+  def self.liquid_variables_for_user(user, inventory_pool, contract_lines)
     {user: {name: user.name},
      inventory_pool: {name: inventory_pool.name,
                       description: inventory_pool.description},
      email_signature: Setting::EMAIL_SIGNATURE,
-     contract_lines: visit_lines.map(&:contract_line).map do |l|
+     contract_lines: contract_lines.map do |l|
        {quantity: l.quantity,
         model_name: l.model.name,
         item_inventory_code: l.item.inventory_code,
         start_date: l.start_date,
         end_date: l.end_date}
      end,
-     quantity: visit_lines.to_a.sum(&:quantity),
-     due_date: visit_lines.first.date
+     quantity: contract_lines.to_a.sum(&:quantity),
+     due_date: contract_lines.first.end_date
     }.deep_stringify_keys
   end
 

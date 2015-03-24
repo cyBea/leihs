@@ -695,10 +695,6 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "End Date": [
-         null,
-         ""
-      ],
       "End date": [
          null,
          ""
@@ -1711,10 +1707,6 @@ window.i18n.locale_data = {
          ""
       ],
       "Start": [
-         null,
-         ""
-      ],
-      "Start Date": [
          null,
          ""
       ],

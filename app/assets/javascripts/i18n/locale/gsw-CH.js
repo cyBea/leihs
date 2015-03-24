@@ -676,10 +676,6 @@ window.i18n.locale_data = {
          null,
          "Benutzername und/oder Passwort sind läär"
       ],
-      "End Date": [
-         null,
-         "Änd-Datum"
-      ],
       "End date": [
          null,
          "Änd-Datum"
@@ -1686,10 +1682,6 @@ window.i18n.locale_data = {
       "Start": [
          null,
          "Start"
-      ],
-      "Start Date": [
-         null,
-         "Startdatum"
       ],
       "Start Date must be before End Date": [
          null,

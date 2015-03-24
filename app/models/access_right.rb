@@ -71,7 +71,6 @@ class AccessRight < ActiveRecord::Base
 
   scope :active, -> { where(deleted_at: nil) }
   scope :suspended, -> { where.not(suspended_until: nil).where("suspended_until >= ?", Date.today) }
-  scope :not_suspended, -> { where("suspended_until IS NULL OR suspended_until < ?", Date.today) }
 
 ####################################################################
 
@@ -95,9 +94,9 @@ class AccessRight < ActiveRecord::Base
 
   def check_for_existing_contract_lines
     if inventory_pool
-      lines = inventory_pool.contract_lines.by_user(user)
-      errors.add(:base, _("Currently has open orders")) if lines.to_approve.exists? or lines.to_hand_over.exists?
-      errors.add(:base, _("Currently has items to return")) if lines.to_take_back.exists?
+      lines = inventory_pool.contract_lines.where(user_id: user)
+      errors.add(:base, _("Currently has open orders")) if lines.submitted.exists? or lines.approved.exists?
+      errors.add(:base, _("Currently has items to return")) if lines.signed.exists?
     end
   end
 

@@ -19,7 +19,7 @@ end
 Then /^each of the lines of such contract must also be "(.*?)"$/ do |line_state|
   t = @visits.all? do |visit|
     visit.lines.all? do |line|
-      object_with_sign_state? line.contract, line_state
+      object_with_sign_state? line, line_state
     end
   end
   expect(t).to be true

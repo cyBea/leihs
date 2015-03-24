@@ -39,7 +39,7 @@ Then /^the time range for that option line is changed$/ do
 end
 
 When(/^I add an option$/) do
-  @option = Option.find_by_inventory_pool_id @current_inventory_pool.id
+  @option = @current_inventory_pool.options.sample
   field_value = @option.name
   find("[data-add-contract-line]").set field_value
   find(".ui-autocomplete a[title='#{field_value}']", match: :prefer_exact, text: field_value).click

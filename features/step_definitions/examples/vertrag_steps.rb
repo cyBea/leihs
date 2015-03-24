@@ -20,8 +20,8 @@ Given /^I open a contract during hand over( that contains software)?$/ do |arg1|
   page.driver.browser.switch_to.window new_window
 
   @contract_element = find(".contract")
-  @contract = @customer.contracts.where(inventory_pool_id: @current_inventory_pool).signed.sort_by(&:updated_at).last
-  @contract_lines_to_take_back = @customer.contract_lines.to_take_back.joins(:contract).where(contracts: {inventory_pool_id: @current_inventory_pool})
+  @contract = @customer.contracts.signed.where(inventory_pool_id: @current_inventory_pool).order("RAND()").first
+  @contract_lines_to_take_back = @customer.contract_lines.signed.where(inventory_pool_id: @current_inventory_pool)
 end
 
 #Dann /^möchte ich die folgenden Bereiche sehen:$/ do |table|
@@ -243,13 +243,13 @@ end
 
 #Angenommen(/^es gibt einen Kunden mit Vertrag wessen Addresse mit "(.*?)" endet$/) do |arg1|
 Given(/^there is a contract for a user whose address ends with "(.*?)"$/) do |arg1|
-  @user = @current_inventory_pool.users.customers.find {|u| u.contracts.where(status: [:signed, :closed]).exists? and u.read_attribute(:address) =~ /, $/}
+  @user = @current_inventory_pool.users.customers.find {|u| u.contracts.signed_or_closed.exists? and u.read_attribute(:address) =~ /, $/}
   expect(@user).not_to be_nil
 end
 
 #Wenn(/^ich einen Vertrag dieses Kunden öffne$/) do
 When(/^I open this user's contract$/) do
-  visit manage_contract_path(@current_inventory_pool, @user.contracts.where(status: [:signed, :closed]).order("RAND()").first)
+  visit manage_contract_path(@current_inventory_pool, @user.contracts.signed_or_closed.order("RAND()").first)
 end
 
 #Dann(/^wird seine Adresse ohne den abschliessenden "(.*?)" angezeigt$/) do |arg1|

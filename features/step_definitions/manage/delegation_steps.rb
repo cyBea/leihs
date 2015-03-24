@@ -142,14 +142,14 @@ end
 
 #Dann(/^die Delegation ist als Besteller gespeichert$/) do
 Then(/^the delegation is saved as borrower$/) do
-  @current_user.contracts.find(@contract_ids).each do |contract|
+  @contracts.each do |contract|
     expect(contract.user).to eq @delegation
   end
 end
 
 #Dann(/^ich werde als Kontaktperson hinterlegt$/) do
 Then(/^I am saved as contact person$/) do
-  @current_user.contracts.find(@contract_ids).each do |contract|
+  @contracts.each do |contract|
     expect(contract.delegated_user).to eq @delegated_user
   end
 end
@@ -341,13 +341,17 @@ end
 #Dann(/^ist in der Bestellung der Benutzer aufgeführt$/) do
 Then(/^the order shows the user$/) do
   find(".content-wrapper", :text => @new_user.name, match: :first)
-  expect(@contract.reload.user).to eq @new_user
+  @contract.lines do |line|
+    expect(line.reload.user).to eq @new_user
+  end
 end
 
 #Dann(/^es ist keine Kontaktperson aufgeführt$/) do
 Then(/^no contact person is shown$/) do
   expect(has_no_content?("(#{@delegated_user.name})")).to be true
-  expect(@contract.reload.delegated_user).to eq nil
+  @contract.lines do |line|
+    expect(line.reload.delegated_user).to eq nil
+  end
 end
 
 #Wenn(/^keine Bestellung, Aushändigung oder ein Vertrag für eine Delegation besteht$/) do
@@ -517,7 +521,7 @@ end
 Then(/^the hand over shows the user$/) do
   find(".content-wrapper", :text => @new_user.name, match: :first)
   expect(current_path).to eq manage_hand_over_path(@current_inventory_pool, @new_user)
-  expect(@delegation.visits.hand_over.blank?).to be true
+  expect(@delegation.visits.hand_over.where(inventory_pool_id: @current_inventory_pool).empty?).to be true
 end
 
 #Dann(/^ich öffne eine Aushändigung für eine Delegation$/) do
@@ -581,7 +585,9 @@ end
 
 #Dann(/^die neu gewählte Kontaktperson wird gespeichert$/) do
 Then(/^the newly selected contact person is saved$/) do
-  expect(@contract.reload.delegated_user).to eq @contact
+  @contract.lines.each do |line|
+    expect(line.reload.delegated_user).to eq @contact
+  end
 end
 
 #Dann(/^sehe ich genau ein Kontaktpersonfeld$/) do
@@ -678,11 +684,13 @@ end
 
 #Und(/^man merkt sich die Bestellung$/) do
 And(/^I take note of the contract$/) do
-  @contract = @current_user.contracts.unsubmitted.first
+  @contracts = @current_user.contracts.unsubmitted
 end
 
 #Und(/^ich refreshe die Bestellung$/) do
 And(/^I reload the order$/) do
-  @contract.reload
-  @contract_ids = [@contract.id]
+  reloaded_contracts = @contracts.map do |contract|
+    contract.user.contracts.find_by(status: :submitted, inventory_pool_id: contract.inventory_pool)
+  end
+  @contracts = reloaded_contracts
 end
