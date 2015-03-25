@@ -1,4 +1,4 @@
-module Delegation::Contract
+module Delegation::ContractLinesBundle
 
   def self.included(base)
     base.class_eval do

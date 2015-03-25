@@ -33,6 +33,11 @@ class Admin::DatabaseController < Admin::ApplicationController
           # ["audits", ["created_at"]],
           # ["audits", ["thread_id"]],
           # ["audits", ["user_id", "user_type"]],
+          ["contract_lines", ["status"]],
+          ["contract_lines", ["inventory_pool_id"]],
+          ["contract_lines", ["user_id"]],
+          ["contract_lines", ["delegated_user_id"]],
+          ["contract_lines", ["handed_over_by_user_id"]],
           ["contract_lines", ["contract_id"]],
           ["contract_lines", ["end_date"]],
           ["contract_lines", ["item_id"]],
@@ -41,9 +46,6 @@ class Admin::DatabaseController < Admin::ApplicationController
           ["contract_lines", ["returned_date", "contract_id"]],
           ["contract_lines", ["start_date"]],
           ["contract_lines", ["type", "contract_id"]],
-          ["contracts", ["inventory_pool_id"]],
-          ["contracts", ["status"]],
-          ["contracts", ["user_id"]],
           ["groups", ["inventory_pool_id"]],
           ["groups_users", ["group_id"]],
           ["groups_users", ["user_id", "group_id"], :unique => true],
@@ -121,7 +123,7 @@ class Admin::DatabaseController < Admin::ApplicationController
   def access_rights
     @visits = Visit.joins("LEFT JOIN access_rights ON visits.user_id = access_rights.user_id AND visits.inventory_pool_id = access_rights.inventory_pool_id").
         where(access_rights: {id: nil}).
-        order(:inventory_pool_id, :user_id, :date).
+        order(:inventory_pool_id, :user_id, :visit_date).
         group("visits.inventory_pool_id, visits.user_id").
         includes(:user, :inventory_pool)
     if request.post?

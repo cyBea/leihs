@@ -137,7 +137,7 @@ When /^I open a hand over for a customer that has things to pick up today as wel
 end
 
 When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
-  @model = @customer.get_approved_contract(@current_inventory_pool).models.order("RAND()").detect do |model|
+  @model = @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool).models.order("RAND()").detect do |model|
     @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).order("RAND()").first
   end
   find("[data-add-contract-line]").set @item.inventory_code
@@ -152,7 +152,7 @@ end
 
 When /^it doesn't exist in any future contracts$/ do
   @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
-                              @customer.get_approved_contract(@current_inventory_pool).models).sample
+                              @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool).models).sample
   @item = @model_not_in_contract.items.borrowable.in_stock.order("RAND()").first
   find("#add-start-date").set I18n.l(Date.today+7.days)
   find("#add-end-date").set I18n.l(Date.today+8.days)
@@ -268,7 +268,7 @@ Then /^the print dialog opens automatically$/ do
   step 'I select an item line and assign an inventory code'
   step 'I click hand over'
   find(".modal .button", match: :first, :text => _("Hand Over")).click
-  check_printed_contract(page.driver.browser.window_handles, @current_inventory_pool, @item_line.contract)
+  check_printed_contract(page.driver.browser.window_handles, @current_inventory_pool, @item_line)
 end
 
 When(/^start and end date are set to the corresponding dates of the hand over's first time window$/) do

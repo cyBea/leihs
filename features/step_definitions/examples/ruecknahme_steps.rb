@@ -126,13 +126,13 @@ end
 
 #Wenn(/^ich diese Option zurücknehme$/) do
 When(/^I take back this option$/) do
-  @option = Option.find {|o| o.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}.count >= 2}
+  @option = Option.find {|o| o.option_lines.select{|l| l.status == :signed and l.user == @user}.count >= 2}
   step 'I add the same option again'
 end
 
 #Dann(/^wird die Option dem ersten Zeitfenster hinzugefügt$/) do
 Then(/^the option is added to the first time window$/) do
-  @option_lines = @option.option_lines.select{|l| l.contract.status == :signed and l.contract.user == @user}
+  @option_lines = @option.option_lines.select{|l| l.status == :signed and l.user == @user}
   @option_line = @option_lines.sort{|a, b| a.end_date <=> b.end_date}.first
   expect(find("[data-selected-lines-container]", match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i).to be > 0
 end

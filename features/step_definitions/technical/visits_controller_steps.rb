@@ -36,7 +36,7 @@ Given /^visit that is (.*)$/ do |arg1|
            else
              raise
          end
-  @visit = @inventory_pool.visits.hand_over.where("date #{sign} ?", Date.today).first
+  @visit = @inventory_pool.visits.hand_over.where("visit_date #{sign} ?", Date.today).first
 end
 
 When /^the visit is deleted$/ do

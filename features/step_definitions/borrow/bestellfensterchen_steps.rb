@@ -42,8 +42,10 @@ end
 #Wenn(/^das gleiche Modell nochmals hinzugefügt wird$/) do
 When(/^I add the same model one more time$/) do
   FactoryGirl.create(:contract_line,
-                     :contract => @current_user.get_unsubmitted_contract(@inventory_pool),
-                     :model => @new_contract_line.model)
+                     user: @current_user,
+                     status: :unsubmitted,
+                     inventory_pool: @inventory_pool,
+                     model: @new_contract_line.model)
   #step "erscheint es im Bestellfensterchen"
   step "it appears in the order window"
 end
@@ -87,9 +89,9 @@ end
 #Angenommen(/^meine Bestellung ist leer$/) do
 Given(/^my order is empty$/) do
   # NOTE removing contracts already generated on the dataset
-  @current_user.contracts.unsubmitted.map(&:destroy)
+  @current_user.contract_lines.unsubmitted.map(&:destroy)
 
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).empty?).to be true
+  expect(@current_user.contract_lines.unsubmitted.empty?).to be true
 end
 
 #Dann(/^sehe ich keine Zeitanzeige$/) do
@@ -101,10 +103,10 @@ end
 Then(/^I see a timer$/) do
   step "I visit the homepage"
   expect(has_selector?("#current-order-basket #timeout-countdown", :visible => true)).to be true
-  @timeoutStart = if @current_user.contracts.unsubmitted.empty?
+  @timeoutStart = if @current_user.contract_lines.unsubmitted.empty?
                     Time.now
                   else
-                    @current_user.contracts.unsubmitted.order("RAND()").first.updated_at
+                    @current_user.contract_lines.unsubmitted.order("RAND()").first.updated_at
                   end
   @countdown = find("#timeout-countdown-time", match: :first).text
 end
@@ -163,8 +165,8 @@ end
 # #Wenn(/^die Zeit überschritten ist$/) do
 # When(/^time has run out$/) do
 #   past_date = Time.now - (Contract::TIMEOUT_MINUTES + 1).minutes
-#   @current_user.contracts.unsubmitted.each do |contract|
-#     contract.update_attribute :updated_at, past_date
+#   @current_user.contract_lines.unsubmitted.each do |contract_line|
+#     contract_line.update_attribute :updated_at, past_date
 #   end
 #   page.execute_script %Q{ localStorage.currentTimeout = moment("#{past_date.to_s}").toDate() }
 # end

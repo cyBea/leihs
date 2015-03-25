@@ -45,5 +45,11 @@ end
 
 Then /^this contract is approved$/ do
   find(".line[data-id='#{@contract.id}']", text: _("Approved"))
-  expect(@contract.reload.status).to eq :approved
+
+  approved_contract = @current_inventory_pool.contracts.approved.find_by(user_id: @contract.user)
+  @contract.lines.each do |line|
+    expect(approved_contract.contract_lines.include? line).to be true
+    expect(line.reload.status).to eq :approved
+  end
+  step "that contract has been deleted"
 end

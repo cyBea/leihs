@@ -29,14 +29,14 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
 
     @date = date ? Date.parse(date) : Date.today
     if @date == Date.today
-      @submitted_contracts_count = current_inventory_pool.contracts.submitted.count
-      @overdue_hand_overs_count = current_inventory_pool.visits.hand_over.where("date < ?", @date).count
-      @overdue_take_backs_count = current_inventory_pool.visits.take_back.where("date < ?", @date).count
+      @submitted_contract_lines_count = current_inventory_pool.contract_lines.submitted.count
+      @overdue_hand_overs_count = current_inventory_pool.visits.hand_over.where("visit_date < ?", @date).count
+      @overdue_take_backs_count = current_inventory_pool.visits.take_back.where("visit_date < ?", @date).count
     else
       params[:tab] = nil if params[:tab] == "orders" or params[:tab] == "last_visitors"
     end
-    @hand_overs_count = current_inventory_pool.visits.hand_over.where(:date => @date).count
-    @take_backs_count = current_inventory_pool.visits.take_back.where(:date => @date).count
+    @hand_overs_count = current_inventory_pool.visits.hand_over.where(:visit_date => @date).count
+    @take_backs_count = current_inventory_pool.visits.take_back.where(:visit_date => @date).count
     @last_visitors = session[:last_visitors].reverse.map if session[:last_visitors]
   end
 
@@ -102,7 +102,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
     today_and_next_4_days = [date] 
     4.times { today_and_next_4_days << current_inventory_pool.next_open_date(today_and_next_4_days[-1] + 1.day) }
     
-    grouped_visits = current_inventory_pool.visits.includes(:user => {}, :contract_lines => [:model, :contract]).where("date <= ?", today_and_next_4_days.last).group_by {|x| [x.action, x.date] }
+    grouped_visits = current_inventory_pool.visits.includes(:user).where("visit_date <= ?", today_and_next_4_days.last).group_by {|x| [x.action, x.date] }
     
     chart_data = today_and_next_4_days.map do |day|
       day_name = (day == Date.today) ? _("Today") : l(day, :format => "%a %d.%m")

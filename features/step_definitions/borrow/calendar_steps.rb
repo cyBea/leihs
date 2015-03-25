@@ -15,7 +15,7 @@ end
 When(/^I open the calendar of a model related to an inventory pool for which has reached maximum amount of visits$/) do
   @inventory_pool = @current_user.inventory_pools.order("RAND ()").detect { |ip| not ip.workday.reached_max_visits.empty? }
   @inventory_pool ||= @current_user.inventory_pools.detect do |ip|
-    if ip.visits.where("date >= ?", Date.today)
+    if ip.visits.where("visit_date >= ?", Date.today)
       # NOTE set max visits to 1 for all days
       ip.workday.update_attributes(max_visits: (0..6).inject({}) { |h, n| h[n] = 1; h })
       true

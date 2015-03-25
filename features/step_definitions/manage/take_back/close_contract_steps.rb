@@ -1,5 +1,5 @@
 When /^I open a take back(, not overdue)?( with at least an option handed over before today)?$/ do |arg1, arg2|
-  contracts = Contract.signed.where(inventory_pool_id: @current_user.inventory_pools.managed)
+  contracts = ContractLinesBundle.signed.where(inventory_pool_id: @current_user.inventory_pools.managed)
   contract = if arg1
                contracts.order("RAND()").detect {|c| not c.lines.any? {|l| l.end_date < Date.today} }
              elsif arg2
@@ -12,7 +12,7 @@ When /^I open a take back(, not overdue)?( with at least an option handed over b
   @customer = contract.user
   visit manage_take_back_path(@current_inventory_pool, @customer)
   expect(has_selector?("#take-back-view")).to be true
-  @contract_lines_to_take_back = @customer.contract_lines.to_take_back.joins(:contract).where(contracts: {inventory_pool_id: @current_inventory_pool})
+  @contract_lines_to_take_back = @customer.contract_lines.signed.where(inventory_pool_id: @current_inventory_pool)
 end
 
 When /^I select all lines of an open contract$/ do
@@ -50,7 +50,7 @@ Then /^the contract is closed and all items are returned$/ do
   @contract_lines_to_take_back.each do |line|
     line.reload
     expect(line.item.in_stock?).to be true unless line.is_a? OptionLine
-    expect(line.contract.status).to eq :closed
+    expect(line.status).to eq :closed
   end
-  expect(@customer.contract_lines.to_take_back.joins(:contract).where(contracts: {inventory_pool_id: @current_inventory_pool}).empty?).to be true
+  expect(@customer.contract_lines.signed.where(inventory_pool_id: @current_inventory_pool)).to be_empty
 end

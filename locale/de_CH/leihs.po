@@ -477,9 +477,6 @@ msgstr "Editiere Mail-Templates für das gesamte System"
 msgid "Empty Username and/or Password"
 msgstr "Benutzername und/oder Passwort sind leer"
 
-msgid "End Date"
-msgstr "Enddatum"
-
 msgid "End date"
 msgstr "Enddatum"
 
@@ -1259,9 +1256,6 @@ msgstr "Etwas ist schiefgelaufen!"
 
 msgid "Start"
 msgstr "Start"
-
-msgid "Start Date"
-msgstr "Startdatum"
 
 msgid "Start Date must be before End Date"
 msgstr "Startdaum muss vor Enddatum liegen"

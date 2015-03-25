@@ -9,14 +9,16 @@ end
 
 #Wenn /^jeder Eintrag einer abgeschickten Bestellung referenziert auf einen Zweck$/ do
 When /^each entry of a submitted order refers to a purpose$/ do
-  FactoryGirl.create(:contract_with_lines, status: :submitted).lines.each do |line|
+  contract_lines = rand(3..6).times.map { FactoryGirl.create :contract_line, status: :submitted }
+  contract_lines.each do |line|
     expect(line.purpose.is_a?(Purpose)).to be true
   end
 end
 
 #Wenn /^jeder Eintrag eines Vertrages kann auf einen Zweck referenzieren$/ do
-When /^each entry of an order can refer to a purpose$/ do
-  FactoryGirl.create(:contract_with_lines).lines.each do |line|
+Wenn /^each entry of an order can refer to a purpose$/ do
+  contract_lines = rand(3..6).times.map { FactoryGirl.create :contract_line }
+  contract_lines.each do |line|
     line.purpose = FactoryGirl.create :purpose
     expect(line.purpose.is_a?(Purpose)).to be true
   end
@@ -32,7 +34,7 @@ end
 
 #Dann /^sehe ich auf jeder Zeile den zugewisenen Zweck$/ do
 Then /^I see the assigned purpose on each line$/ do
-  @customer.get_approved_contract(@current_inventory_pool).lines.each do |line|
+  @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool).lines.each do |line|
     target = find(".line[data-id='#{line.id}'] [data-tooltip-template*='purpose']")
     hover_for_tooltip target
     find(".tooltipster-default .tooltipster-content", text: line.purpose.description)
@@ -115,7 +117,7 @@ When /^I define a purpose$/ do
   find("#add-purpose").click
   @added_purpose = "Another Purpose"
   find("#purpose").set @added_purpose
-  @approved_lines = @customer.get_approved_contract(@current_inventory_pool).lines
+  @approved_lines = @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool).lines
   step 'kann ich die Aushändigung durchführen'
 end
 
@@ -128,7 +130,7 @@ end
 
 #Wenn /^alle der ausgewählten Gegenstände haben einen Zweck angegeben$/ do
 When /^all selected items have an assigned purpose$/ do
-  @contract = @customer.get_approved_contract(@current_inventory_pool)
+  @contract = @customer.contracts.approved.find_by(inventory_pool_id: @current_inventory_pool)
   lines = @contract.lines
   lines.each do |line|
     @item_line = line

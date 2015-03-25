@@ -109,14 +109,25 @@ end
 
 When /^I lend (\w+) item(s?) of that model to "([^"]*)"$/ do |n, plural, user_login|
   user = User.find_by_login user_login
-  @inventory_pool.reload
-  n = to_number(n)
-  contract = FactoryGirl.create :contract, :user => user, :inventory_pool => @inventory_pool, :purpose => "this is the required purpose"
-  contract.add_lines(n, @model, nil, Date.today, Date.tomorrow)
+  purpose = FactoryGirl.create :purpose, description: "this is the required purpose"
+  contract_lines = to_number(n).times.map { FactoryGirl.create :contract_line,
+                                                               inventory_pool: @inventory_pool,
+                                                               user: user,
+                                                               model: @model,
+                                                               purpose: purpose,
+                                                               start_date: Date.today,
+                                                               end_date: Date.tomorrow }
+
+  contract = user.contracts.unsubmitted.find_by(inventory_pool_id: @inventory_pool)
   expect(contract.submit("this is the required purpose")).to be true
+  contract = user.contracts.submitted.find_by(inventory_pool_id: @inventory_pool)
   expect(contract.approve("foo'lish comment")).to be true
-  c = Contract.find_by_user_id user
-  c.sign(@user)
+  contract = user.contracts.approved.find_by(inventory_pool_id: @inventory_pool)
+  contract_lines.each do |cl|
+    cl.update_attributes(item: cl.model.items.borrowable.in_stock.where(inventory_pool: cl.inventory_pool).sample )
+  end
+  document = contract.sign(@user, contract_lines)
+  expect(document).to be_valid
 end
 
 When /^"([^"]*)" returns the item$/ do |user|

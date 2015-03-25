@@ -4,25 +4,25 @@
 Given(/^I have added items to an order$/) do
   step "I have an unsubmitted order with models"
   purpose = FactoryGirl.create :purpose
-  @current_user.contracts.unsubmitted.each do |contract|
+  @contracts = @current_user.contracts.unsubmitted
+  @contracts.each do |contract|
     contract.purpose = purpose
   end
-  @contract_ids = @current_user.contracts.unsubmitted.pluck(:id)
 end
 
 #Wenn(/^ich die Bestellübersicht öffne$/) do
 When(/^I open my list of orders$/) do
   visit borrow_current_order_path
   expect(has_content?(_("Order overview"))).to be true
-  expect(all(".line").count).to eq @current_user.contracts.unsubmitted.flat_map(&:lines).count
+  expect(all(".line").count).to eq @current_user.contract_lines.unsubmitted.count
 end
 
 #############################################################################
 
 #Dann(/^sehe ich die Einträge gruppiert nach Startdatum und Gerätepark$/) do
 Then(/^I see entries grouped by start date and inventory pool$/) do
-  @current_user.contracts.unsubmitted.flat_map(&:lines).group_by{|l| [l.start_date, l.inventory_pool]}.each do |k,v|
-    expect(find("#current-order-lines .row", text: I18n.l(k[0]), match: :first).has_content? k[1].name).to be true
+  @current_user.contract_lines.unsubmitted.group_by{|l| [l.start_date, l.inventory_pool]}.each do |k,v|
+    find("#current-order-lines .row", text: /#{I18n.l(k[0])}.*#{k[1].name}/)
   end
 end
 
@@ -65,7 +65,7 @@ end
 
 def before_max_available(user)
   h = {}
-  lines = user.contracts.unsubmitted.flat_map(&:lines)
+  lines = user.contract_lines.unsubmitted
   lines.each do |order_line|
     h[order_line.id] = order_line.model.availability_in(order_line.inventory_pool).maximum_available_in_period_summed_for_groups(order_line.start_date, order_line.end_date)
   end
@@ -86,15 +86,14 @@ end
 
 #Dann(/^wird der Eintrag aus der Bestellung entfernt$/) do
 Then(/^the entry is removed from the order$/) do
-  expect(all(".line").count).to eq @current_user.contracts.unsubmitted.flat_map(&:lines).count
+  expect(all(".line").count).to eq @current_user.contract_lines.unsubmitted.count
 end
 
 #############################################################################
 
 #Wenn(/^ich die Bestellung lösche$/) do
 When(/^I delete the order$/) do
-  @contract_line_ids = @current_user.contracts.unsubmitted.flat_map(&:contract_line_ids)
-  @contract_ids = @current_user.contracts.unsubmitted.pluck(:id)
+  @contracts = @current_user.contracts.unsubmitted
 
   @before_max_available = before_max_available(@current_user)
 
@@ -110,14 +109,14 @@ end
 
 #Dann(/^alle Einträge werden aus der Bestellung gelöscht$/) do
 Then(/^all entries are deleted from the order$/) do
-  expect(ContractLine.where(id: @contract_line_ids).count).to eq 0
-  expect(Contract.where(id: @contract_ids).count).to eq 0
+  expect(@current_user.contract_lines.unsubmitted).to be_empty
+  expect(@current_user.contracts.unsubmitted).to be_empty
 end
 
 #Dann(/^die Gegenstände sind wieder zur Ausleihe verfügbar$/) do
 Then(/^the items are available for borrowing again$/) do
-  @current_user.contracts.unsubmitted.flat_map(&:lines).each do |contract_line|
-    after_max_available = contract_line.model.availability_in(contract_line.contract.inventory_pool).maximum_available_in_period_summed_for_groups(contract_line.start_date, contract_line.end_date)
+  @current_user.contract_lines.unsubmitted.each do |contract_line|
+    after_max_available = contract_line.model.availability_in(contract_line.inventory_pool).maximum_available_in_period_summed_for_groups(contract_line.start_date, contract_line.end_date)
     expect(after_max_available).to eq @before_max_available[contract_line.id]
   end
 end
@@ -141,7 +140,7 @@ end
 
 #Dann(/^ändert sich der Status der Bestellung auf Abgeschickt$/) do
 Then(/^the order's status changes to submitted$/) do
-  @current_user.contracts.find(@contract_ids).each do |contract|
+  @contracts.each do |contract|
     expect(contract.status).to eq :submitted
   end
 end
@@ -221,12 +220,15 @@ Then(/^the entry's date is changed accordingly$/) do
     expect(@changed_lines.first.reload.start_date).to eq @new_date
   end
   if @new_quantity
-    t = @changed_lines.first.contract.lines.where(model_id: @changed_lines.first.model_id,
-                                              start_date: @changed_lines.first.start_date,
-                                              end_date: @changed_lines.first.end_date).sum(:quantity)
+    line = @changed_lines.first
+    t = line.user.contract_lines.where(inventory_pool_id: line.inventory_pool_id,
+                                       status: line.status,
+                                       model_id: line.model_id,
+                                       start_date: line.start_date,
+                                       end_date: line.end_date).sum(:quantity)
     expect(t).to eq @new_quantity
 
-    @just_changed_line = find("[data-model-id='#{@changed_lines.first.model_id}'][data-start-date='#{@changed_lines.first.start_date}'][data-end-date='#{@changed_lines.first.end_date}']")
+    @just_changed_line = find("[data-model-id='#{line.model_id}'][data-start-date='#{line.start_date}'][data-end-date='#{line.end_date}']")
   end
 end
 

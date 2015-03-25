@@ -1,7 +1,6 @@
 class Mailer::Order < ActionMailer::Base
 
   def choose_language_for(contract)
-    #set_locale(contract.target_user.language.locale_name)#NOTE: not working anymore "set_locale"
     I18n.locale = contract.target_user.language.locale_name || I18n.default_locale
   end
 

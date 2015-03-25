@@ -499,10 +499,6 @@
 
   msgstr("Benutzername und/oder Passwort sind leer");
 
-  msgid("End Date");
-
-  msgstr("Enddatum");
-
   msgid("End date");
 
   msgstr("Enddatum");
@@ -1370,10 +1366,6 @@
   msgid("Start");
 
   msgstr("Start");
-
-  msgid("Start Date");
-
-  msgstr("Startdatum");
 
   msgid("Start Date must be before End Date");
 

@@ -3,26 +3,18 @@
 Given(/^I hit the timeout page with a model that has conflicts$/) do
   step "I have an unsubmitted order with models"
   step "a model is not available"
-  #step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
   step "I have performed no activity for more than 30 minutes"
-  #step "ich eine Aktivität ausführe"
   step "I perform some activity"
-  #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
   step 'I am informed that my items are no longer reserved for me'
 end
 
 #Angenommen(/^ich zur Timeout Page mit (\d+) Konfliktmodellen weitergeleitet werde$/) do |n|
 Given(/^I hit the timeout page with (\d+) models that have conflicts$/) do |n|
-  #step "ich habe eine offene Bestellung mit Modellen"
   step "I have an unsubmitted order with models"
-  #step "#{n} Modelle sind nicht verfügbar"
-  step "#{n} models are not available" 
-  #step "ich länger als 30 Minuten keine Aktivität ausgeführt habe"
+  step "#{n} models are not available"
   step "I have performed no activity for more than 30 minutes"
-  #step "ich eine Aktivität ausführe"
   step "I perform some activity"
-  #step "werde ich auf die Timeout Page geleitet"
   step "I am redirected to the timeout page"
   step 'I am informed that my items are no longer reserved for me'
 end
@@ -46,7 +38,7 @@ end
 
 #Dann(/^die nicht mehr verfügbaren Modelle sind hervorgehoben$/) do
 Then(/^the no longer available items are highlighted$/) do
-  @current_user.contracts.unsubmitted.flat_map(&:lines).each do |line|
+  @current_user.contract_lines.unsubmitted.each do |line|
     unless line.available?
       find("[data-ids*='#{line.id}']", match: :first).find(:xpath, "./../../..").find(".line-info.red[title='#{_("Not available")}']")
     end
@@ -76,8 +68,8 @@ end
 
 #Dann(/^wird die Bestellung des Benutzers gelöscht$/) do
 Then(/^the user's order has been deleted$/) do
-  @contract_ids.each do |contract_id|
-    expect { Contract.find(contract_id) }.to raise_error(ActiveRecord::RecordNotFound)
+  @contracts.each do |contract|
+    expect { contract.reload }.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
 
@@ -92,7 +84,7 @@ end
 Given(/^I delete one entry$/) do
   line = all(".row.line").to_a.sample
   @line_ids = line.find("button[data-ids]")["data-ids"].gsub(/\[|\]/, "").split(',').map(&:to_i)
-  expect(@line_ids.all? { |id| @current_user.contracts.unsubmitted.flat_map(&:contract_line_ids).include?(id) }).to be true
+  expect(@line_ids.all? { |id| @current_user.contract_lines.unsubmitted.map(&:id).include?(id) }).to be true
   line.find(".dropdown-toggle").click
   line.find("a", text: _("Delete")).click
   alert = page.driver.browser.switch_to.alert
@@ -102,7 +94,7 @@ end
 #Dann(/^wird der Eintrag aus der Bestellung gelöscht$/) do
 Then(/^the entry is deleted from the order$/) do
   expect(@line_ids.all? { |id| page.has_no_selector? "button[data-ids='[#{id}]']" }).to be true
-  expect(@line_ids.all? { |id| not @current_user.contracts.unsubmitted.flat_map(&:contract_line_ids).include?(id) }).to be true
+  expect(@line_ids.all? { |id| not @current_user.contract_lines.unsubmitted.map(&:id).include?(id) }).to be true
 end
 
 #########################################################################
@@ -154,7 +146,7 @@ end
 
 #Wenn(/^ein Modell nicht verfügbar ist$/) do
 #When(/^a model is not available$/) do
-#  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).any? { |l| not l.available? }).to be true
+#  expect(@current_user.contract_lines.unsubmitted.any? { |l| not l.available? }).to be true
 #end
 
 
@@ -165,10 +157,9 @@ end
 #########################################################################
 
 #Angenommen(/^die letzte Aktivität auf meiner Bestellung ist mehr als (\d+) minuten her$/) do |minutes|
-Given(/^the last activity on my order was more than (\d+) minutes ago$/) do |minutes|
-  @current_user.contracts.unsubmitted.each do |contract|
-    contract.update_attributes(updated_at: Time.now - (minutes.to_i+1).minutes)
-  end
+#Wenn(/^ich länger als (\d+) Minuten keine Aktivität ausgeführt habe$/) do |arg1|
+When(/^I have performed no activity for more than (\d+) minutes$/) do |minutes|
+  Timecop.travel(Time.now + (minutes.to_i + 1).minutes)
 end
 
 #Wenn(/^ich die Seite der Hauptkategorien besuche$/) do
@@ -182,12 +173,12 @@ end
 
 #When(/^werden die nicht verfügbaren Modelle aus der Bestellung gelöscht$/) do
 When(/^the unavailable models are deleted from the order$/) do
-  expect(@current_user.contracts.unsubmitted.flat_map(&:lines).all? { |l| l.available? }).to be true
+  expect(@current_user.contract_lines.unsubmitted.all? { |l| l.available? }).to be true
 end
 
 #Wenn(/^ich einen der Fehler korrigiere$/) do
 When(/^I correct one of the errors$/) do
-  @line_ids = @current_user.contracts.unsubmitted.flat_map(&:lines).select { |l| not l.available? }.map(&:id)
+  @line_ids = @current_user.contract_lines.unsubmitted.select { |l| not l.available? }.map(&:id)
   resolve_conflict_for_contract_line @line_ids.delete_at(0)
 end
 
@@ -214,7 +205,7 @@ def resolve_conflict_for_contract_line(line_id)
   select_available_not_closed_date(:end, start_date)
   find(".modal .button.green").click
 
-  expect(has_no_selector?("#booking-calendar")).to be true
+  step "the booking calendar is closed"
   within ".line[data-ids='[#{line_id}]']" do
     expect(has_no_selector?(".line-info.red")).to be true
   end

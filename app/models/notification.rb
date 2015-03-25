@@ -14,7 +14,7 @@ class Notification < ActiveRecord::Base
     o = Mailer::Order.submitted(order, purpose).deliver if send_mail
     title = (o.nil? ? _("Order submitted") : o.subject)
     Notification.create(:user => order.target_user, :title => title)
-    order.log_history(title, order.target_user.id) if order.target_user
+    #6628029# order.log_history(title, order.target_user.id) if order.target_user
   end
 
   # Notify the person responsible for the inventory pool that an order
@@ -26,16 +26,17 @@ class Notification < ActiveRecord::Base
   
   def self.order_approved(order, comment, send_mail = true, current_user = nil)
     if send_mail
-      if order.has_changes?
-        o = Mailer::Order.changed(order, comment).deliver
-      else
+      #6628029#
+      # if order.has_changes?
+      #   o = Mailer::Order.changed(order, comment).deliver
+      # else
         o = Mailer::Order.approved(order, comment).deliver
-      end
+      # end
     end
     title = (o.nil? ? _("Order approved") : o.subject)
     Notification.create(:user => order.target_user, :title => title)
     current_user ||= order.target_user
-    order.log_history(title, current_user.id)
+    #6628029# order.log_history(title, current_user.id)
   end
   
   def self.order_rejected(order, comment, send_mail = true, current_user = nil)
@@ -43,12 +44,12 @@ class Notification < ActiveRecord::Base
     o = Mailer::Order.rejected(order, comment).deliver if send_mail
     title = (o.nil? ? _("Order rejected") : o.subject)
     Notification.create(:user => order.target_user, :title => title)
-    order.log_history(title, current_user.id)
+    #6628029# order.log_history(title, current_user.id)
   end
 
-  def self.deadline_soon_reminder(user, visit_lines, send_mail = true)
-    visit_lines.map(&:inventory_pool).uniq.each do |inventory_pool|
-      o = Mailer::User.deadline_soon_reminder(user, inventory_pool, visit_lines).deliver if send_mail
+  def self.deadline_soon_reminder(user, contract_lines, send_mail = true)
+    contract_lines.map(&:inventory_pool).uniq.each do |inventory_pool|
+      o = Mailer::User.deadline_soon_reminder(user, inventory_pool, contract_lines).deliver if send_mail
       title = (o.nil? ? _("Deadline soon") : o.subject)
       Notification.create(:user => user, :title => title)
       user.histories.create(:text => title, :user_id => user.id, :type_const => History::ACTION)
@@ -56,9 +57,9 @@ class Notification < ActiveRecord::Base
   end
   
   
-  def self.remind_user(user, visit_lines, send_mail = true)
-    visit_lines.map(&:inventory_pool).uniq.each do |inventory_pool|
-      o = Mailer::User.remind(user, inventory_pool, visit_lines).deliver if send_mail
+  def self.remind_user(user, contract_lines, send_mail = true)
+    contract_lines.map(&:inventory_pool).uniq.each do |inventory_pool|
+      o = Mailer::User.remind(user, inventory_pool, contract_lines).deliver if send_mail
       title = (o.nil? ? _("Reminder") : o.subject)
       Notification.create(:user => user, :title => title)
       user.histories.create(:text => title, :user_id => user.id, :type_const => History::ACTION)

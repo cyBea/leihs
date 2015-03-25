@@ -1,23 +1,22 @@
 # -*- encoding : utf-8 -*-
 
-Given(/^there is an empty order$/) do
-  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
-    @customer = ip.users.order("RAND ()").detect {|c| c.visits.hand_over.empty? }
+Then(/^I don't see empty orders in the list of orders$/) do
+  find('nav a', text: _('Orders')).click
+  within "#contracts" do
+    expect(has_selector? ".line[data-id]").to be true
+    ids = all(".line[data-id]").map{|line| line["data-id"] }
+    contracts = @current_inventory_pool.contracts.find(ids)
+    contracts.each do |contract|
+      expect(contract.lines.empty?).to be false
+    end
   end
-  raise "customer not found" unless @customer
-  step "I open a hand over to this customer"
-  @contract = @current_inventory_pool.contracts.approved.where(user_id: @customer.id).last
-end
-
-Then(/^I don't see this order in the list of orders$/) do
-  find('a', text: _('Orders')).click
-  expect(has_no_selector?("[data-id='#{@contract.id}']")).to be true
 end
 
 #When(/^ich öffne eine Bestellung von ein gesperrter Benutzer$/) do
 When(/^I open a suspended user's order$/) do
   user = @current_inventory_pool.contracts.submitted.order("RAND()").first.user
   ensure_suspended_user(user, @current_inventory_pool)
+  step "I navigate to the open orders"
   step 'I open an order placed by "%s"' % user
 end
 
@@ -67,7 +66,7 @@ end
 
 #Given(/^es existiert eine visierpflichtige Bestellung$/) do
 Given(/^a verifiable order exists$/) do
-  @contract = Contract.with_verifiable_user_and_model.first
+  @contract = ContractLinesBundle.with_verifiable_user_and_model.first
   expect(@contract).not_to be_nil
 end
 

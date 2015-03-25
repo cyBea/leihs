@@ -280,13 +280,23 @@ class Manage::UsersController < Manage::ApplicationController
 
   def hand_over
     set_shared_visit_variables 0 do
-      @contract = @user.get_approved_contract(current_inventory_pool)
+      @contract = @user.contracts.approved.find_by(inventory_pool_id: current_inventory_pool)
+      @contract ||= @user.contracts.approved.new(inventory_pool: current_inventory_pool) do |x|
+        # simply choose the first delegated user in order to pass contract validation. the delegated user has to be chosen again in the hand over process anyway
+        x.delegated_user = @user.delegated_users.first if @user.is_delegation
+      end
       @lines = @contract.lines.includes([:purpose, :model])
       @models = @contract.models.where(type: :Model)
       @software = @contract.models.where(type: :Software)
-      @options = @contract.options  
+      @options = @contract.options
       @items = @contract.items.items
       @licenses = @contract.items.licenses
+      # @lines = @user.contract_lines.approved.where(inventory_pool_id: current_inventory_pool).includes([:purpose, :model])
+      # @models = @lines.select{|l| l.type == "ItemLine"}.map(&:model).select{|model| model.type == "Model"}
+      # @software = @lines.select{|l| l.type == "ItemLine"}.map(&:model).select{|model| model.type == "Software"}
+      # @options = @lines.select{|l| l.type == "OptionLine"}.map(&:option)
+      # @items = @lines.select{|l| l.type == "ItemLine"}.map(&:item).compact.select{|item| item.model.type == "Model"}
+      # @licenses = @lines.select{|l| l.type == "ItemLine"}.map(&:item).compact.select{|item| item.model.type == "Software"}
     end
     @start_date, @end_date = @grouped_lines.keys.sort.first || [Date.today, Date.today]
     add_visitor(@user)
@@ -295,7 +305,7 @@ class Manage::UsersController < Manage::ApplicationController
   def take_back
     set_shared_visit_variables 1 do
       @contracts = @user.contracts.signed.where(:inventory_pool_id => current_inventory_pool)
-      @lines = @user.contract_lines.to_take_back.where(:contract_id => @contracts).includes([:purpose, :model, :item])
+      @lines = @user.contract_lines.signed.where(:contract_id => @contracts) #6628029# .includes([:purpose, :model, :item])
       @models = @contracts.flat_map(&:models).uniq
       @options = @contracts.flat_map(&:options).uniq
       @items = @contracts.flat_map(&:items).uniq

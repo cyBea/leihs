@@ -475,9 +475,6 @@ msgstr ""
 msgid "Empty Username and/or Password"
 msgstr "Benutzername und/oder Passwort sind läär"
 
-msgid "End Date"
-msgstr "Änd-Datum"
-
 msgid "End date"
 msgstr "Änd-Datum"
 
@@ -1248,9 +1245,6 @@ msgstr "Öppis isch schief gange!"
 
 msgid "Start"
 msgstr "Start"
-
-msgid "Start Date"
-msgstr "Startdatum"
 
 msgid "Start Date must be before End Date"
 msgstr "Startdatum muess vor em Enddatum si"
